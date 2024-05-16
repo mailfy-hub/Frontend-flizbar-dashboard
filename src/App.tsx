@@ -1,10 +1,10 @@
-import { Login } from "./pages/Auth/login";
+import { Routes } from "./routes";
 
 export function App() {
 
   return (
     <>
-      <Login/>
+      <Routes/>
     </>
   )
 }
