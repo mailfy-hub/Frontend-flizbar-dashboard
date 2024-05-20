@@ -15,6 +15,7 @@ import {
   MenuList,
   Typography,
 } from "@material-tailwind/react";
+import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { RoutesMapped } from "../../utils/route-config";
@@ -38,13 +39,15 @@ const profileMenuItems = [
   },
 ];
 
-interface ActiveRouteProps {
+export interface ActiveRouteProps {
   name: string;
   icon: string;
 }
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isFirstRender, setIsFirstRender] = useState(true); // Track the first render
+
   const closeMenu = () => setIsMenuOpen(false);
 
   const location = useLocation();
@@ -53,7 +56,10 @@ export const Header = () => {
   );
 
   const getPageInfo = (route: string) => {
-    const foundRoute = RoutesMapped.find((r) => r.route == route);
+    const foundRoute = RoutesMapped.filter((r) =>
+      route.startsWith(r.route)
+    ).sort((a, b) => b.route.length - a.route.length)[0];
+
     if (foundRoute) {
       setActiveRoute({ name: foundRoute.name, icon: foundRoute.icon });
     } else {
@@ -67,16 +73,33 @@ export const Header = () => {
 
   return (
     <header className="bg-GRAY_100 h-[72px] w-full px-12 flex items-center justify-between">
-      {activeRoute ? (
-        <div className="flex items-center gap-2">
-          <Icon color={"#0C0B0A"} icon={activeRoute.icon} />
-          <p className="font-body font-medium text-body16 text-black">
-            {activeRoute.name}
-          </p>
-        </div>
-      ) : (
-        <div></div>
-      )}
+      <AnimatePresence>
+        {activeRoute ? (
+          <motion.div
+            key={location.pathname}
+            initial={isFirstRender ? { opacity: 0, x: 35 } : { opacity: 0 }}
+            animate={isFirstRender ? { opacity: 100, x: 0 } : { opacity: 100 }}
+            transition={{
+              type: "ease",
+              duration: 0.45,
+              delay: isFirstRender ? 0.5 : 0,
+            }}
+            onAnimationComplete={() => {
+              if (isFirstRender) {
+                setIsFirstRender(false);
+              }
+            }}
+            className="flex items-center gap-2"
+          >
+            <Icon color={"#0C0B0A"} icon={activeRoute.icon} />
+            <p className="font-body font-medium text-body16 text-black">
+              {activeRoute.name}
+            </p>
+          </motion.div>
+        ) : (
+          <div></div>
+        )}
+      </AnimatePresence>
       <div>
         <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
           <MenuHandler>
@@ -110,8 +133,7 @@ export const Header = () => {
             </Button>
           </MenuHandler>
           <MenuList className="p-1">
-            {profileMenuItems.map(({ label, icon }, key) => {
-              const isLastItem = key === profileMenuItems.length - 1;
+            {profileMenuItems.map(({ label, icon }, _) => {
               return (
                 <MenuItem
                   key={label}

@@ -110,22 +110,22 @@ export const Home = () => {
         <div className="w-full mt-8 grid md:grid-cols-4 gap-8">
           <FastAccessButton
             icon={"heroicons:wallet"}
-            link=""
+            link="/wallets"
             pageName="Carteiras"
           />
           <FastAccessButton
             icon={"radix-icons:dashboard"}
-            link=""
+            link="/contributions"
             pageName="Aportes"
           />
           <FastAccessButton
             icon={"heroicons:arrow-uturn-down"}
-            link=""
+            link="/withdraw"
             pageName="Resgates"
           />
           <FastAccessButton
             icon={"heroicons:user-circle-16-solid"}
-            link=""
+            link="/my-account"
             pageName="Minha conta"
           />
         </div>

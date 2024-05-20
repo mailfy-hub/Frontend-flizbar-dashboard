@@ -1,19 +1,67 @@
-import { Outlet } from "react-router-dom";
-import { Header } from "../../components/header";
-import {
-} from "../../components/lineChart";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import { ActiveRouteProps, Header } from "../../components/header";
+import {} from "../../components/lineChart";
 import { SidebarLayout } from "../../components/sidebar";
+import { RoutesMapped } from "../../utils/route-config";
+import { Loading } from "../Utils/loading";
 
 export const Layout = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  const location = useLocation();
+  const [_, setActiveRoute] = useState<ActiveRouteProps | null>(
+    {} as ActiveRouteProps
+  );
+
+  const getPageInfo = (route: string) => {
+    const foundRoute = RoutesMapped.filter((r) =>
+      route.startsWith(r.route)
+    ).sort((a, b) => b.route.length - a.route.length)[0];
+
+    if (foundRoute) {
+      setActiveRoute({ name: foundRoute.name, icon: foundRoute.icon });
+    } else {
+      setActiveRoute(null);
+    }
+  };
+
+  useEffect(() => {
+    getPageInfo(location.pathname);
+  }, [location]);
+
+  useEffect(() => {
+    const time = 1250;
+    const mockTimeout = setTimeout(() => {
+      setIsLoading(false);
+    }, time);
+    return () => {
+      clearTimeout(mockTimeout);
+    };
+  }, []);
+
   return (
-    <div className="w-full h-full bg-GRAY_100 flex relative">
-      <SidebarLayout />
-      <div className="w-full overflow-auto">
-        <Header />
-        <div className="p-12 w-full h-auto">
-          <Outlet/>
+    <>
+      {isLoading && <Loading />}
+      <div className="w-full h-full bg-GRAY_100 flex relative">
+        <SidebarLayout />
+        <div className="w-full overflow-auto">
+          <Header />
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 100 }}
+            transition={{
+              type: "ease",
+              duration: 0.45,
+            }}
+            className="p-12 w-full h-auto"
+          >
+            <Outlet />
+          </motion.div>
         </div>
       </div>
-    </div>
+    </>
   );
 };

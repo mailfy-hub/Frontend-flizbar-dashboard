@@ -1,6 +1,8 @@
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
+  CircleStackIcon,
+  MagnifyingGlassIcon,
   PencilIcon,
   TrashIcon,
 } from "@heroicons/react/16/solid";
@@ -11,26 +13,55 @@ import {
   CardFooter,
   CardHeader,
   IconButton,
+  Input,
   Tooltip,
   Typography,
 } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 
-const TABLE_ROW = [
+interface TABLE_ROW_PROPS {
+  code: string;
+  name: string;
+  type: string;
+  phone: string;
+  email: string;
+}
+
+const TABLE_ROW: TABLE_ROW_PROPS[] = [
   {
-    id: "1",
+    code: "#TBR5253626",
     name: "Emma Roberts",
-    email_address: "emma@mail.com",
-    created_at: "23/04/18",
+    type: "física",
+    phone: "",
+    email: "emma@email.com",
+  },
+  {
+    code: "#TBR525362421",
+    name: "Daniel Heart",
+    type: "física",
+    phone: "",
+    email: "gdanielh@hotmail.com",
+  },
+  {
+    code: "#TBR52536257",
+    name: "Mark Greysson",
+    type: "física",
+    phone: "",
+    email: "markg@gmail.com",
   },
 ];
 
-const TABLE_HEAD = ["ID", "Nome", "Endereço de e-mail", "Data de criação", " "];
+const TABLE_HEAD = ["Código", "Nome", "Tipo", "Telefone", "E-mail", ""];
 
-export const Users = () => {
+export const Customers = () => {
+  const navigate = useNavigate();
+  const handleInsert = () => {
+    navigate("insert");
+  };
   return (
     <div>
-      <SectionTitle text="Todos usuários" />
+      <SectionTitle text="Todos clientes" />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
           floated={false}
@@ -39,21 +70,26 @@ export const Users = () => {
         >
           <div>
             <Typography variant="h6" color="#0C0B0A">
-              Tabela de usuários
+              Tabela de clientes
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
-              Veja informações sobre todos seus usuários
+              Veja informações sobre todos seus clientes
             </Typography>
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
             <div className="w-full md:w-72">
-              {/* <Input
+              <Input
                 label="Search"
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              /> */}
+              />
             </div>
-            <Button className="md:max-w-fit w-full bg-GOLD_MAIN">
-              ADICIONAR USUÁRIO
+            <Button
+              onClick={() => {
+                handleInsert();
+              }}
+              className="md:max-w-fit w-full bg-GOLD_MAIN"
+            >
+              ADICIONAR CLIENT
             </Button>
           </div>
         </CardHeader>
@@ -75,10 +111,10 @@ export const Users = () => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROW.map(({ id, name, email_address, created_at }) => {
+              {TABLE_ROW.map(({ code, email, name, phone, type }) => {
                 const classes = "!p-6 ";
                 return (
-                  <tr key={name}>
+                  <tr key={code}>
                     <td className={classes}>
                       <div className="flex items-center gap-3">
                         <div>
@@ -87,7 +123,7 @@ export const Users = () => {
                             color="blue-gray"
                             className="!font-semibold"
                           >
-                            {id}
+                            {code}
                           </Typography>
                         </div>
                       </div>
@@ -118,7 +154,7 @@ export const Users = () => {
                           color="#757575"
                           className="!font-normal"
                         >
-                          {email_address}
+                          {type}
                         </Typography>
                       </div>
                     </td>
@@ -128,10 +164,23 @@ export const Users = () => {
                         variant="small"
                         className="!font-normal text-gray-600"
                       >
-                        {created_at}
+                        {phone}
                       </Typography>
                     </td>
-                    <td className="flex items-center justify-end text-right p-4 border-b border-gray-300 gap-2">
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        className="!font-normal text-gray-600"
+                      >
+                        {email}
+                      </Typography>
+                    </td>
+                    <td className={`${classes} flex justify-end `}>
+                      <Tooltip content="Cotações">
+                        <IconButton variant="text">
+                          <CircleStackIcon className="w-4 h-4 text-gray-400" />
+                        </IconButton>
+                      </Tooltip>
                       <Tooltip content="Editar usuário">
                         <IconButton variant="text">
                           <PencilIcon className="w-4 h-4 text-gray-400" />

@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { RoutesMapped } from "../../utils/route-config";
@@ -15,7 +16,16 @@ export const SidebarLayout = () => {
 
   return (
     <div className="hidden md:block max-w-[280px] w-full h-screen">
-      <div className="max-w-[280px] w-full bg-BLACK h-screen flex flex-col overflow-auto fixed left-0 top-0">
+      <motion.div
+        initial={{ x: -100 }}
+        animate={{ x: 0 }}
+        transition={{
+          type: "ease",
+          duration: 1,
+          delay: 0.2,
+        }}
+        className="max-w-[280px] w-full bg-BLACK h-screen flex flex-col overflow-auto fixed left-0 top-0"
+      >
         <div className="h-[72px] w-full flex items-center px-6 ">
           <div className="h-8">
             <Logo />
@@ -43,7 +53,7 @@ export const SidebarLayout = () => {
             Logout
           </button>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

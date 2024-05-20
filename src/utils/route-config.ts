@@ -35,7 +35,7 @@ export const RoutesMapped = [
     icon: "heroicons:arrow-trending-up-20-solid",
   },
   {
-    route: "/rescues",
+    route: "/withdraw",
     name: "Resgates",
     icon: "heroicons:arrow-uturn-down",
   },

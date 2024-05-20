@@ -18,19 +18,18 @@ import { SectionTitle } from "../../../components/sectionTitle";
 
 const TABLE_ROW = [
   {
-    id: "1",
-    name: "Emma Roberts",
-    email_address: "emma@mail.com",
+    code: "1",
     created_at: "23/04/18",
+    value: 1.2,
   },
 ];
 
-const TABLE_HEAD = ["ID", "Nome", "Endereço de e-mail", "Data de criação", " "];
+const TABLE_HEAD = ["Código", "Data", "Valor", " "];
 
-export const Users = () => {
+export const CalculedInterest = () => {
   return (
     <div>
-      <SectionTitle text="Todos usuários" />
+      <SectionTitle text="Todos cálculos" />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
           floated={false}
@@ -39,10 +38,10 @@ export const Users = () => {
         >
           <div>
             <Typography variant="h6" color="#0C0B0A">
-              Tabela de usuários
+              Tabela de Juros para calculadora
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
-              Veja informações sobre todos seus usuários
+              Veja informações sobre todos seus juros para calculadora
             </Typography>
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
@@ -53,7 +52,7 @@ export const Users = () => {
               /> */}
             </div>
             <Button className="md:max-w-fit w-full bg-GOLD_MAIN">
-              ADICIONAR USUÁRIO
+              ADICIONAR JUROS
             </Button>
           </div>
         </CardHeader>
@@ -75,10 +74,10 @@ export const Users = () => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROW.map(({ id, name, email_address, created_at }) => {
+              {TABLE_ROW.map(({ created_at, code, value }) => {
                 const classes = "!p-6 ";
                 return (
-                  <tr key={name}>
+                  <tr key={code}>
                     <td className={classes}>
                       <div className="flex items-center gap-3">
                         <div>
@@ -87,7 +86,7 @@ export const Users = () => {
                             color="blue-gray"
                             className="!font-semibold"
                           >
-                            {id}
+                            {code}
                           </Typography>
                         </div>
                       </div>
@@ -100,7 +99,7 @@ export const Users = () => {
                             color="blue-gray"
                             className="!font-semibold"
                           >
-                            {name}
+                            {created_at}
                           </Typography>
                           {/*                             <Typography
                               variant="small"
@@ -118,19 +117,11 @@ export const Users = () => {
                           color="#757575"
                           className="!font-normal"
                         >
-                          {email_address}
+                          {value}
                         </Typography>
                       </div>
                     </td>
 
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        className="!font-normal text-gray-600"
-                      >
-                        {created_at}
-                      </Typography>
-                    </td>
                     <td className="flex items-center justify-end text-right p-4 border-b border-gray-300 gap-2">
                       <Tooltip content="Editar usuário">
                         <IconButton variant="text">
