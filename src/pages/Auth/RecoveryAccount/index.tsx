@@ -1,5 +1,5 @@
 import { Button, Input, Typography } from "@material-tailwind/react";
-import { SideImageAuthorization } from "../../../components/SideImageAuthorization";
+import { SideImageAuthorization } from "../../../components/sideImageAuthorization";
 
 export function RecoveryAccount () {
   return (
