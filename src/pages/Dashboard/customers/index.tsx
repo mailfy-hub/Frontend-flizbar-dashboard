@@ -89,7 +89,7 @@ export const Customers = () => {
               }}
               className="md:max-w-fit w-full bg-GOLD_MAIN"
             >
-              ADICIONAR CLIENT
+              ADICIONAR CLIENTE
             </Button>
           </div>
         </CardHeader>

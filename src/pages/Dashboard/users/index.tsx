@@ -15,6 +15,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { SectionTitle } from "../../../components/sectionTitle";
+import { useNavigate } from "react-router-dom";
 
 const TABLE_ROW = [
   {
@@ -28,6 +29,10 @@ const TABLE_ROW = [
 const TABLE_HEAD = ["ID", "Nome", "Endereço de e-mail", "Data de criação", " "];
 
 export const Users = () => {
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate("insert");
+  };
   return (
     <div>
       <SectionTitle text="Todos usuários" />
@@ -52,7 +57,10 @@ export const Users = () => {
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               /> */}
             </div>
-            <Button className="md:max-w-fit w-full bg-GOLD_MAIN">
+            <Button
+              onClick={handleNavigate}
+              className="md:max-w-fit w-full bg-GOLD_MAIN"
+            >
               ADICIONAR USUÁRIO
             </Button>
           </div>

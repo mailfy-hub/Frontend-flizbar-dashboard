@@ -4,7 +4,7 @@ import { Button, Input, Select } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 
-export const ContribuitionInsert = () => {
+export const CalculedInterestInsert = () => {
   const navigate = useNavigate();
 
   const handleNavigateBack = () => {
@@ -24,34 +24,21 @@ export const ContribuitionInsert = () => {
       <form className="mt-12">
         <div className="bg-WHITE p-8 w-full rounded-md">
           <div className="flex items-center gap-4">
-            <Icon
-              height={16}
-              icon={"radix-icons:dashboard"}
-              color="#0C0B0A"
-            />
-            <SectionTitle size="sm" text="Aporte" />
+            <Icon height={16} icon={"heroicons:circle-stack"} color="#0C0B0A" />
+            <SectionTitle size="sm" text="Juros" />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
-              <Input type="date" label="Data do aporte" />
-            </div>
-            <div className="grid md:grid-cols-2 gap-6">
-              <Select label="Cliente">
+              <Select label="Fundo de origem">
                 <option value=""></option>
               </Select>
-              <Select label="Carteira">
-                <option value=""></option>
-              </Select>
-            </div>
-            <div className="grid md:grid-cols-2 gap-6">
-              <Input type="number" label="Valor da cotação do dolar" />
-              <Input type="number" label="Valor do aporte" />
+              <Input type="number" label="Valor da readequação" />
             </div>
           </div>
         </div>
         <div className="w-full flex justify-end mt-8">
           <Button className="bg-GOLD_MAIN w-full md:w-auto">
-            Adicionar Rendimento
+            Adicionar Cálculo de juros
           </Button>
         </div>
       </form>

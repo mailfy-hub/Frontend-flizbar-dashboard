@@ -4,7 +4,7 @@ import { Button, Input, Select } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 
-export const ContribuitionInsert = () => {
+export const IncomeInsert = () => {
   const navigate = useNavigate();
 
   const handleNavigateBack = () => {
@@ -26,26 +26,22 @@ export const ContribuitionInsert = () => {
           <div className="flex items-center gap-4">
             <Icon
               height={16}
-              icon={"radix-icons:dashboard"}
+              icon={"heroicons:arrow-trending-up-20-solid"}
               color="#0C0B0A"
             />
-            <SectionTitle size="sm" text="Aporte" />
+            <SectionTitle size="sm" text="Rendimento" />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
-              <Input type="date" label="Data do aporte" />
+              <Input type="date" label="Data do rendimento" />
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-              <Select label="Cliente">
-                <option value=""></option>
-              </Select>
-              <Select label="Carteira">
+              <Select label="Fundo de origem">
                 <option value=""></option>
               </Select>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-              <Input type="number" label="Valor da cotação do dolar" />
-              <Input type="number" label="Valor do aporte" />
+              <Input type="number" label="Porcentagem do rendimento" />
             </div>
           </div>
         </div>

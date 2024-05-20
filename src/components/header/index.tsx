@@ -46,7 +46,6 @@ export interface ActiveRouteProps {
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isFirstRender, setIsFirstRender] = useState(true); // Track the first render
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -77,18 +76,14 @@ export const Header = () => {
         {activeRoute ? (
           <motion.div
             key={location.pathname}
-            initial={isFirstRender ? { opacity: 0, x: 35 } : { opacity: 0 }}
-            animate={isFirstRender ? { opacity: 100, x: 0 } : { opacity: 100 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 100 }}
             transition={{
               type: "ease",
               duration: 0.45,
-              delay: isFirstRender ? 0.5 : 0,
+              delay: 0,
             }}
-            onAnimationComplete={() => {
-              if (isFirstRender) {
-                setIsFirstRender(false);
-              }
-            }}
+
             className="flex items-center gap-2"
           >
             <Icon color={"#0C0B0A"} icon={activeRoute.icon} />

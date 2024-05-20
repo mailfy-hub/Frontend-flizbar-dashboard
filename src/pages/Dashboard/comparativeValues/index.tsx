@@ -14,6 +14,7 @@ import {
   Tooltip,
   Typography,
 } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 
 const TABLE_ROW = [
@@ -38,6 +39,10 @@ const TABLE_HEAD = [
 ];
 
 export const ComparativeValues = () => {
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate("insert");
+  };
   return (
     <div>
       <SectionTitle text="Todos valores comparativos" />
@@ -57,7 +62,10 @@ export const ComparativeValues = () => {
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
             <div className="w-full md:w-72"></div>
-            <Button className="md:max-w-fit w-full bg-GOLD_MAIN">
+            <Button
+              onClick={handleNavigate}
+              className="md:max-w-fit w-full bg-GOLD_MAIN"
+            >
               ADICIONAR VALOR COMPARATIVO
             </Button>
           </div>

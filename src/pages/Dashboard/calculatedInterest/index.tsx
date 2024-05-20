@@ -14,6 +14,7 @@ import {
   Tooltip,
   Typography,
 } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 
 const TABLE_ROW = [
@@ -27,6 +28,10 @@ const TABLE_ROW = [
 const TABLE_HEAD = ["Código", "Data", "Valor", " "];
 
 export const CalculedInterest = () => {
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate("insert");
+  };
   return (
     <div>
       <SectionTitle text="Todos cálculos" />
@@ -51,7 +56,10 @@ export const CalculedInterest = () => {
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               /> */}
             </div>
-            <Button className="md:max-w-fit w-full bg-GOLD_MAIN">
+            <Button
+              onClick={handleNavigate}
+              className="md:max-w-fit w-full bg-GOLD_MAIN"
+            >
               ADICIONAR JUROS
             </Button>
           </div>
