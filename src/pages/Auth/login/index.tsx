@@ -1,5 +1,5 @@
-import { Button, Input, Typography } from "@material-tailwind/react";
-import { FormEvent } from "react";
+import { Button, Option, Select, Typography } from "@material-tailwind/react";
+import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SideImageAuthorization } from "../../../components/sideImageAuthorization";
 import { useAuth } from "../../../hook/auth";
@@ -7,12 +7,24 @@ import { useAuth } from "../../../hook/auth";
 export function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [role, setRole] = useState("user");
+  const handleChangeRole = (newRole: string) => {
+    setRole(newRole);
+  };
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
-    login({
-      email: "marlon@mailfy.com",
-      password: "marlon123",
-    });
+    if (role == "user") {
+      login({
+        email: "marlon@mailfy.com",
+        password: "marlon123",
+      });
+    } else {
+      login({
+        email: "admin@flibzar.com",
+        password: "admin",
+      });
+    }
+
     navigate("/");
   };
 
@@ -32,7 +44,17 @@ export function Login() {
               <Typography variant="h6" color="blue-gray" className="-mb-3">
                 Seu e-mail
               </Typography>
-              <Input
+              <Select
+                label="Autorização no sistema"
+                value={role}
+                onChange={(val) => {
+                  val && handleChangeRole(val);
+                }}
+              >
+                <Option value="user">User</Option>
+                <Option value="admin">Admin</Option>
+              </Select>
+              {/* <Input
                 size="md"
                 placeholder="Insira seu e-mail"
                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -43,8 +65,8 @@ export function Login() {
 
               <Typography variant="h6" color="blue-gray" className="-mb-3">
                 Senha de acesso
-              </Typography>
-              <Input
+              </Typography> */}
+              {/*  <Input
                 type="password"
                 size="md"
                 placeholder="********"
@@ -52,7 +74,7 @@ export function Login() {
                 labelProps={{
                   className: "before:content-none after:content-none",
                 }}
-              />
+              /> */}
             </div>
 
             <Button className="mt-6 bg-GOLD_MAIN" fullWidth type="submit">

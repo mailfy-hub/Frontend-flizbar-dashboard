@@ -1,10 +1,13 @@
 import { createContext, useContext, useState } from "react";
 import { usersMock } from "../mock/data";
 
+export type roleAccessType = "all" | "user" | "admin";
+
 interface AuthContextProps {
   isAuthenticated: boolean;
   userData: User | null;
   login: (credentials: loginProps) => void;
+  logout: () => void;
 }
 
 const AuthContext = createContext({} as AuthContextProps);
@@ -18,7 +21,7 @@ export interface User {
   name: string;
   email: string;
   password: string;
-  role: "user" | "admin";
+  role: roleAccessType;
 }
 
 type Props = {
@@ -45,8 +48,13 @@ export const AuthContextProvider = ({ children }: Props) => {
     }
   };
 
+  const logout = () => {
+    setIsAuthenticated(false);
+    setUserData(null);
+  };
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, userData, login }}>
+    <AuthContext.Provider value={{ isAuthenticated, userData, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

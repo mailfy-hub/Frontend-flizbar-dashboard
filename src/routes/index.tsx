@@ -33,65 +33,62 @@ import { WalletEdit } from "../pages/Dashboard/wallets/edit";
 import { WalletInsert } from "../pages/Dashboard/wallets/insert";
 import { Withdraw } from "../pages/Dashboard/withdraw";
 import { WithdrawInsert } from "../pages/Dashboard/withdraw/insert";
-import ProtectedRoutes from "./protected";
 
 export const Routes = () => {
   return (
     <RoutesRRD>
-      <Route element={<ProtectedRoutes />}>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="users">
-            <Route index element={<Users />} />
-            <Route path="insert" element={<UserInsert />} />
-            <Route path="edit" element={<UserEdit />} />
-          </Route>
-          <Route path="wallets">
-            <Route index element={<Wallets />} />
-            <Route path="insert" element={<WalletInsert />} />
-            <Route path="edit" element={<WalletEdit />} />
-          </Route>
-          <Route path="quotes">
-            <Route index element={<Quotes />} />
-            <Route path="insert" element={<QuotesInsert />} />
-          </Route>
-          <Route path="funds">
-            <Route index element={<Funds />} />
-            <Route path="insert" element={<FundsInsert />} />
-            <Route path="edit" element={<FundsEdit />} />
-          </Route>
-          <Route path="movements" element={<Movements />} />
-          <Route path="customers">
-            <Route index element={<Customers />} />
-            <Route path="insert" element={<CustomerInsert />} />
-            <Route path="edit" element={<CustomerEdit />} />
-          </Route>
-          <Route path="income">
-            <Route index element={<Income />} />
-            <Route path="insert" element={<IncomeInsert />} />
-          </Route>
-          <Route path="withdraw">
-            <Route index element={<Withdraw />} />
-            <Route path="insert" element={<WithdrawInsert />} />
-          </Route>
-          <Route path="readjustments">
-            <Route index element={<Readjustments />} />
-            <Route path="insert" element={<ReadjustmentsInsert />} />
-          </Route>
-          <Route path="comparative-values">
-            <Route index element={<ComparativeValues />} />
-            <Route path="insert" element={<ComparativeValuesInsert />} />
-            <Route path="edit" element={<ComparativeValuesEdit />} />
-          </Route>
-          <Route path="calculated-interest">
-            <Route index element={<CalculedInterest />} />
-            <Route path="insert" element={<CalculedInterestInsert />} />
-            <Route path="edit" element={<CalculedInterestEdit />} />
-          </Route>
-          <Route path="contributions">
-            <Route index element={<Contribuitions />} />
-            <Route path="insert" element={<ContribuitionInsert />} />
-          </Route>
+      <Route path="/"  element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="users">
+          <Route index element={<Users />} />
+          <Route path="insert" element={<UserInsert />} />
+          <Route path="edit" element={<UserEdit />} />
+        </Route>
+        <Route path="wallets">
+          <Route index element={<Wallets />} />
+          <Route path="insert" element={<WalletInsert />} />
+          <Route path="edit" element={<WalletEdit />} />
+        </Route>
+        <Route path="quotes">
+          <Route index element={<Quotes />} />
+          <Route path="insert" element={<QuotesInsert />} />
+        </Route>
+        <Route path="funds">
+          <Route index element={<Funds />} />
+          <Route path="insert" element={<FundsInsert />} />
+          <Route path="edit" element={<FundsEdit />} />
+        </Route>
+        <Route path="movements" element={<Movements />} />
+        <Route path="customers">
+          <Route index element={<Customers />} />
+          <Route path="insert" element={<CustomerInsert />} />
+          <Route path="edit" element={<CustomerEdit />} />
+        </Route>
+        <Route path="income">
+          <Route index element={<Income />} />
+          <Route path="insert" element={<IncomeInsert />} />
+        </Route>
+        <Route path="withdraw">
+          <Route index element={<Withdraw />} />
+          <Route path="insert" element={<WithdrawInsert />} />
+        </Route>
+        <Route path="readjustments">
+          <Route index element={<Readjustments />} />
+          <Route path="insert" element={<ReadjustmentsInsert />} />
+        </Route>
+        <Route path="comparative-values">
+          <Route index element={<ComparativeValues />} />
+          <Route path="insert" element={<ComparativeValuesInsert />} />
+          <Route path="edit" element={<ComparativeValuesEdit />} />
+        </Route>
+        <Route path="calculated-interest">
+          <Route index element={<CalculedInterest />} />
+          <Route path="insert" element={<CalculedInterestInsert />} />
+          <Route path="edit" element={<CalculedInterestEdit />} />
+        </Route>
+        <Route path="contributions">
+          <Route index element={<Contribuitions />} />
+          <Route path="insert" element={<ContribuitionInsert />} />
         </Route>
       </Route>
       <Route path="login" element={<Login />} />
