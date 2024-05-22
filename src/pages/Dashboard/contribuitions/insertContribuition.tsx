@@ -51,7 +51,7 @@ export const ContribuitionInsert = () => {
         </div>
         <div className="w-full flex justify-end mt-8">
           <Button className="bg-GOLD_MAIN w-full md:w-auto">
-            Adicionar Rendimento
+            Adicionar Aporte
           </Button>
         </div>
       </form>

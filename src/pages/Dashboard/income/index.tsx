@@ -34,7 +34,7 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
   },
 ];
 
-const TABLE_HEAD = ["#", "value", "Valor", "Data de criação"];
+const TABLE_HEAD = ["#", "Fundo", "Valor", "Data de criação"];
 
 export const Income = () => {
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ export const Income = () => {
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
             <div className="w-full md:w-72">
               <Input
-                label="Search"
+                label="Nome do fundo"
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               />
             </div>
@@ -129,7 +129,6 @@ export const Income = () => {
                           <CurrencyRow currency={currency} value={value} />
                         </div>
                       </td>
-
 
                       <td className={classes}>
                         <Typography

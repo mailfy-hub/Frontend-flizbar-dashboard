@@ -1,7 +1,6 @@
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
-  MagnifyingGlassIcon,
 } from "@heroicons/react/16/solid";
 import {
   Button,
@@ -9,7 +8,6 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
-  Input,
   Typography,
 } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
@@ -78,10 +76,10 @@ export const Quotes = () => {
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
             <div className="w-full md:w-72">
-              <Input
+              {/* <Input
                 label="Search"
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              />
+              /> */}
             </div>
             <Button
               onClick={() => {

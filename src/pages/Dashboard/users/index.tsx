@@ -10,12 +10,17 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  DialogHeader,
   IconButton,
   Tooltip,
   Typography,
 } from "@material-tailwind/react";
-import { SectionTitle } from "../../../components/sectionTitle";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { SectionTitle } from "../../../components/sectionTitle";
 
 const TABLE_ROW = [
   {
@@ -29,12 +34,40 @@ const TABLE_ROW = [
 const TABLE_HEAD = ["ID", "Nome", "Endereço de e-mail", "Data de criação", " "];
 
 export const Users = () => {
+
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate("insert");
   };
+  const handleEdit = () => {
+    navigate("edit");
+  };
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(!open);
   return (
     <div>
+      <Dialog size="xs" open={open} handler={handleOpen}>
+        <DialogHeader>
+          Tem certeza que deseja <br /> deletar este registro?
+        </DialogHeader>
+        <DialogBody>
+          Essa ação é irreversível, tome cuidado ao prosseguir.
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="red"
+            onClick={handleOpen}
+            className="mr-1"
+          >
+            <span>Cancelar</span>
+          </Button>
+          <Button variant="gradient" color="red" onClick={handleOpen}>
+            <span>Confirmar</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
       <SectionTitle text="Todos usuários" />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
@@ -141,12 +174,12 @@ export const Users = () => {
                     </td>
                     <td className="flex items-center justify-end text-right p-4 border-b border-gray-300 gap-2">
                       <Tooltip content="Editar usuário">
-                        <IconButton variant="text">
+                        <IconButton onClick={handleEdit} variant="text">
                           <PencilIcon className="w-4 h-4 text-gray-400" />
                         </IconButton>
                       </Tooltip>
                       <Tooltip content="Deletar usuário">
-                        <IconButton variant="text">
+                        <IconButton onClick={handleOpen} variant="text">
                           <TrashIcon className="w-4 h-4 text-gray-400" />
                         </IconButton>
                       </Tooltip>

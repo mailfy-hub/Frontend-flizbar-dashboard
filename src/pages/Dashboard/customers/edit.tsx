@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 
-export const CustomerInsert = () => {
+export const CustomerEdit = () => {
   const navigate = useNavigate();
 
   const handleNavigateBack = () => {
@@ -26,7 +26,7 @@ export const CustomerInsert = () => {
             className="text-GRAY_400 hover:text-GOLD_DARK transition-all"
           />
         </button>
-        <SectionTitle text="Preencha o formulário de inclusão" />
+        <SectionTitle text="Dados do cliente" />
       </div>
       <form className="mt-12">
         <div className="bg-WHITE p-8 w-full rounded-md">
@@ -194,7 +194,7 @@ export const CustomerInsert = () => {
         </div>
         <div className="w-full flex justify-end mt-8">
           <Button className="bg-GOLD_MAIN w-full md:w-auto">
-            Adicionar cliente
+            Atualizar dados
           </Button>
         </div>
       </form>

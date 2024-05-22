@@ -86,7 +86,7 @@ export const Contribuitions = () => {
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
             <div className="w-full md:w-72">
               <Input
-                label="Search"
+                label="Nome do cliente"
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               />
             </div>

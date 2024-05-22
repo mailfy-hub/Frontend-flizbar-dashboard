@@ -1,10 +1,4 @@
-import {
-  ChevronDownIcon,
-  Cog6ToothIcon,
-  InboxArrowDownIcon,
-  LifebuoyIcon,
-  UserCircleIcon,
-} from "@heroicons/react/16/solid";
+import { ChevronDownIcon, UserCircleIcon } from "@heroicons/react/16/solid";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import {
   Avatar,
@@ -22,10 +16,10 @@ import { RoutesMapped } from "../../utils/route-config";
 
 const profileMenuItems = [
   {
-    label: "My Profile",
+    label: "Meu perfil",
     icon: UserCircleIcon,
   },
-  {
+  /*   {
     label: "Edit Profile",
     icon: Cog6ToothIcon,
   },
@@ -36,7 +30,7 @@ const profileMenuItems = [
   {
     label: "Help",
     icon: LifebuoyIcon,
-  },
+  }, */
 ];
 
 export interface ActiveRouteProps {
@@ -83,7 +77,6 @@ export const Header = () => {
               duration: 0.45,
               delay: 0,
             }}
-
             className="flex items-center gap-2"
           >
             <Icon color={"#0C0B0A"} icon={activeRoute.icon} />

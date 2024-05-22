@@ -4,7 +4,7 @@ import { Button, Input, Select } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 
-export const FundsInsert = () => {
+export const CalculedInterestEdit = () => {
   const navigate = useNavigate();
 
   const handleNavigateBack = () => {
@@ -19,30 +19,26 @@ export const FundsInsert = () => {
             className="text-GRAY_400 hover:text-GOLD_DARK transition-all"
           />
         </button>
-        <SectionTitle text="Preencha o formulário de inclusão" />
+        <SectionTitle text="Dados do cálculo" />
       </div>
       <form className="mt-12">
         <div className="bg-WHITE p-8 w-full rounded-md">
           <div className="flex items-center gap-4">
-            <Icon
-              height={16}
-              icon={"heroicons:currency-dollar"}
-              color="#0C0B0A"
-            />
-            <SectionTitle size="sm" text="Fundo" />
+            <Icon height={16} icon={"heroicons:circle-stack"} color="#0C0B0A" />
+            <SectionTitle size="sm" text="Juros" />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
-              <Input type="text" label="Nome" />
-              <Select label="Moeda">
+              <Select label="Fundo de origem">
                 <option value=""></option>
               </Select>
+              <Input type="number" label="Valor da readequação" />
             </div>
           </div>
         </div>
         <div className="w-full flex justify-end mt-8">
           <Button className="bg-GOLD_MAIN w-full md:w-auto">
-            Adicionar Fundo
+            Atualizar dados
           </Button>
         </div>
       </form>

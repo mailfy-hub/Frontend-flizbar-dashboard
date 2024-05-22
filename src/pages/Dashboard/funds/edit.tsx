@@ -4,12 +4,13 @@ import { Button, Input, Select } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 
-export const FundsInsert = () => {
+export const FundsEdit = () => {
   const navigate = useNavigate();
 
   const handleNavigateBack = () => {
     navigate(-1);
   };
+
   return (
     <div>
       <div className="flex items-center gap-4">
@@ -19,7 +20,7 @@ export const FundsInsert = () => {
             className="text-GRAY_400 hover:text-GOLD_DARK transition-all"
           />
         </button>
-        <SectionTitle text="Preencha o formulário de inclusão" />
+        <SectionTitle text="Dados do fundo" />
       </div>
       <form className="mt-12">
         <div className="bg-WHITE p-8 w-full rounded-md">
@@ -42,7 +43,7 @@ export const FundsInsert = () => {
         </div>
         <div className="w-full flex justify-end mt-8">
           <Button className="bg-GOLD_MAIN w-full md:w-auto">
-            Adicionar Fundo
+            Atualizar dados
           </Button>
         </div>
       </form>
