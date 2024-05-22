@@ -1,20 +1,33 @@
 import { Button, Input, Typography } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { FormEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { SideImageAuthorization } from "../../../components/sideImageAuthorization";
+import { useAuth } from "../../../hook/auth";
 
 export function Login() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const handleLogin = (e: FormEvent) => {
+    e.preventDefault();
+    login({
+      email: "marlon@mailfy.com",
+      password: "marlon123",
+    });
+    navigate("/");
+  };
+
   return (
     <div className="h-screen w-full flex bg-WHITE">
       <SideImageAuthorization />
       <div className="w-full h-full flex justify-center items-center">
-        <form className="p-6 bg-white rounded-md">
+        <form onSubmit={handleLogin} className="p-6 bg-white rounded-md">
           <Typography variant="h4" color="blue-gray">
             Entre na sua conta
           </Typography>
           <Typography color="gray" className="mt-1 font-normal">
             Que bom te ver denovo, faça seu login.
           </Typography>
-          <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+          <div className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
             <div className="mb-1 flex flex-col gap-6">
               <Typography variant="h6" color="blue-gray" className="-mb-3">
                 Seu e-mail
@@ -42,7 +55,7 @@ export function Login() {
               />
             </div>
 
-            <Button className="mt-6 bg-GOLD_MAIN" fullWidth>
+            <Button className="mt-6 bg-GOLD_MAIN" fullWidth type="submit">
               Entrar
             </Button>
             <Typography color="gray" className="mt-4 text-center font-normal">
@@ -51,7 +64,7 @@ export function Login() {
                 Cadastrar
               </Link>
             </Typography>
-          </form>
+          </div>
         </form>
       </div>
     </div>
