@@ -1,5 +1,7 @@
 import { Route, Routes as RoutesRRD } from "react-router-dom";
+import { RecoveryAccount } from "../pages/Auth/RecoveryAccount";
 import { Login } from "../pages/Auth/login";
+import { SignUp } from "../pages/Auth/signUp";
 import { CalculedInterest } from "../pages/Dashboard/calculatedInterest";
 import { CalculedInterestInsert } from "../pages/Dashboard/calculatedInterest/insert";
 import { ComparativeValues } from "../pages/Dashboard/comparativeValues";
@@ -20,11 +22,11 @@ import { QuotesInsert } from "../pages/Dashboard/quotes/insert";
 import { Readjustments } from "../pages/Dashboard/readjustments";
 import { ReadjustmentsInsert } from "../pages/Dashboard/readjustments/insert";
 import { Users } from "../pages/Dashboard/users";
+import { UserInsert } from "../pages/Dashboard/users/insert";
 import { Wallets } from "../pages/Dashboard/wallets";
 import { WalletInsert } from "../pages/Dashboard/wallets/insert";
 import { Withdraw } from "../pages/Dashboard/withdraw";
 import { WithdrawInsert } from "../pages/Dashboard/withdraw/insert";
-import { UserInsert } from "../pages/Dashboard/users/insert";
 
 export const Routes = () => {
   return (
@@ -78,6 +80,8 @@ export const Routes = () => {
         </Route>
       </Route>
       <Route path="login" element={<Login />} />
+      <Route path="register" element={<SignUp />} />
+      <Route path="recovery" element={<RecoveryAccount />} />
     </RoutesRRD>
   );
 };

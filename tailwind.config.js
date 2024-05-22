@@ -44,7 +44,7 @@ module.exports = withMT({
         head64: "4rem",
       },
       backgroundImage: {
-        "auth-side-image": "url('./src/assets/side_image_auth.png')",
+        "auth-side-image": "url('../src/assets/side_image_auth.png')",
       },
     },
   },

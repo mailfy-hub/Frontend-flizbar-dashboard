@@ -1,9 +1,10 @@
 import { Button, Input, Typography } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 import { SideImageAuthorization } from "../../../components/sideImageAuthorization";
 
 export function Login() {
   return (
-    <div className="h-screen w-full flex bg-GRAY_100">
+    <div className="h-screen w-full flex bg-WHITE">
       <SideImageAuthorization />
       <div className="w-full h-full flex justify-center items-center">
         <form className="p-6 bg-white rounded-md">
@@ -46,9 +47,9 @@ export function Login() {
             </Button>
             <Typography color="gray" className="mt-4 text-center font-normal">
               Ainda não tem uma conta?{" "}
-              <a href="#" className="font-medium text-gray-900">
+              <Link to="/register" className="font-medium text-gray-900">
                 Cadastrar
-              </a>
+              </Link>
             </Typography>
           </form>
         </form>
