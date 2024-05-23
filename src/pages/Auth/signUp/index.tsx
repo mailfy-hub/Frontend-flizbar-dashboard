@@ -1,11 +1,14 @@
 import { Button, Input, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+import { HeaderMobile } from "../../../components/headerMobile";
 import { SideImageAuthorization } from "../../../components/sideImageAuthorization";
 
 export function SignUp() {
   return (
-    <div className="h-screen w-full flex bg-white">
+    <div className="h-screen w-full md:flex bg-white">
       <SideImageAuthorization />
+      <HeaderMobile />
+
       <div className="w-full h-full flex justify-center items-center">
         <form className=" bg-white rounded-md">
           <Typography variant="h4" color="blue-gray">

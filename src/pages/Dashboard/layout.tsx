@@ -16,12 +16,16 @@ export const Layout = () => {
   );
 
   const getPageInfo = (route: string) => {
-    const foundRoute = routesMapped.filter((r) =>
-      route.startsWith(r.path)
-    ).sort((a, b) => b.path.length - a.path.length)[0];
+    const foundRoute = routesMapped
+      .filter((r) => route.startsWith(r.path))
+      .sort((a, b) => b.path.length - a.path.length)[0];
 
     if (foundRoute) {
-      setActiveRoute({ name: foundRoute.name, icon: foundRoute.icon });
+      setActiveRoute({
+        name: foundRoute.name,
+        icon: foundRoute.icon,
+        path: foundRoute.path,
+      });
     } else {
       setActiveRoute(null);
     }
@@ -56,7 +60,7 @@ export const Layout = () => {
               type: "ease",
               duration: 0.45,
             }}
-            className="p-12 w-full h-auto"
+            className="px-4 py-12 md:p-12 w-full h-auto"
           >
             <Outlet />
           </motion.div>
