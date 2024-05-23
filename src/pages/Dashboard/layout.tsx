@@ -4,7 +4,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { ActiveRouteProps, Header } from "../../components/header";
 import {} from "../../components/lineChart";
 import { SidebarLayout } from "../../components/sidebar";
-import { RoutesMapped } from "../../utils/route-config";
+import { routesMapped } from "../../utils/route-config";
 import { Loading } from "../Utils/loading";
 
 export const Layout = () => {
@@ -16,9 +16,9 @@ export const Layout = () => {
   );
 
   const getPageInfo = (route: string) => {
-    const foundRoute = RoutesMapped.filter((r) =>
-      route.startsWith(r.route)
-    ).sort((a, b) => b.route.length - a.route.length)[0];
+    const foundRoute = routesMapped.filter((r) =>
+      route.startsWith(r.path)
+    ).sort((a, b) => b.path.length - a.path.length)[0];
 
     if (foundRoute) {
       setActiveRoute({ name: foundRoute.name, icon: foundRoute.icon });

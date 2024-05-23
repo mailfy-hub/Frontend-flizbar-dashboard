@@ -89,7 +89,7 @@ export const Funds = () => {
           className="rounded-none flex flex-wrap gap-4 justify-between mb-4 p-2"
         >
           <div>
-            <Typography variant="h6" color="#0C0B0A">
+            <Typography variant="h6" color="black">
               Tabela de fundos
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
@@ -169,7 +169,7 @@ export const Funds = () => {
                       <div>
                         <Typography
                           variant="small"
-                          color="#757575"
+                          color="black"
                           className="!font-normal"
                         >
                           {currency}

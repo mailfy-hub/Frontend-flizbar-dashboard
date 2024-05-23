@@ -27,7 +27,7 @@ export const FundsInsert = () => {
             <Icon
               height={16}
               icon={"heroicons:currency-dollar"}
-              color="#0C0B0A"
+              color="black"
             />
             <SectionTitle size="sm" text="Fundo" />
           </div>

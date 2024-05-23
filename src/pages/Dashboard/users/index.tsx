@@ -34,7 +34,6 @@ const TABLE_ROW = [
 const TABLE_HEAD = ["ID", "Nome", "Endereço de e-mail", "Data de criação", " "];
 
 export const Users = () => {
-
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate("insert");
@@ -76,7 +75,7 @@ export const Users = () => {
           className="rounded-none flex flex-wrap gap-4 justify-between mb-4 p-2"
         >
           <div>
-            <Typography variant="h6" color="#0C0B0A">
+            <Typography variant="h6" color="black">
               Tabela de usuários
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
@@ -156,7 +155,7 @@ export const Users = () => {
                       <div>
                         <Typography
                           variant="small"
-                          color="#757575"
+                          color="black"
                           className="!font-normal"
                         >
                           {email_address}

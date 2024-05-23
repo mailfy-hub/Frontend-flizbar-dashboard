@@ -37,7 +37,7 @@ import { WithdrawInsert } from "../pages/Dashboard/withdraw/insert";
 export const Routes = () => {
   return (
     <RoutesRRD>
-      <Route path="/" element={<Layout />}>
+      <Route path="/"  element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="users">
           <Route index element={<Users />} />

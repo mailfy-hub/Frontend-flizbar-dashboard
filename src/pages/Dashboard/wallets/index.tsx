@@ -77,7 +77,7 @@ export const Wallets = () => {
           className="rounded-none flex flex-wrap gap-4 justify-between mb-4 p-2"
         >
           <div>
-            <Typography variant="h6" color="#0C0B0A">
+            <Typography variant="h6" color="black">
               Tabela de carteiras
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">

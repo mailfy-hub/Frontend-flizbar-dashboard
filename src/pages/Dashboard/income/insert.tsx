@@ -27,7 +27,7 @@ export const IncomeInsert = () => {
             <Icon
               height={16}
               icon={"heroicons:arrow-trending-up-20-solid"}
-              color="#0C0B0A"
+              color="black"
             />
             <SectionTitle size="sm" text="Rendimento" />
           </div>

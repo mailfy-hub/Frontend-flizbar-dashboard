@@ -1,4 +1,4 @@
-import { Routes } from "./routes";
+import { Routes } from "./routes/mock";
 
 export function App() {
   return <Routes />;

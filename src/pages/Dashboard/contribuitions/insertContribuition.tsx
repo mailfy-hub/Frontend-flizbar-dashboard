@@ -24,11 +24,7 @@ export const ContribuitionInsert = () => {
       <form className="mt-12">
         <div className="bg-WHITE p-8 w-full rounded-md">
           <div className="flex items-center gap-4">
-            <Icon
-              height={16}
-              icon={"radix-icons:dashboard"}
-              color="#0C0B0A"
-            />
+            <Icon height={16} icon={"radix-icons:dashboard"} color="black" />
             <SectionTitle size="sm" text="Aporte" />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">

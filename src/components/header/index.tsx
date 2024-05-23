@@ -12,7 +12,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { RoutesMapped } from "../../utils/route-config";
+import { routesMapped } from "../../utils/route-config";
 
 const profileMenuItems = [
   {
@@ -49,9 +49,9 @@ export const Header = () => {
   );
 
   const getPageInfo = (route: string) => {
-    const foundRoute = RoutesMapped.filter((r) =>
-      route.startsWith(r.route)
-    ).sort((a, b) => b.route.length - a.route.length)[0];
+    const foundRoute = routesMapped.filter((r) =>
+      route.startsWith(r.path)
+    ).sort((a, b) => b.path.length - a.path.length)[0];
 
     if (foundRoute) {
       setActiveRoute({ name: foundRoute.name, icon: foundRoute.icon });
