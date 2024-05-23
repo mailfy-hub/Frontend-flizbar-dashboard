@@ -1,9 +1,4 @@
-import {
-  Bars4Icon,
-  ChevronDownIcon,
-  UserCircleIcon,
-  XMarkIcon,
-} from "@heroicons/react/16/solid";
+import { ChevronDownIcon, UserCircleIcon } from "@heroicons/react/16/solid";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import {
   Avatar,
@@ -197,9 +192,13 @@ export const Header = () => {
             className="grid place-content-center"
           >
             {isMobMenuOpen ? (
-              <XMarkIcon height={18} color="white" />
+              <Icon
+                height={18}
+                color="#ffffff"
+                icon={"heroicons:x-mark-16-solid"}
+              />
             ) : (
-              <Bars4Icon height={18} color="white" />
+              <Icon height={18} color="#ffffff" icon={"heroicons:bars-3"} />
             )}
           </button>
           {isMobMenuOpen && (
