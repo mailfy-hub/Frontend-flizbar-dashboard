@@ -1,6 +1,7 @@
 import { Button, Option, Select, Typography } from "@material-tailwind/react";
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { HeaderMobile } from "../../../components/headerMobile";
 import { SideImageAuthorization } from "../../../components/sideImageAuthorization";
 import { useAuth } from "../../../hook/auth";
 
@@ -29,8 +30,10 @@ export function Login() {
   };
 
   return (
-    <div className="h-screen w-full flex bg-WHITE">
+    <div className="h-screen w-full md:flex bg-WHITE">
       <SideImageAuthorization />
+      <HeaderMobile />
+
       <div className="w-full h-full flex justify-center items-center">
         <form onSubmit={handleLogin} className="p-6 bg-white rounded-md">
           <Typography variant="h4" color="blue-gray">

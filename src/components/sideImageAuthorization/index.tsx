@@ -1,9 +1,10 @@
 import { ChevronLeftIcon } from "@heroicons/react/16/solid";
-import { Logo } from "../../components/logo/index";
+import { Logo } from "../logo";
 
 export const SideImageAuthorization = () => {
   return (
-      <div className="p-12 flex flex-col justify-between h-screen w-full max-w-[560px] bg-auth-side-image">
+    <>
+      <div className="hidden md:flex p-12 flex-col justify-between h-screen w-full max-w-[560px] bg-auth-side-image ">
         <div className="flex items-center justify-between">
           <Logo />
           <div className="flex items-center gap-1">
@@ -19,5 +20,6 @@ export const SideImageAuthorization = () => {
           </h3>
         </div>
       </div>
+    </>
   );
 };
