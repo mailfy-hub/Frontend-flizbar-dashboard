@@ -7,6 +7,9 @@ import {
 import { SectionTitle } from "../../../components/sectionTitle";
 
 import { Props } from "react-apexcharts";
+import { useAuth } from "../../../hook/auth";
+
+import ImageHeroAdmin from "../../../assets/admin-banner-image.png";
 
 const ChartRendimentosData: Props = {
   type: "line",
@@ -79,32 +82,53 @@ const ChartRendimentosPercentualData: Props = {
   },
 };
 export const Home = () => {
+  const { getUserRole, userData } = useAuth();
+  const userRole = getUserRole();
   return (
     <>
-      <div>
-        <SectionTitle text="Sua carteira" />
-        <div className="flex flex-col md:flex-row items-center gap-8 mt-8">
-          <div className="md:max-w-[332px] w-full bg-GOLD_DARK h-[124px] rounded-lg p-6 flex flex-col justify-between">
-            <p className="font-display font-medium text-WHITE text-body16 leading-tight">
-              Valor Total Aproximado
-            </p>
-            <div className="flex items-center gap-2">
-              <span className="font-display font-normal text-WHITE text-head32 leading-tight">
-                R$
-              </span>
-              <span className="font-display font-normal text-WHITE text-head32 leading-tight">
-                588,21
-              </span>
+      {userRole === "user" ? (
+        <div>
+          <SectionTitle text="Sua carteira" />
+          <div className="flex flex-col md:flex-row items-center gap-8 mt-8">
+            <div className="md:max-w-[332px] w-full bg-GOLD_DARK h-[124px] rounded-lg p-6 flex flex-col justify-between">
+              <p className="font-display font-medium text-WHITE text-body16 leading-tight">
+                Valor Total Aproximado
+              </p>
+              <div className="flex items-center gap-2">
+                <span className="font-display font-normal text-WHITE text-head32 leading-tight">
+                  R$
+                </span>
+                <span className="font-display font-normal text-WHITE text-head32 leading-tight">
+                  588,21
+                </span>
+              </div>
+            </div>
+            <div className="w-full grid md:grid-cols-4 gap-8">
+              <CurrencyCard Name="Dólar" Symbol="$" Value={81.63} />
+              <CurrencyCard Name="Euro" Symbol="€" Value={0.0} />
+              <CurrencyCard Name="Real" Symbol="R$" Value={175.98} />
+              <CurrencyCard Name="Iene" Symbol="¥" Value={0.0} />
             </div>
           </div>
-          <div className="w-full grid md:grid-cols-4 gap-8">
-            <CurrencyCard Name="Dólar" Symbol="$" Value={81.63} />
-            <CurrencyCard Name="Euro" Symbol="€" Value={0.0} />
-            <CurrencyCard Name="Real" Symbol="R$" Value={175.98} />
-            <CurrencyCard Name="Iene" Symbol="¥" Value={0.0} />
+        </div>
+      ) : (
+        <div className="w-full h-[248px] bg-GRAY_800 rounded-md p-8 flex items-center justify-between">
+          <div className="h-full w-full flex flex-col justify-center">
+            <span className="font-body font-normal uppercase text-GOLD_DARK text-sm14">
+              PAINEL DO <b>ADMISTRADOR</b>
+            </span>
+            <h1 className="font-display font-normal text-white text-head32 mt-2">
+              Bem-vindo <b>{userData?.name.split(" ")[0]}</b>
+            </h1>
+            <p className="font-body font-normal text-GRAY_500 text-body18 mt-2">
+              Que bom ter você devolta, o que faremos hoje?
+            </p>
+          </div>
+          <div>
+            <img alt="logo flizbar" src={ImageHeroAdmin} />
           </div>
         </div>
-      </div>
+      )}
       <div className="mt-12">
         <SectionTitle text="Acesso Rápido" />
         <div className="w-full mt-8 grid md:grid-cols-4 gap-8">
@@ -130,88 +154,91 @@ export const Home = () => {
           />
         </div>
       </div>
-
-      <div className="mt-12">
-        <SectionTitle text="Visualização Gráfica" />
-        <div className="grid md:grid-cols-2 gap-8 mt-8">
-          {/*                 <Chart {...ChartRendimentosData} />
-           */}{" "}
-          <DefaultLineChart
-            chartProps={ChartRendimentosData}
-            chartTitle="T-Bond Brazil"
-            chartSubtitle="Evolução Patrimonial"
-          />
-          <DefaultLineChart
-            chartProps={ChartRendimentosPercentualData}
-            chartTitle="T-Bond Brazil"
-            chartSubtitle="Percentual de Rendimentos"
-          />
+      {userRole === "user" && (
+        <div>
+          <div className="mt-12">
+            <SectionTitle text="Visualização Gráfica" />
+            <div className="grid md:grid-cols-2 gap-8 mt-8">
+              {/*                 <Chart {...ChartRendimentosData} />
+               */}{" "}
+              <DefaultLineChart
+                chartProps={ChartRendimentosData}
+                chartTitle="T-Bond Brazil"
+                chartSubtitle="Evolução Patrimonial"
+              />
+              <DefaultLineChart
+                chartProps={ChartRendimentosPercentualData}
+                chartTitle="T-Bond Brazil"
+                chartSubtitle="Percentual de Rendimentos"
+              />
+            </div>
+          </div>
+          <div className="mt-12">
+            <div className="grid md:grid-cols-2 gap-8 mt-8">
+              {/*                 <Chart {...ChartRendimentosData} />
+               */}{" "}
+              <DefaultLineChart
+                chartProps={ChartRendimentosData}
+                chartTitle="T-Bond USA"
+                chartSubtitle="Evolução Patrimonial"
+              />
+              <DefaultLineChart
+                chartProps={ChartRendimentosPercentualData}
+                chartTitle="T-Bond USA"
+                chartSubtitle="Percentual de Rendimentos"
+              />
+            </div>
+          </div>
+          <div className="mt-12">
+            <div className="grid md:grid-cols-2 gap-8 mt-8">
+              {/*                 <Chart {...ChartRendimentosData} />
+               */}{" "}
+              <DefaultLineChart
+                chartProps={ChartRendimentosData}
+                chartTitle="Baixo Risco"
+                chartSubtitle="Evolução Patrimonial"
+              />
+              <DefaultLineChart
+                chartProps={ChartRendimentosPercentualData}
+                chartTitle="Baixo Risco"
+                chartSubtitle="Percentual de Rendimentos"
+              />
+            </div>
+          </div>
+          <div className="mt-12">
+            <div className="grid md:grid-cols-2 gap-8 mt-8">
+              {/*                 <Chart {...ChartRendimentosData} />
+               */}{" "}
+              <DefaultLineChart
+                chartProps={ChartRendimentosData}
+                chartTitle="Alto Risco"
+                chartSubtitle="Evolução Patrimonial"
+              />
+              <DefaultLineChart
+                chartProps={ChartRendimentosPercentualData}
+                chartTitle="Alto Risco"
+                chartSubtitle="Percentual de Rendimentos"
+              />
+            </div>
+          </div>
+          <div className="mt-12">
+            <div className="grid md:grid-cols-2 gap-8 mt-8">
+              {/*                 <Chart {...ChartRendimentosData} />
+               */}{" "}
+              <DefaultLineChart
+                chartProps={ChartRendimentosData}
+                chartTitle="Total"
+                chartSubtitle="Evolução Patrimonial"
+              />
+              <DefaultLineChart
+                chartProps={ChartRendimentosPercentualData}
+                chartTitle="Total"
+                chartSubtitle="Percentual de Rendimentos"
+              />
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="mt-12">
-        <div className="grid md:grid-cols-2 gap-8 mt-8">
-          {/*                 <Chart {...ChartRendimentosData} />
-           */}{" "}
-          <DefaultLineChart
-            chartProps={ChartRendimentosData}
-            chartTitle="T-Bond USA"
-            chartSubtitle="Evolução Patrimonial"
-          />
-          <DefaultLineChart
-            chartProps={ChartRendimentosPercentualData}
-            chartTitle="T-Bond USA"
-            chartSubtitle="Percentual de Rendimentos"
-          />
-        </div>
-      </div>
-      <div className="mt-12">
-        <div className="grid md:grid-cols-2 gap-8 mt-8">
-          {/*                 <Chart {...ChartRendimentosData} />
-           */}{" "}
-          <DefaultLineChart
-            chartProps={ChartRendimentosData}
-            chartTitle="Baixo Risco"
-            chartSubtitle="Evolução Patrimonial"
-          />
-          <DefaultLineChart
-            chartProps={ChartRendimentosPercentualData}
-            chartTitle="Baixo Risco"
-            chartSubtitle="Percentual de Rendimentos"
-          />
-        </div>
-      </div>
-      <div className="mt-12">
-        <div className="grid md:grid-cols-2 gap-8 mt-8">
-          {/*                 <Chart {...ChartRendimentosData} />
-           */}{" "}
-          <DefaultLineChart
-            chartProps={ChartRendimentosData}
-            chartTitle="Alto Risco"
-            chartSubtitle="Evolução Patrimonial"
-          />
-          <DefaultLineChart
-            chartProps={ChartRendimentosPercentualData}
-            chartTitle="Alto Risco"
-            chartSubtitle="Percentual de Rendimentos"
-          />
-        </div>
-      </div>
-      <div className="mt-12">
-        <div className="grid md:grid-cols-2 gap-8 mt-8">
-          {/*                 <Chart {...ChartRendimentosData} />
-           */}{" "}
-          <DefaultLineChart
-            chartProps={ChartRendimentosData}
-            chartTitle="Total"
-            chartSubtitle="Evolução Patrimonial"
-          />
-          <DefaultLineChart
-            chartProps={ChartRendimentosPercentualData}
-            chartTitle="Total"
-            chartSubtitle="Percentual de Rendimentos"
-          />
-        </div>
-      </div>
+      )}
     </>
   );
 };

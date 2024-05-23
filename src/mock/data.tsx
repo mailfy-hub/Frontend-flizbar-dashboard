@@ -8,7 +8,7 @@ export const usersMock: User[] = [
     role: "user",
   },
   {
-    name: "ADM. Marlon Lencina",
+    name: "Marlon Lencina",
     email: "admin@flibzar.com",
     password: "admin",
     role: "admin",

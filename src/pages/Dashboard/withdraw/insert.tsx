@@ -27,7 +27,7 @@ export const WithdrawInsert = () => {
             <Icon
               height={16}
               icon={"heroicons:arrow-uturn-down"}
-              color="#0C0B0A"
+              color="black"
             />
             <SectionTitle size="sm" text="Resgate" />
           </div>

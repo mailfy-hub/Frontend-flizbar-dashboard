@@ -75,7 +75,7 @@ export const CalculedInterest = () => {
           className="rounded-none flex flex-wrap gap-4 justify-between mb-4 p-2"
         >
           <div>
-            <Typography variant="h6" color="#0C0B0A">
+            <Typography variant="h6" color="black">
               Tabela de Juros para calculadora
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
@@ -155,7 +155,7 @@ export const CalculedInterest = () => {
                       <div>
                         <Typography
                           variant="small"
-                          color="#757575"
+                          color="black"
                           className="!font-normal"
                         >
                           {value}

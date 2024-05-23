@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../../hook/auth";
-import { RoutesMapped } from "../../utils/route-config";
+import { routesMapped } from "../../utils/route-config";
 import { Logo } from "../logo";
 import { PageButton } from "./PageButton";
 
@@ -39,7 +39,7 @@ export const SidebarLayout = () => {
         </div>
         <div className="flex-1 flex flex-col justify-between">
           <nav className="h-auto pt-5 overflow-auto">
-            {RoutesMapped.map((route) => {
+            {routesMapped.map((route) => {
               if (userData) {
                 if (
                   route.roleAccess.includes(userData?.role) ||
@@ -47,11 +47,11 @@ export const SidebarLayout = () => {
                 ) {
                   return (
                     <PageButton
-                      key={route.route}
+                      key={route.path}
                       pageName={route.name}
                       icon={route.icon}
-                      isActive={route.route === activeRoute}
-                      link={route.route}
+                      isActive={route.path === activeRoute}
+                      link={route.path}
                     />
                   );
                 }

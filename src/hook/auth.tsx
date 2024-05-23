@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { usersMock } from "../mock/data";
 
 export type roleAccessType = "all" | "user" | "admin";
@@ -8,6 +8,8 @@ interface AuthContextProps {
   userData: User | null;
   login: (credentials: loginProps) => void;
   logout: () => void;
+  isLoadingData: boolean;
+  getUserRole: () => roleAccessType;
 }
 
 const AuthContext = createContext({} as AuthContextProps);
@@ -28,7 +30,10 @@ type Props = {
   children?: React.ReactNode;
 };
 
+const LOCAL_STORAGE_KEY = "flizbar-storage-data";
+
 export const AuthContextProvider = ({ children }: Props) => {
+  const [isLoadingData, setIsLoadingData] = useState(false);
   const [userData, setUserData] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -45,16 +50,61 @@ export const AuthContextProvider = ({ children }: Props) => {
       console.log(userExist);
       setIsAuthenticated(true);
       setUserData(userExist);
+
+      saveToLocalStorage({
+        userData: userExist,
+      });
     }
   };
 
   const logout = () => {
     setIsAuthenticated(false);
     setUserData(null);
+    removeFromLocalStorage();
   };
 
+  const saveToLocalStorage = (data: { userData: User }) => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+  };
+
+  const removeFromLocalStorage = () => {
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
+  };
+
+  const getUserRole = () => {
+    if (userData) {
+      return userData.role;
+    } else {
+      return "user";
+    }
+  };
+
+  const loadFromLocalStorage = () => {
+    setIsLoadingData(true);
+    const data = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (data) {
+      const parsedData = JSON.parse(data);
+      setUserData(parsedData.userData);
+      setIsAuthenticated(true);
+    }
+    setIsLoadingData(false);
+  };
+
+  useEffect(() => {
+    loadFromLocalStorage();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, userData, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        userData,
+        login,
+        logout,
+        isLoadingData,
+        getUserRole,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

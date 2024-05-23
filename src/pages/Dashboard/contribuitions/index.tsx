@@ -35,7 +35,7 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
     currency: "BRL",
   },
   {
-    code: "#TBR52536267",
+    code: "#TBR52536264",
     customer: "Emma Roberts",
     wallet: "T-BOND Brazil",
     value: 120.0,
@@ -43,7 +43,7 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
     currency: "USD",
   },
   {
-    code: "#TBR52536267",
+    code: "#TBR52536262",
     customer: "Emma Roberts",
     wallet: "T-BOND Brazil",
     value: 50.0,
@@ -60,7 +60,6 @@ const TABLE_HEAD = [
   "Data de criação",
 ];
 
-
 export const Contribuitions = () => {
   const navigate = useNavigate();
   const handleInsert = () => {
@@ -76,7 +75,7 @@ export const Contribuitions = () => {
           className="rounded-none flex flex-wrap gap-4 justify-between mb-4 p-2"
         >
           <div>
-            <Typography variant="h6" color="#0C0B0A">
+            <Typography variant="h6" color="black">
               Tabela de aportes
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
@@ -159,7 +158,7 @@ export const Contribuitions = () => {
                         <div>
                           <Typography
                             variant="small"
-                            color="#757575"
+                            color="black"
                             className="!font-normal"
                           >
                             {wallet}

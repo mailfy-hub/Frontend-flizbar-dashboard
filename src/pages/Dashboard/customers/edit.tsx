@@ -31,7 +31,7 @@ export const CustomerEdit = () => {
       <form className="mt-12">
         <div className="bg-WHITE p-8 w-full rounded-md">
           <div className="flex items-center gap-4">
-            <Icon height={16} icon={"heroicons:user"} color="#0C0B0A" />
+            <Icon height={16} icon={"heroicons:user"} color="black" />
             <SectionTitle size="sm" text="Dados de acesso" />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
@@ -42,7 +42,7 @@ export const CustomerEdit = () => {
         </div>
         <div className="bg-WHITE p-8 w-full rounded-md mt-8">
           <div className="flex items-center gap-4">
-            <Icon height={16} icon={"heroicons:user"} color="#0C0B0A" />
+            <Icon height={16} icon={"heroicons:user"} color="black" />
             <SectionTitle size="sm" text="Dados gerais" />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
@@ -90,7 +90,7 @@ export const CustomerEdit = () => {
         </div>
         <div className="bg-WHITE p-8 w-full rounded-md mt-8">
           <div className="flex items-center gap-4">
-            <Icon height={16} icon={"heroicons:map-pin"} color="#0C0B0A" />
+            <Icon height={16} icon={"heroicons:map-pin"} color="black" />
             <SectionTitle size="sm" text="Endereço" />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
@@ -119,7 +119,7 @@ export const CustomerEdit = () => {
         </div>
         <div className="bg-WHITE p-8 w-full rounded-md mt-8">
           <div className="flex items-center gap-4">
-            <Icon height={16} icon={"heroicons:user-circle"} color="#0C0B0A" />
+            <Icon height={16} icon={"heroicons:user-circle"} color="black" />
             <SectionTitle size="sm" text="Contato" />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
@@ -137,7 +137,7 @@ export const CustomerEdit = () => {
         </div>
         <div className="bg-WHITE p-8 w-full rounded-md mt-8">
           <div className="flex items-center gap-4">
-            <Icon height={16} icon={"heroicons:user"} color="#0C0B0A" />
+            <Icon height={16} icon={"heroicons:user"} color="black" />
             <SectionTitle size="sm" text="Dados complementares" />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
@@ -164,7 +164,7 @@ export const CustomerEdit = () => {
         </div>
         <div className="bg-WHITE p-8 w-full rounded-md mt-8">
           <div className="flex items-center gap-4">
-            <Icon height={16} icon={"heroicons:banknotes"} color="#0C0B0A" />
+            <Icon height={16} icon={"heroicons:banknotes"} color="black" />
             <SectionTitle size="sm" text="Dados bancários" />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">

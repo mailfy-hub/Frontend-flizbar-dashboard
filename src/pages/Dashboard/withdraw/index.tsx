@@ -52,7 +52,7 @@ export const Withdraw = () => {
           className="rounded-none flex flex-wrap gap-4 justify-between mb-4 p-2"
         >
           <div>
-            <Typography variant="h6" color="#0C0B0A">
+            <Typography variant="h6" color="black">
               Tabela de resgates
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
@@ -94,57 +94,55 @@ export const Withdraw = () => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROW.map(
-                ({ code, created_at, wallet, customer }) => {
-                  const classes = "!p-6 ";
-                  return (
-                    <tr key={code}>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="!font-semibold"
-                            >
-                              {code}
-                            </Typography>
-                          </div>
+              {TABLE_ROW.map(({ code, created_at, wallet, customer }) => {
+                const classes = "!p-6 ";
+                return (
+                  <tr key={code}>
+                    <td className={classes}>
+                      <div className="flex items-center gap-3">
+                        <div>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="!font-semibold"
+                          >
+                            {code}
+                          </Typography>
                         </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="!font-semibold"
-                            >
-                              {wallet}
-                            </Typography>
-                          </div>
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <div className="flex items-center gap-3">
+                        <div>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="!font-semibold"
+                          >
+                            {wallet}
+                          </Typography>
                         </div>
-                      </td>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          className="!font-normal text-gray-600"
-                        >
-                          {customer}
-                        </Typography>
-                      </td>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          className="!font-normal text-gray-600"
-                        >
-                          {created_at}
-                        </Typography>
-                      </td>
-                    </tr>
-                  );
-                }
-              )}
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        className="!font-normal text-gray-600"
+                      >
+                        {customer}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        className="!font-normal text-gray-600"
+                      >
+                        {created_at}
+                      </Typography>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </CardBody>

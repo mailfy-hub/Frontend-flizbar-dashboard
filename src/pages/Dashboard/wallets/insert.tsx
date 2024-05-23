@@ -24,7 +24,7 @@ export const WalletInsert = () => {
       <form className="mt-12">
         <div className="bg-WHITE p-8 w-full rounded-md">
           <div className="flex items-center gap-4">
-            <Icon height={16} icon={"heroicons:wallet"} color="#0C0B0A" />
+            <Icon height={16} icon={"heroicons:wallet"} color="black" />
             <SectionTitle size="sm" text="Carteira" />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
