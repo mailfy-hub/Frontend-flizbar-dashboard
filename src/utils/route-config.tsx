@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { roleAccessType } from "../hook/auth";
 import { CalculedInterest } from "../pages/Dashboard/calculatedInterest";
+import { Calculator } from "../pages/Dashboard/calculatedInterest/calculator";
 import { CalculedInterestEdit } from "../pages/Dashboard/calculatedInterest/edit";
 import { CalculedInterestInsert } from "../pages/Dashboard/calculatedInterest/insert";
 import { ComparativeValues } from "../pages/Dashboard/comparativeValues";
@@ -18,6 +19,7 @@ import { Home } from "../pages/Dashboard/home";
 import { Income } from "../pages/Dashboard/income";
 import { IncomeInsert } from "../pages/Dashboard/income/insert";
 import { Movements } from "../pages/Dashboard/movements";
+import { MyAccount } from "../pages/Dashboard/myAccount";
 import { Quotes } from "../pages/Dashboard/quotes";
 import { QuotesInsert } from "../pages/Dashboard/quotes/insert";
 import { Readjustments } from "../pages/Dashboard/readjustments";
@@ -43,6 +45,7 @@ export interface routeMapped {
   roleAccess: roleAccessType[];
   element: ReactNode;
   subRoutes: subRoutesMapped[] | [];
+  addToSidebar: boolean;
 }
 
 export const routesMapped: routeMapped[] = [
@@ -53,10 +56,23 @@ export const routesMapped: routeMapped[] = [
     icon: "radix-icons:dashboard",
     roleAccess: ["all"],
     subRoutes: [],
+    addToSidebar: true,
+  },
+
+  {
+    path: "/my-account",
+    element: <MyAccount />,
+    name: "Minha conta",
+    icon: "radix-icons:dashboard",
+    roleAccess: ["all"],
+    subRoutes: [],
+    addToSidebar: false,
   },
   {
     path: "/users",
     element: <Users />,
+    addToSidebar: true,
+
     name: "Usuários",
     icon: "heroicons:users",
     roleAccess: ["admin"],
@@ -76,6 +92,8 @@ export const routesMapped: routeMapped[] = [
   {
     path: "/customers",
     name: "Clientes",
+    addToSidebar: true,
+
     icon: "heroicons:building-storefront",
     roleAccess: ["admin"],
     element: <Customers />,
@@ -95,8 +113,10 @@ export const routesMapped: routeMapped[] = [
   {
     path: "/funds",
     name: "Fundos",
+    addToSidebar: true,
+
     icon: "heroicons:currency-dollar",
-    roleAccess: ["all"],
+    roleAccess: ["admin"],
     element: <Funds />,
     subRoutes: [
       {
@@ -114,6 +134,8 @@ export const routesMapped: routeMapped[] = [
   {
     path: "/wallets",
     name: "Carteiras",
+    addToSidebar: true,
+
     icon: "heroicons:wallet",
     roleAccess: ["admin"],
     element: <Wallets />,
@@ -133,6 +155,8 @@ export const routesMapped: routeMapped[] = [
   {
     path: "/contributions",
     name: "Aportes",
+    addToSidebar: true,
+
     icon: "radix-icons:dashboard",
     roleAccess: ["all"],
     element: <Contribuitions />,
@@ -147,6 +171,8 @@ export const routesMapped: routeMapped[] = [
   {
     path: "/income",
     name: "Rendimentos",
+    addToSidebar: true,
+
     icon: "heroicons:arrow-trending-up-20-solid",
     roleAccess: ["admin"],
     element: <Income />,
@@ -161,6 +187,8 @@ export const routesMapped: routeMapped[] = [
   {
     path: "/withdraw",
     name: "Resgates",
+    addToSidebar: true,
+
     icon: "heroicons:arrow-uturn-down",
     roleAccess: ["all"],
     element: <Withdraw />,
@@ -175,6 +203,8 @@ export const routesMapped: routeMapped[] = [
   {
     path: "/movements",
     name: "Movimentações",
+    addToSidebar: true,
+
     icon: "heroicons:arrows-right-left",
     roleAccess: ["all"],
     element: <Movements />,
@@ -183,6 +213,8 @@ export const routesMapped: routeMapped[] = [
   {
     path: "/readjustments",
     name: "Readequações",
+    addToSidebar: true,
+
     icon: "heroicons:briefcase",
     roleAccess: ["admin"],
     element: <Readjustments />,
@@ -198,6 +230,8 @@ export const routesMapped: routeMapped[] = [
     path: "/comparative-values",
     name: "Valores comparativos",
     icon: "heroicons:table-cells",
+    addToSidebar: true,
+
     roleAccess: ["admin"],
     element: <ComparativeValues />,
     subRoutes: [
@@ -218,6 +252,8 @@ export const routesMapped: routeMapped[] = [
     name: "Cotações",
     icon: "heroicons:chart-bar",
     roleAccess: ["admin"],
+    addToSidebar: true,
+
     element: <Quotes />,
     subRoutes: [
       {
@@ -230,6 +266,7 @@ export const routesMapped: routeMapped[] = [
   {
     path: "/calculated-interest",
     name: "Juros calculados",
+    addToSidebar: true,
     icon: "heroicons:circle-stack",
     roleAccess: ["admin"],
     element: <CalculedInterest />,
@@ -245,5 +282,14 @@ export const routesMapped: routeMapped[] = [
         element: <CalculedInterestInsert />,
       },
     ],
+  },
+  {
+    path: "/interested-calculator",
+    element: <Calculator />,
+    name: "Calculadora de juros",
+    icon: "heroicons:circle-stack",
+    roleAccess: ["user"],
+    subRoutes: [],
+    addToSidebar: true,
   },
 ];

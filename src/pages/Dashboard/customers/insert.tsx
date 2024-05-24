@@ -17,6 +17,7 @@ export const CustomerInsert = () => {
     if (docType === "pf" || docType === "pj") setDocumentType(docType);
   };
 
+
   return (
     <div>
       <div className="flex items-center gap-4">
@@ -28,6 +29,7 @@ export const CustomerInsert = () => {
         </button>
         <SectionTitle text="Preencha o formulário de inclusão" />
       </div>
+
       <form className="mt-12">
         <div className="bg-WHITE p-8 w-full rounded-md">
           <div className="flex items-center gap-4">

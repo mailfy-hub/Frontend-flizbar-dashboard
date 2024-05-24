@@ -11,7 +11,7 @@ import {
 } from "@material-tailwind/react";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../hook/auth";
 import { routesMapped } from "../../utils/route-config";
 import { Logo } from "../logo";
@@ -21,6 +21,7 @@ const profileMenuItems = [
   {
     label: "Meu perfil",
     icon: UserCircleIcon,
+    link: "/my-account",
   },
   /*   {
     label: "Edit Profile",
@@ -162,24 +163,22 @@ export const Header = () => {
               </Button>
             </MenuHandler>
             <MenuList className="p-1">
-              {profileMenuItems.map(({ label, icon }, _) => {
+              {profileMenuItems.map(({ label, icon, link }, _) => {
                 return (
-                  <MenuItem
-                    key={label}
-                    onClick={closeMenu}
-                    className="flex items-center gap-2 rounded"
-                  >
-                    {React.createElement(icon, {
-                      className: "h-4 w-4",
-                      strokeWidth: 2,
-                    })}
-                    <Typography
-                      as="span"
-                      variant="small"
-                      className="font-normal"
-                    >
-                      {label}
-                    </Typography>
+                  <MenuItem key={label} onClick={closeMenu}>
+                    <Link className="flex items-center gap-2 rounded" to={link}>
+                      {React.createElement(icon, {
+                        className: "h-4 w-4",
+                        strokeWidth: 2,
+                      })}
+                      <Typography
+                        as="span"
+                        variant="small"
+                        className="font-normal"
+                      >
+                        {label}
+                      </Typography>
+                    </Link>
                   </MenuItem>
                 );
               })}
@@ -202,28 +201,52 @@ export const Header = () => {
             )}
           </button>
           {isMobMenuOpen && (
-            <div className="bg-BLACK w-full h-screen fixed top-[72px] left-0 z-[9999999]">
-              <nav>
-                {routesMapped.map(({ icon, name, path, roleAccess }) => {
-                  if (userData) {
-                    if (
-                      roleAccess.includes(userData?.role) ||
-                      roleAccess.includes("all")
-                    ) {
-                      return (
-                        <PageButton
-                          onClick={handleChangePage}
-                          key={path}
-                          pageName={name}
-                          icon={icon}
-                          isActive={path === activeRoute?.path}
-                          link={path}
-                        />
-                      );
+            <div className="bg-BLACK flex flex-col w-full h-screen fixed top-[72px] left-0 z-[9999999]">
+              <div>
+                <nav>
+                  {routesMapped.map(
+                    ({ icon, name, path, roleAccess, addToSidebar }) => {
+                      if (userData && addToSidebar) {
+                        if (
+                          roleAccess.includes(userData?.role) ||
+                          roleAccess.includes("all")
+                        ) {
+                          return (
+                            <PageButton
+                              onClick={handleChangePage}
+                              key={path}
+                              pageName={name}
+                              icon={icon}
+                              isActive={path === activeRoute?.path}
+                              link={path}
+                            />
+                          );
+                        }
+                      }
                     }
-                  }
-                })}
-              </nav>
+                  )}
+                </nav>
+                <Link
+                  onClick={handleChangePage}
+                  to={"/my-account"}
+                  className="mx-4 bg-GRAY_800 p-6 rounded-lg flex items-center gap-2 mt-4"
+                >
+                  <Avatar
+                    variant="circular"
+                    size="sm"
+                    alt="tania andrew"
+                    src="https://avatars.githubusercontent.com/u/92546209?v=4"
+                  />
+                  <div>
+                    <p className="font-display font-semibold text-body14 text-WHITE no-underline capitalize text-left">
+                      Marlon Lencina
+                    </p>
+                    <span className="font-body font-normal text-sm12 text-WHITE  no-underline lowercase text-left">
+                      marlon@mailfy.com
+                    </span>
+                  </div>
+                </Link>
+              </div>
 
               <button
                 onClick={handleLogout}

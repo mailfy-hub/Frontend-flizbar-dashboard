@@ -40,7 +40,7 @@ export const SidebarLayout = () => {
         <div className="flex-1 flex flex-col justify-between">
           <nav className="h-auto pt-5 overflow-auto">
             {routesMapped.map((route) => {
-              if (userData) {
+              if (userData && route.addToSidebar) {
                 if (
                   route.roleAccess.includes(userData?.role) ||
                   route.roleAccess.includes("all")

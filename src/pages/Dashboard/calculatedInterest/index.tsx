@@ -21,6 +21,7 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
+import SuccessDialog from "../../../components/successDialog";
 
 const TABLE_ROW = [
   {
@@ -42,11 +43,31 @@ export const CalculedInterest = () => {
     navigate("edit");
   };
 
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(!open);
+  const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
+  const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+  const handleOpenSuccessDelete = () => {
+    handleToggleConfirmationDialog();
+    handleToggleSuccessDialog();
+  };
+
+  const handleToggleSuccessDialog = () => {
+    setOpenSuccessDialog(!openSuccessDialog);
+  };
+
+  const handleToggleConfirmationDialog = () => {
+    setOpenConfimationDialog(!openConfimationDialog);
+  };
   return (
     <div>
-      <Dialog size="xs" open={open} handler={handleOpen}>
+      <SuccessDialog
+        open={openSuccessDialog}
+        handleClose={handleToggleSuccessDialog}
+      />
+      <Dialog
+        size="xs"
+        open={openConfimationDialog}
+        handler={handleToggleConfirmationDialog}
+      >
         <DialogHeader>
           Tem certeza que deseja <br /> deletar este registro?
         </DialogHeader>
@@ -57,12 +78,16 @@ export const CalculedInterest = () => {
           <Button
             variant="text"
             color="red"
-            onClick={handleOpen}
+            onClick={handleToggleConfirmationDialog}
             className="mr-1"
           >
             <span>Cancelar</span>
           </Button>
-          <Button variant="gradient" color="red" onClick={handleOpen}>
+          <Button
+            variant="gradient"
+            color="red"
+            onClick={handleOpenSuccessDelete}
+          >
             <span>Confirmar</span>
           </Button>
         </DialogFooter>
@@ -170,7 +195,10 @@ export const CalculedInterest = () => {
                         </IconButton>
                       </Tooltip>
                       <Tooltip content="Deletar usuário">
-                        <IconButton onClick={handleOpen} variant="text">
+                        <IconButton
+                          onClick={handleToggleConfirmationDialog}
+                          variant="text"
+                        >
                           <TrashIcon className="w-4 h-4 text-gray-400" />
                         </IconButton>
                       </Tooltip>
