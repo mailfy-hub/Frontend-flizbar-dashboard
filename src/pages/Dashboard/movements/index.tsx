@@ -32,7 +32,7 @@ const TABLE_ROW: TableRowProps[] = [
   },
 ];
 
-const TABLE_HEAD = ["Código", "Data", "Tipo", "Cliente", "Fundo", "Valor"];
+const TABLE_HEAD = ["Código", "Data", "Tipo", "Fundo", "Valor"];
 
 export const Movements = () => {
   return (
@@ -77,7 +77,6 @@ export const Movements = () => {
                   code,
                   currency,
                   created_at,
-                  customer,
                   fund,
                   type,
                   value,
@@ -125,17 +124,6 @@ export const Movements = () => {
                             className="!font-normal"
                           >
                             {type}
-                          </Typography>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div>
-                          <Typography
-                            variant="small"
-                            color="black"
-                            className="!font-normal"
-                          >
-                            {customer}
                           </Typography>
                         </div>
                       </td>

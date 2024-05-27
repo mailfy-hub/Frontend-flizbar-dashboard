@@ -15,11 +15,54 @@ export const Routes = () => {
       <Route element={<AuthRoute />}>
         <Route path="unathorized" element={<Unathorized />} />
 
+        {routesMapped.map((route) => {
+          if (!!route.isOutletRoute) return;
+          if (
+            route.roleAccess.includes("all") ||
+            (route.roleAccess.includes("user") && !route.isOutletRoute)
+          )
+            return (
+              <Route key={route.path} path={route.path}>
+                <Route index element={route.element} />
+                {route.subRoutes.map((sub) => {
+                  return (
+                    <Route
+                      key={`${route.path}/${sub.path}`}
+                      element={sub.element}
+                      path={sub.path}
+                    />
+                  );
+                })}
+              </Route>
+            );
+        })}
+
+        <Route element={<ProtectedRoute />}>
+          {routesMapped.map((route) => {
+            if (!!route.isOutletRoute) return;
+            if (route.roleAccess.includes("admin") && !route.isOutletRoute)
+              return (
+                <Route key={route.path} path={route.path}>
+                  <Route index element={route.element} />
+                  {route.subRoutes.map((sub) => {
+                    return (
+                      <Route
+                        key={`${route.path}/${sub.path}`}
+                        element={sub.element}
+                        path={sub.path}
+                      />
+                    );
+                  })}
+                </Route>
+              );
+          })}
+        </Route>
+
         <Route path="/" element={<Layout />}>
           {routesMapped.map((route) => {
             if (
               route.roleAccess.includes("all") ||
-              route.roleAccess.includes("user")
+              (route.roleAccess.includes("user") && route.isOutletRoute)
             )
               return (
                 <Route key={route.path} path={route.path}>
@@ -38,7 +81,7 @@ export const Routes = () => {
           })}
           <Route element={<ProtectedRoute availableToRole="admin" />}>
             {routesMapped.map((route) => {
-              if (route.roleAccess.includes("admin"))
+              if (route.roleAccess.includes("admin") && route.isOutletRoute)
                 return (
                   <Route key={route.path} path={route.path}>
                     <Route index element={route.element} />
@@ -58,7 +101,10 @@ export const Routes = () => {
         </Route>
       </Route>
       <Route element={<IsAuthenticatedBlock />}>
-        <Route path="login" element={<Login />} />
+        <Route path="login">
+          <Route index element={<Login />} />
+          <Route path="admin" element={<Login />} />
+        </Route>
         <Route path="register" element={<SignUp />} />
         <Route path="recovery" element={<RecoveryAccount />} />
       </Route>

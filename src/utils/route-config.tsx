@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 import { roleAccessType } from "../hook/auth";
+import { VerifyAccess } from "../pages/Auth/verifyAccess";
+import { VerifyAccessCode } from "../pages/Auth/verifyAccessCode";
 import { CalculedInterest } from "../pages/Dashboard/calculatedInterest";
 import { Calculator } from "../pages/Dashboard/calculatedInterest/calculator";
 import { CalculedInterestEdit } from "../pages/Dashboard/calculatedInterest/edit";
@@ -41,11 +43,12 @@ interface subRoutesMapped {
 export interface routeMapped {
   path: string;
   name: string;
-  icon: string;
+  icon?: string;
   roleAccess: roleAccessType[];
   element: ReactNode;
   subRoutes: subRoutesMapped[] | [];
   addToSidebar: boolean;
+  isOutletRoute: boolean;
 }
 
 export const routesMapped: routeMapped[] = [
@@ -57,6 +60,7 @@ export const routesMapped: routeMapped[] = [
     roleAccess: ["all"],
     subRoutes: [],
     addToSidebar: true,
+    isOutletRoute: true,
   },
 
   {
@@ -67,12 +71,13 @@ export const routesMapped: routeMapped[] = [
     roleAccess: ["all"],
     subRoutes: [],
     addToSidebar: false,
+    isOutletRoute: true,
   },
   {
     path: "/users",
     element: <Users />,
     addToSidebar: true,
-
+    isOutletRoute: true,
     name: "Usuários",
     icon: "heroicons:users",
     roleAccess: ["admin"],
@@ -93,7 +98,7 @@ export const routesMapped: routeMapped[] = [
     path: "/customers",
     name: "Clientes",
     addToSidebar: true,
-
+    isOutletRoute: true,
     icon: "heroicons:building-storefront",
     roleAccess: ["admin"],
     element: <Customers />,
@@ -114,7 +119,7 @@ export const routesMapped: routeMapped[] = [
     path: "/funds",
     name: "Fundos",
     addToSidebar: true,
-
+    isOutletRoute: true,
     icon: "heroicons:currency-dollar",
     roleAccess: ["admin"],
     element: <Funds />,
@@ -135,7 +140,7 @@ export const routesMapped: routeMapped[] = [
     path: "/wallets",
     name: "Carteiras",
     addToSidebar: true,
-
+    isOutletRoute: true,
     icon: "heroicons:wallet",
     roleAccess: ["admin"],
     element: <Wallets />,
@@ -156,7 +161,7 @@ export const routesMapped: routeMapped[] = [
     path: "/contributions",
     name: "Aportes",
     addToSidebar: true,
-
+    isOutletRoute: true,
     icon: "radix-icons:dashboard",
     roleAccess: ["all"],
     element: <Contribuitions />,
@@ -172,7 +177,7 @@ export const routesMapped: routeMapped[] = [
     path: "/income",
     name: "Rendimentos",
     addToSidebar: true,
-
+    isOutletRoute: true,
     icon: "heroicons:arrow-trending-up-20-solid",
     roleAccess: ["admin"],
     element: <Income />,
@@ -188,7 +193,7 @@ export const routesMapped: routeMapped[] = [
     path: "/withdraw",
     name: "Resgates",
     addToSidebar: true,
-
+    isOutletRoute: true,
     icon: "heroicons:arrow-uturn-down",
     roleAccess: ["all"],
     element: <Withdraw />,
@@ -204,7 +209,7 @@ export const routesMapped: routeMapped[] = [
     path: "/movements",
     name: "Movimentações",
     addToSidebar: true,
-
+    isOutletRoute: true,
     icon: "heroicons:arrows-right-left",
     roleAccess: ["all"],
     element: <Movements />,
@@ -214,7 +219,7 @@ export const routesMapped: routeMapped[] = [
     path: "/readjustments",
     name: "Readequações",
     addToSidebar: true,
-
+    isOutletRoute: true,
     icon: "heroicons:briefcase",
     roleAccess: ["admin"],
     element: <Readjustments />,
@@ -231,7 +236,7 @@ export const routesMapped: routeMapped[] = [
     name: "Valores comparativos",
     icon: "heroicons:table-cells",
     addToSidebar: true,
-
+    isOutletRoute: true,
     roleAccess: ["admin"],
     element: <ComparativeValues />,
     subRoutes: [
@@ -253,7 +258,7 @@ export const routesMapped: routeMapped[] = [
     icon: "heroicons:chart-bar",
     roleAccess: ["admin"],
     addToSidebar: true,
-
+    isOutletRoute: true,
     element: <Quotes />,
     subRoutes: [
       {
@@ -267,6 +272,7 @@ export const routesMapped: routeMapped[] = [
     path: "/calculated-interest",
     name: "Juros calculados",
     addToSidebar: true,
+    isOutletRoute: true,
     icon: "heroicons:circle-stack",
     roleAccess: ["admin"],
     element: <CalculedInterest />,
@@ -291,5 +297,21 @@ export const routesMapped: routeMapped[] = [
     roleAccess: ["user"],
     subRoutes: [],
     addToSidebar: true,
+    isOutletRoute: true,
+  },
+  {
+    path: "/verify-access",
+    element: <VerifyAccess />,
+    name: "Verifição de acesso",
+    roleAccess: ["admin"],
+    subRoutes: [
+      {
+        name: "Verifique o código de acesso",
+        path: "code",
+        element: <VerifyAccessCode />,
+      },
+    ],
+    addToSidebar: false,
+    isOutletRoute: false,
   },
 ];

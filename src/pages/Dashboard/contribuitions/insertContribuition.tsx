@@ -32,15 +32,9 @@ export const ContribuitionInsert = () => {
               <Input type="date" label="Data do aporte" />
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-              <Select label="Cliente">
-                <option value=""></option>
-              </Select>
               <Select label="Carteira">
                 <option value=""></option>
               </Select>
-            </div>
-            <div className="grid md:grid-cols-2 gap-6">
-              <Input type="number" label="Valor da cotação do dolar" />
               <Input type="number" label="Valor do aporte" />
             </div>
           </div>

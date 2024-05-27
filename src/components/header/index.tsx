@@ -201,9 +201,9 @@ export const Header = () => {
             )}
           </button>
           {isMobMenuOpen && (
-            <div className="bg-BLACK flex flex-col w-full h-screen fixed top-[72px] left-0 z-[9999999]">
+            <nav className="bg-BLACK flex flex-col w-full h-screen fixed top-[72px] left-0 z-[9999999] overflow-x-scroll pb-12">
               <div>
-                <nav>
+                <div>
                   {routesMapped.map(
                     ({ icon, name, path, roleAccess, addToSidebar }) => {
                       if (userData && addToSidebar) {
@@ -225,7 +225,7 @@ export const Header = () => {
                       }
                     }
                   )}
-                </nav>
+                </div>
                 <Link
                   onClick={handleChangePage}
                   to={"/my-account"}
@@ -258,7 +258,7 @@ export const Header = () => {
                 ></Icon>
                 Logout
               </button>
-            </div>
+            </nav>
           )}
         </div>
       </header>

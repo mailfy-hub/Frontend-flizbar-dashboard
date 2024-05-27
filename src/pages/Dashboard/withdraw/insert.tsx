@@ -36,9 +36,6 @@ export const WithdrawInsert = () => {
               <Input type="date" label="Data do resgate" />
             </div>
             <div className="grid md:grid-cols-3 gap-6">
-              <Select label="Cliente">
-                <option value=""></option>
-              </Select>
               <Select label="Fundo de origem">
                 <option value=""></option>
               </Select>

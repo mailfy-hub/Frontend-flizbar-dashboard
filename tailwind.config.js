@@ -8,6 +8,7 @@ module.exports = withMT({
         GOLD_WHITE: "#FEFDE8",
         GOLD_MAIN: "#A06A08",
         GOLD_DARK: "#C89305",
+        GOLD_BLACK: "#1F1503",
         BLACK: "#0C0B0A",
         WHITE: "#FFFFFF",
         GRAY_100: "#F5F5F5",

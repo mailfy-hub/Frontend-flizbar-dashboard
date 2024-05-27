@@ -1,6 +1,7 @@
 import { Button, Input, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { HeaderMobile } from "../../../components/headerMobile";
+import { InputWithDropdown } from "../../../components/inputWithDropdown";
 import { SideImageAuthorization } from "../../../components/sideImageAuthorization";
 
 export function SignUp() {
@@ -44,9 +45,9 @@ export function SignUp() {
               />
 
               <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Data de nascimento
+                Telefone
               </Typography>
-              <Input
+              {/* <Input
                 size="md"
                 placeholder="00/00/0000"
                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -54,6 +55,8 @@ export function SignUp() {
                   className: "before:content-none after:content-none",
                 }}
               />
+ */}
+              <InputWithDropdown />
 
               <Typography variant="h6" color="blue-gray" className="-mb-3">
                 Senha de acesso

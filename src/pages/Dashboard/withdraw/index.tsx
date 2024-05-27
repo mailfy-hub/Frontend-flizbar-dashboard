@@ -35,7 +35,7 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
   },
 ];
 
-const TABLE_HEAD = ["#", "Fundo", "Valor", "Cliente", "Data de criação"];
+const TABLE_HEAD = ["#", "Fundo", "Valor", "Data de criação"];
 
 export const Withdraw = () => {
   const navigate = useNavigate();
@@ -94,7 +94,7 @@ export const Withdraw = () => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROW.map(({ code, created_at, wallet, customer }) => {
+              {TABLE_ROW.map(({ code, created_at, wallet }) => {
                 const classes = "!p-6 ";
                 return (
                   <tr key={code}>
@@ -124,14 +124,7 @@ export const Withdraw = () => {
                         </div>
                       </div>
                     </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        className="!font-normal text-gray-600"
-                      >
-                        {customer}
-                      </Typography>
-                    </td>
+
                     <td className={classes}>
                       <Typography
                         variant="small"

@@ -52,13 +52,7 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
   },
 ];
 
-const TABLE_HEAD = [
-  "Código",
-  "Cliente",
-  "Carteira",
-  "Valor",
-  "Data de criação",
-];
+const TABLE_HEAD = ["Código", "Carteira", "Valor", "Data de criação"];
 
 export const Contribuitions = () => {
   const navigate = useNavigate();
@@ -118,7 +112,7 @@ export const Contribuitions = () => {
             </thead>
             <tbody>
               {TABLE_ROW.map(
-                ({ code, customer, created_at, value, wallet, currency }) => {
+                ({ code, created_at, value, wallet, currency }) => {
                   const classes = "!p-6 ";
                   return (
                     <tr key={code}>
@@ -135,25 +129,7 @@ export const Contribuitions = () => {
                           </div>
                         </div>
                       </td>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="!font-semibold"
-                            >
-                              {customer}
-                            </Typography>
-                            {/*                             <Typography
-                              variant="small"
-                              className="!font-normal text-gray-600"
-                            >
-                              {detail}
-                            </Typography> */}
-                          </div>
-                        </div>
-                      </td>
+
                       <td className={classes}>
                         <div>
                           <Typography

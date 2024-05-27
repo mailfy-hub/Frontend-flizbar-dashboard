@@ -22,8 +22,10 @@
     "react-apexcharts": "^1.4.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.2.0",
+    "react-phone-input-2": "^2.15.1",
     "react-router-dom": "^6.23.1",
-    "recharts": "^2.12.7"
+    "recharts": "^2.12.7",
+    "use-react-countries": "^2.0.1"
   },
   "devDependencies": {
     "@iconify/tailwind": "^1.1.0",
