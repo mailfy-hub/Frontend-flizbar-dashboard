@@ -49,7 +49,7 @@ export const SidebarLayout = () => {
                     <PageButton
                       key={route.path}
                       pageName={route.name}
-                      icon={route.icon}
+                      icon={route.icon ? route.icon : "heroicons:circle-stack"}
                       isActive={route.path === activeRoute}
                       link={route.path}
                     />

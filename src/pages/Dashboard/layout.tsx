@@ -23,7 +23,7 @@ export const Layout = () => {
     if (foundRoute) {
       setActiveRoute({
         name: foundRoute.name,
-        icon: foundRoute.icon,
+        icon: foundRoute.icon ? foundRoute.icon : "heroicons:circle-stack",
         path: foundRoute.path,
       });
     } else {

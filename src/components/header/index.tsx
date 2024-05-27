@@ -62,7 +62,7 @@ export const Header = () => {
     if (foundRoute) {
       setActiveRoute({
         name: foundRoute.name,
-        icon: foundRoute.icon,
+        icon: foundRoute.icon ? foundRoute.icon : "heroicons:circle-stack",
         path: foundRoute.path,
       });
     } else {
@@ -216,7 +216,7 @@ export const Header = () => {
                               onClick={handleChangePage}
                               key={path}
                               pageName={name}
-                              icon={icon}
+                              icon={icon ? icon : "heroicons:circle-stack"}
                               isActive={path === activeRoute?.path}
                               link={path}
                             />
