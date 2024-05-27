@@ -87,8 +87,8 @@ export const Header = () => {
   };
 
   return (
-    <div className="h-[72px] w-full">
-      <header className="md:bg-GRAY_100 bg-BLACK h-[72px] w-full p-4 md:px-12 flex items-center justify-between fixed md:static top-0 z-40">
+    <div className="h-[72px] w-full relative">
+      <header className="md:bg-GRAY_100 bg-BLACK h-[72px] w-full p-4 md:px-12 flex items-center justify-between fixed md:static top-0 z-40 ">
         <AnimatePresence>
           <div className="hidden md:block">
             {activeRoute ? (
@@ -200,68 +200,67 @@ export const Header = () => {
               <Icon height={18} color="#ffffff" icon={"heroicons:bars-3"} />
             )}
           </button>
-          {isMobMenuOpen && (
-            <nav className="bg-BLACK flex flex-col w-full h-screen fixed top-[72px] left-0 z-[9999999] overflow-x-scroll pb-12">
-              <div>
-                <div>
-                  {routesMapped.map(
-                    ({ icon, name, path, roleAccess, addToSidebar }) => {
-                      if (userData && addToSidebar) {
-                        if (
-                          roleAccess.includes(userData?.role) ||
-                          roleAccess.includes("all")
-                        ) {
-                          return (
-                            <PageButton
-                              onClick={handleChangePage}
-                              key={path}
-                              pageName={name}
-                              icon={icon ? icon : "heroicons:circle-stack"}
-                              isActive={path === activeRoute?.path}
-                              link={path}
-                            />
-                          );
-                        }
-                      }
-                    }
-                  )}
-                </div>
-                <Link
-                  onClick={handleChangePage}
-                  to={"/my-account"}
-                  className="mx-4 bg-GRAY_800 p-6 rounded-lg flex items-center gap-2 mt-4"
-                >
-                  <Avatar
-                    variant="circular"
-                    size="sm"
-                    alt="tania andrew"
-                    src="https://avatars.githubusercontent.com/u/92546209?v=4"
-                  />
-                  <div>
-                    <p className="font-display font-semibold text-body14 text-WHITE no-underline capitalize text-left">
-                      Marlon Lencina
-                    </p>
-                    <span className="font-body font-normal text-sm12 text-WHITE  no-underline lowercase text-left">
-                      marlon@mailfy.com
-                    </span>
-                  </div>
-                </Link>
-              </div>
-
-              <button
-                onClick={handleLogout}
-                className="hover:opacity-65 transition-all flex items-center gap-4 px-6 h-[72px] bg-GRAY_800 text-GRAY_500 font-display font-medium text-body16 z-10 mt-6 w-full"
-              >
-                <Icon
-                  color="#616161"
-                  icon={"heroicons:arrow-left-end-on-rectangle"}
-                ></Icon>
-                Logout
-              </button>
-            </nav>
-          )}
         </div>
       </header>
+      {isMobMenuOpen && (
+        <nav className="bg-BLACK flex flex-col w-full h-screen fixed top-[72px] pb-[72px] left-0 z-[9999999] overflow-scroll ">
+          <div>
+            <div>
+              {routesMapped.map(
+                ({ icon, name, path, roleAccess, addToSidebar }) => {
+                  if (userData && addToSidebar) {
+                    if (
+                      roleAccess.includes(userData?.role) ||
+                      roleAccess.includes("all")
+                    ) {
+                      return (
+                        <PageButton
+                          onClick={handleChangePage}
+                          key={path}
+                          pageName={name}
+                          icon={icon ? icon : "heroicons:circle-stack"}
+                          isActive={path === activeRoute?.path}
+                          link={path}
+                        />
+                      );
+                    }
+                  }
+                }
+              )}
+            </div>
+            <Link
+              onClick={handleChangePage}
+              to={"/my-account"}
+              className="mx-4 bg-GRAY_800 p-6 rounded-lg flex items-center gap-2 mt-4"
+            >
+              <Avatar
+                variant="circular"
+                size="sm"
+                alt="tania andrew"
+                src="https://avatars.githubusercontent.com/u/92546209?v=4"
+              />
+              <div>
+                <p className="font-display font-semibold text-body14 text-WHITE no-underline capitalize text-left">
+                  Marlon Lencina
+                </p>
+                <span className="font-body font-normal text-sm12 text-WHITE  no-underline lowercase text-left">
+                  marlon@mailfy.com
+                </span>
+              </div>
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="hover:opacity-65 transition-all flex items-center gap-4 px-6 h-[72px] bg-GRAY_800 text-GRAY_500 font-display font-medium text-body16 z-10 mt-6 w-full"
+            >
+              <Icon
+                color="#616161"
+                icon={"heroicons:arrow-left-end-on-rectangle"}
+              ></Icon>
+              Logout
+            </button>
+          </div>
+        </nav>
+      )}
     </div>
   );
 };
