@@ -18,7 +18,7 @@ export function Login() {
       password: "marlon123",
     });
 
-    navigate("/my-account");
+    navigate("/");
   };
 
   const handleLoginAdmin = (e: FormEvent) => {

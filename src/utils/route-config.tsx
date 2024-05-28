@@ -26,6 +26,7 @@ import { Quotes } from "../pages/Dashboard/quotes";
 import { QuotesInsert } from "../pages/Dashboard/quotes/insert";
 import { Readjustments } from "../pages/Dashboard/readjustments";
 import { ReadjustmentsInsert } from "../pages/Dashboard/readjustments/insert";
+import { UserDataProfile } from "../pages/Dashboard/userDataFillForm";
 import { Users } from "../pages/Dashboard/users";
 import { UserEdit } from "../pages/Dashboard/users/edit";
 import { UserInsert } from "../pages/Dashboard/users/insert";
@@ -62,7 +63,16 @@ export const routesMapped: routeMapped[] = [
     addToSidebar: true,
     isOutletRoute: true,
   },
-
+  {
+    path: "/profile",
+    element: <UserDataProfile />,
+    name: "Perfil do usuário",
+    icon: "heroicons:building-storefront",
+    roleAccess: ["user"],
+    subRoutes: [],
+    addToSidebar: false,
+    isOutletRoute: true,
+  },
   {
     path: "/my-account",
     element: <MyAccount />,

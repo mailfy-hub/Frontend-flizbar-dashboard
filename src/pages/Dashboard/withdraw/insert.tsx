@@ -3,9 +3,11 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, Input, Select } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
+import { useAuth } from "../../../hook/auth";
 
 export const WithdrawInsert = () => {
   const navigate = useNavigate();
+  const { userData } = useAuth();
 
   const handleNavigateBack = () => {
     navigate(-1);
@@ -34,8 +36,13 @@ export const WithdrawInsert = () => {
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
               <Input type="date" label="Data do resgate" />
+              {userData?.role === "admin" && (
+                <Select label="Cliente">
+                  <option value=""></option>
+                </Select>
+              )}
             </div>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 gap-6">
               <Select label="Fundo de origem">
                 <option value=""></option>
               </Select>

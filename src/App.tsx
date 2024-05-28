@@ -1,5 +1,11 @@
 import { Routes } from "./routes";
+import {ScrollToTop} from "./utils/scrollToTop";
 
 export function App() {
-  return <Routes />;
+  return (
+    <>
+      <ScrollToTop />
+      <Routes />
+    </>
+  );
 }

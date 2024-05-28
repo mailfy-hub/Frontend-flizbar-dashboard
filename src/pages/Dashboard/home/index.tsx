@@ -10,6 +10,7 @@ import { Props } from "react-apexcharts";
 import { useAuth } from "../../../hook/auth";
 
 import ImageHeroAdmin from "../../../assets/admin-banner-image.png";
+import { useEffect } from "react";
 
 const ChartRendimentosData: Props = {
   type: "line",
@@ -84,6 +85,10 @@ const ChartRendimentosPercentualData: Props = {
 export const Home = () => {
   const { getUserRole, userData } = useAuth();
   const userRole = getUserRole();
+
+
+  useEffect(() => {
+  }, [])
   return (
     <>
       {userRole === "user" ? (

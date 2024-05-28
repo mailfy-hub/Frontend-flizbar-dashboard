@@ -1,10 +1,23 @@
 import { Button, Input, Typography } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { FormEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { HeaderMobile } from "../../../components/headerMobile";
 import { InputWithDropdown } from "../../../components/inputWithDropdown";
 import { SideImageAuthorization } from "../../../components/sideImageAuthorization";
+import { useAuth } from "../../../hook/auth";
 
 export function SignUp() {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleNavigate = (e: FormEvent) => {
+    e.preventDefault();
+    login({
+      email: "marlon@mailfy.com",
+      password: "marlon123",
+    });
+    navigate("/profile");
+  };
   return (
     <div className="h-screen w-full md:flex bg-white">
       <SideImageAuthorization />
@@ -72,7 +85,12 @@ export function SignUp() {
               />
             </div>
 
-            <Button className="mt-6 bg-GOLD_MAIN" fullWidth>
+            <Button
+              onClick={handleNavigate}
+              type="button"
+              className="mt-6 bg-GOLD_MAIN"
+              fullWidth
+            >
               Cadastrar
             </Button>
             <Typography color="gray" className="mt-4 text-center font-normal">
