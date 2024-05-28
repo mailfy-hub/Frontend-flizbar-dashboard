@@ -1,5 +1,6 @@
+import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, Input, Typography } from "@material-tailwind/react";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { HeaderMobile } from "../../../components/headerMobile";
 import { InputWithDropdown } from "../../../components/inputWithDropdown";
@@ -9,6 +10,14 @@ import { useAuth } from "../../../hook/auth";
 export function SignUp() {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [inputPassType, setInputPassType] = useState("password");
+  const handleSeePass = () => {
+    if (inputPassType === "password") {
+      setInputPassType("text");
+    } else {
+      setInputPassType("password");
+    }
+  };
 
   const handleNavigate = (e: FormEvent) => {
     e.preventDefault();
@@ -75,13 +84,18 @@ export function SignUp() {
                 Senha de acesso
               </Typography>
               <Input
-                type="password"
+                type={inputPassType}
                 size="md"
                 placeholder="********"
                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                 labelProps={{
                   className: "before:content-none after:content-none",
                 }}
+                icon={
+                  <button onClick={handleSeePass} type="button">
+                    <Icon color="#90A4AE" icon={"heroicons:eye"} height={16} />
+                  </button>
+                }
               />
             </div>
 

@@ -1,3 +1,4 @@
+import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, Input, Typography } from "@material-tailwind/react";
 import { FormEvent, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -10,6 +11,14 @@ export function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const [roleLogin, setRoleLogin] = useState("");
+  const [inputPassType, setInputPassType] = useState("password");
+  const handleSeePass = () => {
+    if (inputPassType === "password") {
+      setInputPassType("text");
+    } else {
+      setInputPassType("password");
+    }
+  };
 
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
@@ -72,13 +81,22 @@ export function Login() {
                   Senha de acesso
                 </Typography>
                 <Input
-                  type="password"
+                  type={inputPassType}
                   size="md"
                   placeholder="********"
                   className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                   labelProps={{
                     className: "before:content-none after:content-none",
                   }}
+                  icon={
+                    <button onClick={handleSeePass} type="button">
+                      <Icon
+                        color="#90A4AE"
+                        icon={"heroicons:eye"}
+                        height={16}
+                      />
+                    </button>
+                  }
                 />
               </div>
 
