@@ -99,7 +99,14 @@ export function Login() {
                   }
                 />
               </div>
-
+              <div>
+                <Link
+                  className="font-body font-medium text-body14 text-GOLD_MAIN"
+                  to={"/recovery"}
+                >
+                  Esqueci minha senha
+                </Link>
+              </div>
               <Button fullWidth className="mt-6 bg-GOLD_MAIN" type="submit">
                 Entrar
               </Button>
