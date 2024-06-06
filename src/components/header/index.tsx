@@ -19,7 +19,7 @@ import { PageButton } from "../sidebar/PageButton";
 
 const profileMenuItems = [
   {
-    label: "Meu perfil",
+    label: "Minha conta",
     icon: UserCircleIcon,
     link: "/my-account",
   },

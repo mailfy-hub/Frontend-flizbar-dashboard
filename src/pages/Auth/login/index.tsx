@@ -27,7 +27,7 @@ export function Login() {
       password: "marlon123",
     });
 
-    navigate("/");
+    navigate("/verify-access");
   };
 
   const handleLoginAdmin = (e: FormEvent) => {

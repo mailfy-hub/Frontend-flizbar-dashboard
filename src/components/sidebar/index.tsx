@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hook/auth";
 import { routesMapped } from "../../utils/route-config";
 import { Logo } from "../logo";
@@ -9,11 +9,15 @@ import { PageButton } from "./PageButton";
 
 export const SidebarLayout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [activeRoute, setActiveRoute] = useState<string>("");
   const { userData, logout } = useAuth();
 
   const handleLogout = () => {
     logout();
+    if (userData?.role === "admin") {
+      navigate("/login/admin");
+    }
   };
 
   useEffect(() => {

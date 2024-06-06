@@ -9,8 +9,8 @@ import { SectionTitle } from "../../../components/sectionTitle";
 import { Props } from "react-apexcharts";
 import { useAuth } from "../../../hook/auth";
 
-import ImageHeroAdmin from "../../../assets/admin-banner-image.png";
 import { useEffect } from "react";
+import ImageHeroAdmin from "../../../assets/admin-banner-image.png";
 
 const ChartRendimentosData: Props = {
   type: "line",
@@ -86,9 +86,7 @@ export const Home = () => {
   const { getUserRole, userData } = useAuth();
   const userRole = getUserRole();
 
-
-  useEffect(() => {
-  }, [])
+  useEffect(() => {}, []);
   return (
     <>
       {userRole === "user" ? (
@@ -138,11 +136,6 @@ export const Home = () => {
         <SectionTitle text="Acesso Rápido" />
         <div className="w-full mt-8 grid md:grid-cols-4 gap-8">
           <FastAccessButton
-            icon={"heroicons:wallet"}
-            link="/wallets"
-            pageName="Carteiras"
-          />
-          <FastAccessButton
             icon={"radix-icons:dashboard"}
             link="/contributions"
             pageName="Aportes"
@@ -151,6 +144,11 @@ export const Home = () => {
             icon={"heroicons:arrow-uturn-down"}
             link="/withdraw"
             pageName="Resgates"
+          />
+          <FastAccessButton
+            icon={"heroicons:arrows-right-left"}
+            link="/movements"
+            pageName="Movimentações"
           />
           <FastAccessButton
             icon={"heroicons:user-circle-16-solid"}

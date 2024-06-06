@@ -1,7 +1,9 @@
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
-  MagnifyingGlassIcon,
+  DocumentArrowDownIcon,
+  EyeIcon,
+  TrashIcon,
 } from "@heroicons/react/16/solid";
 import {
   Button,
@@ -9,12 +11,22 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
-  Input,
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  DialogHeader,
+  IconButton,
+  Tooltip,
   Typography,
 } from "@material-tailwind/react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import exampleImageAporte from "../../../assets/example-image-aporte.png";
+import { ImageDialog } from "../../../components/imageDialog";
 import { SectionTitle } from "../../../components/sectionTitle";
+import SuccessDialog from "../../../components/successDialog";
 import { CurrencyRow } from "../../../components/table/currencyRow";
+import { useAuth } from "../../../hook/auth";
 
 interface TABLE_ROW_PROPS {
   code: string;
@@ -52,15 +64,83 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
   },
 ];
 
-const TABLE_HEAD = ["Código", "Carteira", "Valor", "Data de criação"];
-
 export const Contribuitions = () => {
+  const { userData } = useAuth();
   const navigate = useNavigate();
   const handleInsert = () => {
     navigate("insert");
   };
+
+  const TABLE_HEAD =
+    userData?.role === "admin"
+      ? ["Código", "Cliente", "Carteira", "Valor", "Data de criação", "Ações"]
+      : ["Código", "Carteira", "Valor", "Data de criação"];
+
+  const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
+  const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+  const handleOpenSuccessDelete = () => {
+    handleToggleConfirmationDialog();
+    handleToggleSuccessDialog();
+  };
+
+  const handleToggleSuccessDialog = () => {
+    setOpenSuccessDialog(!openSuccessDialog);
+  };
+
+  const handleToggleConfirmationDialog = () => {
+    setOpenConfimationDialog(!openConfimationDialog);
+  };
+
+  const [isDialogImageOpen, setIsDialogImageOpen] = useState(false);
+
+  const handleToggleDialogImage = () => {
+    setIsDialogImageOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleDetails = () => {
+    navigate("details");
+  };
   return (
     <div>
+      <ImageDialog
+        imageUrl={exampleImageAporte}
+        open={isDialogImageOpen}
+        imageAlt="test"
+        onClose={handleToggleDialogImage}
+      />
+      <SuccessDialog
+        open={openSuccessDialog}
+        handleClose={handleToggleSuccessDialog}
+      />
+      <Dialog
+        size="xs"
+        open={openConfimationDialog}
+        handler={handleToggleConfirmationDialog}
+      >
+        <DialogHeader>
+          Tem certeza que deseja <br /> deletar este registro?
+        </DialogHeader>
+        <DialogBody>
+          Essa ação é irreversível, tome cuidado ao prosseguir.
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="red"
+            onClick={handleToggleConfirmationDialog}
+            className="mr-1"
+          >
+            <span>Cancelar</span>
+          </Button>
+          <Button
+            variant="gradient"
+            color="red"
+            onClick={handleOpenSuccessDelete}
+          >
+            <span>Confirmar</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
       <SectionTitle text="Todos aportes" />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
@@ -77,12 +157,6 @@ export const Contribuitions = () => {
             </Typography>
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
-            <div className="w-full md:w-72">
-              <Input
-                label="Nome do cliente"
-                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              />
-            </div>
             <Button
               onClick={() => {
                 handleInsert();
@@ -112,7 +186,7 @@ export const Contribuitions = () => {
             </thead>
             <tbody>
               {TABLE_ROW.map(
-                ({ code, created_at, value, wallet, currency }) => {
+                ({ code, customer, created_at, value, wallet, currency }) => {
                   const classes = "!p-6 ";
                   return (
                     <tr key={code}>
@@ -129,6 +203,20 @@ export const Contribuitions = () => {
                           </div>
                         </div>
                       </td>
+
+                      {userData?.role === "admin" && (
+                        <td className={classes}>
+                          <div>
+                            <Typography
+                              variant="small"
+                              color="black"
+                              className="!font-normal"
+                            >
+                              {customer}
+                            </Typography>
+                          </div>
+                        </td>
+                      )}
 
                       <td className={classes}>
                         <div>
@@ -159,6 +247,32 @@ export const Contribuitions = () => {
                           {created_at}
                         </Typography>
                       </td>
+
+                      {userData?.role === "admin" && (
+                        <td className={`${classes} flex justify-start `}>
+                          <Tooltip content="Visualizar">
+                            <IconButton onClick={handleDetails} variant="text">
+                              <EyeIcon className="w-4 h-4 text-gray-400" />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip content="Comprovante">
+                            <IconButton
+                              onClick={handleToggleDialogImage}
+                              variant="text"
+                            >
+                              <DocumentArrowDownIcon className="w-4 h-4 text-gray-400" />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip content="Excluir">
+                            <IconButton
+                              onClick={handleToggleConfirmationDialog}
+                              variant="text"
+                            >
+                              <TrashIcon className="w-4 h-4 text-gray-400" />
+                            </IconButton>
+                          </Tooltip>
+                        </td>
+                      )}
                     </tr>
                   );
                 }

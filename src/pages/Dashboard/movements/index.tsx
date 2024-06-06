@@ -1,14 +1,22 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  EyeIcon,
+} from "@heroicons/react/16/solid";
 import {
   Button,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
+  IconButton,
+  Tooltip,
   Typography,
 } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { CurrencyRow } from "../../../components/table/currencyRow";
+import { useAuth } from "../../../hook/auth";
 
 interface TableRowProps {
   currency: "BRL" | "USD" | "EUR" | "JPY";
@@ -32,9 +40,17 @@ const TABLE_ROW: TableRowProps[] = [
   },
 ];
 
-const TABLE_HEAD = ["Código", "Data", "Tipo", "Fundo", "Valor"];
-
 export const Movements = () => {
+  const { userData } = useAuth();
+
+  const navigate = useNavigate();
+  const handleNavigateDetails = () => {
+    navigate("/contributions/details");
+  };
+  const TABLE_HEAD =
+    userData?.role === "admin"
+      ? ["Código", "Cliente", "Data", "Tipo", "Fundo", "Valor"]
+      : ["Código", "Data", "Tipo", "Fundo", "Valor"];
   return (
     <div>
       <SectionTitle text="Todas movimentações" />
@@ -80,6 +96,7 @@ export const Movements = () => {
                   fund,
                   type,
                   value,
+                  customer,
                 }) => {
                   const classes = "!p-6 ";
                   return (
@@ -97,6 +114,21 @@ export const Movements = () => {
                           </div>
                         </div>
                       </td>
+                      {userData?.role === "admin" && (
+                        <td className={classes}>
+                          <div className="flex items-center gap-3">
+                            <div>
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="!font-semibold"
+                              >
+                                {customer}
+                              </Typography>
+                            </div>
+                          </div>
+                        </td>
+                      )}
                       <td className={classes}>
                         <div className="flex items-center gap-3">
                           <div>
@@ -141,6 +173,18 @@ export const Movements = () => {
                       <td className={classes}>
                         <CurrencyRow currency={currency} value={value} />
                       </td>
+                      {userData?.role === "admin" && (
+                        <td className={`${classes} flex justify-start `}>
+                          <Tooltip content="Detalhes">
+                            <IconButton
+                              onClick={handleNavigateDetails}
+                              variant="text"
+                            >
+                              <EyeIcon className="w-4 h-4 text-gray-400" />
+                            </IconButton>
+                          </Tooltip>
+                        </td>
+                      )}
                     </tr>
                   );
                 }

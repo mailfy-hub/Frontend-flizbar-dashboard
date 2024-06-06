@@ -71,7 +71,7 @@ export function InputWithDropdown() {
   };
 
   return (
-    <div className="relative flex w-full max-w-[24rem]">
+    <div className="relative flex w-full ">
       <Menu placement="bottom-start">
         <MenuHandler>
           <Button

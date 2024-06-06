@@ -29,8 +29,8 @@ export const UserInsert = () => {
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
-              <Input type="email" label="E-mail de acesso" />
-              <Input type="text" label="Nome" />
+              <Input type="email" label="E-mail de acesso*" />
+              <Input type="text" label="Nome*" />
             </div>
           </div>
         </div>

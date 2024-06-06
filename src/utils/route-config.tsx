@@ -23,6 +23,7 @@ import { IncomeInsert } from "../pages/Dashboard/income/insert";
 import { Movements } from "../pages/Dashboard/movements";
 import { MyAccount } from "../pages/Dashboard/myAccount";
 import { Quotes } from "../pages/Dashboard/quotes";
+import { QuotesEdit } from "../pages/Dashboard/quotes/edit";
 import { QuotesInsert } from "../pages/Dashboard/quotes/insert";
 import { Readjustments } from "../pages/Dashboard/readjustments";
 import { ReadjustmentsInsert } from "../pages/Dashboard/readjustments/insert";
@@ -35,6 +36,7 @@ import { WalletEdit } from "../pages/Dashboard/wallets/edit";
 import { WalletInsert } from "../pages/Dashboard/wallets/insert";
 import { Withdraw } from "../pages/Dashboard/withdraw";
 import { WithdrawInsert } from "../pages/Dashboard/withdraw/insert";
+import { ContribuitionDetails } from "../pages/Dashboard/contribuitions/details";
 
 interface subRoutesMapped {
   path: string;
@@ -181,6 +183,11 @@ export const routesMapped: routeMapped[] = [
         path: "insert",
         element: <ContribuitionInsert />,
       },
+      {
+        name: "Detalhes do aporte",
+        path: "details",
+        element: <ContribuitionDetails />,
+      },
     ],
   },
   {
@@ -275,6 +282,11 @@ export const routesMapped: routeMapped[] = [
         name: "Adicione uma cotação",
         path: "insert",
         element: <QuotesInsert />,
+      },
+      {
+        name: "Edite uma cotação",
+        path: "edit",
+        element: <QuotesEdit />,
       },
     ],
   },

@@ -12,6 +12,7 @@ export const ContribuitionInsert = () => {
   const handleNavigateBack = () => {
     navigate(-1);
   };
+
   return (
     <div>
       <div className="flex items-center gap-4">
@@ -44,6 +45,13 @@ export const ContribuitionInsert = () => {
               </Select>
               <Input type="number" label="Valor do aporte" />
             </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              <Input
+                type="number"
+                label="Valor da cotação do dolar"
+                value={5.12}
+              />
+            </div>
           </div>
         </div>
         <div className="w-full flex justify-end mt-8">
@@ -55,3 +63,4 @@ export const ContribuitionInsert = () => {
     </div>
   );
 };
+

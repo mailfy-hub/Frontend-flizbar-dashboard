@@ -1,7 +1,7 @@
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
-  MagnifyingGlassIcon,
+  TrashIcon,
 } from "@heroicons/react/16/solid";
 import {
   Button,
@@ -9,11 +9,20 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
-  Input,
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  DialogHeader,
+  IconButton,
+  Tooltip,
   Typography,
 } from "@material-tailwind/react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
+import SuccessDialog from "../../../components/successDialog";
+import { CurrencyRow } from "../../../components/table/currencyRow";
+import { useAuth } from "../../../hook/auth";
 
 interface TABLE_ROW_PROPS {
   wallet: string;
@@ -35,15 +44,68 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
   },
 ];
 
-const TABLE_HEAD = ["#", "Fundo", "Valor", "Data de criação"];
-
 export const Withdraw = () => {
   const navigate = useNavigate();
   const handleInsert = () => {
     navigate("insert");
   };
+  const { userData } = useAuth();
+
+  const TABLE_HEAD =
+    userData?.role === "admin"
+      ? ["Código", "Cliente", "Fundo", "Valor", "Data de criação"]
+      : ["Código", "Fundo", "Valor", "Data de criação"];
+
+  const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
+  const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+  const handleOpenSuccessDelete = () => {
+    handleToggleConfirmationDialog();
+    handleToggleSuccessDialog();
+  };
+
+  const handleToggleSuccessDialog = () => {
+    setOpenSuccessDialog(!openSuccessDialog);
+  };
+
+  const handleToggleConfirmationDialog = () => {
+    setOpenConfimationDialog(!openConfimationDialog);
+  };
+
   return (
     <div>
+      <SuccessDialog
+        open={openSuccessDialog}
+        handleClose={handleToggleSuccessDialog}
+      />
+      <Dialog
+        size="xs"
+        open={openConfimationDialog}
+        handler={handleToggleConfirmationDialog}
+      >
+        <DialogHeader>
+          Tem certeza que deseja <br /> deletar este registro?
+        </DialogHeader>
+        <DialogBody>
+          Essa ação é irreversível, tome cuidado ao prosseguir.
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="red"
+            onClick={handleToggleConfirmationDialog}
+            className="mr-1"
+          >
+            <span>Cancelar</span>
+          </Button>
+          <Button
+            variant="gradient"
+            color="red"
+            onClick={handleOpenSuccessDelete}
+          >
+            <span>Confirmar</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
       <SectionTitle text="Todos resgates" />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
@@ -60,12 +122,6 @@ export const Withdraw = () => {
             </Typography>
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
-            <div className="w-full md:w-72">
-              <Input
-                label="Nome do cliente"
-                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              />
-            </div>
             <Button
               onClick={() => {
                 handleInsert();
@@ -94,48 +150,77 @@ export const Withdraw = () => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROW.map(({ code, created_at, wallet }) => {
-                const classes = "!p-6 ";
-                return (
-                  <tr key={code}>
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        <div>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="!font-semibold"
-                          >
-                            {code}
-                          </Typography>
+              {TABLE_ROW.map(
+                ({ code, created_at, customer, wallet, currency, value }) => {
+                  const classes = "!p-6 ";
+                  return (
+                    <tr key={code}>
+                      <td className={classes}>
+                        <div className="flex items-center gap-3">
+                          <div>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="!font-semibold"
+                            >
+                              {code}
+                            </Typography>
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        <div>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="!font-semibold"
-                          >
-                            {wallet}
-                          </Typography>
-                        </div>
-                      </div>
-                    </td>
+                      </td>
+                      {userData?.role === "admin" && (
+                        <td className={classes}>
+                          <div className="flex items-center gap-3">
+                            <div>
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="!font-semibold"
+                              >
+                                {customer}
+                              </Typography>
+                            </div>
+                          </div>
+                        </td>
+                      )}
 
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        className="!font-normal text-gray-600"
-                      >
-                        {created_at}
-                      </Typography>
-                    </td>
-                  </tr>
-                );
-              })}
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          className="!font-normal text-gray-600"
+                        >
+                          {wallet}
+                        </Typography>
+                      </td>
+
+                      <td className={`${classes} flex items-center gap-2`}>
+                        <CurrencyRow currency={currency} value={value} />
+                      </td>
+
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          className="!font-normal text-gray-600"
+                        >
+                          {created_at}
+                        </Typography>
+                      </td>
+                      {userData?.role === "admin" && (
+                        <td className={`${classes} flex justify-start `}>
+                          <Tooltip content="Excluir">
+                            <IconButton
+                              onClick={handleToggleConfirmationDialog}
+                              variant="text"
+                            >
+                              <TrashIcon className="w-4 h-4 text-gray-400" />
+                            </IconButton>
+                          </Tooltip>
+                        </td>
+                      )}
+                    </tr>
+                  );
+                }
+              )}
             </tbody>
           </table>
         </CardBody>

@@ -1,15 +1,29 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  PencilIcon,
+  TrashIcon,
+} from "@heroicons/react/16/solid";
 import {
   Button,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  DialogHeader,
+  IconButton,
+  Tooltip,
   Typography,
 } from "@material-tailwind/react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
+import SuccessDialog from "../../../components/successDialog";
 import { CurrencyRow } from "../../../components/table/currencyRow";
+import { useAuth } from "../../../hook/auth";
 
 interface CURRENCY_PROPS {
   currency_code: "USD" | "EUR" | "JPY" | "BRL";
@@ -51,11 +65,66 @@ const TABLE_HEAD = ["Código", "Data de criação", "Dólar", "Yene", "Euro"];
 
 export const Quotes = () => {
   const navigate = useNavigate();
+  const { userData } = useAuth();
+
   const handleInsert = () => {
     navigate("insert");
   };
+
+  const handleEdit = () => {
+    navigate("edit");
+  };
+
+  const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
+  const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+  const handleOpenSuccessDelete = () => {
+    handleToggleConfirmationDialog();
+    handleToggleSuccessDialog();
+  };
+
+  const handleToggleSuccessDialog = () => {
+    setOpenSuccessDialog(!openSuccessDialog);
+  };
+
+  const handleToggleConfirmationDialog = () => {
+    setOpenConfimationDialog(!openConfimationDialog);
+  };
+
   return (
     <div>
+      <SuccessDialog
+        open={openSuccessDialog}
+        handleClose={handleToggleSuccessDialog}
+      />
+      <Dialog
+        size="xs"
+        open={openConfimationDialog}
+        handler={handleToggleConfirmationDialog}
+      >
+        <DialogHeader>
+          Tem certeza que deseja <br /> deletar este registro?
+        </DialogHeader>
+        <DialogBody>
+          Essa ação é irreversível, tome cuidado ao prosseguir.
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="red"
+            onClick={handleToggleConfirmationDialog}
+            className="mr-1"
+          >
+            <span>Cancelar</span>
+          </Button>
+          <Button
+            variant="gradient"
+            color="red"
+            onClick={handleOpenSuccessDelete}
+          >
+            <span>Confirmar</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
       <SectionTitle text="Todas cotações" />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
@@ -155,6 +224,23 @@ export const Quotes = () => {
                         value={JPY.value}
                       />
                     </td>
+                    {userData?.role === "admin" && (
+                      <td className={`${classes} flex justify-end `}>
+                        <Tooltip content="Editar">
+                          <IconButton onClick={handleEdit} variant="text">
+                            <PencilIcon className="w-4 h-4 text-gray-400" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip content="Excluir">
+                          <IconButton
+                            onClick={handleToggleConfirmationDialog}
+                            variant="text"
+                          >
+                            <TrashIcon className="w-4 h-4 text-gray-400" />
+                          </IconButton>
+                        </Tooltip>
+                      </td>
+                    )}
                   </tr>
                 );
               })}

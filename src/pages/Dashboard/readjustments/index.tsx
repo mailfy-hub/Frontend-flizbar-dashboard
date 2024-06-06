@@ -2,6 +2,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   MagnifyingGlassIcon,
+  TrashIcon,
 } from "@heroicons/react/16/solid";
 import {
   Button,
@@ -9,15 +10,25 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  DialogHeader,
+  IconButton,
   Input,
+  Tooltip,
   Typography,
 } from "@material-tailwind/react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
+import SuccessDialog from "../../../components/successDialog";
 import { CurrencyRow } from "../../../components/table/currencyRow";
+import { useAuth } from "../../../hook/auth";
 
 interface TABLE_ROW_PROPS {
-  wallet: string;
+  originFund: string;
+  destinyFund: string;
   created_at: string;
   value: number;
   currency: "BRL" | "USD" | "EUR" | "JPY";
@@ -28,7 +39,8 @@ interface TABLE_ROW_PROPS {
 
 const TABLE_ROW: TABLE_ROW_PROPS[] = [
   {
-    wallet: "T-BOND Brazil",
+    originFund: "T-BOND USA",
+    destinyFund: "T-BOND Brazil",
     value: 2700.0,
     type: "Resgate",
     created_at: "22/05/2023",
@@ -39,21 +51,71 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
 ];
 
 const TABLE_HEAD = [
-  "#",
-  "Fundo",
-  "Tipo",
-  "Valor",
-  "Cliente",
+  "Código",
   "Data de criação",
+  "Cliente",
+  "Fundo de origem",
+  "Fundo de destino",
+  "Valor",
 ];
 
 export const Readjustments = () => {
   const navigate = useNavigate();
+  const { userData } = useAuth();
+
   const handleInsert = () => {
     navigate("insert");
   };
+
+  const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
+  const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+  const handleOpenSuccessDelete = () => {
+    handleToggleConfirmationDialog();
+    handleToggleSuccessDialog();
+  };
+
+  const handleToggleSuccessDialog = () => {
+    setOpenSuccessDialog(!openSuccessDialog);
+  };
+
+  const handleToggleConfirmationDialog = () => {
+    setOpenConfimationDialog(!openConfimationDialog);
+  };
   return (
     <div>
+      <SuccessDialog
+        open={openSuccessDialog}
+        handleClose={handleToggleSuccessDialog}
+      />
+      <Dialog
+        size="xs"
+        open={openConfimationDialog}
+        handler={handleToggleConfirmationDialog}
+      >
+        <DialogHeader>
+          Tem certeza que deseja <br /> deletar este registro?
+        </DialogHeader>
+        <DialogBody>
+          Essa ação é irreversível, tome cuidado ao prosseguir.
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="red"
+            onClick={handleToggleConfirmationDialog}
+            className="mr-1"
+          >
+            <span>Cancelar</span>
+          </Button>
+          <Button
+            variant="gradient"
+            color="red"
+            onClick={handleOpenSuccessDelete}
+          >
+            <span>Confirmar</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
       <SectionTitle text="Todas readequações" />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
@@ -110,9 +172,9 @@ export const Readjustments = () => {
                   created_at,
                   currency,
                   value,
-                  wallet,
                   customer,
-                  type,
+                  destinyFund,
+                  originFund,
                 }) => {
                   const classes = "!p-6 ";
                   return (
@@ -130,31 +192,14 @@ export const Readjustments = () => {
                           </div>
                         </div>
                       </td>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="!font-semibold"
-                            >
-                              {wallet}
-                            </Typography>
-                          </div>
-                        </div>
-                      </td>
+
                       <td className={classes}>
                         <Typography
                           variant="small"
                           className="!font-normal text-gray-600"
                         >
-                          {type}
+                          {created_at}
                         </Typography>
-                      </td>
-                      <td className={classes}>
-                        <div>
-                          <CurrencyRow currency={currency} value={value} />
-                        </div>
                       </td>
                       <td className={classes}>
                         <Typography
@@ -165,13 +210,49 @@ export const Readjustments = () => {
                         </Typography>
                       </td>
                       <td className={classes}>
-                        <Typography
-                          variant="small"
-                          className="!font-normal text-gray-600"
-                        >
-                          {created_at}
-                        </Typography>
+                        <div className="flex items-center gap-3">
+                          <div>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="!font-semibold"
+                            >
+                              {originFund}
+                            </Typography>
+                          </div>
+                        </div>
                       </td>
+                      <td className={classes}>
+                        <div className="flex items-center gap-3">
+                          <div>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="!font-semibold"
+                            >
+                              {destinyFund}
+                            </Typography>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td className={classes}>
+                        <div>
+                          <CurrencyRow currency={currency} value={value} />
+                        </div>
+                      </td>
+                      {userData?.role === "admin" && (
+                        <td className={`${classes} flex justify-start `}>
+                          <Tooltip content="Detalhes">
+                            <IconButton
+                              onClick={handleToggleConfirmationDialog}
+                              variant="text"
+                            >
+                              <TrashIcon className="w-4 h-4 text-gray-400" />
+                            </IconButton>
+                          </Tooltip>
+                        </td>
+                      )}
                     </tr>
                   );
                 }

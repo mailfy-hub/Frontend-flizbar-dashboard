@@ -1,12 +1,58 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Input, Option, Select, Button } from "@material-tailwind/react";
+import { Button, Input, Option, Select } from "@material-tailwind/react";
 import { useState } from "react";
 import { SectionTitle } from "../../../components/sectionTitle";
+
+type contact = {
+  index: number;
+  name: string;
+  contact: string;
+};
+
+type MaritalStatus =
+  | "Solteiro(a)"
+  | "Casado(a)"
+  | "Divorciado(a)"
+  | "Viúvo(a)"
+  | "União Estável"
+  | "Outro";
 
 export const EditClient = () => {
   const [documentType, setDocumentType] = useState<"pf" | "pj">("pf");
   const handleDocumentType = (docType: string) => {
     if (docType === "pf" || docType === "pj") setDocumentType(docType);
+  };
+
+  const [selectedMaritalStatus, setSelectedMaritalStatus] =
+    useState<MaritalStatus>("Solteiro(a)"); // Initial state
+
+  const handleMaritalStatusChange = (val: MaritalStatus) => {
+    console.log(val);
+    setSelectedMaritalStatus(val);
+  };
+
+  const [contactsList, setContactsList] = useState<contact[]>([
+    {
+      index: 1,
+      name: "",
+      contact: "",
+    },
+  ]);
+
+  const handleNewContact = () => {
+    const newContact = {
+      index: contactsList.length + 1,
+      name: "",
+      contact: "",
+    };
+
+    setContactsList((state) => [newContact, ...state]);
+  };
+  const handleRemoveContact = (idx: number) => {
+    const contactsFiltered = contactsList.filter(
+      (contact) => contact.index !== idx
+    );
+    setContactsList(contactsFiltered);
   };
 
   return (
@@ -49,6 +95,7 @@ export const EditClient = () => {
             )}
             <Select label="Nacionalidade">
               <Option>Brasileiro</Option>
+              <Option>Outra</Option>
             </Select>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -61,7 +108,7 @@ export const EditClient = () => {
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             {documentType == "pf" && (
-              <Select label="Sexo">
+              <Select label="Gênero">
                 <Option>Masculino</Option>
                 <Option>Feminino</Option>
                 <Option>Prefiro não declarar</Option>
@@ -78,7 +125,9 @@ export const EditClient = () => {
         <div className="mt-8 flex flex-col gap-6 ">
           <div className="grid md:grid-cols-2 gap-6">
             <Select label="Tipo do endereço">
-              <Option>1</Option>
+              <Option>Residencial</Option>
+              <Option>Comercial</Option>
+              <Option>Outro</Option>
             </Select>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -105,14 +154,30 @@ export const EditClient = () => {
           <SectionTitle size="sm" text="Contato" />
         </div>
         <div className="mt-8 flex flex-col gap-6 ">
-          <div className="grid md:grid-cols-3 gap-6">
-            <Select label="Tipo do contato">
-              <Option>1</Option>
-            </Select>
-            <Input type="email" label="Nome" />
-            <Input type="email" label="Contato" />
+          <div className="grid gap-6">
+            {contactsList.map((contact) => {
+              return (
+                <div className="flex items-center gap-6">
+                  <Input type="email" label="Nome" />
+                  <Input type="email" label="Número de Telefone" />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleRemoveContact(contact.index);
+                    }}
+                    className="font-body font-medium text-GRAY text-body14 underline hover:text-GOLD_MAIN text-nowrap"
+                  >
+                    Remover
+                  </button>
+                </div>
+              );
+            })}
           </div>
-          <Button className="bg-GRAY_100 w-full md:w-auto text-GRAY_400">
+          <Button
+            type="button"
+            onClick={handleNewContact}
+            className="bg-GRAY_100 w-full md:w-auto text-GRAY_400"
+          >
             Novo contato
           </Button>
         </div>
@@ -128,20 +193,60 @@ export const EditClient = () => {
             <Input type="text" label="Nome da mãe" />
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            <Select label="Estado civil">
-              <Option>1</Option>
+            <Select
+              value={selectedMaritalStatus}
+              onChange={(val) =>
+                val && handleMaritalStatusChange(val as MaritalStatus)
+              }
+              label="Estado civil"
+            >
+              <Option value="Solteiro(a)">Solteiro(a)</Option>
+              <Option value="Casado(a)">Casado(a)</Option>
+              <Option value="Divorciado(a)">Divorciado(a)</Option>
+              <Option value="Viúvo(a)">Viúvo(a)</Option>
+              <Option value="União Estável">União Estável</Option>
+              <Option value="Outro">Outro</Option>
             </Select>
             <Select label="Escolaridade">
-              <Option>1</Option>
+              <Option>Ensino Médio incompleto</Option>
+              <Option>Ensino médio completo</Option>
+              <Option>Nível Técnico</Option>
+              <Option>Superior Incompleto</Option>
+              <Option>Superior Completo</Option>
+              <Option>Pós graduação</Option>
+              <Option>Mestrado</Option>
+              <Option>Doutorado</Option>
+              <Option>Outro</Option>
             </Select>
-            <Input type="text" label="É pessoa politicamente exposta?" />
+            <Select label="É pessoa politicamente exposta?">
+              <Option>Sim</Option>
+              <Option>Não</Option>
+            </Select>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             <Input type="text" label="Qual sua profissão?" />
             <Select label="Declara imposto ao governo dos EUA?">
-              <Option>1</Option>
+              <Option>Sim</Option>
+              <Option>Não</Option>
             </Select>
           </div>
+          {selectedMaritalStatus == "União Estável" && (
+            <div className="grid md:grid-cols-2 gap-6">
+              <Input label="Nome do cônjuge" />
+            </div>
+          )}
+          {selectedMaritalStatus == "União Estável" && (
+            <div className="grid md:grid-cols-2 gap-6">
+              <Select label="Tipo do documento" className="w-full">
+                <Option value="Inscrição estadual">Inscrição estadual</Option>
+                <Option value="Carteira de habilitação">
+                  Carteira de habilitação
+                </Option>
+                <Option value="Passaporte">Passaporte</Option>
+              </Select>
+              <Input label="Número do documento" className="w-full" />
+            </div>
+          )}
         </div>
       </div>
       <div className="bg-WHITE p-8 w-full rounded-md mt-8">
@@ -152,7 +257,10 @@ export const EditClient = () => {
         <div className="mt-8 flex flex-col gap-6 ">
           <div className="grid md:grid-cols-2 gap-6">
             <Select label="Tipo da conta">
-              <Option>1</Option>
+              <Option>Conta corrente</Option>
+              <Option>Conta conjunta</Option>
+              <Option>Conta poupança</Option>
+              <Option>Outra</Option>
             </Select>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -168,7 +276,11 @@ export const EditClient = () => {
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             <Select label="Tipo da chave PIX">
-              <Option>1</Option>
+              <Option>Chave e-mail</Option>
+              <Option>Chave número de telefone</Option>
+              <Option>Chave CPF</Option>
+              <Option>Chave CNPJ</Option>
+              <Option>Chave aleatória</Option>
             </Select>
             <Input type="text" label="Chave PIX" />
           </div>
