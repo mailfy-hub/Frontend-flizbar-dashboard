@@ -46,7 +46,7 @@ const TABLE_ROW = [
   },
 ];
 
-const TABLE_HEAD = ["Código", "Nome do fundo", "Moeda", " "];
+const TABLE_HEAD = ["Código", "Nome do fundo", "Moeda", "Ações"];
 
 export const Funds = () => {
   const navigate = useNavigate();

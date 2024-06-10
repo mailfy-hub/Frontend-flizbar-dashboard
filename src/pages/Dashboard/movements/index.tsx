@@ -49,7 +49,7 @@ export const Movements = () => {
   };
   const TABLE_HEAD =
     userData?.role === "admin"
-      ? ["Código", "Cliente", "Data", "Tipo", "Fundo", "Valor"]
+      ? ["Código", "Cliente", "Data", "Tipo", "Fundo", "Valor", "Ações"]
       : ["Código", "Data", "Tipo", "Fundo", "Valor"];
   return (
     <div>

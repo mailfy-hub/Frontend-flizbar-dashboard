@@ -34,7 +34,7 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
   },
 ];
 
-const TABLE_HEAD = ["#", "Fundo", "Valor", "Data de criação"];
+const TABLE_HEAD = ["Código", "Fundo", "Valor", "Data de criação"];
 
 export const Income = () => {
   const navigate = useNavigate();

@@ -32,7 +32,7 @@ const TABLE_ROW = [
   },
 ];
 
-const TABLE_HEAD = ["ID", "Nome", "Endereço de e-mail", "Data de criação", " "];
+const TABLE_HEAD = ["Código", "Nome", "Endereço de e-mail", "Data de criação", "Ações"];
 
 export const Users = () => {
   const navigate = useNavigate();

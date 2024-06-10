@@ -41,7 +41,7 @@ const TABLE_HEAD = [
   "CDI",
   "Poupança",
   "Taxa de juros (BC)",
-  "",
+  "Ações",
 ];
 
 export const ComparativeValues = () => {

@@ -15,6 +15,7 @@ module.exports = withMT({
         GRAY_800: "#1B1917",
         GRAY_500: "#616161",
         GRAY_400: "#757575",
+        EMERALD_500: "#009A76",
       },
       fontFamily: {
         display: '"Lato", sans-serif',

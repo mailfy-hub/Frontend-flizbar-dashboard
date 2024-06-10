@@ -34,7 +34,7 @@ const TABLE_ROW = [
   },
 ];
 
-const TABLE_HEAD = ["Código", "Nome", ""];
+const TABLE_HEAD = ["Código", "Nome", "Ações"];
 
 export const Wallets = () => {
   const navigate = useNavigate();

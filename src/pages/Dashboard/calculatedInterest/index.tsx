@@ -31,7 +31,7 @@ const TABLE_ROW = [
   },
 ];
 
-const TABLE_HEAD = ["Código", "Data", "Valor", " "];
+const TABLE_HEAD = ["Código", "Data", "Valor", "Ações"];
 
 export const CalculedInterest = () => {
   const navigate = useNavigate();

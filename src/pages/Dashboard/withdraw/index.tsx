@@ -53,7 +53,7 @@ export const Withdraw = () => {
 
   const TABLE_HEAD =
     userData?.role === "admin"
-      ? ["Código", "Cliente", "Fundo", "Valor", "Data de criação"]
+      ? ["Código", "Cliente", "Fundo", "Valor", "Data de criação", "Ações"]
       : ["Código", "Fundo", "Valor", "Data de criação"];
 
   const [openConfimationDialog, setOpenConfimationDialog] = useState(false);

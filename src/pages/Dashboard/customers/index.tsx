@@ -58,7 +58,7 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
   },
 ];
 
-const TABLE_HEAD = ["Código", "Nome", "Tipo", "Telefone", "E-mail", ""];
+const TABLE_HEAD = ["Código", "Nome", "Tipo", "Telefone", "E-mail", "Ações"];
 
 export const Customers = () => {
   const navigate = useNavigate();

@@ -61,7 +61,7 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
   },
 ];
 
-const TABLE_HEAD = ["Código", "Data de criação", "Dólar", "Yene", "Euro"];
+const TABLE_HEAD = ["Código", "Data de criação", "Dólar", "Yene", "Euro", "Ações"];
 
 export const Quotes = () => {
   const navigate = useNavigate();

@@ -57,6 +57,7 @@ const TABLE_HEAD = [
   "Fundo de origem",
   "Fundo de destino",
   "Valor",
+  "Ações"
 ];
 
 export const Readjustments = () => {
