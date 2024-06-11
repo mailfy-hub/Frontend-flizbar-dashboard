@@ -43,6 +43,7 @@ interface subRoutesMapped {
   name: string;
   element: ReactNode;
 }
+
 export interface routeMapped {
   path: string;
   name: string;
@@ -52,10 +53,29 @@ export interface routeMapped {
   subRoutes: subRoutesMapped[] | [];
   addToSidebar: boolean;
   isOutletRoute: boolean;
+  blockSidebarInteractivity: boolean;
+}
+
+function createRouteMapped(route: Partial<routeMapped>): routeMapped {
+  return {
+    path: route.path || "",
+    name: route.name || "",
+    icon: route.icon,
+    roleAccess: route.roleAccess || [],
+    element: route.element!,
+    subRoutes: route.subRoutes || [],
+    addToSidebar: route.addToSidebar !== undefined ? route.addToSidebar : true,
+    isOutletRoute:
+      route.isOutletRoute !== undefined ? route.isOutletRoute : false,
+    blockSidebarInteractivity:
+      route.blockSidebarInteractivity !== undefined
+        ? route.blockSidebarInteractivity
+        : false,
+  };
 }
 
 export const routesMapped: routeMapped[] = [
-  {
+  createRouteMapped({
     path: "/",
     element: <Home />,
     name: "Dashboard",
@@ -64,8 +84,8 @@ export const routesMapped: routeMapped[] = [
     subRoutes: [],
     addToSidebar: true,
     isOutletRoute: true,
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/profile",
     element: <UserDataProfile />,
     name: "Perfil do usuário",
@@ -74,8 +94,9 @@ export const routesMapped: routeMapped[] = [
     subRoutes: [],
     addToSidebar: false,
     isOutletRoute: true,
-  },
-  {
+    blockSidebarInteractivity: true,
+  }),
+  createRouteMapped({
     path: "/my-account",
     element: <MyAccount />,
     name: "Minha conta",
@@ -84,8 +105,8 @@ export const routesMapped: routeMapped[] = [
     subRoutes: [],
     addToSidebar: false,
     isOutletRoute: true,
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/users",
     element: <Users />,
     addToSidebar: true,
@@ -105,8 +126,8 @@ export const routesMapped: routeMapped[] = [
         element: <UserInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/customers",
     name: "Clientes",
     addToSidebar: true,
@@ -126,8 +147,8 @@ export const routesMapped: routeMapped[] = [
         element: <CustomerInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/funds",
     name: "Fundos",
     addToSidebar: true,
@@ -147,8 +168,8 @@ export const routesMapped: routeMapped[] = [
         element: <FundsInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/wallets",
     name: "Carteiras",
     addToSidebar: true,
@@ -168,8 +189,8 @@ export const routesMapped: routeMapped[] = [
         element: <WalletInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/contributions",
     name: "Aportes",
     addToSidebar: true,
@@ -189,8 +210,8 @@ export const routesMapped: routeMapped[] = [
         element: <ContribuitionDetails />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/income",
     name: "Rendimentos",
     addToSidebar: true,
@@ -205,8 +226,8 @@ export const routesMapped: routeMapped[] = [
         element: <IncomeInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/withdraw",
     name: "Resgates",
     addToSidebar: true,
@@ -221,8 +242,8 @@ export const routesMapped: routeMapped[] = [
         element: <WithdrawInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/movements",
     name: "Movimentações",
     addToSidebar: true,
@@ -231,8 +252,8 @@ export const routesMapped: routeMapped[] = [
     roleAccess: ["all"],
     element: <Movements />,
     subRoutes: [],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/readjustments",
     name: "Readequações",
     addToSidebar: true,
@@ -247,8 +268,8 @@ export const routesMapped: routeMapped[] = [
         element: <ReadjustmentsInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/comparative-values",
     name: "Valores comparativos",
     icon: "heroicons:table-cells",
@@ -268,8 +289,8 @@ export const routesMapped: routeMapped[] = [
         element: <ComparativeValuesInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/quotes",
     name: "Cotações",
     icon: "heroicons:chart-bar",
@@ -289,8 +310,8 @@ export const routesMapped: routeMapped[] = [
         element: <QuotesEdit />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/calculated-interest",
     name: "Juros calculados",
     addToSidebar: true,
@@ -310,8 +331,8 @@ export const routesMapped: routeMapped[] = [
         element: <CalculedInterestInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/interested-calculator",
     element: <Calculator />,
     name: "Calculadora de juros",
@@ -320,8 +341,8 @@ export const routesMapped: routeMapped[] = [
     subRoutes: [],
     addToSidebar: true,
     isOutletRoute: true,
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/verify-access",
     element: <VerifyAccess />,
     name: "Verifição de acesso",
@@ -335,5 +356,5 @@ export const routesMapped: routeMapped[] = [
     ],
     addToSidebar: false,
     isOutletRoute: false,
-  },
+  }),
 ];

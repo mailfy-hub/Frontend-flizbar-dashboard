@@ -43,7 +43,11 @@ export interface ActiveRouteProps {
   path: string;
 }
 
-export const Header = () => {
+interface HeaderType {
+  isBlocked?: boolean;
+}
+
+export const Header = ({ isBlocked = false }: HeaderType) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeMenu = () => setIsMenuOpen(false);
@@ -154,33 +158,40 @@ export const Header = () => {
                     </span>
                   </div>
                 </div>
-                <ChevronDownIcon
-                  strokeWidth={2.5}
-                  className={`h-3 w-3 transition-transform ${
-                    isMenuOpen ? "rotate-180" : ""
-                  }`}
-                />
+                {!isBlocked && (
+                  <ChevronDownIcon
+                    strokeWidth={2.5}
+                    className={`h-3 w-3 transition-transform ${
+                      isMenuOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                )}
               </Button>
             </MenuHandler>
             <MenuList className="p-1">
               {profileMenuItems.map(({ label, icon, link }, _) => {
-                return (
-                  <MenuItem key={label} onClick={closeMenu}>
-                    <Link className="flex items-center gap-2 rounded" to={link}>
-                      {React.createElement(icon, {
-                        className: "h-4 w-4",
-                        strokeWidth: 2,
-                      })}
-                      <Typography
-                        as="span"
-                        variant="small"
-                        className="font-normal"
+                if (!isBlocked) {
+                  return (
+                    <MenuItem key={label} onClick={closeMenu}>
+                      <Link
+                        className="flex items-center gap-2 rounded"
+                        to={link}
                       >
-                        {label}
-                      </Typography>
-                    </Link>
-                  </MenuItem>
-                );
+                        {React.createElement(icon, {
+                          className: "h-4 w-4",
+                          strokeWidth: 2,
+                        })}
+                        <Typography
+                          as="span"
+                          variant="small"
+                          className="font-normal"
+                        >
+                          {label}
+                        </Typography>
+                      </Link>
+                    </MenuItem>
+                  );
+                }
               })}
             </MenuList>
           </Menu>

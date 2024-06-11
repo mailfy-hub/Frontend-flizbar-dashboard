@@ -79,8 +79,8 @@ export const InfoClient = () => {
           </div>
         </form>
       ) : (
-        <form className="">
-          <div className="bg-WHITE p-8 w-full rounded-md">
+        <div className="">
+          <form className="bg-WHITE p-8 w-full rounded-md">
             <div className="flex items-center gap-4">
               <Icon height={16} icon={"heroicons:user"} color="black" />
               <SectionTitle size="sm" text="Dados de acesso" />
@@ -89,9 +89,14 @@ export const InfoClient = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 <Input type="email" label="E-mail de acesso" />
               </div>
+              <div className="w-full">
+                <Button className="bg-GOLD_MAIN w-full md:w-auto">
+                  Atualizar dados
+                </Button>
+              </div>
             </div>
-          </div>
-          <div className="bg-WHITE p-8 w-full rounded-md mt-8">
+          </form>
+          <form className="bg-WHITE p-8 w-full rounded-md mt-8">
             <div className="flex items-center gap-4">
               <Icon height={16} icon={"heroicons:user"} color="black" />
               <SectionTitle size="sm" text="Dados gerais" />
@@ -138,9 +143,14 @@ export const InfoClient = () => {
                   </Select>
                 )}
               </div>
+              <div className="w-full">
+                <Button className="bg-GOLD_MAIN w-full md:w-auto">
+                  Atualizar dados
+                </Button>
+              </div>
             </div>
-          </div>
-          <div className="bg-WHITE p-8 w-full rounded-md mt-8">
+          </form>
+          <form className="bg-WHITE p-8 w-full rounded-md mt-8">
             <div className="flex items-center gap-4">
               <Icon height={16} icon={"heroicons:map-pin"} color="black" />
               <SectionTitle size="sm" text="Endereço" />
@@ -169,9 +179,14 @@ export const InfoClient = () => {
                 <Input type="text" label="Complemento" />
                 <Input type="text" label="Referência" />
               </div>
+              <div className="w-full">
+                <Button className="bg-GOLD_MAIN w-full md:w-auto">
+                  Atualizar endereço
+                </Button>
+              </div>
             </div>
-          </div>
-          <div className="bg-WHITE p-8 w-full rounded-md mt-8">
+          </form>
+          <form className="bg-WHITE p-8 w-full rounded-md mt-8">
             <div className="flex items-center gap-4">
               <Icon height={16} icon={"heroicons:user-circle"} color="black" />
               <SectionTitle size="sm" text="Contato" />
@@ -180,7 +195,7 @@ export const InfoClient = () => {
               <div className="grid gap-6">
                 {contactsList.map((contact) => {
                   return (
-                    <div className="flex items-center gap-6">
+                    <div className="flex md:items-center flex-col md:flex-row items-end gap-6">
                       <Input type="email" label="Nome" />
                       <Input type="email" label="Número de Telefone" />
                       <button
@@ -196,16 +211,22 @@ export const InfoClient = () => {
                   );
                 })}
               </div>
-              <Button
-                type="button"
-                onClick={handleNewContact}
-                className="bg-GRAY_100 w-full md:w-auto text-GRAY_400"
-              >
-                Novo contato
-              </Button>
+
+              <div className="w-full flex flex-col md:flex-row items-center gap-4">
+                <Button
+                  type="button"
+                  onClick={handleNewContact}
+                  className="bg-GRAY_100 w-full md:w-auto text-GRAY_400"
+                >
+                  Novo contato
+                </Button>
+                <Button className="bg-GOLD_MAIN w-full md:w-auto">
+                  Atualizar contatos
+                </Button>
+              </div>
             </div>
-          </div>
-          <div className="bg-WHITE p-8 w-full rounded-md mt-8">
+          </form>
+          <form className="bg-WHITE p-8 w-full rounded-md mt-8">
             <div className="flex items-center gap-4">
               <Icon height={16} icon={"heroicons:user"} color="black" />
               <SectionTitle size="sm" text="Dados complementares" />
@@ -272,9 +293,14 @@ export const InfoClient = () => {
                   <Input label="Número do documento" className="w-full" />
                 </div>
               )}
+              <div>
+                <Button className="bg-GOLD_MAIN w-full md:w-auto">
+                  Atualizar dados
+                </Button>
+              </div>
             </div>
-          </div>
-          <div className="bg-WHITE p-8 w-full rounded-md mt-8">
+          </form>
+          <form className="bg-WHITE p-8 w-full rounded-md mt-8">
             <div className="flex items-center gap-4">
               <Icon height={16} icon={"heroicons:banknotes"} color="black" />
               <SectionTitle size="sm" text="Dados bancários" />
@@ -309,9 +335,14 @@ export const InfoClient = () => {
                 </Select>
                 <Input type="text" label="Chave PIX" />
               </div>
+              <div className="w-full">
+                <Button className="bg-GOLD_MAIN w-full md:w-auto">
+                  Atualizar dados bancários
+                </Button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       )}
     </div>
   );

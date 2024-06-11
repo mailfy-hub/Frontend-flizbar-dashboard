@@ -41,10 +41,10 @@ export function Login() {
   };
 
   useEffect(() => {
-    if (location.pathname === "/login") {
-      return setRoleLogin("user");
-    } else if (location.pathname === "/login/admin") {
+    if (location.pathname === "/login/admin") {
       return setRoleLogin("admin");
+    } else {
+      return setRoleLogin("user");
     }
   }, [location]);
 

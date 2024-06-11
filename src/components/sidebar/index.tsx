@@ -7,7 +7,11 @@ import { routesMapped } from "../../utils/route-config";
 import { Logo } from "../logo";
 import { PageButton } from "./PageButton";
 
-export const SidebarLayout = () => {
+interface SidebarLayout {
+  isBlocked?: boolean;
+}
+
+export const SidebarLayout = ({ isBlocked = false }: SidebarLayout) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [activeRoute, setActiveRoute] = useState<string>("");
@@ -25,7 +29,7 @@ export const SidebarLayout = () => {
   }, [location]);
 
   return (
-    <div className="hidden md:block max-w-[280px] w-full h-screen">
+    <div className={`hidden md:block max-w-[280px] w-full h-screen bg-BLACK`}>
       <motion.div
         initial={{ x: -100 }}
         animate={{ x: 0 }}
@@ -34,15 +38,28 @@ export const SidebarLayout = () => {
           duration: 1,
           delay: 0.2,
         }}
-        className="max-w-[280px] w-full bg-BLACK h-screen flex flex-col overflow-auto fixed left-0 top-0"
+        className={`max-w-[280px] w-full bg-BLACK h-screen flex flex-col overflow-auto fixed left-0 top-0 `}
       >
+        {isBlocked && (
+          <div className="absolute w-full h-full grid place-content-center">
+            <Icon
+              icon={"heroicons:lock-closed-solid"}
+              height={24}
+              color="#fff"
+            />
+          </div>
+        )}
         <div className="h-[72px] w-full flex items-center px-6 ">
           <div className="h-8">
             <Logo />
           </div>
         </div>
-        <div className="flex-1 flex flex-col justify-between">
-          <nav className="h-auto pt-5 overflow-auto">
+        <div className={`flex-1 flex flex-col justify-between `}>
+          <nav
+            className={`h-auto pt-5 overflow-auto ${
+              isBlocked ? "pointer-events-none opacity-65" : ""
+            }`}
+          >
             {routesMapped.map((route) => {
               if (userData && route.addToSidebar) {
                 if (

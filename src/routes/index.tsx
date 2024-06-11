@@ -3,8 +3,9 @@ import { RecoveryAccount } from "../pages/Auth/RecoveryAccount";
 import { Login } from "../pages/Auth/login";
 import { SignUp } from "../pages/Auth/signUp";
 import { Layout } from "../pages/Dashboard/layout";
+import { LayoutNotInteractive } from "../pages/Dashboard/layoutNotInteractive";
 import { Unathorized } from "../pages/Utils/unathorized";
-import { routesMapped } from "../utils/route-config";
+import { routesMapped } from "../utils/route-config-test";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { AuthRoute } from "./authRoute";
 import { IsAuthenticatedBlock } from "./isAuthenticatedBlock";
@@ -36,6 +37,26 @@ export const Routes = () => {
               </Route>
             );
         })}
+
+        <Route element={<LayoutNotInteractive />}>
+          {routesMapped.map(
+            (route) =>
+              route.blockSidebarInteractivity && (
+                <Route key={route.path} path={route.path}>
+                  <Route index element={route.element} />
+                  {route.subRoutes.map((sub) => {
+                    return (
+                      <Route
+                        key={`${route.path}/${sub.path}`}
+                        element={sub.element}
+                        path={sub.path}
+                      />
+                    );
+                  })}
+                </Route>
+              )
+          )}
+        </Route>
 
         <Route element={<ProtectedRoute />}>
           {routesMapped.map((route) => {
@@ -100,6 +121,7 @@ export const Routes = () => {
           </Route>
         </Route>
       </Route>
+
       <Route element={<IsAuthenticatedBlock />}>
         <Route path="login">
           <Route index element={<Login />} />
