@@ -32,6 +32,7 @@ export const UserDataProfile = () => {
   const handleFinishForm = () => {
     navigate("/");
   };
+
   return (
     <div>
       <div className="flex items-center gap-4">
@@ -39,7 +40,7 @@ export const UserDataProfile = () => {
       </div>
 
       <div className="mt-8">
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3 md:gap-6 snap-end snap-proximity snap-x overflow-x-auto">
           <StepButtonIndicator
             icon={"heroicons:user"}
             name={"Dados gerais"}
