@@ -160,6 +160,39 @@ export const Home = () => {
       {userRole === "user" && (
         <div>
           <div className="mt-12">
+            <div className="grid md:grid-cols-2 gap-8 mt-8">
+              {/*                 <Chart {...ChartRendimentosData} />
+               */}{" "}
+              <DefaultLineChart
+                chartProps={ChartRendimentosData}
+                chartTitle="Total"
+                chartSubtitle="Evolução Patrimonial"
+              />
+              <DefaultLineChart
+                chartProps={ChartRendimentosPercentualData}
+                chartTitle="Total"
+                chartSubtitle="Percentual de Rendimentos"
+              />
+            </div>
+          </div>
+          <div className="mt-12">
+            <div className="grid md:grid-cols-2 gap-8 mt-8">
+              {/*                 <Chart {...ChartRendimentosData} />
+               */}{" "}
+              <DefaultLineChart
+                chartProps={ChartRendimentosData}
+                chartTitle="T-Bond USA"
+                chartSubtitle="Evolução Patrimonial"
+              />
+              <DefaultLineChart
+                chartProps={ChartRendimentosPercentualData}
+                chartTitle="T-Bond USA"
+                chartSubtitle="Percentual de Rendimentos"
+              />
+            </div>
+          </div>
+
+          <div className="mt-12">
             <SectionTitle text="Visualização Gráfica" />
             <div className="grid md:grid-cols-2 gap-8 mt-8">
               {/*                 <Chart {...ChartRendimentosData} />
@@ -176,22 +209,7 @@ export const Home = () => {
               />
             </div>
           </div>
-          <div className="mt-12">
-            <div className="grid md:grid-cols-2 gap-8 mt-8">
-              {/*                 <Chart {...ChartRendimentosData} />
-               */}{" "}
-              <DefaultLineChart
-                chartProps={ChartRendimentosData}
-                chartTitle="T-Bond USA"
-                chartSubtitle="Evolução Patrimonial"
-              />
-              <DefaultLineChart
-                chartProps={ChartRendimentosPercentualData}
-                chartTitle="T-Bond USA"
-                chartSubtitle="Percentual de Rendimentos"
-              />
-            </div>
-          </div>
+
           <div className="mt-12">
             <div className="grid md:grid-cols-2 gap-8 mt-8">
               {/*                 <Chart {...ChartRendimentosData} />
@@ -220,22 +238,6 @@ export const Home = () => {
               <DefaultLineChart
                 chartProps={ChartRendimentosPercentualData}
                 chartTitle="Alto Risco"
-                chartSubtitle="Percentual de Rendimentos"
-              />
-            </div>
-          </div>
-          <div className="mt-12">
-            <div className="grid md:grid-cols-2 gap-8 mt-8">
-              {/*                 <Chart {...ChartRendimentosData} />
-               */}{" "}
-              <DefaultLineChart
-                chartProps={ChartRendimentosData}
-                chartTitle="Total"
-                chartSubtitle="Evolução Patrimonial"
-              />
-              <DefaultLineChart
-                chartProps={ChartRendimentosPercentualData}
-                chartTitle="Total"
                 chartSubtitle="Percentual de Rendimentos"
               />
             </div>
