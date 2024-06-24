@@ -9,16 +9,17 @@ import {
   Input,
   Typography,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { HeaderMobile } from "../../../components/headerMobile";
 import { InputWithDropdown } from "../../../components/inputWithDropdown";
 import { SideImageAuthorization } from "../../../components/sideImageAuthorization";
 
+import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useAuth } from "../../../hook/auth";
-import { SignUpProps } from "../../../types/auth";
+import { AUTH_ERROR, SignUpProps } from "../../../types/auth";
 import { CountryType, countries } from "../../../utils/number-config";
 
 export function SignUp() {
@@ -58,7 +59,12 @@ export function SignUp() {
       await signUp(info);
       navigate("/login");
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error)) {
+        setResponseError(error.response?.data as AUTH_ERROR);
+        console.log(error.response?.data);
+      } else {
+        console.error(error);
+      }
     }
   };
 
@@ -83,6 +89,17 @@ export function SignUp() {
   const handleDialogContract = () => [
     setIsDialogContractOpen((state) => !state),
   ];
+
+  const [responseError, setResponseError] = useState<AUTH_ERROR | null>();
+  const mappedError = useMemo(() => {
+    switch (responseError?.message) {
+      case "User e-mail already exists":
+        return "Endereço de e-mail já está em uso.";
+      default:
+        "Erro de servidor, tente novamente ou retorne mais tarde.";
+        break;
+    }
+  }, [responseError]);
 
   return (
     <div className="h-screen w-full md:flex bg-white">
@@ -147,7 +164,6 @@ export function SignUp() {
         </DialogFooter>
       </Dialog>
 
-      
       <SideImageAuthorization />
       <HeaderMobile />
 
@@ -324,9 +340,18 @@ export function SignUp() {
               )}
             </div>
 
-            <Button type="submit" className="mt-6 bg-GOLD_MAIN" fullWidth>
-              Cadastrar
-            </Button>
+            <div className="mt-6 flex flex-col items-center">
+              {responseError?.message && (
+                <div>
+                  <Typography variant={"small"} color={"red"}>
+                    {mappedError}
+                  </Typography>
+                </div>
+              )}
+              <Button type="submit" className="mt-6 bg-GOLD_MAIN" fullWidth>
+                Cadastrar
+              </Button>
+            </div>
 
             <Typography color="gray" className="mt-4 text-center font-normal">
               Já tem uma conta?{" "}

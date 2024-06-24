@@ -68,7 +68,6 @@ export const AuthContextProvider = ({ children }: Props) => {
         username,
       });
     } catch (error) {
-      console.error(error);
       throw error;
     }
   };
