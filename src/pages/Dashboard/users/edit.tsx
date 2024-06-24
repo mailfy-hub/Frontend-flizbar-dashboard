@@ -1,15 +1,37 @@
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, Input } from "@material-tailwind/react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { api } from "../../../client/api";
 import { SectionTitle } from "../../../components/sectionTitle";
+import { User } from "../../../types/dashboard/users";
 
 export const UserEdit = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const [user, setUser] = useState<User | null>(null);
 
   const handleNavigateBack = () => {
     navigate(-1);
   };
+
+  const getUser = async (id: string) => {
+    try {
+      const { data } = await api.get(`/users/${id}`);
+      setUser(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      getUser(id);
+    }
+  }, [id]);
+
   return (
     <div>
       <div className="flex items-center gap-4">
@@ -29,8 +51,16 @@ export const UserEdit = () => {
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
-              <Input type="email" label="E-mail de acesso*" />
-              <Input type="text" label="Nome*" />
+              <Input value={user?.name} type="text" label="Nome*" />
+              <Input value={user?.surname} type="text" label="Sobrenome*" />
+            </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              <Input
+                value={user?.email}
+                type="email"
+                label="E-mail de acesso*"
+              />
+              <Input value={user?.username} type="text" label="Username*" />
             </div>
           </div>
         </div>

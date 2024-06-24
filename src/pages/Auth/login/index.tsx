@@ -157,7 +157,12 @@ export function Login() {
                   </Typography>
                 </div>
               )}
-              <Button fullWidth className="mt-2 bg-GOLD_MAIN" type="submit">
+              <Button
+                disabled={formik.isSubmitting}
+                fullWidth
+                className="mt-2 bg-GOLD_MAIN disabled:opacity-65"
+                type="submit"
+              >
                 Entrar
               </Button>
             </div>

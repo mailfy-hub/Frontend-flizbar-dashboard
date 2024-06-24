@@ -10,6 +10,12 @@ export const UserInsert = () => {
   const handleNavigateBack = () => {
     navigate(-1);
   };
+
+/*   const handleCreateNewUser = async () => {
+    try {
+    } catch (error) {}
+  }; */
+
   return (
     <div>
       <div className="flex items-center gap-4">

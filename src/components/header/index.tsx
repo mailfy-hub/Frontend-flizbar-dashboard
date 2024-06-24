@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../hook/auth";
 import { routesMapped } from "../../utils/route-config";
+import { generateRoutesByRole } from "../../utils/route-role-export";
 import { Logo } from "../logo";
 import { PageButton } from "../sidebar/PageButton";
 
@@ -90,13 +91,9 @@ export const Header = ({ isBlocked = false }: HeaderType) => {
     handleMobileMenu();
   };
 
-  const RoutesUserRole = routesMapped.filter((route) => {
-    if (userData?.isAdmin === route.isAdmin) {
-      return route;
-    }
-  });
+  const routesUserRole = userData && generateRoutesByRole(userData?.isAdmin);
 
-  console.log(userData)
+  console.log(userData);
 
   return (
     <div className="h-[72px] w-full relative">
@@ -243,18 +240,19 @@ export const Header = ({ isBlocked = false }: HeaderType) => {
                   }
                 }
               )} */}
-              {RoutesUserRole.map(({ path, name, icon }) => {
-                return (
-                  <PageButton
-                    onClick={handleChangePage}
-                    key={path}
-                    pageName={name}
-                    icon={icon ? icon : "heroicons:circle-stack"}
-                    isActive={path === activeRoute?.path}
-                    link={path}
-                  />
-                );
-              })}
+              {routesUserRole &&
+                routesUserRole.map(({ path, name, icon }) => {
+                  return (
+                    <PageButton
+                      onClick={handleChangePage}
+                      key={path}
+                      pageName={name}
+                      icon={icon ? icon : "heroicons:circle-stack"}
+                      isActive={path === activeRoute?.path}
+                      link={path}
+                    />
+                  );
+                })}
             </div>
             <Link
               onClick={handleChangePage}
@@ -269,10 +267,10 @@ export const Header = ({ isBlocked = false }: HeaderType) => {
               />
               <div>
                 <p className="font-display font-semibold text-body14 text-WHITE no-underline capitalize text-left">
-                  Marlon Lencina
+                  {`${userData?.name} ${userData?.surname}`}
                 </p>
                 <span className="font-body font-normal text-sm12 text-WHITE  no-underline lowercase text-left">
-                  marlon@mailfy.com
+                  {`${userData?.email}`}
                 </span>
               </div>
             </Link>

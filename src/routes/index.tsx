@@ -5,6 +5,7 @@ import { Login } from "../pages/Auth/login";
 import { SignUp } from "../pages/Auth/signUp";
 import { Layout } from "../pages/Dashboard/layout";
 import { LayoutNotInteractive } from "../pages/Dashboard/layoutNotInteractive";
+import { NotFound } from "../pages/Utils/404";
 import { Unathorized } from "../pages/Utils/unathorized";
 import { generateRoutesByRole } from "../utils/route-role-export";
 import { ProtectedRoute } from "./ProtectedRoute";
@@ -140,6 +141,8 @@ export const Routes = () => {
         <Route path="register" element={<SignUp />} />
         <Route path="recovery" element={<RecoveryAccount />} />
       </Route>
+
+      <Route path="*" element={<NotFound />} />
     </RoutesRRD>
   );
 };

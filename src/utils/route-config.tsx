@@ -102,7 +102,7 @@ export const routesMapped: routeMapped[] = [
     element: <MyAccount />,
     name: "Minha conta",
     icon: "radix-icons:dashboard",
-    isAdmin: false,
+    isAdmin: "all",
     subRoutes: [],
     addToSidebar: false,
     isOutletRoute: true,
@@ -118,7 +118,7 @@ export const routesMapped: routeMapped[] = [
     subRoutes: [
       {
         name: "Edite seu usuário",
-        path: "edit",
+        path: "edit/:id",
         element: <UserEdit />,
       },
       {

@@ -17,9 +17,11 @@ import { SideImageAuthorization } from "../../../components/sideImageAuthorizati
 
 import axios from "axios";
 import { useFormik } from "formik";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { useAuth } from "../../../hook/auth";
 import { AUTH_ERROR, SignUpProps } from "../../../types/auth";
+import { generateUniqueUsername } from "../../../utils/generateUsername";
 import { CountryType, countries } from "../../../utils/number-config";
 
 export function SignUp() {
@@ -46,10 +48,7 @@ export function SignUp() {
       ),
     }),
     onSubmit: (values) => {
-      const username = `${values.name.toLowerCase()}${values.surname.toLowerCase()}${values.phone.slice(
-        -3
-      )}`;
-      console.log(username);
+      const username = generateUniqueUsername(values.name, values.surname);
       handleSignUp({ username, ...values });
     },
   });
@@ -57,6 +56,10 @@ export function SignUp() {
   const handleSignUp = async (info: SignUpProps) => {
     try {
       await signUp(info);
+      toast("Conta criada!", {
+        position: "bottom-right",
+        type: "success",
+      });
       navigate("/login");
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -348,7 +351,12 @@ export function SignUp() {
                   </Typography>
                 </div>
               )}
-              <Button type="submit" className="mt-6 bg-GOLD_MAIN" fullWidth>
+              <Button
+                disabled={formik.isSubmitting}
+                type="submit"
+                className="mt-6 bg-GOLD_MAIN disabled:opacity-65"
+                fullWidth
+              >
                 Cadastrar
               </Button>
             </div>
