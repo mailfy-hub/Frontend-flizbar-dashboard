@@ -37,14 +37,14 @@ export function SignUp() {
       agree: false,
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Required"),
-      surname: Yup.string().required("Required"),
-      email: Yup.string().email().required("Required"),
-      password: Yup.string().required("Required"),
-      phone: Yup.string().required("Required"),
+      name: Yup.string().required("Preencha esse campo"),
+      surname: Yup.string().required("Preencha esse campo"),
+      email: Yup.string().email().required("Preencha esse campo"),
+      password: Yup.string().required("Preencha esse campo"),
+      phone: Yup.string().required("Preencha esse campo"),
       agree: Yup.boolean().oneOf(
         [true],
-        "You must accept the terms and conditions."
+        "Vpcê precisa concordar com nossos termos e condições."
       ),
     }),
     onSubmit: (values) => {
