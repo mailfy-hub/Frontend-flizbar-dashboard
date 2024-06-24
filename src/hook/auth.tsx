@@ -46,26 +46,8 @@ export const AuthContextProvider = ({ children }: Props) => {
       setUserData(data.user);
       setAccessToken(data.accessToken);
     } catch (error) {
-      console.error(error);
       throw error;
     }
-    /*   const userExist: User | undefined = usersMock.find(
-      (user) => user.email === email
-    ); */
-
-    /* if (!userExist) {
-      return;
-    }
-
-    if (userExist.password === password) {
-      console.log(userExist);
-      setIsAuthenticated(true);
-      setUserData(userExist);
-
-      saveToLocalStorage({
-        userData: userExist,
-      });
-    } */
   };
 
   const signUp = async ({
@@ -113,14 +95,6 @@ export const AuthContextProvider = ({ children }: Props) => {
     localStorage.removeItem(`${LOCAL_STORAGE_KEY}-user`);
     localStorage.removeItem(`${LOCAL_STORAGE_KEY}-token`);
   };
-
-  /*   const getUserRole = () => {
-    if (userData) {
-      return userData.role;
-    } else {
-      return "user";
-    }
-  }; */
 
   const loadFromLocalStorage = () => {
     setIsLoadingData(true);

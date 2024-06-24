@@ -30,3 +30,9 @@ export interface SignUpProps {
   password: string;
   surname: string;
 }
+
+export interface AUTH_ERROR {
+  message: string;
+  resource: string;
+  scope: string;
+}

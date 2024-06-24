@@ -1,13 +1,14 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, Input, Typography } from "@material-tailwind/react";
+import axios from "axios";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { HeaderMobile } from "../../../components/headerMobile";
 import { SideImageAuthorization } from "../../../components/sideImageAuthorization";
 import { useAuth } from "../../../hook/auth";
-import { loginProps } from "../../../types/auth";
+import { AUTH_ERROR, loginProps } from "../../../types/auth";
 export function Login() {
   const { login } = useAuth();
   const [inputPassType, setInputPassType] = useState("password");
@@ -18,21 +19,38 @@ export function Login() {
       password: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().email().required("Required"),
-      password: Yup.string().required("Required"),
+      email: Yup.string()
+        .email("E-mail inválido")
+        .required("Preencha esse campo"),
+      password: Yup.string().required("Preencha esse campo"),
     }),
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
       handleLogin(values);
     },
   });
 
+  const [responseError, setResponseError] = useState<AUTH_ERROR | null>();
+  const mappedError = useMemo(() => {
+    switch (responseError?.message) {
+      case "Invalid username or password":
+        return "Endereço de e-mail ou senha incorretos.";
+      default:
+        "Erro de servidor, tente novamente ou retorne mais tarde.";
+        break;
+    }
+  }, [responseError]);
   const handleLogin = async (credentials: loginProps) => {
     try {
-      console.log(credentials);
+      setResponseError(null);
       await login(credentials);
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error)) {
+        setResponseError(error.response?.data as AUTH_ERROR);
+        console.log(error.response?.data);
+      } else {
+        console.error(error);
+      }
     }
   };
 
@@ -131,9 +149,18 @@ export function Login() {
                 Esqueci minha senha
               </Link>
             </div>
-            <Button fullWidth className="mt-6 bg-GOLD_MAIN" type="submit">
-              Entrar
-            </Button>
+            <div className="mt-6 flex flex-col items-center">
+              {responseError?.message && (
+                <div>
+                  <Typography variant={"small"} color={"red"}>
+                    {mappedError}
+                  </Typography>
+                </div>
+              )}
+              <Button fullWidth className="mt-2 bg-GOLD_MAIN" type="submit">
+                Entrar
+              </Button>
+            </div>
             <Typography color="gray" className="mt-4 text-center font-normal">
               Ainda não tem uma conta?{" "}
               <Link to="/register" className="font-medium text-gray-900">
