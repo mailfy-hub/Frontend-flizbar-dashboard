@@ -4,6 +4,7 @@ import { useState } from "react";
 import { InputWithDropdown } from "../../../components/inputWithDropdown";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { useAuth } from "../../../hook/auth";
+import { CountryType, countries } from "../../../utils/number-config";
 
 type contact = {
   index: number;
@@ -58,9 +59,16 @@ export const InfoClient = () => {
     setContactsList(contactsFiltered);
   };
 
+  const [selectedCountry, setSelectedCountry] = useState<CountryType>(
+    countries[0]
+  );
+  const handleSelectedCountry = (selected: CountryType) => {
+    setSelectedCountry(selected);
+  };
+
   return (
     <div>
-      {userData?.role === "admin" ? (
+      {userData?.isAdmin ? (
         <form>
           <div className="bg-WHITE p-8 w-full rounded-md">
             <div className="flex items-center gap-4">
@@ -73,7 +81,7 @@ export const InfoClient = () => {
               </div>
               <div className="grid md:grid-cols-2 gap-6">
                 <Input type="text" label="Nome" />
-                <InputWithDropdown />
+                <InputWithDropdown selectedCountry={selectedCountry} handleChangeCountry={handleSelectedCountry} />
               </div>
             </div>
           </div>

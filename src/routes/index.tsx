@@ -1,27 +1,37 @@
 import { Route, Routes as RoutesRRD } from "react-router-dom";
+import { useAuth } from "../hook/auth";
 import { RecoveryAccount } from "../pages/Auth/RecoveryAccount";
 import { Login } from "../pages/Auth/login";
 import { SignUp } from "../pages/Auth/signUp";
 import { Layout } from "../pages/Dashboard/layout";
 import { LayoutNotInteractive } from "../pages/Dashboard/layoutNotInteractive";
 import { Unathorized } from "../pages/Utils/unathorized";
-import { routesMapped } from "../utils/route-config-test";
+import { generateRoutesByRole } from "../utils/route-role-export";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { AuthRoute } from "./authRoute";
 import { IsAuthenticatedBlock } from "./isAuthenticatedBlock";
 
 export const Routes = () => {
+  const { userData } = useAuth();
+  const routesUserRole = userData && generateRoutesByRole(userData?.isAdmin);
+  /*   useEffect(() => {
+    const RoutesUserRole = routesMapped.filter((route) => {
+      // console.log(route.name, route.isAdmin, userData?.isAdmin);
+
+      if (userData?.isAdmin == route.isAdmin || route.isAdmin == "all") {
+        return route;
+      }
+    });
+    setRoutesUserRole(RoutesUserRole);
+  }, [userData]); */
   return (
     <RoutesRRD>
       <Route element={<AuthRoute />}>
         <Route path="unathorized" element={<Unathorized />} />
 
-        {routesMapped.map((route) => {
-          if (!!route.isOutletRoute) return;
-          if (
-            route.roleAccess.includes("all") ||
-            (route.roleAccess.includes("user") && !route.isOutletRoute)
-          )
+        {routesUserRole &&
+          routesUserRole.map((route) => {
+            if (!!route.isOutletRoute) return;
             return (
               <Route key={route.path} path={route.path}>
                 <Route index element={route.element} />
@@ -36,32 +46,33 @@ export const Routes = () => {
                 })}
               </Route>
             );
-        })}
+          })}
 
         <Route element={<LayoutNotInteractive />}>
-          {routesMapped.map(
-            (route) =>
-              route.blockSidebarInteractivity && (
-                <Route key={route.path} path={route.path}>
-                  <Route index element={route.element} />
-                  {route.subRoutes.map((sub) => {
-                    return (
-                      <Route
-                        key={`${route.path}/${sub.path}`}
-                        element={sub.element}
-                        path={sub.path}
-                      />
-                    );
-                  })}
-                </Route>
-              )
-          )}
+          {routesUserRole &&
+            routesUserRole.map(
+              (route) =>
+                route.blockSidebarInteractivity && (
+                  <Route key={route.path} path={route.path}>
+                    <Route index element={route.element} />
+                    {route.subRoutes.map((sub) => {
+                      return (
+                        <Route
+                          key={`${route.path}/${sub.path}`}
+                          element={sub.element}
+                          path={sub.path}
+                        />
+                      );
+                    })}
+                  </Route>
+                )
+            )}
         </Route>
 
         <Route element={<ProtectedRoute />}>
-          {routesMapped.map((route) => {
-            if (!!route.isOutletRoute) return;
-            if (route.roleAccess.includes("admin") && !route.isOutletRoute)
+          {routesUserRole &&
+            routesUserRole.map((route) => {
+              if (!!route.isOutletRoute) return;
               return (
                 <Route key={route.path} path={route.path}>
                   <Route index element={route.element} />
@@ -76,33 +87,13 @@ export const Routes = () => {
                   })}
                 </Route>
               );
-          })}
+            })}
         </Route>
 
         <Route path="/" element={<Layout />}>
-          {routesMapped.map((route) => {
-            if (
-              route.roleAccess.includes("all") ||
-              (route.roleAccess.includes("user") && route.isOutletRoute)
-            )
-              return (
-                <Route key={route.path} path={route.path}>
-                  <Route index element={route.element} />
-                  {route.subRoutes.map((sub) => {
-                    return (
-                      <Route
-                        key={`${route.path}/${sub.path}`}
-                        element={sub.element}
-                        path={sub.path}
-                      />
-                    );
-                  })}
-                </Route>
-              );
-          })}
-          <Route element={<ProtectedRoute availableToRole="admin" />}>
-            {routesMapped.map((route) => {
-              if (route.roleAccess.includes("admin") && route.isOutletRoute)
+          {routesUserRole &&
+            routesUserRole.map((route) => {
+              if (route.isOutletRoute)
                 return (
                   <Route key={route.path} path={route.path}>
                     <Route index element={route.element} />
@@ -118,6 +109,25 @@ export const Routes = () => {
                   </Route>
                 );
             })}
+          <Route element={<ProtectedRoute isAdmin={true} />}>
+            {routesUserRole &&
+              routesUserRole.map((route) => {
+                if (route.isOutletRoute)
+                  return (
+                    <Route key={route.path} path={route.path}>
+                      <Route index element={route.element} />
+                      {route.subRoutes.map((sub) => {
+                        return (
+                          <Route
+                            key={`${route.path}/${sub.path}`}
+                            element={sub.element}
+                            path={sub.path}
+                          />
+                        );
+                      })}
+                    </Route>
+                  );
+              })}
           </Route>
         </Route>
       </Route>

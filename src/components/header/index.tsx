@@ -90,6 +90,14 @@ export const Header = ({ isBlocked = false }: HeaderType) => {
     handleMobileMenu();
   };
 
+  const RoutesUserRole = routesMapped.filter((route) => {
+    if (userData?.isAdmin === route.isAdmin) {
+      return route;
+    }
+  });
+
+  console.log(userData)
+
   return (
     <div className="h-[72px] w-full relative">
       <header className="md:bg-GRAY_100 bg-BLACK h-[72px] w-full p-4 md:px-12 flex items-center justify-between fixed md:static top-0 z-40 ">
@@ -151,10 +159,10 @@ export const Header = ({ isBlocked = false }: HeaderType) => {
                   />
                   <div>
                     <p className="font-display font-semibold text-body14 text-BLACK no-underline capitalize text-left">
-                      Marlon Lencina
+                      {userData?.name}
                     </p>
                     <span className="font-body font-normal text-sm12 text-GRAY_400  no-underline lowercase text-left">
-                      marlon@mailfy.com
+                      {userData?.email}
                     </span>
                   </div>
                 </div>
@@ -217,13 +225,10 @@ export const Header = ({ isBlocked = false }: HeaderType) => {
         <nav className="bg-BLACK flex flex-col w-full h-screen fixed top-[72px] pb-[72px] left-0 z-[9999999] overflow-scroll ">
           <div>
             <div>
-              {routesMapped.map(
-                ({ icon, name, path, roleAccess, addToSidebar }) => {
+              {/* {routesMapped.map(
+                ({ icon, name, path, addToSidebar, isAdmin }) => {
                   if (userData && addToSidebar) {
-                    if (
-                      roleAccess.includes(userData?.role) ||
-                      roleAccess.includes("all")
-                    ) {
+                    if (isAdmin) {
                       return (
                         <PageButton
                           onClick={handleChangePage}
@@ -237,7 +242,19 @@ export const Header = ({ isBlocked = false }: HeaderType) => {
                     }
                   }
                 }
-              )}
+              )} */}
+              {RoutesUserRole.map(({ path, name, icon }) => {
+                return (
+                  <PageButton
+                    onClick={handleChangePage}
+                    key={path}
+                    pageName={name}
+                    icon={icon ? icon : "heroicons:circle-stack"}
+                    isActive={path === activeRoute?.path}
+                    link={path}
+                  />
+                );
+              })}
             </div>
             <Link
               onClick={handleChangePage}

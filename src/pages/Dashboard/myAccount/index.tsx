@@ -22,7 +22,7 @@ export const MyAccount = () => {
         <SectionTitle text="Seus dados da conta" />
       </div>
       <div className="mt-12 flex items-center gap-2">
-        {userData?.role !== "admin" && (
+        {!userData?.isAdmin && (
           <button
             onClick={() => {
               handleActiveScreen("client");
@@ -36,7 +36,7 @@ export const MyAccount = () => {
             Dados do cliente
           </button>
         )}
-        {userData?.role !== "admin" && (
+        {!userData?.isAdmin && (
           <button
             onClick={() => {
               handleActiveScreen("wallets");
@@ -51,7 +51,7 @@ export const MyAccount = () => {
           </button>
         )}
 
-        {userData?.role !== "admin" && (
+        {!userData?.isAdmin && (
           <button
             onClick={() => {
               handleActiveScreen("files");

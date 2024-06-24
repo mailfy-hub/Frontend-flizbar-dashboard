@@ -9,9 +9,12 @@ export const SideImageAuthorization = () => {
           <Logo />
           <div className="flex items-center gap-1">
             <ChevronLeftIcon className="size-4 text-WHITE" />
-            <p className="text-white font-normal text-sm14 font-body">
+            <a
+              href="https://flizbar.com/"
+              className="text-white font-normal text-sm14 font-body"
+            >
               Voltar ao site
-            </p>
+            </a>
           </div>
         </div>
         <div>

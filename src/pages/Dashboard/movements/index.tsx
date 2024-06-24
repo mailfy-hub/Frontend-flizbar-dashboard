@@ -47,10 +47,9 @@ export const Movements = () => {
   const handleNavigateDetails = () => {
     navigate("/contributions/details");
   };
-  const TABLE_HEAD =
-    userData?.role === "admin"
-      ? ["Código", "Cliente", "Data", "Tipo", "Fundo", "Valor", "Ações"]
-      : ["Código", "Data", "Tipo", "Fundo", "Valor"];
+  const TABLE_HEAD = userData?.isAdmin
+    ? ["Código", "Cliente", "Data", "Tipo", "Fundo", "Valor", "Ações"]
+    : ["Código", "Data", "Tipo", "Fundo", "Valor"];
   return (
     <div>
       <SectionTitle text="Todas movimentações" />
@@ -114,7 +113,7 @@ export const Movements = () => {
                           </div>
                         </div>
                       </td>
-                      {userData?.role === "admin" && (
+                      {userData?.isAdmin && (
                         <td className={classes}>
                           <div className="flex items-center gap-3">
                             <div>
@@ -173,7 +172,7 @@ export const Movements = () => {
                       <td className={classes}>
                         <CurrencyRow currency={currency} value={value} />
                       </td>
-                      {userData?.role === "admin" && (
+                      {userData?.isAdmin && (
                         <td className={`${classes} flex justify-start `}>
                           <Tooltip content="Detalhes">
                             <IconButton

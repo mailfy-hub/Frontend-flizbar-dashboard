@@ -61,7 +61,14 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
   },
 ];
 
-const TABLE_HEAD = ["Código", "Data de criação", "Dólar", "Yene", "Euro", "Ações"];
+const TABLE_HEAD = [
+  "Código",
+  "Data de criação",
+  "Dólar",
+  "Yene",
+  "Euro",
+  "Ações",
+];
 
 export const Quotes = () => {
   const navigate = useNavigate();
@@ -224,7 +231,7 @@ export const Quotes = () => {
                         value={JPY.value}
                       />
                     </td>
-                    {userData?.role === "admin" && (
+                    {userData?.isAdmin && (
                       <td className={`${classes} flex justify-end `}>
                         <Tooltip content="Editar">
                           <IconButton onClick={handleEdit} variant="text">

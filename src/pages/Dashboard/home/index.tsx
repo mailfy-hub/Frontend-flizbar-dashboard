@@ -83,13 +83,12 @@ const ChartRendimentosPercentualData: Props = {
   },
 };
 export const Home = () => {
-  const { getUserRole, userData } = useAuth();
-  const userRole = getUserRole();
+  const { userData } = useAuth();
 
   useEffect(() => {}, []);
   return (
     <>
-      {userRole === "user" ? (
+      {!userData?.isAdmin ? (
         <div>
           <SectionTitle text="Sua carteira" />
           <div className="flex flex-col md:flex-row items-center gap-8 mt-8">
@@ -157,7 +156,7 @@ export const Home = () => {
           />
         </div>
       </div>
-      {userRole === "user" && (
+      {!userData?.isAdmin && (
         <div>
           <div className="mt-12">
             <div className="grid md:grid-cols-2 gap-8 mt-8">

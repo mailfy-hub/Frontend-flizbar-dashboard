@@ -57,7 +57,7 @@ const TABLE_HEAD = [
   "Fundo de origem",
   "Fundo de destino",
   "Valor",
-  "Ações"
+  "Ações",
 ];
 
 export const Readjustments = () => {
@@ -242,7 +242,7 @@ export const Readjustments = () => {
                           <CurrencyRow currency={currency} value={value} />
                         </div>
                       </td>
-                      {userData?.role === "admin" && (
+                      {userData?.isAdmin && (
                         <td className={`${classes} flex justify-start `}>
                           <Tooltip content="Detalhes">
                             <IconButton

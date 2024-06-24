@@ -1,15 +1,24 @@
 import { Button, Typography } from "@material-tailwind/react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { HeaderMobile } from "../../../components/headerMobile";
 import { InputWithDropdown } from "../../../components/inputWithDropdown";
 import { Logo } from "../../../components/logo";
+import { CountryType, countries } from "../../../utils/number-config";
 
 export function VerifyAccess() {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleNumberVerify = () => {
-    navigate('code')
-  }
+    navigate("code");
+  };
+
+  const [selectedCountry, setSelectedCountry] = useState<CountryType>(
+    countries[0]
+  );
+  const handleSelectedCountry = (selected: CountryType) => {
+    setSelectedCountry(selected);
+  };
+
   return (
     <div className="h-full md:h-screen w-full md:flex bg-GOLD_BLACK">
       <HeaderMobile />
@@ -27,10 +36,17 @@ export function VerifyAccess() {
           </Typography>
           <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
             <div className="mb-1 flex flex-col gap-6">
-              <InputWithDropdown />
+              <InputWithDropdown
+                handleChangeCountry={handleSelectedCountry}
+                selectedCountry={selectedCountry}
+              />
             </div>
 
-            <Button onClick={handleNumberVerify} className="mt-6 bg-GOLD_MAIN" fullWidth>
+            <Button
+              onClick={handleNumberVerify}
+              className="mt-6 bg-GOLD_MAIN"
+              fullWidth
+            >
               Enviar código
             </Button>
             <Typography color="gray" className="mt-4 text-center font-normal">

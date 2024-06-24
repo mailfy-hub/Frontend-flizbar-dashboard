@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hook/auth";
-import { routesMapped } from "../../utils/route-config";
+import { generateRoutesByRole } from "../../utils/route-role-export";
 import { Logo } from "../logo";
 import { PageButton } from "./PageButton";
 
@@ -19,10 +19,10 @@ export const SidebarLayout = ({ isBlocked = false }: SidebarLayout) => {
 
   const handleLogout = () => {
     logout();
-    if (userData?.role === "admin") {
-      navigate("/login/admin");
-    }
+    navigate("/login");
   };
+
+  const routesUserRole = userData && generateRoutesByRole(userData?.isAdmin);
 
   useEffect(() => {
     setActiveRoute(location.pathname);
@@ -60,12 +60,9 @@ export const SidebarLayout = ({ isBlocked = false }: SidebarLayout) => {
               isBlocked ? "pointer-events-none opacity-65" : ""
             }`}
           >
-            {routesMapped.map((route) => {
-              if (userData && route.addToSidebar) {
-                if (
-                  route.roleAccess.includes(userData?.role) ||
-                  route.roleAccess.includes("all")
-                ) {
+            {routesUserRole &&
+              routesUserRole.map((route) => {
+                if (route.addToSidebar) {
                   return (
                     <PageButton
                       key={route.path}
@@ -76,8 +73,7 @@ export const SidebarLayout = ({ isBlocked = false }: SidebarLayout) => {
                     />
                   );
                 }
-              }
-            })}
+              })}
           </nav>
           <button
             onClick={handleLogout}

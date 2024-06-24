@@ -4,11 +4,19 @@ import { useState } from "react";
 import { FormStepType } from ".";
 import { InputWithDropdown } from "../../../components/inputWithDropdown";
 import { SectionTitle } from "../../../components/sectionTitle";
+import { CountryType, countries } from "../../../utils/number-config";
 
 export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
   const [documentType, setDocumentType] = useState<"pf" | "pj">("pf");
   const handleDocumentType = (docType: string) => {
     if (docType === "pf" || docType === "pj") setDocumentType(docType);
+  };
+
+  const [selectedCountry, setSelectedCountry] = useState<CountryType>(
+    countries[0]
+  );
+  const handleSelectedCountry = (selected: CountryType) => {
+    setSelectedCountry(selected);
   };
 
   return (
@@ -59,7 +67,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 <Option>Prefiro não declarar</Option>
               </Select>
             )}
-            <InputWithDropdown />
+            <InputWithDropdown handleChangeCountry={handleSelectedCountry} selectedCountry={selectedCountry} />
           </div>
         </div>
       </div>

@@ -33,7 +33,7 @@ export const ContribuitionInsert = () => {
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
               <Input type="date" label="Data do aporte" />
-              {userData?.role === "admin" && (
+              {userData?.isAdmin && (
                 <Select label="Cliente">
                   <option value=""></option>
                 </Select>

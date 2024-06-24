@@ -72,7 +72,7 @@ export const Contribuitions = () => {
   };
 
   const TABLE_HEAD =
-    userData?.role === "admin"
+    userData?.isAdmin
       ? ["Código", "Cliente", "Carteira", "Valor", "Data de criação", "Ações"]
       : ["Código", "Carteira", "Valor", "Data de criação"];
 
@@ -204,7 +204,7 @@ export const Contribuitions = () => {
                         </div>
                       </td>
 
-                      {userData?.role === "admin" && (
+                      {userData?.isAdmin && (
                         <td className={classes}>
                           <div>
                             <Typography
@@ -248,7 +248,7 @@ export const Contribuitions = () => {
                         </Typography>
                       </td>
 
-                      {userData?.role === "admin" && (
+                      {userData?.isAdmin && (
                         <td className={`${classes} flex justify-start `}>
                           <Tooltip content="Visualizar">
                             <IconButton onClick={handleDetails} variant="text">

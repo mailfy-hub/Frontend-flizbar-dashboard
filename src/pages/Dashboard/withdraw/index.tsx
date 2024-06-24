@@ -51,10 +51,9 @@ export const Withdraw = () => {
   };
   const { userData } = useAuth();
 
-  const TABLE_HEAD =
-    userData?.role === "admin"
-      ? ["Código", "Cliente", "Fundo", "Valor", "Data de criação", "Ações"]
-      : ["Código", "Fundo", "Valor", "Data de criação"];
+  const TABLE_HEAD = userData?.isAdmin
+    ? ["Código", "Cliente", "Fundo", "Valor", "Data de criação", "Ações"]
+    : ["Código", "Fundo", "Valor", "Data de criação"];
 
   const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
@@ -168,7 +167,7 @@ export const Withdraw = () => {
                           </div>
                         </div>
                       </td>
-                      {userData?.role === "admin" && (
+                      {userData?.isAdmin && (
                         <td className={classes}>
                           <div className="flex items-center gap-3">
                             <div>
@@ -205,7 +204,7 @@ export const Withdraw = () => {
                           {created_at}
                         </Typography>
                       </td>
-                      {userData?.role === "admin" && (
+                      {userData?.isAdmin && (
                         <td className={`${classes} flex justify-start `}>
                           <Tooltip content="Excluir">
                             <IconButton

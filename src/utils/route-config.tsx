@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { roleAccessType } from "../hook/auth";
 import { VerifyAccess } from "../pages/Auth/verifyAccess";
 import { VerifyAccessCode } from "../pages/Auth/verifyAccessCode";
 import { CalculedInterest } from "../pages/Dashboard/calculatedInterest";
@@ -43,56 +42,79 @@ interface subRoutesMapped {
   name: string;
   element: ReactNode;
 }
+
+export type RouteRole = boolean | "all";
+
 export interface routeMapped {
   path: string;
   name: string;
   icon?: string;
-  roleAccess: roleAccessType[];
   element: ReactNode;
   subRoutes: subRoutesMapped[] | [];
   addToSidebar: boolean;
   isOutletRoute: boolean;
+  blockSidebarInteractivity: boolean;
+  isAdmin?: RouteRole;
+}
+
+function createRouteMapped(route: Partial<routeMapped>): routeMapped {
+  return {
+    path: route.path || "",
+    name: route.name || "",
+    icon: route.icon,
+    isAdmin: route.isAdmin,
+    element: route.element!,
+    subRoutes: route.subRoutes || [],
+    addToSidebar: route.addToSidebar !== undefined ? route.addToSidebar : true,
+    isOutletRoute:
+      route.isOutletRoute !== undefined ? route.isOutletRoute : false,
+    blockSidebarInteractivity:
+      route.blockSidebarInteractivity !== undefined
+        ? route.blockSidebarInteractivity
+        : false,
+  };
 }
 
 export const routesMapped: routeMapped[] = [
-  {
+  createRouteMapped({
     path: "/",
     element: <Home />,
     name: "Dashboard",
     icon: "radix-icons:dashboard",
-    roleAccess: ["all"],
+    isAdmin: "all",
     subRoutes: [],
     addToSidebar: true,
     isOutletRoute: true,
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/profile",
     element: <UserDataProfile />,
     name: "Perfil do usuário",
     icon: "heroicons:building-storefront",
-    roleAccess: ["user"],
+    isAdmin: false,
     subRoutes: [],
     addToSidebar: false,
     isOutletRoute: true,
-  },
-  {
+    blockSidebarInteractivity: true,
+  }),
+  createRouteMapped({
     path: "/my-account",
     element: <MyAccount />,
     name: "Minha conta",
     icon: "radix-icons:dashboard",
-    roleAccess: ["all"],
+    isAdmin: false,
     subRoutes: [],
     addToSidebar: false,
     isOutletRoute: true,
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/users",
     element: <Users />,
     addToSidebar: true,
     isOutletRoute: true,
     name: "Usuários",
     icon: "heroicons:users",
-    roleAccess: ["admin"],
+    isAdmin: true,
     subRoutes: [
       {
         name: "Edite seu usuário",
@@ -105,15 +127,15 @@ export const routesMapped: routeMapped[] = [
         element: <UserInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/customers",
     name: "Clientes",
     addToSidebar: true,
     isOutletRoute: true,
     icon: "heroicons:building-storefront",
-    roleAccess: ["admin"],
     element: <Customers />,
+    isAdmin: true,
     subRoutes: [
       {
         name: "Edite seu cliente",
@@ -126,15 +148,16 @@ export const routesMapped: routeMapped[] = [
         element: <CustomerInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/funds",
     name: "Fundos",
     addToSidebar: true,
     isOutletRoute: true,
     icon: "heroicons:currency-dollar",
-    roleAccess: ["admin"],
     element: <Funds />,
+    isAdmin: true,
+
     subRoutes: [
       {
         name: "Edite seu fundo",
@@ -147,15 +170,16 @@ export const routesMapped: routeMapped[] = [
         element: <FundsInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/wallets",
     name: "Carteiras",
     addToSidebar: true,
     isOutletRoute: true,
     icon: "heroicons:wallet",
-    roleAccess: ["admin"],
     element: <Wallets />,
+    isAdmin: true,
+
     subRoutes: [
       {
         name: "Edite sua carteira",
@@ -168,14 +192,14 @@ export const routesMapped: routeMapped[] = [
         element: <WalletInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/contributions",
     name: "Aportes",
     addToSidebar: true,
     isOutletRoute: true,
     icon: "radix-icons:dashboard",
-    roleAccess: ["all"],
+    isAdmin: "all",
     element: <Contribuitions />,
     subRoutes: [
       {
@@ -189,15 +213,16 @@ export const routesMapped: routeMapped[] = [
         element: <ContribuitionDetails />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/income",
     name: "Rendimentos",
     addToSidebar: true,
     isOutletRoute: true,
     icon: "heroicons:arrow-trending-up-20-solid",
-    roleAccess: ["admin"],
     element: <Income />,
+    isAdmin: true,
+
     subRoutes: [
       {
         name: "Adicione um rendimento",
@@ -205,14 +230,14 @@ export const routesMapped: routeMapped[] = [
         element: <IncomeInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/withdraw",
     name: "Resgates",
     addToSidebar: true,
     isOutletRoute: true,
     icon: "heroicons:arrow-uturn-down",
-    roleAccess: ["all"],
+    isAdmin: "all",
     element: <Withdraw />,
     subRoutes: [
       {
@@ -221,24 +246,25 @@ export const routesMapped: routeMapped[] = [
         element: <WithdrawInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/movements",
     name: "Movimentações",
     addToSidebar: true,
     isOutletRoute: true,
     icon: "heroicons:arrows-right-left",
-    roleAccess: ["all"],
+    isAdmin: "all",
     element: <Movements />,
     subRoutes: [],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/readjustments",
     name: "Readequações",
     addToSidebar: true,
     isOutletRoute: true,
+    isAdmin: true,
+
     icon: "heroicons:briefcase",
-    roleAccess: ["admin"],
     element: <Readjustments />,
     subRoutes: [
       {
@@ -247,15 +273,16 @@ export const routesMapped: routeMapped[] = [
         element: <ReadjustmentsInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/comparative-values",
     name: "Valores comparativos",
     icon: "heroicons:table-cells",
     addToSidebar: true,
     isOutletRoute: true,
-    roleAccess: ["admin"],
     element: <ComparativeValues />,
+    isAdmin: true,
+
     subRoutes: [
       {
         name: "Edite seu valor comparativo",
@@ -268,15 +295,16 @@ export const routesMapped: routeMapped[] = [
         element: <ComparativeValuesInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/quotes",
     name: "Cotações",
     icon: "heroicons:chart-bar",
-    roleAccess: ["admin"],
     addToSidebar: true,
     isOutletRoute: true,
     element: <Quotes />,
+    isAdmin: true,
+
     subRoutes: [
       {
         name: "Adicione uma cotação",
@@ -289,15 +317,16 @@ export const routesMapped: routeMapped[] = [
         element: <QuotesEdit />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/calculated-interest",
     name: "Juros calculados",
     addToSidebar: true,
     isOutletRoute: true,
     icon: "heroicons:circle-stack",
-    roleAccess: ["admin"],
     element: <CalculedInterest />,
+    isAdmin: true,
+
     subRoutes: [
       {
         name: "Edite seu cálculo",
@@ -310,22 +339,21 @@ export const routesMapped: routeMapped[] = [
         element: <CalculedInterestInsert />,
       },
     ],
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/interested-calculator",
     element: <Calculator />,
     name: "Calculadora de juros",
     icon: "heroicons:circle-stack",
-    roleAccess: ["user"],
+    isAdmin: false,
     subRoutes: [],
     addToSidebar: true,
     isOutletRoute: true,
-  },
-  {
+  }),
+  createRouteMapped({
     path: "/verify-access",
     element: <VerifyAccess />,
     name: "Verifição de acesso",
-    roleAccess: ["admin"],
     subRoutes: [
       {
         name: "Verifique o código de acesso",
@@ -335,5 +363,5 @@ export const routesMapped: routeMapped[] = [
     ],
     addToSidebar: false,
     isOutletRoute: false,
-  },
+  }),
 ];
