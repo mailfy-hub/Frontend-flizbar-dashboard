@@ -44,7 +44,7 @@ export function SignUp() {
       phone: Yup.string().required("Preencha esse campo"),
       agree: Yup.boolean().oneOf(
         [true],
-        "Vpcê precisa concordar com nossos termos e condições."
+        "Você precisa concordar com nossos termos e condições."
       ),
     }),
     onSubmit: (values) => {
