@@ -32,22 +32,18 @@ export const AuthContextProvider = ({ children }: Props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const login = async ({ email, password }: loginProps) => {
-    try {
-      const { data }: loginResponseProps = await api.post("/auth/login", {
-        email,
-        password,
-      });
-      setIsAuthenticated(true);
-      saveToLocalStorage({
-        user: data.user,
-        token: data.accessToken,
-      });
+    const { data }: loginResponseProps = await api.post("/auth/login", {
+      email,
+      password,
+    });
+    setIsAuthenticated(true);
+    saveToLocalStorage({
+      user: data.user,
+      token: data.accessToken,
+    });
 
-      setUserData(data.user);
-      setAccessToken(data.accessToken);
-    } catch (error) {
-      throw error;
-    }
+    setUserData(data.user);
+    setAccessToken(data.accessToken);
   };
 
   const signUp = async ({
@@ -57,19 +53,15 @@ export const AuthContextProvider = ({ children }: Props) => {
     surname,
     phone,
     username,
-  }: SignUpProps) => {
-    try {
-      await api.post("/users", {
-        email,
-        password,
-        name,
-        surname,
-        phone,
-        username,
-      });
-    } catch (error) {
-      throw error;
-    }
+  }: SignUpProps): Promise<void> => {
+    await api.post("/users", {
+      email,
+      password,
+      name,
+      surname,
+      phone,
+      username,
+    });
   };
 
   const logout = () => {

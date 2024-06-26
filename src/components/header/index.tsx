@@ -174,7 +174,7 @@ export const Header = ({ isBlocked = false }: HeaderType) => {
               </Button>
             </MenuHandler>
             <MenuList className="p-1">
-              {profileMenuItems.map(({ label, icon, link }, _) => {
+              {profileMenuItems.map(({ label, icon, link }) => {
                 if (!isBlocked) {
                   return (
                     <MenuItem key={label} onClick={closeMenu}>
