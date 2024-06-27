@@ -28,6 +28,8 @@ export function SignUp() {
   const navigate = useNavigate();
   const { signUp } = useAuth();
   const formik = useFormik({
+    validateOnChange: false,
+    validateOnBlur: false,
     initialValues: {
       name: "",
       surname: "",
@@ -170,7 +172,7 @@ export function SignUp() {
       <SideImageAuthorization />
       <HeaderMobile />
 
-      <div className="w-full h-full flex justify-center items-center">
+      <div className="w-full h-full flex justify-center  pt-[72px] overflow-y-scroll">
         <form onSubmit={formik.handleSubmit} className=" bg-white rounded-md">
           <Typography variant="h4" color="blue-gray">
             Cadastre-se
