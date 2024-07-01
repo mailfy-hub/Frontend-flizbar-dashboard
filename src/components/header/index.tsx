@@ -17,6 +17,7 @@ import { routesMapped } from "../../utils/route-config";
 import { generateRoutesByRole } from "../../utils/route-role-export";
 import { Logo } from "../logo";
 import { PageButton } from "../sidebar/PageButton";
+import Profile from "../../assets/profile.png";
 
 const profileMenuItems = [
   {
@@ -152,7 +153,7 @@ export const Header = ({ isBlocked = false }: HeaderType) => {
                     variant="circular"
                     size="sm"
                     alt="tania andrew"
-                    src="https://avatars.githubusercontent.com/u/92546209?v=4"
+                    src={Profile}
                   />
                   <div>
                     <p className="font-display font-semibold text-body14 text-BLACK no-underline capitalize text-left">
@@ -259,12 +260,7 @@ export const Header = ({ isBlocked = false }: HeaderType) => {
               to={"/my-account"}
               className="mx-4 bg-GRAY_800 p-6 rounded-lg flex items-center gap-2 mt-4"
             >
-              <Avatar
-                variant="circular"
-                size="sm"
-                alt="tania andrew"
-                src="https://avatars.githubusercontent.com/u/92546209?v=4"
-              />
+              <Avatar variant="circular" size="sm" alt="tania andrew" src="." />
               <div>
                 <p className="font-display font-semibold text-body14 text-WHITE no-underline capitalize text-left">
                   {`${userData?.name} ${userData?.surname}`}
