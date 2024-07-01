@@ -31,8 +31,6 @@ export const UserInsert = () => {
     countries[0]
   );
 
-  console.log("user", user);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({
       ...user,
