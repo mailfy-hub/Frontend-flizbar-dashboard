@@ -11,6 +11,7 @@ interface AuthContextProps {
   isAuthenticated: boolean;
   userData: User | null;
   signUp: (info: SignUpProps) => Promise<void>;
+  signUpAdmin: (info: SignUpProps) => Promise<void>;
   login: (credentials: loginProps) => Promise<void>;
   logout: () => void;
   isLoadingData: boolean;
@@ -55,6 +56,24 @@ export const AuthContextProvider = ({ children }: Props) => {
     username,
   }: SignUpProps): Promise<void> => {
     await api.post("/users", {
+      email,
+      password,
+      name,
+      surname,
+      phone,
+      username,
+    });
+  };
+
+  const signUpAdmin = async ({
+    email,
+    password,
+    name,
+    surname,
+    phone,
+    username,
+  }: SignUpProps): Promise<void> => {
+    await api.post("/users/admin", {
       email,
       password,
       name,
@@ -115,6 +134,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         isLoadingData,
         accessToken,
         signUp,
+        signUpAdmin,
       }}
     >
       {children}

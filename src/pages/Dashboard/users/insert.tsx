@@ -14,7 +14,7 @@ import { SignUpProps } from "../../../types/auth";
 
 export const UserInsert = () => {
   const navigate = useNavigate();
-  const { signUp } = useAuth();
+  const { signUpAdmin } = useAuth();
   const handleNavigateBack = () => {
     navigate(-1);
   };
@@ -51,7 +51,7 @@ export const UserInsert = () => {
 
   const handleSignUp = async (info: SignUpProps) => {
     try {
-      await signUp(info);
+      await signUpAdmin(info);
       toast("Conta criada!", {
         position: "bottom-right",
         type: "success",
