@@ -6,12 +6,39 @@ import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../../../client/api";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { User } from "../../../types/dashboard/users";
+import { CountryType, countries } from "../../../utils/number-config";
+import { InputWithDropdown } from "../../../components/inputWithDropdown";
 
 export const UserEdit = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
   const [user, setUser] = useState<User | null>(null);
+
+  const [editUser, setEditUser] = useState({
+    email: user?.email || "",
+    password: "",
+    name: user?.name || "",
+    surname: user?.surname || "",
+    phone: user?.phone || "",
+  });
+
+  const [selectedCountry, setSelectedCountry] = useState<CountryType>(
+    countries[0]
+  );
+
+  console.log("user", user);
+
+  const handleSelectedCountry = (selected: CountryType) => {
+    setSelectedCountry(selected);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditUser({
+      ...editUser,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleNavigateBack = () => {
     navigate(-1);
@@ -60,6 +87,17 @@ export const UserEdit = () => {
                 type="email"
                 label="E-mail de acesso*"
               />
+              <InputWithDropdown
+                handleChangeCountry={handleSelectedCountry}
+                selectedCountry={selectedCountry}
+                id="phone"
+                name="phone"
+                type="text"
+                defaultValue={user?.phone || ""}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="grid md:grid-cols-2 gap-6">
               <Input value={user?.username} type="text" label="Username*" />
             </div>
           </div>
