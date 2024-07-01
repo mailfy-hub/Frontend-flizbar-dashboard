@@ -101,14 +101,14 @@ export const Home = () => {
                   R$
                 </span>
                 <span className="font-display font-normal text-WHITE text-head32 leading-tight">
-                  588,21
+                  0,00
                 </span>
               </div>
             </div>
             <div className="w-full grid md:grid-cols-4 gap-8">
-              <CurrencyCard Name="Dólar" Symbol="$" Value={81.63} />
+              <CurrencyCard Name="Dólar" Symbol="$" Value={0.0} />
               <CurrencyCard Name="Euro" Symbol="€" Value={0.0} />
-              <CurrencyCard Name="Real" Symbol="R$" Value={175.98} />
+              <CurrencyCard Name="Real" Symbol="R$" Value={0.0} />
               <CurrencyCard Name="Iene" Symbol="¥" Value={0.0} />
             </div>
           </div>
