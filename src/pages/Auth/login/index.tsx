@@ -24,6 +24,8 @@ export function Login() {
         .required("Preencha esse campo"),
       password: Yup.string().required("Preencha esse campo"),
     }),
+    validateOnBlur: false,
+    validateOnChange: false,
     onSubmit: (values) => {
       // alert(JSON.stringify(values, null, 2));
       handleLogin(values);
@@ -51,6 +53,8 @@ export function Login() {
       } else {
         console.error(error);
       }
+    } finally {
+      formik.setSubmitting(false);
     }
   };
 
