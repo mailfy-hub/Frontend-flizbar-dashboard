@@ -6,7 +6,7 @@ export const AuthRoute = () => {
   const { isAuthenticated, isLoadingData } = useAuth();
   const location = useLocation();
 
-  if(isLoadingData) return <Loading/>
+  if (isLoadingData) return <Loading />;
 
   if (isAuthenticated) {
     return <Outlet />;

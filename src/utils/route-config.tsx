@@ -364,4 +364,15 @@ export const routesMapped: routeMapped[] = [
     addToSidebar: false,
     isOutletRoute: false,
   }),
+  createRouteMapped({
+    path: "/fullfill-user-form",
+    element: <UserDataProfile />,
+    name: "Cadastro de dados",
+    icon: "heroicons:circle-stack",
+    isAdmin: false,
+    subRoutes: [],
+    addToSidebar: false,
+    isOutletRoute: true,
+    blockSidebarInteractivity: true,
+  }),
 ];

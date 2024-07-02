@@ -8,12 +8,12 @@ interface ProtectedRouteProps {
 export const ProtectedRoute = ({
   isAdmin = "all",
 }: ProtectedRouteProps) => {
-  const { userData, isAuthenticated } = useAuth();
+  const { profile, isAuthenticated } = useAuth();
   const location = useLocation();
 
   if (!isAuthenticated) return <Navigate to={"/login"} state={location} />;
 
-  if (isAdmin == userData?.isAdmin || isAdmin == "all") {
+  if (isAdmin == profile?.user?.isAdmin || isAdmin == "all") {
     return <Outlet />;
   } else {
     return <Navigate to={"/unathorized"} state={location} />;

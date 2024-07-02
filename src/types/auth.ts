@@ -27,7 +27,7 @@ export interface User {
   avatar: string | null;
   phone: string;
   lastAccess: string | null;
-  isAdmin: UserRoleAccessType;
+  isAdmin: boolean;
   password: string;
   verified: boolean;
   createdAt: string;

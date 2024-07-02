@@ -13,8 +13,8 @@ import { AuthRoute } from "./authRoute";
 import { IsAuthenticatedBlock } from "./isAuthenticatedBlock";
 
 export const Routes = () => {
-  const { userData } = useAuth();
-  const routesUserRole = userData && generateRoutesByRole(userData?.isAdmin);
+  const { profile } = useAuth();
+  const routesUserRole = profile && generateRoutesByRole(profile.user.isAdmin);
   /*   useEffect(() => {
     const RoutesUserRole = routesMapped.filter((route) => {
       // console.log(route.name, route.isAdmin, userData?.isAdmin);

@@ -10,6 +10,7 @@ import { Props } from "react-apexcharts";
 import { useAuth } from "../../../hook/auth";
 
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import ImageHeroAdmin from "../../../assets/admin-banner-image.png";
 
 const ChartRendimentosData: Props = {
@@ -85,31 +86,48 @@ const ChartRendimentosPercentualData: Props = {
 export const Home = () => {
   const { userData } = useAuth();
 
+  const navigate = useNavigate();
+
+  const handleNavigateFullfillForm = () => {
+    navigate("fullfill-user-form");
+  };
+
   useEffect(() => {}, []);
   return (
     <>
       {!userData?.isAdmin ? (
         <div>
-          <SectionTitle text="Sua carteira" />
-          <div className="flex flex-col md:flex-row items-center gap-8 mt-8">
-            <div className="md:max-w-[332px] w-full bg-GOLD_DARK h-[124px] rounded-lg p-6 flex flex-col justify-between">
-              <p className="font-display font-medium text-WHITE text-body16 leading-tight">
-                Valor Total Aproximado
-              </p>
-              <div className="flex items-center gap-2">
-                <span className="font-display font-normal text-WHITE text-head32 leading-tight">
-                  R$
-                </span>
-                <span className="font-display font-normal text-WHITE text-head32 leading-tight">
-                  0,00
-                </span>
-              </div>
+          <button
+            onClick={handleNavigateFullfillForm}
+            className="w-full bg-white p-8 rounded-md"
+          >
+            <div>
+              <h4>Preencha com todos seus dados</h4>
+              <p>Clique aqui para ser redirecionado</p>
             </div>
-            <div className="w-full grid md:grid-cols-4 gap-8">
-              <CurrencyCard Name="Dólar" Symbol="$" Value={0.0} />
-              <CurrencyCard Name="Euro" Symbol="€" Value={0.0} />
-              <CurrencyCard Name="Real" Symbol="R$" Value={0.0} />
-              <CurrencyCard Name="Iene" Symbol="¥" Value={0.0} />
+          </button>
+          <div className="mt-8">
+            <SectionTitle text="Sua carteira" />
+            <div className="flex flex-col md:flex-row items-center gap-8 mt-8">
+              <div className="md:max-w-[332px] w-full bg-GOLD_DARK h-[124px] rounded-lg p-6 flex flex-col justify-between">
+                <p className="font-display font-medium text-WHITE text-body16 leading-tight">
+                  Valor Total Aproximado
+                </p>
+                <div className="flex items-center gap-2">
+                  <span className="font-display font-normal text-WHITE text-head32 leading-tight">
+                    R$
+                  </span>
+                  <span className="font-display font-normal text-WHITE text-head32 leading-tight">
+                    0,00
+                  </span>
+                </div>
+              </div>
+              <div className="w-full grid md:grid-cols-4 gap-8">
+                <CurrencyCard Name="Dólar" Symbol="$" Value={0.0} />
+                <CurrencyCard Name="Euro" Symbol="€" Value={0.0} />
+                <CurrencyCard Name="Real" Symbol="R$" Value={0.0} />
+                <CurrencyCard Name="Iene" Symbol="¥" Value={0.0} />
+              </div>
             </div>
           </div>
         </div>
