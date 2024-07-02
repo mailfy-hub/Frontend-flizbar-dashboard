@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../client/api";
 import {
+  Profile,
   SignUpProps,
   User,
   loginProps,
@@ -10,6 +11,7 @@ import {
 interface AuthContextProps {
   isAuthenticated: boolean;
   userData: User | null;
+  profile: Profile | null;
   signUp: (info: SignUpProps) => Promise<void>;
   signUpAdmin: (info: SignUpProps) => Promise<void>;
   login: (credentials: loginProps) => Promise<void>;
@@ -32,19 +34,29 @@ export const AuthContextProvider = ({ children }: Props) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  const [profile, setProfile] = useState<Profile | null>(null);
+
   const login = async ({ email, password }: loginProps) => {
     const { data }: loginResponseProps = await api.post("/auth/login", {
       email,
       password,
     });
+
+    const profile = await loadUserProfile(data.user.id);
+    setProfile(profile);
+
     setIsAuthenticated(true);
     saveToLocalStorage({
-      user: data.user,
+      user: profile.user,
       token: data.accessToken,
     });
 
-    setUserData(data.user);
+    /* setUserData(data.user); */
     setAccessToken(data.accessToken);
+
+    api.defaults.headers.common = {
+      Authorization: `Bearer ${data.accessToken}`,
+    };
   };
 
   const signUp = async ({
@@ -86,6 +98,7 @@ export const AuthContextProvider = ({ children }: Props) => {
   const logout = () => {
     setIsAuthenticated(false);
     setUserData(null);
+    setProfile(null);
     setAccessToken(null);
     removeFromLocalStorage();
   };
@@ -106,18 +119,80 @@ export const AuthContextProvider = ({ children }: Props) => {
     localStorage.removeItem(`${LOCAL_STORAGE_KEY}-token`);
   };
 
-  const loadFromLocalStorage = () => {
-    setIsLoadingData(true);
-    const userLS = localStorage.getItem(`${LOCAL_STORAGE_KEY}-user`);
-    const tokenLS = localStorage.getItem(`${LOCAL_STORAGE_KEY}-token`);
-    if (userLS && tokenLS) {
-      const userDataParsed: User = JSON.parse(userLS);
-      const tokenDataParsed: string = JSON.parse(tokenLS);
-      setUserData(userDataParsed);
-      setAccessToken(tokenDataParsed);
-      setIsAuthenticated(true);
+  const loadFromLocalStorage = async () => {
+    try {
+      setIsLoadingData(true);
+      const userLS = localStorage.getItem(`${LOCAL_STORAGE_KEY}-user`);
+      const tokenLS = localStorage.getItem(`${LOCAL_STORAGE_KEY}-token`);
+      if (userLS && tokenLS) {
+        const userDataParsed: User = JSON.parse(userLS);
+        const tokenDataParsed: string = JSON.parse(tokenLS);
+
+        setUserData(userDataParsed);
+        setAccessToken(tokenDataParsed);
+        setIsAuthenticated(true);
+
+        const profile = await loadUserProfile(userDataParsed.id);
+        setProfile(profile);
+
+        api.defaults.headers.common = {
+          Authorization: `Bearer ${tokenDataParsed}`,
+        };
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoadingData(false);
     }
-    setIsLoadingData(false);
+  };
+
+  const loadUserProfile = async (id: string) => {
+    try {
+      const { data } = await api.get<{ profile: Profile }>(`/profiles/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      return data.profile;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const verifyAccountData = () => {
+    const isAddressFilled =
+      profile?.clientAddresses?.every(
+        (address) =>
+          address.clientId &&
+          address.addressType &&
+          address.documentNumber &&
+          address.zipCode &&
+          address.city &&
+          address.state &&
+          address.street &&
+          address.number &&
+          address.neighborhood &&
+          address.complement &&
+          address.reference
+      ) ?? false;
+
+    const isFinanceFilled =
+      profile?.clientFinance &&
+      profile.clientFinance.profileId &&
+      profile.clientFinance.contactType &&
+      profile.clientFinance.bankName &&
+      profile.clientFinance.accountNumber &&
+      profile.clientFinance.accountDigit &&
+      profile.clientFinance.agencyNumber &&
+      profile.clientFinance.agencyDigit &&
+      profile.clientFinance.pixKeyType &&
+      profile.clientFinance.pixKey;
+
+    // const isContactFilled = profile?.clientContacts?.length > 0 ?? false;
+
+    const isFullfiledAccountData =
+      isAddressFilled && isFinanceFilled && isContactFilled;
   };
 
   useEffect(() => {
@@ -135,6 +210,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         accessToken,
         signUp,
         signUpAdmin,
+        profile,
       }}
     >
       {children}
