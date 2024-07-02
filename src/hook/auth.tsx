@@ -45,6 +45,9 @@ export const AuthContextProvider = ({ children }: Props) => {
 
     setUserData(data.user);
     setAccessToken(data.accessToken);
+    api.defaults.headers.common = {
+      Authorization: `Bearer ${data.accessToken}`,
+    };
   };
 
   const signUp = async ({
@@ -116,6 +119,10 @@ export const AuthContextProvider = ({ children }: Props) => {
       setUserData(userDataParsed);
       setAccessToken(tokenDataParsed);
       setIsAuthenticated(true);
+
+      api.defaults.headers.common = {
+        Authorization: `Bearer ${tokenDataParsed}`,
+      };
     }
     setIsLoadingData(false);
   };
