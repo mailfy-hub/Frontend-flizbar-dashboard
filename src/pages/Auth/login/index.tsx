@@ -51,6 +51,8 @@ export function Login() {
       } else {
         console.error(error);
       }
+    } finally {
+      formik.setSubmitting(false);
     }
   };
 
