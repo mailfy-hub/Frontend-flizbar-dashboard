@@ -8,34 +8,26 @@ import { SectionTitle } from "../../../components/sectionTitle";
 import { User } from "../../../types/dashboard/users";
 import { CountryType, countries } from "../../../utils/number-config";
 import { InputWithDropdown } from "../../../components/inputWithDropdown";
+import { updateUser, IUser } from "../../../client/users";
+import { toast } from "react-toastify";
 
 export const UserEdit = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
   const [user, setUser] = useState<User | null>(null);
-
-  const [editUser, setEditUser] = useState({
-    email: user?.email || "",
-    password: "",
-    name: user?.name || "",
-    surname: user?.surname || "",
-    phone: user?.phone || "",
-  });
-
+  const [userUpdate, setUserUpdate] = useState({});
   const [selectedCountry, setSelectedCountry] = useState<CountryType>(
     countries[0]
   );
-
-  console.log("user", user);
 
   const handleSelectedCountry = (selected: CountryType) => {
     setSelectedCountry(selected);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditUser({
-      ...editUser,
+    setUserUpdate({
+      ...userUpdate,
       [e.target.name]: e.target.value,
     });
   };
@@ -51,6 +43,16 @@ export const UserEdit = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const updateUserData = async (userUpdate: IUser) => {
+    const idUser = user?.id || undefined;
+    await updateUser(userUpdate, idUser as string);
+    toast("Usuário atualizado!", {
+      position: "bottom-right",
+      type: "success",
+    });
+    navigate(`/users`);
   };
 
   useEffect(() => {
@@ -78,14 +80,28 @@ export const UserEdit = () => {
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
-              <Input value={user?.name} type="text" label="Nome*" />
-              <Input value={user?.surname} type="text" label="Sobrenome*" />
+              <Input
+                defaultValue={user?.name}
+                type="text"
+                label="Nome*"
+                name="name"
+                onChange={handleInputChange}
+              />
+              <Input
+                defaultValue={user?.surname}
+                type="text"
+                label="Sobrenome*"
+                name="surname"
+                onChange={handleInputChange}
+              />
             </div>
             <div className="grid md:grid-cols-2 gap-6">
               <Input
-                value={user?.email}
+                defaultValue={user?.email}
                 type="email"
                 label="E-mail de acesso*"
+                name="email"
+                onChange={handleInputChange}
               />
               <InputWithDropdown
                 handleChangeCountry={handleSelectedCountry}
@@ -98,12 +114,22 @@ export const UserEdit = () => {
               />
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-              <Input value={user?.username} type="text" label="Username*" />
+              <Input
+                value={user?.username}
+                type="text"
+                label="Username*"
+                name="username"
+                onChange={handleInputChange}
+              />
             </div>
           </div>
         </div>
         <div className="w-full flex justify-end mt-8">
-          <Button className="bg-GOLD_MAIN w-full md:w-auto">
+          <Button
+            className="bg-GOLD_MAIN w-full md:w-auto"
+            type="button"
+            onClick={() => updateUserData(userUpdate as IUser)}
+          >
             Atualizar dados
           </Button>
         </div>
