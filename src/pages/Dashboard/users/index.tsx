@@ -26,15 +26,6 @@ import SuccessDialog from "../../../components/successDialog";
 import { User } from "../../../types/dashboard/users";
 import { formatDate } from "../../../utils/formatDate";
 
-/* const TABLE_ROW = [
-  {
-    id: "1",
-    name: "Emma Roberts",
-    email_address: "emma@mail.com",
-    created_at: "23/04/18",
-  },
-]; */
-
 const TABLE_HEAD = [
   "Código",
   "Nome",
@@ -70,7 +61,9 @@ export const Users = () => {
   const [usersList, setUsersList] = useState<User[]>();
   const getUserslist = async () => {
     try {
-      const { data } = await api.get("/users");
+      const { data } = await api.get("admin/users/admins");
+      console.log("data", data);
+
       const mappedData = data.map((user: User) => {
         return {
           ...user,
@@ -78,7 +71,9 @@ export const Users = () => {
         };
       });
       setUsersList(mappedData);
-    } catch (error) {}
+    } catch (error) {
+      /* empty */
+    }
   };
   useEffect(() => {
     getUserslist();

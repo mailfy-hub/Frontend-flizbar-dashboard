@@ -2,6 +2,7 @@ import { Route, Routes as RoutesRRD } from "react-router-dom";
 import { useAuth } from "../hook/auth";
 import { RecoveryAccount } from "../pages/Auth/RecoveryAccount";
 import { Login } from "../pages/Auth/login";
+import { ResetPassword } from "../pages/Auth/resetPassword";
 import { SignUp } from "../pages/Auth/signUp";
 import { Layout } from "../pages/Dashboard/layout";
 import { LayoutNotInteractive } from "../pages/Dashboard/layoutNotInteractive";
@@ -131,6 +132,7 @@ export const Routes = () => {
         </Route>
         <Route path="register" element={<SignUp />} />
         <Route path="recovery" element={<RecoveryAccount />} />
+        <Route path="reset-password" element={<ResetPassword />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />
