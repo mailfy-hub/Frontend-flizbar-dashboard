@@ -1,10 +1,11 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, Input, Option, Select } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputWithDropdown } from "../../../components/inputWithDropdown";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { useAuth } from "../../../hook/auth";
 import { CountryType, countries } from "../../../utils/number-config";
+import { api } from "../../../client/api";
 
 type contact = {
   index: number;
@@ -30,10 +31,42 @@ export const InfoClient = () => {
   const [selectedMaritalStatus, setSelectedMaritalStatus] =
     useState<MaritalStatus>("Solteiro(a)"); // Initial state
 
+  const [dataUser, setDataUser] = useState({
+    avatar: "",
+    createdAt: "",
+    deletedAt: "",
+    email: "",
+    id: "",
+    isAdmin: Boolean,
+    lastAccess: "",
+    name: "",
+    password: "",
+    phone: "",
+    surname: "",
+    updatedAt: "",
+    username: "",
+    verified: Boolean,
+    type: "",
+  });
+
   const handleMaritalStatusChange = (val: MaritalStatus) => {
     console.log(val);
     setSelectedMaritalStatus(val);
   };
+
+  const getDataUser = async () => {
+    const id = userData?.id;
+    try {
+      const { data } = await api.get(`users/${id}`);
+      setDataUser(data);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
+    getDataUser();
+  }, []);
 
   const [contactsList, setContactsList] = useState<contact[]>([
     {
@@ -77,11 +110,24 @@ export const InfoClient = () => {
             </div>
             <div className="mt-8 flex flex-col gap-6 ">
               <div className="grid md:grid-cols-2 gap-6">
-                <Input type="email" label="E-mail de acesso" />
+                <Input
+                  type="email"
+                  label="E-mail de acesso"
+                  defaultValue={userData.email}
+                />
+                <Input type="text" label="Nome" defaultValue={userData.name} />
               </div>
               <div className="grid md:grid-cols-2 gap-6">
-                <Input type="text" label="Nome" />
-                <InputWithDropdown selectedCountry={selectedCountry} handleChangeCountry={handleSelectedCountry} />
+                <Input
+                  type="text"
+                  label="Sobrenome"
+                  defaultValue={userData.surname}
+                />
+                <InputWithDropdown
+                  selectedCountry={selectedCountry}
+                  handleChangeCountry={handleSelectedCountry}
+                  defaultValue={dataUser?.phone}
+                />
               </div>
             </div>
           </div>
