@@ -31,7 +31,6 @@ export const InfoClient = () => {
     useState<MaritalStatus>("Solteiro(a)"); // Initial state
 
   const handleMaritalStatusChange = (val: MaritalStatus) => {
-    console.log(val);
     setSelectedMaritalStatus(val);
   };
 

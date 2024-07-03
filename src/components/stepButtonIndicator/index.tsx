@@ -25,12 +25,12 @@ export const StepButtonIndicator = ({
     >
       <div
         className={`
-         shrink-0 h-8 w-8 rounded-full  grid place-content-center transition-all
+         shrink-0 h-8 w-8 rounded-full  grid place-content-center transition-all 
         ${
           isStepActive
             ? "bg-GOLD_DARK"
             : isStepFilled
-            ? "bg-EMERALD_500"
+            ? "bg-EMERALD_500 cursor-not-allowed opacity-65"
             : "bg-gray-300"
         }
         `}

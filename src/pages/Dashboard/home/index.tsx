@@ -9,6 +9,7 @@ import { SectionTitle } from "../../../components/sectionTitle";
 import { Props } from "react-apexcharts";
 import { useAuth } from "../../../hook/auth";
 
+import { Icon } from "@iconify/react/dist/iconify.js";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ImageHeroAdmin from "../../../assets/admin-banner-image.png";
@@ -84,7 +85,7 @@ const ChartRendimentosPercentualData: Props = {
   },
 };
 export const Home = () => {
-  const { userData } = useAuth();
+  const { userData, isFullfiledAccountInfo } = useAuth();
 
   const navigate = useNavigate();
 
@@ -97,16 +98,34 @@ export const Home = () => {
     <>
       {!userData?.isAdmin ? (
         <div>
-          <button
-            onClick={handleNavigateFullfillForm}
-            className="w-full bg-white p-8 rounded-md"
-          >
-            <div>
-              <h4>Preencha com todos seus dados</h4>
-              <p>Clique aqui para ser redirecionado</p>
+          {!isFullfiledAccountInfo && (
+            <div
+              onClick={handleNavigateFullfillForm}
+              className="w-full bg-white rounded-md flex items-center p-6 gap-6 cursor-pointer hover:opacity-75 transition-all border-[1px] border-WHITE hover:border-GOLD_DARK mb-8"
+            >
+              <div className="flex w-full items-center gap-4">
+                <div className=" h-10 w-10 rounded-full bg-GOLD_MAIN grid place-content-center">
+                  <Icon icon={"ph:user"} className="text-WHITE text-body16" />
+                </div>
+                <div className="w-full">
+                  <h4 className="font-display font-semibold text-BLACK text-body18 leading-tight">
+                    Preencha com todos seus dados
+                  </h4>
+                  <p className="font-body font-normal text-GRAY_400 text-body16 mt-1">
+                    Complete os dados da sua conta, clique aqui para ser
+                    redirecionado.
+                  </p>
+                </div>
+              </div>
+              <div>
+                <Icon
+                  icon={"ph:arrow-right"}
+                  className="text-GRAY_400 text-body16"
+                />
+              </div>
             </div>
-          </button>
-          <div className="mt-8">
+          )}
+          <div className="">
             <SectionTitle text="Sua carteira" />
             <div className="flex flex-col md:flex-row items-center gap-8 mt-8">
               <div className="md:max-w-[332px] w-full bg-GOLD_DARK h-[124px] rounded-lg p-6 flex flex-col justify-between">

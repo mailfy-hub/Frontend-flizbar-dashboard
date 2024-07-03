@@ -12,13 +12,14 @@ interface AuthContextProps {
   isAuthenticated: boolean;
   userData: User | null;
   profile: Profile | null;
-  isFullfiledAccountInfo: boolean;
   signUp: (info: SignUpProps) => Promise<void>;
   signUpAdmin: (info: SignUpProps) => Promise<void>;
   login: (credentials: loginProps) => Promise<void>;
   logout: () => void;
   isLoadingData: boolean;
   accessToken: string | null;
+
+  isFullfiledAccountInfo: boolean;
 }
 
 const AuthContext = createContext({} as AuthContextProps);
@@ -31,34 +32,44 @@ const LOCAL_STORAGE_KEY = "flizbar-storage-data";
 
 export const AuthContextProvider = ({ children }: Props) => {
   const [isLoadingData, setIsLoadingData] = useState(false);
-  const [isFullfiledAccountInfo, setIsFullfiledAccountInfo] = useState(false);
   const [userData, setUserData] = useState<User | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
+
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const [profile, setProfile] = useState<Profile | null>(null);
 
+  const [isFullfiledAccountInfo, setIsFullfiledAccountInfo] = useState(false);
+
   const login = async ({ email, password }: loginProps) => {
-    const { data }: loginResponseProps = await api.post("/auth/login", {
-      email,
-      password,
-    });
+    try {
+      const { data }: loginResponseProps = await api.post("/auth/login", {
+        email,
+        password,
+      });
 
-    const profile = await loadUserProfile(data.user.id, data.accessToken);
-    setProfile(profile);
+      api.defaults.headers.common = {
+        Authorization: `Bearer ${data.accessToken}`,
+      };
 
-    setIsAuthenticated(true);
-    saveToLocalStorage({
-      user: profile.user,
-      token: data.accessToken,
-    });
+      await loadUserProfile(data.user.id);
 
-    /* setUserData(data.user); */
-    setAccessToken(data.accessToken);
+      // setUserData(data.user);
+      setAccessToken(data.accessToken);
+      setIsAuthenticated(true);
+      saveToLocalStorage({
+        user: data.user,
+        token: data.accessToken,
+      });
 
-    api.defaults.headers.common = {
-      Authorization: `Bearer ${data.accessToken}`,
-    };
+      /* setUserData(data.user); */
+
+      api.defaults.headers.common = {
+        Authorization: `Bearer ${data.accessToken}`,
+      };
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const signUp = async ({
@@ -123,7 +134,6 @@ export const AuthContextProvider = ({ children }: Props) => {
 
   const loadFromLocalStorage = async () => {
     try {
-      setIsLoadingData(true);
       const userLS = localStorage.getItem(`${LOCAL_STORAGE_KEY}-user`);
       const tokenLS = localStorage.getItem(`${LOCAL_STORAGE_KEY}-token`);
       if (userLS && tokenLS) {
@@ -134,71 +144,47 @@ export const AuthContextProvider = ({ children }: Props) => {
           Authorization: `Bearer ${tokenDataParsed}`,
         };
 
-        setUserData(userDataParsed);
+        const profile = await loadUserProfile(userDataParsed.id);
+        verifyAccountData(profile)
+
         setAccessToken(tokenDataParsed);
         setIsAuthenticated(true);
-
-        const profile = await loadUserProfile(
-          userDataParsed.id,
-          tokenDataParsed
-        );
-        setProfile(profile);
       }
     } catch (error) {
       console.log(error);
-    } finally {
-      setIsLoadingData(false);
     }
   };
 
-  const loadUserProfile = async (id: string, token: string) => {
+  const loadUserProfile = async (id: string): Promise<Profile> => {
     try {
-      const { data } = await api.get<{ profile: Profile }>(`/profiles/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      setIsLoadingData(true);
+      const { data } = await api.get(`/profiles/${id}`);
 
-      verifyAccountData();
-      return data.profile;
+      setProfile(data);
+      setUserData(data.user);
+      setIsLoadingData(false);
+
+      return data;
     } catch (error) {
       throw error;
     }
   };
 
-  const verifyAccountData = () => {
-    const isAddressFilled =
-      profile?.clientAddresses?.every(
-        (address) =>
-          address.clientId &&
-          address.addressType &&
-          address.documentNumber &&
-          address.zipCode &&
-          address.city &&
-          address.state &&
-          address.street &&
-          address.number &&
-          address.neighborhood &&
-          address.complement &&
-          address.reference
-      ) ?? false;
+  const verifyAccountData = (profile: Profile) => {
+    const isClientDetailsFilled = profile?.clientDetails == null ? false : true;
+    const isClientAddressesFilled =
+      profile?.clientAddresses.length > 0 ? true : false;
+    const isClientContactsFilled =
+      profile?.clientContacts.length > 0 ? true : false;
+    const isClientFinanceFilled = profile?.clientFinance == null ? false : true;
 
-    const isFinanceFilled =
-      profile?.clientFinance &&
-      profile.clientFinance.profileId &&
-      profile.clientFinance.contactType &&
-      profile.clientFinance.bankName &&
-      profile.clientFinance.accountNumber &&
-      profile.clientFinance.accountDigit &&
-      profile.clientFinance.agencyNumber &&
-      profile.clientFinance.agencyDigit &&
-      profile.clientFinance.pixKeyType &&
-      profile.clientFinance.pixKey;
+    const isFullfiledAccountData =
+      !!isClientDetailsFilled &&
+      !!isClientAddressesFilled &&
+      !!isClientContactsFilled &&
+      !!isClientFinanceFilled;
 
-    // const isContactFilled = profile?.clientContacts?.length > 0 ?? false;
-
-    const isFullfiledAccountData = !!isAddressFilled && !!isFinanceFilled;
-    setIsFullfiledAccountInfo(isFullfiledAccountData)
+    setIsFullfiledAccountInfo(isFullfiledAccountData);
   };
 
   useEffect(() => {
@@ -217,7 +203,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         signUp,
         signUpAdmin,
         profile,
-        isFullfiledAccountInfo
+        isFullfiledAccountInfo,
       }}
     >
       {children}

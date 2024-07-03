@@ -91,7 +91,7 @@ export const AdditionalData = ({ handleConfirmationClick }: FormStepType) => {
       <div className="w-full flex justify-end mt-8">
         <Button
           onClick={() => {
-            handleConfirmationClick(4);
+            handleConfirmationClick();
           }}
           className="bg-GOLD_MAIN w-full md:w-auto"
           type="submit"

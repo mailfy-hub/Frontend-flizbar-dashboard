@@ -94,7 +94,6 @@ export const Header = ({ isBlocked = false }: HeaderType) => {
 
   const routesUserRole = userData && generateRoutesByRole(userData?.isAdmin);
 
-  console.log(userData);
 
   return (
     <div className="h-[72px] w-full relative">

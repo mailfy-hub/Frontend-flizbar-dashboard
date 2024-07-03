@@ -9,9 +9,9 @@ export interface Profile {
   contractAccepted: boolean;
   createdAt: string;
   attachments: any[]; // Adjust the type based on the structure of the attachments if available
-  clientAddresses: ClientAddress[] | null;
+  clientAddresses: ClientAddress[];
   clientContacts: string[]; // Adjust the type based on the structure of the client contacts if available
-  clientDetails: any | null; // Adjust the type based on the structure of the client details if available
+  clientDetails: ProfileDetails | null; // Adjust the type based on the structure of the client details if available
   clientFinance: ClientFinance | null;
   clientParents: ClientParents | null;
   user: User;

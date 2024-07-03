@@ -1,44 +1,89 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, Input } from "@material-tailwind/react";
-import { useState } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { InferType } from "yup";
 import { FormStepType } from ".";
+import { api } from "../../../client/api";
 import { SectionTitle } from "../../../components/sectionTitle";
+import { useAuth } from "../../../hook/auth";
 
-type contact = {
-  index: number;
-  name: string;
-  contact: string;
-};
 
-export const Contact = ({ handleConfirmationClick }: FormStepType) => {
-  const [contactsList, setContactsList] = useState<contact[]>([
-    {
-      index: 1,
-      name: "",
-      contact: "",
+
+export const Contact = ({  }: FormStepType) => {
+  const { userData } = useAuth();
+  const ContactSchema = Yup.object().shape({
+    contactsList: Yup.array().of(
+      Yup.object().shape({
+        name: Yup.string().required("Nome é obrigatório"),
+        phone: Yup.string().required("Número de Telefone é obrigatório"),
+      })
+    ),
+  });
+
+  const initialValues = {
+    contactsList: [
+      {
+        index: 1,
+        name: "",
+        phone: "",
+      },
+    ],
+  };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema: ContactSchema,
+    onSubmit: (values) => {
+      console.log(values);
+      handlePostContactsInformation(values);
+      // handleConfirmationClick();
     },
-  ]);
+  });
 
   const handleNewContact = () => {
     const newContact = {
-      index: contactsList.length + 1,
+      index: formik.values.contactsList.length + 1,
       name: "",
-      contact: "",
+      phone: "",
     };
-
-    setContactsList((state) => [newContact, ...state]);
+    formik.setFieldValue("contactsList", [
+      ...formik.values.contactsList,
+      newContact,
+    ]);
   };
+
   const handleRemoveContact = (idx: number) => {
-    if (contactsList.length <= 1) {
+    if (formik.values.contactsList.length <= 1) {
       return;
     }
-    const contactsFiltered = contactsList.filter(
+    const contactsFiltered = formik.values.contactsList.filter(
       (contact) => contact.index !== idx
     );
-    setContactsList(contactsFiltered);
+    formik.setFieldValue("contactsList", contactsFiltered);
   };
+
+  type FormValues = InferType<typeof ContactSchema>;
+
+  const handlePostContactsInformation = async (data: FormValues) => {
+    try {
+      if (data.contactsList) {
+        const formattedData = data?.contactsList.map((contact) => {
+          return {
+            name: contact.name,
+            phone: contact.phone,
+          };
+        });
+        await api.post(`profiles/${userData?.id}/contacts`, formattedData);
+      }
+      // handleConfirmationClick();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <form>
+    <form onSubmit={formik.handleSubmit}>
       <div className="bg-WHITE p-8 w-full rounded-md mt-8">
         <div className="flex items-center gap-4">
           <Icon height={16} icon={"heroicons:user-circle"} color="black" />
@@ -46,25 +91,42 @@ export const Contact = ({ handleConfirmationClick }: FormStepType) => {
         </div>
         <div className="mt-8 flex flex-col gap-6 ">
           <div className="grid gap-6">
-            {contactsList.map((contact) => {
-              return (
-                <div className="flex flex-col md:flex-row items-end md:items-center gap-6">
-                  <Input type="email" label="Nome" />
-                  <Input type="email" label="Número de Telefone" />
-                  {contactsList.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        handleRemoveContact(contact.index);
-                      }}
-                      className="font-body font-medium text-GRAY text-body14 underline hover:text-GOLD_MAIN text-nowrap"
-                    >
-                      Remover
-                    </button>
-                  )}
-                </div>
-              );
-            })}
+            {formik.values.contactsList.map((contact, index) => (
+              <div
+                key={index}
+                className="flex flex-col md:flex-row items-end md:items-center gap-6"
+              >
+                <Input
+                  type="text"
+                  label="Nome"
+                  id={`contactsList.${index}.name`}
+                  name={`contactsList.${index}.name`}
+                  value={formik.values.contactsList[index].name}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+
+                <Input
+                  type="text"
+                  label="Número de Telefone"
+                  id={`contactsList.${index}.phone`}
+                  name={`contactsList.${index}.phone`}
+                  value={formik.values.contactsList[index].phone}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+
+                {formik.values.contactsList.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveContact(contact.index)}
+                    className="font-body font-medium text-GRAY text-body14 underline hover:text-GOLD_MAIN text-nowrap"
+                  >
+                    Remover
+                  </button>
+                )}
+              </div>
+            ))}
           </div>
           <Button
             type="button"
@@ -76,13 +138,7 @@ export const Contact = ({ handleConfirmationClick }: FormStepType) => {
         </div>
       </div>
       <div className="w-full flex justify-end mt-8">
-        <Button
-          onClick={() => {
-            handleConfirmationClick(3);
-          }}
-          className="bg-GOLD_MAIN w-full md:w-auto"
-          type="submit"
-        >
+        <Button type="submit" className="bg-GOLD_MAIN w-full md:w-auto">
           Próxima etapa
         </Button>
       </div>

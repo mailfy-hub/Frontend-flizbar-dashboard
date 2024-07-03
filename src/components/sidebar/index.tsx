@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hook/auth";
 import { generateRoutesByRole } from "../../utils/route-role-export";
@@ -22,7 +22,15 @@ export const SidebarLayout = ({ isBlocked = false }: SidebarLayout) => {
     navigate("/login");
   };
 
-  const routesUserRole = userData && generateRoutesByRole(userData?.isAdmin);
+  const routesUserRole = useMemo(() => {
+    if (userData) {
+      const routes = generateRoutesByRole(userData.isAdmin);
+      return routes;
+    } else {
+      return [];
+    }
+  }, [userData]);
+
 
   useEffect(() => {
     setActiveRoute(location.pathname);
@@ -60,20 +68,19 @@ export const SidebarLayout = ({ isBlocked = false }: SidebarLayout) => {
               isBlocked ? "pointer-events-none opacity-65" : ""
             }`}
           >
-            {routesUserRole &&
-              routesUserRole.map((route) => {
-                if (route.addToSidebar) {
-                  return (
-                    <PageButton
-                      key={route.path}
-                      pageName={route.name}
-                      icon={route.icon ? route.icon : "heroicons:circle-stack"}
-                      isActive={route.path === activeRoute}
-                      link={route.path}
-                    />
-                  );
-                }
-              })}
+            {routesUserRole.map((route) => {
+              if (route.addToSidebar) {
+                return (
+                  <PageButton
+                    key={route.path}
+                    pageName={route.name}
+                    icon={route.icon ? route.icon : "heroicons:circle-stack"}
+                    isActive={route.path === activeRoute}
+                    link={route.path}
+                  />
+                );
+              }
+            })}
           </nav>
           <button
             onClick={handleLogout}

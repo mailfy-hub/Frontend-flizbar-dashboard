@@ -126,7 +126,6 @@ export const UserInsert = () => {
             type="button"
             onClick={() => {
               onSubmit();
-              console.log("Adicionar usuário");
             }}
           >
             Adicionar Usuário
