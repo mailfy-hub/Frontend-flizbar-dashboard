@@ -46,7 +46,6 @@ export const Customers = () => {
   const getUserslist = async () => {
     try {
       const { data } = await api.get("admin/users/clients");
-      console.log("data", data);
 
       const mappedData = data.map((user: User) => {
         return {
@@ -62,8 +61,6 @@ export const Customers = () => {
   useEffect(() => {
     getUserslist();
   }, []);
-
-  console.log("userList", usersList);
 
   const handleOpenSuccessDelete = () => {
     handleToggleConfirmationDialog();
