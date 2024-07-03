@@ -1,4 +1,7 @@
-import { ChevronDoubleRightIcon } from "@heroicons/react/16/solid";
+import {
+  ArrowLeftIcon,
+  ChevronDoubleRightIcon,
+} from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
@@ -66,9 +69,19 @@ export const UserDataProfile = () => {
     }
   }, [profile]);
 
+  const handleNavigateBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div>
       <div className="flex items-center gap-4">
+        <button onClick={handleNavigateBack} className="">
+          <ArrowLeftIcon
+            height={18}
+            className="text-GRAY_400 hover:text-GOLD_DARK transition-all"
+          />
+        </button>
         <SectionTitle text="Complete seus dados" />
       </div>
 

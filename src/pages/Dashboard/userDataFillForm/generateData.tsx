@@ -12,7 +12,6 @@ import { useAuth } from "../../../hook/auth";
 export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
   const { userData } = useAuth();
 
-
   const validationSchema = Yup.object().shape({
     personType: Yup.string()
       .oneOf(["pf", "pj"])
@@ -155,14 +154,17 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
           <div className="grid md:grid-cols-2 gap-6">
             <Select
               id="personType"
+              name="personType"
               value={formik.values.personType}
               onChange={(selectedOption) => {
+                console.log(selectedOption);
                 formik.setFieldValue("personType", selectedOption);
               }}
               label="Tipo de pessoa"
             >
               <Option value="pf">Física</Option>
-              <Option value="pj">Jurídica</Option>
+              <Option value="pf">Física</Option>
+              {/*  <Option value="pj">Jurídica</Option> */}
             </Select>
             {formik.values.personType == "pf" ? (
               <Input
@@ -204,8 +206,8 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
               }}
               label="Nacionalidade"
             >
-              <Option value="brazil">Brasileiro</Option>
-              <Option value="other">Outra</Option>
+              <Option value="Brasileiro">Brasileiro</Option>
+              <Option value="Outra">Outra</Option>
             </Select>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -218,9 +220,11 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
               }}
               label="Tipo do documento"
             >
-              <Option value="state-registration">Inscrição estadual</Option>
-              <Option value="driver-license">Carteira de habilitação</Option>
-              <Option value="passport">Passaporte</Option>
+              <Option value="Inscrição estadual">Inscrição estadual</Option>
+              <Option value="Carteira de habilitação">
+                Carteira de habilitação
+              </Option>
+              <Option value="Passaporte">Passaporte</Option>
             </Select>
             <Input
               name="document"
@@ -282,12 +286,12 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
               }
               label="Estado civil"
             >
-              <Option value="Single">Solteiro(a)</Option>
-              <Option value="Married">Casado(a)</Option>
-              <Option value="Divorced">Divorciado(a)</Option>
-              <Option value="Widowed">Viúvo(a)</Option>
-              <Option value="Stable Union">União estável</Option>
-              <Option value="Other">Outro</Option>
+              <Option value="Solteiro(a)">Solteiro(a)</Option>
+              <Option value="Casado(a)">Casado(a)</Option>
+              <Option value="Divorciado(a)">Divorciado(a)</Option>
+              <Option value="Viúvo(a)">Viúvo(a)</Option>
+              <Option value="União estável">União estável</Option>
+              <Option value="Outro">Outro</Option>
             </Select>
             <Select
               id="education"
@@ -298,21 +302,21 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
               }
               label="Escolaridade"
             >
-              <Option value="high-school-incomplete">
+              <Option value="Ensino médio incompleto">
                 Ensino médio incompleto
               </Option>
-              <Option value="high-school-complete">
+              <Option value="Ensino médio completo">
                 Ensino médio completo
               </Option>
-              <Option value="technical-level">Curso técnico</Option>
-              <Option value="bachelor-incomplete">
+              <Option value="Curso técnico">Curso técnico</Option>
+              <Option value="Bacharelado Imcompleto">
                 Bacharelado Imcompleto
               </Option>
-              <Option value="bachelor-complete">Bacherelado Completo</Option>
-              <Option value="post-graduate">Pós-graduação</Option>
-              <Option value="master">Mestrado</Option>
-              <Option value="doctorate">Doutorado</Option>
-              <Option value="other">Outro</Option>
+              <Option value="Bacherelado Completo">Bacherelado Completo</Option>
+              <Option value="Pós-graduação">Pós-graduação</Option>
+              <Option value="Mestrado">Mestrado</Option>
+              <Option value="Doutorado">Doutorado</Option>
+              <Option value="Outro">Outro</Option>
             </Select>
             <Select
               id="politicalPerson"
@@ -323,8 +327,8 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
               }}
               label="É pessoa politicamente exposta?"
             >
-              <Option value="true">Sim</Option>
-              <Option value="false">Não</Option>
+              <Option value="Sim">Sim</Option>
+              <Option value="Não">Não</Option>
             </Select>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -345,8 +349,8 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
               }}
               label="Declara imposto ao governo dos EUA?"
             >
-              <Option value={"true"}>Sim</Option>
-              <Option value={"false"}>Não</Option>
+              <Option value={"Sim"}>Sim</Option>
+              <Option value={"Não"}>Não</Option>
             </Select>
           </div>
           {formik.values.maritalStatus == "Stable Union" ||

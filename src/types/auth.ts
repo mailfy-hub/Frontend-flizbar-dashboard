@@ -1,7 +1,5 @@
 export type UserRoleAccessType = "all" | "user" | "admin";
 
-
-
 export interface Profile {
   id: string;
   userId: string;
@@ -10,7 +8,7 @@ export interface Profile {
   createdAt: string;
   attachments: any[]; // Adjust the type based on the structure of the attachments if available
   clientAddresses: ClientAddress[];
-  clientContacts: string[]; // Adjust the type based on the structure of the client contacts if available
+  clientContacts: ClientContact[]; // Adjust the type based on the structure of the client contacts if available
   clientDetails: ProfileDetails | null; // Adjust the type based on the structure of the client details if available
   clientFinance: ClientFinance | null;
   clientParents: ClientParents | null;
@@ -51,7 +49,7 @@ export interface ClientAddress {
 
 export interface ClientFinance {
   profileId: string;
-  contactType: string;
+  accountType: string;
   bankName: string;
   accountNumber: string;
   accountDigit: string;
@@ -84,15 +82,26 @@ export interface ProfileDetails {
   spouseDetails: string;
   spouse: boolean;
   birthDate: string;
+  fatherName: string;
+  motherName: string;
 }
-
-
-
-
 
 export interface loginProps {
   email: string;
   password: string;
+}
+
+export interface ClientContact {
+  clientId?: string;
+  createdAt?: string;
+  id: string;
+  name: string;
+  phone: string;
+}
+
+export interface ClientContactClient {
+  name: string;
+  phone: string;
 }
 
 export interface loginResponseProps {

@@ -166,6 +166,7 @@ export function SignUp() {
           <Button color="gray" onClick={handleDialogContract}>
             Fechar
           </Button>
+          
         </DialogFooter>
       </Dialog>
 

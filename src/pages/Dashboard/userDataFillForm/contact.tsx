@@ -8,9 +8,7 @@ import { api } from "../../../client/api";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { useAuth } from "../../../hook/auth";
 
-
-
-export const Contact = ({  }: FormStepType) => {
+export const Contact = ({handleConfirmationClick}: FormStepType) => {
   const { userData } = useAuth();
   const ContactSchema = Yup.object().shape({
     contactsList: Yup.array().of(
@@ -37,7 +35,7 @@ export const Contact = ({  }: FormStepType) => {
     onSubmit: (values) => {
       console.log(values);
       handlePostContactsInformation(values);
-      // handleConfirmationClick();
+      handleConfirmationClick();
     },
   });
 

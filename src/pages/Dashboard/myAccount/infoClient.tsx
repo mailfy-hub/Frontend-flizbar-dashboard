@@ -1,17 +1,11 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, Input, Option, Select } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { InputWithDropdown } from "../../../components/inputWithDropdown";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { useAuth } from "../../../hook/auth";
+import { ClientContact } from "../../../types/auth";
 import { CountryType, countries } from "../../../utils/number-config";
-import { api } from "../../../client/api";
-
-type contact = {
-  index: number;
-  name: string;
-  contact: string;
-};
 
 type MaritalStatus =
   | "Solteiro(a)"
@@ -22,7 +16,7 @@ type MaritalStatus =
   | "Outro";
 
 export const InfoClient = () => {
-  const { userData } = useAuth();
+  const { profile, userData } = useAuth();
   const [documentType, setDocumentType] = useState<"pf" | "pj">("pf");
   const handleDocumentType = (docType: string) => {
     if (docType === "pf" || docType === "pj") setDocumentType(docType);
@@ -31,7 +25,7 @@ export const InfoClient = () => {
   const [selectedMaritalStatus, setSelectedMaritalStatus] =
     useState<MaritalStatus>("Solteiro(a)"); // Initial state
 
-  const [dataUser, setDataUser] = useState({
+  const [dataUser, _] = useState({
     avatar: "",
     createdAt: "",
     deletedAt: "",
@@ -53,40 +47,24 @@ export const InfoClient = () => {
     setSelectedMaritalStatus(val);
   };
 
-  const getDataUser = async () => {
-    const id = userData?.id;
-    try {
-      const { data } = await api.get(`users/${id}`);
-      setDataUser(data);
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-
-  useEffect(() => {
-    getDataUser();
-  }, []);
-
-  const [contactsList, setContactsList] = useState<contact[]>([
-    {
-      index: 1,
-      name: "",
-      contact: "",
-    },
-  ]);
+  const [contactsList, setContactsList] = useState<ClientContact[]>(
+    profile?.clientContacts ? profile.clientContacts : []
+  );
 
   const handleNewContact = () => {
-    const newContact = {
-      index: contactsList.length + 1,
+    const datenow = new Date();
+    const newContact: ClientContact = {
+      id: datenow.getTime().toString(),
       name: "",
-      contact: "",
+      phone: "",
     };
 
     setContactsList((state) => [newContact, ...state]);
   };
-  const handleRemoveContact = (idx: number) => {
+
+  const handleRemoveContact = (id: string) => {
     const contactsFiltered = contactsList.filter(
-      (contact) => contact.index !== idx
+      (contact) => contact.id !== id
     );
     setContactsList(contactsFiltered);
   };
@@ -94,6 +72,7 @@ export const InfoClient = () => {
   const [selectedCountry, setSelectedCountry] = useState<CountryType>(
     countries[0]
   );
+
   const handleSelectedCountry = (selected: CountryType) => {
     setSelectedCountry(selected);
   };
@@ -114,7 +93,12 @@ export const InfoClient = () => {
                   label="E-mail de acesso"
                   defaultValue={userData.email}
                 />
-                <Input type="text" label="Nome" defaultValue={userData.name} />
+                <Input
+                  value={userData.name}
+                  type="text"
+                  label="Nome"
+                  defaultValue={userData.name}
+                />
               </div>
               <div className="grid md:grid-cols-2 gap-6">
                 <Input
@@ -140,7 +124,11 @@ export const InfoClient = () => {
             </div>
             <div className="mt-8 flex flex-col gap-6 ">
               <div className="grid md:grid-cols-2 gap-6">
-                <Input type="email" label="E-mail de acesso" />
+                <Input
+                  value={userData?.email}
+                  type="email"
+                  label="E-mail de acesso"
+                />
               </div>
               <div className="w-full">
                 <Button className="bg-GOLD_MAIN w-full md:w-auto">
@@ -165,31 +153,61 @@ export const InfoClient = () => {
                   <Option value="pj">Jurídica</Option>
                 </Select>
                 {documentType == "pf" ? (
-                  <Input type="text" label="Nome" />
+                  <Input
+                    value={`${userData?.name} ${userData?.surname}`}
+                    type="text"
+                    label="Nome"
+                  />
                 ) : (
                   <Input type="text" label="Razão social" />
                 )}
               </div>
               <div className="grid md:grid-cols-2 gap-6">
                 {documentType == "pf" && (
-                  <Input type="date" label="Date de nascimento" />
+                  <Input
+                    value={"04/07/2024"}
+                    type="text"
+                    label="Date de nascimento"
+                  />
                 )}
-                <Select label="Nacionalidade">
+                <Select value="Brasileiro" label="Nacionalidade">
                   <Option>Brasileiro</Option>
                   <Option>Outra</Option>
                 </Select>
               </div>
               <div className="grid md:grid-cols-2 gap-6">
-                <Select label="Tipo do documento">
+                <Select
+                  value={
+                    profile?.clientDetails?.documentType
+                      ? profile?.clientDetails?.documentType
+                      : ""
+                  }
+                  label="Tipo do documento"
+                >
                   <Option>Inscrição estadual</Option>
                   <Option>Carteira de habilitação</Option>
                   <Option>Passaporte</Option>
                 </Select>
-                <Input type="text" label="Número do documento" />
+                <Input
+                  value={
+                    profile?.clientDetails?.document
+                      ? profile?.clientDetails?.document
+                      : ""
+                  }
+                  type="text"
+                  label="Número do documento"
+                />
               </div>
               <div className="grid md:grid-cols-2 gap-6">
                 {documentType == "pf" && (
-                  <Select label="Gênero">
+                  <Select
+                    value={
+                      profile?.clientDetails?.gender
+                        ? profile?.clientDetails?.gender
+                        : ""
+                    }
+                    label="Gênero"
+                  >
                     <Option>Masculino</Option>
                     <Option>Feminino</Option>
                     <Option>Prefiro não declarar</Option>
@@ -210,27 +228,97 @@ export const InfoClient = () => {
             </div>
             <div className="mt-8 flex flex-col gap-6 ">
               <div className="grid md:grid-cols-2 gap-6">
-                <Select label="Tipo do endereço">
+                <Select
+                  value={
+                    profile?.clientAddresses[0]
+                      ? profile?.clientAddresses[0].addressType
+                      : ""
+                  }
+                  label="Tipo do endereço"
+                >
                   <Option>Residencial</Option>
                   <Option>Comercial</Option>
                   <Option>Outro</Option>
                 </Select>
               </div>
               <div className="grid md:grid-cols-3 gap-6">
-                <Input type="text" label="Cep" />
-                <Input type="text" label="Cidade" />
-                <Select label="Estado">
+                <Input
+                  value={
+                    profile?.clientAddresses[0]
+                      ? profile?.clientAddresses[0].zipCode
+                      : ""
+                  }
+                  type="text"
+                  label="Cep"
+                />
+                <Input
+                  value={
+                    profile?.clientAddresses[0]
+                      ? profile?.clientAddresses[0].city
+                      : ""
+                  }
+                  type="text"
+                  label="Cidade"
+                />
+                <Select
+                  value={
+                    profile?.clientAddresses[0]
+                      ? profile?.clientAddresses[0].state
+                      : ""
+                  }
+                  label="Estado"
+                >
                   <Option>1</Option>
                 </Select>
               </div>
               <div className="grid md:grid-cols-3 gap-6">
-                <Input type="text" label="Logradouro" />
-                <Input type="text" label="Número" />
-                <Input type="text" label="Bairro" />
+                <Input
+                  value={
+                    profile?.clientAddresses[0]
+                      ? profile?.clientAddresses[0].street
+                      : ""
+                  }
+                  type="text"
+                  label="Logradouro"
+                />
+                <Input
+                  value={
+                    profile?.clientAddresses[0]
+                      ? profile?.clientAddresses[0].number
+                      : ""
+                  }
+                  type="text"
+                  label="Número"
+                />
+                <Input
+                  value={
+                    profile?.clientAddresses[0]
+                      ? profile?.clientAddresses[0].neighborhood
+                      : ""
+                  }
+                  type="text"
+                  label="Bairro"
+                />
               </div>
               <div className="grid md:grid-cols-2 gap-6">
-                <Input type="text" label="Complemento" />
-                <Input type="text" label="Referência" />
+                <Input
+                  value={
+                    profile?.clientAddresses[0]
+                      ? profile?.clientAddresses[0].complement
+                      : ""
+                  }
+                  type="text"
+                  label="Complemento"
+                />
+                <Input
+                  value={
+                    profile?.clientAddresses[0]
+                      ? profile?.clientAddresses[0].reference
+                      : ""
+                  }
+                  type="text"
+                  label="Referência"
+                />
               </div>
               <div className="w-full">
                 <Button className="bg-GOLD_MAIN w-full md:w-auto">
@@ -249,12 +337,16 @@ export const InfoClient = () => {
                 {contactsList.map((contact) => {
                   return (
                     <div className="flex md:items-center flex-col md:flex-row items-end gap-6">
-                      <Input type="email" label="Nome" />
-                      <Input type="email" label="Número de Telefone" />
+                      <Input value={contact.name} type="email" label="Nome" />
+                      <Input
+                        value={contact.phone}
+                        type="email"
+                        label="Número de Telefone"
+                      />
                       <button
                         type="button"
                         onClick={() => {
-                          handleRemoveContact(contact.index);
+                          handleRemoveContact(contact?.id);
                         }}
                         className="font-body font-medium text-GRAY text-body14 underline hover:text-GOLD_MAIN text-nowrap"
                       >
@@ -286,8 +378,24 @@ export const InfoClient = () => {
             </div>
             <div className="mt-8 flex flex-col gap-6 ">
               <div className="grid md:grid-cols-2 gap-6">
-                <Input type="text" label="Nome do pai" />
-                <Input type="text" label="Nome da mãe" />
+                <Input
+                  value={
+                    profile?.clientDetails?.fatherName
+                      ? profile?.clientDetails?.fatherName
+                      : ""
+                  }
+                  type="text"
+                  label="Nome do pai"
+                />
+                <Input
+                  value={
+                    profile?.clientDetails?.motherName
+                      ? profile?.clientDetails?.motherName
+                      : ""
+                  }
+                  type="text"
+                  label="Nome da mãe"
+                />
               </div>
               <div className="grid md:grid-cols-3 gap-6">
                 <Select
@@ -304,7 +412,14 @@ export const InfoClient = () => {
                   <Option value="União Estável">União Estável</Option>
                   <Option value="Outro">Outro</Option>
                 </Select>
-                <Select label="Escolaridade">
+                <Select
+                  value={
+                    profile?.clientDetails?.education
+                      ? profile?.clientDetails?.education
+                      : ""
+                  }
+                  label="Escolaridade"
+                >
                   <Option>Ensino Médio incompleto</Option>
                   <Option>Ensino médio completo</Option>
                   <Option>Nível Técnico</Option>
@@ -321,7 +436,15 @@ export const InfoClient = () => {
                 </Select>
               </div>
               <div className="grid md:grid-cols-2 gap-6">
-                <Input type="text" label="Qual sua profissão?" />
+                <Input
+                  value={
+                    profile?.clientDetails?.profession
+                      ? profile?.clientDetails?.profession
+                      : ""
+                  }
+                  type="text"
+                  label="Qual sua profissão?"
+                />
                 <Select label="Declara imposto ao governo dos EUA?">
                   <Option>Sim</Option>
                   <Option>Não</Option>
@@ -334,7 +457,15 @@ export const InfoClient = () => {
               )}
               {selectedMaritalStatus == "União Estável" && (
                 <div className="grid md:grid-cols-2 gap-6">
-                  <Select label="Tipo do documento" className="w-full">
+                  <Select
+                    value={
+                      profile?.profileDetails?.documentType
+                        ? profile?.profileDetails?.documentType
+                        : ""
+                    }
+                    label="Tipo do documento"
+                    className="w-full"
+                  >
                     <Option value="Inscrição estadual">
                       Inscrição estadual
                     </Option>
@@ -360,7 +491,14 @@ export const InfoClient = () => {
             </div>
             <div className="mt-8 flex flex-col gap-6 ">
               <div className="grid md:grid-cols-2 gap-6">
-                <Select label="Tipo da conta">
+                <Select
+                  value={
+                    profile?.clientFinance?.accountType
+                      ? profile?.clientFinance?.accountType
+                      : ""
+                  }
+                  label="Tipo da conta"
+                >
                   <Option>Conta corrente</Option>
                   <Option>Conta conjunta</Option>
                   <Option>Conta poupança</Option>
@@ -368,25 +506,80 @@ export const InfoClient = () => {
                 </Select>
               </div>
               <div className="grid md:grid-cols-2 gap-6">
-                <Input type="text" label="Nome do banco" />
+                <Input
+                  value={
+                    profile?.clientFinance?.bankName
+                      ? profile?.clientFinance?.bankName
+                      : ""
+                  }
+                  type="text"
+                  label="Nome do banco"
+                />
               </div>
               <div className="grid md:grid-cols-2 gap-6">
-                <Input type="text" label="Número da conta" />
-                <Input type="text" label="Dígito da conta" />
+                <Input
+                  value={
+                    profile?.clientFinance?.accountNumber
+                      ? profile?.clientFinance?.accountNumber
+                      : ""
+                  }
+                  type="text"
+                  label="Número da conta"
+                />
+                <Input
+                  value={
+                    profile?.clientFinance?.accountDigit
+                      ? profile?.clientFinance?.accountDigit
+                      : ""
+                  }
+                  type="text"
+                  label="Dígito da conta"
+                />
               </div>
               <div className="grid md:grid-cols-2 gap-6">
-                <Input type="text" label="Número da agência" />
-                <Input type="text" label="Dígito da agência" />
+                <Input
+                  value={
+                    profile?.clientFinance?.agencyNumber
+                      ? profile?.clientFinance?.agencyNumber
+                      : ""
+                  }
+                  type="text"
+                  label="Número da agência"
+                />
+                <Input
+                  value={
+                    profile?.clientFinance?.agencyDigit
+                      ? profile?.clientFinance?.agencyDigit
+                      : ""
+                  }
+                  type="text"
+                  label="Dígito da agência"
+                />
               </div>
               <div className="grid md:grid-cols-2 gap-6">
-                <Select label="Tipo da chave PIX">
+                <Select
+                  value={
+                    profile?.clientFinance?.pixKeyType
+                      ? profile?.clientFinance?.pixKeyType
+                      : ""
+                  }
+                  label="Tipo da chave PIX"
+                >
                   <Option>Chave e-mail</Option>
                   <Option>Chave número de telefone</Option>
                   <Option>Chave CPF</Option>
                   <Option>Chave CNPJ</Option>
                   <Option>Chave aleatória</Option>
                 </Select>
-                <Input type="text" label="Chave PIX" />
+                <Input
+                  value={
+                    profile?.clientFinance?.pixKey
+                      ? profile?.clientFinance?.pixKey
+                      : ""
+                  }
+                  type="text"
+                  label="Chave PIX"
+                />
               </div>
               <div className="w-full">
                 <Button className="bg-GOLD_MAIN w-full md:w-auto">

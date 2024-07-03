@@ -7,7 +7,7 @@ import { api } from "../../../client/api";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { useAuth } from "../../../hook/auth";
 
-export const BankData = ({}: FormStepType) => {
+export const BankData = ({ handleConfirmationClick }: FormStepType) => {
   const { userData } = useAuth();
   const validationSchema = Yup.object().shape({
     accountType: Yup.string().required("Tipo da conta é obrigatório"),
@@ -47,7 +47,7 @@ export const BankData = ({}: FormStepType) => {
         profileId: userData?.id,
         ...data,
       });
-      // handleConfirmationClick();
+      handleConfirmationClick();
     } catch (error) {
       console.log(error);
     }
@@ -73,10 +73,10 @@ export const BankData = ({}: FormStepType) => {
                 formik.touched.accountType && Boolean(formik.errors.accountType)
               }
             >
-              <Option value="checking">Conta corrente</Option>
-              <Option value="joint">Conta conjunta</Option>
-              <Option value="savings">Conta poupança</Option>
-              <Option value="other">Outra</Option>
+              <Option value="Conta corrente">Conta corrente</Option>
+              <Option value="Conta conjunta">Conta conjunta</Option>
+              <Option value="Conta poupança">Conta poupança</Option>
+              <Option value="Outra">Outra</Option>
             </Select>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -164,11 +164,11 @@ export const BankData = ({}: FormStepType) => {
                 formik.touched.pixKeyType && Boolean(formik.errors.pixKeyType)
               }
             >
-              <Option value="e-mail">Chave e-mail</Option>
-              <Option value="phone">Chave número de telefone</Option>
-              <Option value="cpf">Chave CPF</Option>
-              <Option value="cnpj">Chave CNPJ</Option>
-              <Option value="random">Chave aleatória</Option>
+              <Option value="E-mail">Chave e-mail</Option>
+              <Option value="Telefone">Chave número de telefone</Option>
+              <Option value="CPF">Chave CPF</Option>
+              <Option value="CNPJ">Chave CNPJ</Option>
+              <Option value="Aleatória">Chave aleatória</Option>
             </Select>
 
             <Input
@@ -183,7 +183,7 @@ export const BankData = ({}: FormStepType) => {
       </div>
       <div className="w-full flex justify-end mt-8">
         <Button className="bg-GOLD_MAIN w-full md:w-auto" type="submit">
-          Finalizar cadastro
+          Próxima etapa
         </Button>
       </div>
     </form>
