@@ -311,8 +311,8 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 Ensino médio completo
               </Option>
               <Option value="Curso técnico">Curso técnico</Option>
-              <Option value="Bacharelado Imcompleto">
-                Bacharelado Imcompleto
+              <Option value="Bacharelado Incompleto">
+                Bacharelado Incompleto
               </Option>
               <Option value="Bacherelado Completo">Bacherelado Completo</Option>
               <Option value="Pós-graduação">Pós-graduação</Option>
