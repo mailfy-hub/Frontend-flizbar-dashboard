@@ -34,6 +34,7 @@ export function Login() {
 
   const [responseError, setResponseError] = useState<AUTH_ERROR | null>();
   const mappedError = useMemo(() => {
+    console.log(responseError);
     switch (responseError?.message) {
       case "Invalid username or password":
         return "Endereço de e-mail ou senha incorretos.";

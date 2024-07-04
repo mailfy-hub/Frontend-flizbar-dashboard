@@ -50,8 +50,8 @@ export const Address = ({ handleConfirmationClick }: FormStepType) => {
       const dataFormatted = {
         clientId: profile?.id,
         documentNumber: profile?.clientDetails?.document,
-        ...data
-      }
+        ...data,
+      };
       await api.post(`profiles/${userData?.id}/address`, dataFormatted);
       handleConfirmationClick();
     } catch (error) {
@@ -104,10 +104,33 @@ export const Address = ({ handleConfirmationClick }: FormStepType) => {
               }
               value={formik.values.state}
             >
-              <Option value="SP">São Paulo</Option>
-              <Option value="RJ">Rio de Janeiro</Option>
-              <Option value="MG">Minas Gerais</Option>
-              {/* Add more states as needed */}
+              <Option value="AC">AC</Option>
+              <Option value="AL">AL</Option>
+              <Option value="AP">AP</Option>
+              <Option value="AM">AM</Option>
+              <Option value="BA">BA</Option>
+              <Option value="CE">CE</Option>
+              <Option value="DF">DF</Option>
+              <Option value="ES">ES</Option>
+              <Option value="GO">GO</Option>
+              <Option value="MA">MA</Option>
+              <Option value="MT">MT</Option>
+              <Option value="MS">MS</Option>
+              <Option value="MG">MG</Option>
+              <Option value="PA">PA</Option>
+              <Option value="PB">PB</Option>
+              <Option value="PR">PR</Option>
+              <Option value="PE">PE</Option>
+              <Option value="PI">PI</Option>
+              <Option value="RJ">RJ</Option>
+              <Option value="RN">RN</Option>
+              <Option value="RS">RS</Option>
+              <Option value="RO">RO</Option>
+              <Option value="RR">RR</Option>
+              <Option value="SC">SC</Option>
+              <Option value="SP">SP</Option>
+              <Option value="SE">SE</Option>
+              <Option value="TO">TO</Option>
             </Select>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -155,21 +178,6 @@ export const Address = ({ handleConfirmationClick }: FormStepType) => {
         <Button className="bg-GOLD_MAIN w-full md:w-auto" type="submit">
           Próxima etapa
         </Button>
-      </div>
-      <div className="mt-4">
-        {Object.keys(formik.errors).length > 0 && (
-          <div
-            className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-            role="alert"
-          >
-            <strong className="font-bold">Erros no formulário:</strong>
-            <ul className="mt-2">
-              {Object.values(formik.errors).map((error, index) => (
-                <li key={index}>{error}</li>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
     </form>
   );

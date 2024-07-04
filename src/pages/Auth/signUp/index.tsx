@@ -70,6 +70,8 @@ export function SignUp() {
       } else {
         console.error(error);
       }
+    } finally {
+      formik.setSubmitting(false);
     }
   };
 
@@ -166,7 +168,6 @@ export function SignUp() {
           <Button color="gray" onClick={handleDialogContract}>
             Fechar
           </Button>
-          
         </DialogFooter>
       </Dialog>
 

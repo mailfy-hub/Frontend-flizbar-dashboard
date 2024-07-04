@@ -246,9 +246,11 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 }}
                 label="Gênero"
               >
-                <Option value="man">Masculino</Option>
-                <Option value="female">Feminino</Option>
-                <Option value="not-declare">Prefiro não declarar</Option>
+                <Option value="Masculino">Masculino</Option>
+                <Option value="Feminino">Feminino</Option>
+                <Option value="Prefiro não declarar">
+                  Prefiro não declarar
+                </Option>
               </Select>
             )}
           </div>
@@ -406,21 +408,6 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
         >
           Próxima etapa
         </Button>
-      </div>
-      <div className="mt-4">
-        {Object.keys(formik.errors).length > 0 && (
-          <div
-            className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-            role="alert"
-          >
-            <strong className="font-bold">Erros no formulário:</strong>
-            <ul className="mt-2">
-              {Object.values(formik.errors).map((error, index) => (
-                <li key={index}>{error}</li>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
     </form>
   );

@@ -68,7 +68,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         Authorization: `Bearer ${data.accessToken}`,
       };
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   };
 
