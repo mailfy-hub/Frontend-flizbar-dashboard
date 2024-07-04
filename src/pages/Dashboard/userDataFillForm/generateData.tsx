@@ -163,7 +163,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
               label="Tipo de pessoa"
             >
               <Option value="pf">Física</Option>
-              <Option value="pf">Física</Option>
+              <Option value="pj">Jurídica</Option>
               {/*  <Option value="pj">Jurídica</Option> */}
             </Select>
             {formik.values.personType == "pf" ? (
