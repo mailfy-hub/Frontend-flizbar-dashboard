@@ -109,8 +109,13 @@ export const InfoClient = () => {
                 <InputWithDropdown
                   selectedCountry={selectedCountry}
                   handleChangeCountry={handleSelectedCountry}
-                  defaultValue={dataUser?.phone}
+                  value={userData.phone || ""}
                 />
+              </div>
+              <div className="w-full">
+                <Button className="bg-GOLD_MAIN w-full md:w-auto">
+                  Atualizar dados
+                </Button>
               </div>
             </div>
           </div>
