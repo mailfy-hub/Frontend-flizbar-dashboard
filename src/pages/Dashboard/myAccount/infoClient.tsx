@@ -6,6 +6,8 @@ import { SectionTitle } from "../../../components/sectionTitle";
 import { useAuth } from "../../../hook/auth";
 import { ClientContact } from "../../../types/auth";
 import { CountryType, countries } from "../../../utils/number-config";
+import { updateUser } from "../../../client/users";
+import { toast } from "react-toastify";
 
 type MaritalStatus =
   | "Solteiro(a)"
@@ -43,6 +45,8 @@ export const InfoClient = () => {
     type: "",
   });
 
+  const [updateDataUserAdmin, setUpdateDataUserAdmin] = useState({});
+
   const handleMaritalStatusChange = (val: MaritalStatus) => {
     setSelectedMaritalStatus(val);
   };
@@ -77,10 +81,31 @@ export const InfoClient = () => {
     setSelectedCountry(selected);
   };
 
+  const handleUpdateUserAdmin = async (e: any) => {
+    e.preventDefault();
+
+    if (userData) {
+      await updateUser(updateDataUserAdmin, userData.id).then(() => {
+        toast("Dados atualizados!", {
+          position: "bottom-right",
+          type: "success",
+        });
+      });
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUpdateDataUserAdmin({
+      ...updateDataUserAdmin,
+      [name]: value,
+    });
+  };
+
   return (
     <div>
       {userData?.isAdmin ? (
-        <form>
+        <form onSubmit={handleUpdateUserAdmin}>
           <div className="bg-WHITE p-8 w-full rounded-md">
             <div className="flex items-center gap-4">
               <Icon height={16} icon={"heroicons:user"} color="black" />
@@ -90,30 +115,38 @@ export const InfoClient = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 <Input
                   type="email"
+                  name="email"
                   label="E-mail de acesso"
+                  onChange={handleChange}
                   defaultValue={userData.email}
                 />
                 <Input
                   value={userData.name}
+                  name="name"
                   type="text"
                   label="Nome"
+                  onChange={handleChange}
                   defaultValue={userData.name}
                 />
               </div>
               <div className="grid md:grid-cols-2 gap-6">
                 <Input
                   type="text"
+                  name="surname"
                   label="Sobrenome"
+                  onChange={handleChange}
                   defaultValue={userData.surname}
                 />
                 <InputWithDropdown
+                  name="phone"
                   selectedCountry={selectedCountry}
                   handleChangeCountry={handleSelectedCountry}
+                  onChange={handleChange}
                   value={userData.phone || ""}
                 />
               </div>
               <div className="w-full">
-                <Button className="bg-GOLD_MAIN w-full md:w-auto">
+                <Button type="submit" className="bg-GOLD_MAIN w-full md:w-auto">
                   Atualizar dados
                 </Button>
               </div>
