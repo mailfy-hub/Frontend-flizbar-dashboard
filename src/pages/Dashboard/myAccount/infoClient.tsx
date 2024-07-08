@@ -187,6 +187,7 @@ export const InfoClient = () => {
                   <Option>Inscrição estadual</Option>
                   <Option>Carteira de habilitação</Option>
                   <Option>Passaporte</Option>
+                  <Option>International ID</Option>
                 </Select>
                 <Input
                   value={
