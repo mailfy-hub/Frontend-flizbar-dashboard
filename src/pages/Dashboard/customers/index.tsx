@@ -35,8 +35,8 @@ export const Customers = () => {
   const handleInsert = () => {
     navigate("insert");
   };
-  const handleEdit = () => {
-    navigate("edit");
+  const handleEdit = (id: string) => {
+    navigate("edit", { state: { id: id } });
   };
 
   const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
@@ -47,7 +47,9 @@ export const Customers = () => {
     try {
       const { data } = await api.get("admin/users/clients");
 
-      const mappedData = data.map((user: User) => {
+      console.log(data, "data");
+
+      const mappedData = data.reverse().map((user: User) => {
         return {
           ...user,
           // createdAt: formatDate(user.createdAt),
@@ -250,7 +252,10 @@ export const Customers = () => {
                           </IconButton>
                         </Tooltip>
                         <Tooltip content="Editar usuário">
-                          <IconButton onClick={handleEdit} variant="text">
+                          <IconButton
+                            onClick={() => handleEdit(id)}
+                            variant="text"
+                          >
                             <PencilIcon className="w-4 h-4 text-gray-400" />
                           </IconButton>
                         </Tooltip>

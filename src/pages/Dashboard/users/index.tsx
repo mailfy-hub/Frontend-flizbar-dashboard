@@ -64,7 +64,7 @@ export const Users = () => {
       const { data } = await api.get("admin/users/admins");
       console.log("data", data);
 
-      const mappedData = data.map((user: User) => {
+      const mappedData = data.reverse().map((user: User) => {
         return {
           ...user,
           createdAt: formatDate(user.createdAt),
