@@ -142,7 +142,7 @@ export const InfoClient = () => {
                   selectedCountry={selectedCountry}
                   handleChangeCountry={handleSelectedCountry}
                   onChange={handleChange}
-                  value={userData.phone || ""}
+                  value={userData.phone}
                 />
               </div>
               <div className="w-full">
