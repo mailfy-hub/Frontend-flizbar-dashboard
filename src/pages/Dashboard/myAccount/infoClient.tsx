@@ -102,11 +102,14 @@ export const InfoClient = () => {
     });
   };
 
+  console.log("userData", userData);
+
   return (
     <div>
       {userData?.isAdmin ? (
         <form onSubmit={handleUpdateUserAdmin}>
           <div className="bg-WHITE p-8 w-full rounded-md">
+            e{" "}
             <div className="flex items-center gap-4">
               <Icon height={16} icon={"heroicons:user"} color="black" />
               <SectionTitle size="sm" text="Dados de acesso" />
@@ -142,7 +145,7 @@ export const InfoClient = () => {
                   selectedCountry={selectedCountry}
                   handleChangeCountry={handleSelectedCountry}
                   onChange={handleChange}
-                  value={userData.phone}
+                  defaultValue={userData.phone}
                 />
               </div>
               <div className="w-full">
