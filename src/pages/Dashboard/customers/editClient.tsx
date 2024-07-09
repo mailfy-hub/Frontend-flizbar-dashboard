@@ -109,7 +109,7 @@ export const EditClient = () => {
     return `${day}/${month}/${year}`;
   }
 
-  console.log("details", details);
+  // console.log("details", details);
 
   return (
     <div className="">

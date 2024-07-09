@@ -124,7 +124,6 @@ export const InfoClient = () => {
                   defaultValue={userData.email}
                 />
                 <Input
-                  value={userData.name}
                   name="name"
                   type="text"
                   label="Nome"
