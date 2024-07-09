@@ -1,11 +1,11 @@
 import { api } from "./api";
 
 export interface IUser {
-  name?: "string",
-  surname?: "string",
-  username?: "string",
-  phone?: "string",
-  email?: "string"
+  name?: string,
+  surname?: string,
+  username?: string,
+  phone?: string,
+  email?: string
 }
 
 export interface IUserById {

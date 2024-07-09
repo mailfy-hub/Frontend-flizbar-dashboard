@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { useLocation } from "react-router-dom";
 import { getProfileById } from "../../../client/profiles";
-import { useAuth } from "../../../hook/auth";
+// import { useAuth } from "../../../hook/auth";
+import { updateUser } from "../../../client/users";
+import { toast } from "react-toastify";
 
 type contact = {
   [x: string]: string | number | readonly string[] | undefined;
@@ -22,15 +24,17 @@ type MaritalStatus =
   | "Outro";
 
 export const EditClient = () => {
-  const { userData } = useAuth();
+  // const { userData } = useAuth();
 
   const [documentType, setDocumentType] = useState<"pf" | "pj">("pf");
+  const [updateEmail, setUpdateEmail] = useState<string>();
+  // const [generalDataUpdated, setGeneralDataUpdated] = useState({});
   const handleDocumentType = (docType: string) => {
     if (docType === "pf" || docType === "pj") setDocumentType(docType);
   };
 
   const [selectedMaritalStatus, setSelectedMaritalStatus] =
-    useState<MaritalStatus>("Solteiro(a)"); // Initial state
+    useState<MaritalStatus>("Solteiro(a)");
 
   const handleMaritalStatusChange = (val: MaritalStatus) => {
     setSelectedMaritalStatus(val);
@@ -46,6 +50,16 @@ export const EditClient = () => {
 
   const [details, setDetails] = useState<any>();
 
+  // const handleChangeGeneralData = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
+  //   setGeneralDataUpdated({
+  //     ...generalDataUpdated,
+  //     [name]: value,
+  //   });
+  // };
+
+  // console.log("handleDocumentType", generalDataUpdated);
+
   useEffect(() => {
     getProfileById(id).then((data) => {
       setDetails(data);
@@ -54,6 +68,21 @@ export const EditClient = () => {
 
   const location = useLocation();
   const { id } = location.state;
+
+  const handleUpdateEmail = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await updateUser({ email: updateEmail }, details.userId);
+      toast.success("E-mail atualizado com sucesso!");
+    } catch (error) {
+      toast.error("Erro ao atualizar e-mail.");
+    }
+  };
+
+  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setUpdateEmail(value);
+  };
 
   const handleNewContact = () => {
     const newContact = {
@@ -75,14 +104,19 @@ export const EditClient = () => {
   function convertDate(dateString: string): string {
     const date = new Date(dateString);
     const year = date.getUTCFullYear();
-    const month = String(date.getUTCMonth() + 1).padStart(2, "0"); // Adiciona 1 ao mês porque os meses são baseados em zero
+    const month = String(date.getUTCMonth() + 1).padStart(2, "0");
     const day = String(date.getUTCDate()).padStart(2, "0");
     return `${day}/${month}/${year}`;
   }
 
+  console.log("details", details);
+
   return (
     <div className="">
-      <form className="bg-WHITE p-8 w-full rounded-md">
+      <form
+        onSubmit={handleUpdateEmail}
+        className="bg-WHITE p-8 w-full rounded-md"
+      >
         <div className="flex items-center gap-4">
           <Icon height={16} icon={"heroicons:user"} color="black" />
           <SectionTitle size="sm" text="Dados de acesso" />
@@ -90,13 +124,14 @@ export const EditClient = () => {
         <div className="mt-8 flex flex-col gap-6 ">
           <div className="grid md:grid-cols-2 gap-6">
             <Input
-              value={userData?.email}
+              defaultValue={details?.user?.email}
               type="email"
               label="E-mail de acesso"
+              onChange={handleChangeEmail}
             />
           </div>
           <div className="w-full">
-            <Button className="bg-GOLD_MAIN w-full md:w-auto">
+            <Button type="submit" className="bg-GOLD_MAIN w-full md:w-auto">
               Atualizar dados
             </Button>
           </div>
@@ -119,7 +154,7 @@ export const EditClient = () => {
             </Select>
             {documentType == "pf" ? (
               <Input
-                value={`${userData?.name} ${userData?.surname}`}
+                value={`${details?.user?.name} ${details?.user?.surname}`}
                 type="text"
                 label="Nome"
               />

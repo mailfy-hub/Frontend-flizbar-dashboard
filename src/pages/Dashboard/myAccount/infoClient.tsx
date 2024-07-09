@@ -27,23 +27,23 @@ export const InfoClient = () => {
   const [selectedMaritalStatus, setSelectedMaritalStatus] =
     useState<MaritalStatus>("Solteiro(a)"); // Initial state
 
-  const [dataUser, _] = useState({
-    avatar: "",
-    createdAt: "",
-    deletedAt: "",
-    email: "",
-    id: "",
-    isAdmin: Boolean,
-    lastAccess: "",
-    name: "",
-    password: "",
-    phone: "",
-    surname: "",
-    updatedAt: "",
-    username: "",
-    verified: Boolean,
-    type: "",
-  });
+  // const [dataUser, _] = useState({
+  //   avatar: "",
+  //   createdAt: "",
+  //   deletedAt: "",
+  //   email: "",
+  //   id: "",
+  //   isAdmin: Boolean,
+  //   lastAccess: "",
+  //   name: "",
+  //   password: "",
+  //   phone: "",
+  //   surname: "",
+  //   updatedAt: "",
+  //   username: "",
+  //   verified: Boolean,
+  //   type: "",
+  // });
 
   const [updateDataUserAdmin, setUpdateDataUserAdmin] = useState({});
 
@@ -109,7 +109,7 @@ export const InfoClient = () => {
       {userData?.isAdmin ? (
         <form onSubmit={handleUpdateUserAdmin}>
           <div className="bg-WHITE p-8 w-full rounded-md">
-            e{" "}
+            {" "}
             <div className="flex items-center gap-4">
               <Icon height={16} icon={"heroicons:user"} color="black" />
               <SectionTitle size="sm" text="Dados de acesso" />
