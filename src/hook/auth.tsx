@@ -18,7 +18,7 @@ interface AuthContextProps {
   logout: () => void;
   isLoadingData: boolean;
   accessToken: string | null;
-
+  handleFullfiledAccountInfo: (value: boolean) => void;
   isFullfiledAccountInfo: boolean;
 }
 
@@ -145,7 +145,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         };
 
         const profile = await loadUserProfile(userDataParsed.id);
-        verifyAccountData(profile)
+        verifyAccountData(profile);
 
         setAccessToken(tokenDataParsed);
         setIsAuthenticated(true);
@@ -179,15 +179,21 @@ export const AuthContextProvider = ({ children }: Props) => {
     const isClientFinanceFilled = profile?.clientFinance == null ? false : true;
     const isClientBeneficiaryFilled =
       profile?.beneficiaries.length > 0 ? true : false;
+    const isContractAcceptedFilled = profile?.contractAccepted;
 
     const isFullfiledAccountData =
       !!isClientDetailsFilled &&
       !!isClientAddressesFilled &&
       !!isClientContactsFilled &&
       !!isClientFinanceFilled &&
-      !!isClientBeneficiaryFilled;
+      !!isClientBeneficiaryFilled &&
+      isContractAcceptedFilled;
 
     setIsFullfiledAccountInfo(isFullfiledAccountData);
+  };
+
+  const handleFullfiledAccountInfo = (value: boolean) => {
+    setIsFullfiledAccountInfo(value);
   };
 
   useEffect(() => {
@@ -207,6 +213,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         signUpAdmin,
         profile,
         isFullfiledAccountInfo,
+        handleFullfiledAccountInfo,
       }}
     >
       {children}

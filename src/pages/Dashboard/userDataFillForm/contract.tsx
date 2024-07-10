@@ -1,20 +1,35 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, Typography } from "@material-tailwind/react";
-import { useState } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { FormStepType } from ".";
+import { api } from "../../../client/api";
 import { SectionTitle } from "../../../components/sectionTitle";
 
-export const Contract = ({ handleConfirmationClick }: FormStepType) => {
-  const [isSelected, setIsSelected] = useState(false);
+const ContractSchema = Yup.object().shape({
+  terms: Yup.boolean()
+    .oneOf([true], "You must accept the terms and conditions")
+    .required("Required"),
+});
 
-  const handleSelectionChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setIsSelected(event.target.checked);
-  };
+export const Contract = ({ handleConfirmationClick }: FormStepType) => {
+  const formik = useFormik({
+    initialValues: { terms: false },
+    validationSchema: ContractSchema,
+    onSubmit: async (values, { setSubmitting }) => {
+      if (values.terms === false) return;
+      try {
+        await api.post("/profiles/accept-terms");
+        handleConfirmationClick();
+      } catch (error) {
+        console.log(error);
+      }
+      setSubmitting(false);
+    },
+  });
 
   return (
-    <form>
+    <form onSubmit={formik.handleSubmit}>
       <div className="bg-WHITE p-8 w-full rounded-md mt-8">
         <div className="flex items-center gap-4">
           <Icon height={16} icon={"heroicons:user"} color="black" />
@@ -73,24 +88,30 @@ export const Contract = ({ handleConfirmationClick }: FormStepType) => {
             type="checkbox"
             id="terms"
             name="terms"
-            onChange={handleSelectionChange}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            checked={formik.values.terms}
             className="mr-2"
           />
           <label
             htmlFor="terms"
-            className=" font-display text-BLACK text-body18"
+            className="font-display text-BLACK text-body18"
           >
             Eu li e aceito os termos e condições de uso
           </label>
+          {formik.touched.terms && formik.errors.terms ? (
+            <div className="text-red-500 text-sm ml-2">
+              {formik.errors.terms}
+            </div>
+          ) : null}
         </div>
       </div>
 
       <div className="w-full flex justify-end mt-8">
         <Button
-          onClick={handleConfirmationClick}
           className="bg-GOLD_MAIN w-full md:w-auto"
-          type="button"
-          disabled={!isSelected}
+          type="submit"
+          disabled={formik.isSubmitting || !formik.values.terms}
         >
           Finalizar cadastro
         </Button>

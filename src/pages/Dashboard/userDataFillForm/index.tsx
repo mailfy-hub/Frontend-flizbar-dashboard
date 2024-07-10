@@ -20,7 +20,7 @@ export interface FormStepType {
 }
 
 export const UserDataProfile = () => {
-  const { profile, isLoadingData } = useAuth();
+  const { profile, isLoadingData, handleFullfiledAccountInfo } = useAuth();
   const [ActiveFormStepPosition, setActiveFormStepPosition] =
     useState<number>(0);
 
@@ -33,6 +33,7 @@ export const UserDataProfile = () => {
 
   const handleFinishForm = () => {
     navigate("/");
+    handleFullfiledAccountInfo(true)
   };
 
   const verifyAccountData = (profile: Profile) => {
