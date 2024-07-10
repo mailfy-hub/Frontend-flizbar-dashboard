@@ -12,6 +12,7 @@ import { useAuth } from "../../../hook/auth";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 import ImageHeroAdmin from "../../../assets/admin-banner-image.png";
 
 const ChartRendimentosData: Props = {
@@ -168,9 +169,27 @@ export const Home = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 md:flex-row gap-0 md:gap-8 mt-8">
               <div className="col-span-3 w-full grid md:grid-cols-3 gap-8">
                 <div className="col-span-2 w-full bg-GOLD_DARK h-[124px] rounded-lg p-6 flex flex-col justify-between">
-                  <p className="font-display font-medium text-WHITE text-body16 leading-tight">
-                    Valor Total Aproximado
-                  </p>
+                  <div className="">
+                    <p className="font-display font-medium text-WHITE text-body16 leading-tight flex gap-2">
+                      Valor Total Aproximado
+                      <span
+                        className="cursor-pointer "
+                        data-tooltip-id="cotation-tooltip"
+                        data-tooltip-content="Os valores totais são estimados e podem variar de acordo com a cotação do dólar no dia da transação."
+                        style={{
+                          maxWidth: "248px",
+                          textAlign: "center",
+                        }}
+                      >
+                        *
+                      </span>
+                    </p>
+
+                    <ReactTooltip
+                      id="cotation-tooltip"
+                      className="text-center max-w-[324px]"
+                    />
+                  </div>
                   <div className="flex items-center gap-2">
                     <span className="font-display font-normal text-WHITE text-head32 leading-tight">
                       R$
@@ -186,9 +205,24 @@ export const Home = () => {
                   Symbol="$"
                   Value={0.0}
                 />
-                <CurrencyCard color="#C89305" Name="Euro" Symbol="€" Value={0.0} />
-                <CurrencyCard color="#CBAD77" Name="Real" Symbol="R$" Value={0.0} />
-                <CurrencyCard color="#ECBF6E" Name="Iene" Symbol="¥" Value={0.0} />
+                <CurrencyCard
+                  color="#C89305"
+                  Name="Euro"
+                  Symbol="€"
+                  Value={0.0}
+                />
+                <CurrencyCard
+                  color="#CBAD77"
+                  Name="Real"
+                  Symbol="R$"
+                  Value={0.0}
+                />
+                <CurrencyCard
+                  color="#ECBF6E"
+                  Name="Iene"
+                  Symbol="¥"
+                  Value={0.0}
+                />
               </div>
               <div className=" w-full max-w-full bg-white px-4 min-h-[240px] mt-8 md:mt-0">
                 <ResponsiveContainer width="100%" height="100%">
