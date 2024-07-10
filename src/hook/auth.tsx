@@ -177,12 +177,15 @@ export const AuthContextProvider = ({ children }: Props) => {
     const isClientContactsFilled =
       profile?.clientContacts.length > 0 ? true : false;
     const isClientFinanceFilled = profile?.clientFinance == null ? false : true;
+    const isClientBeneficiaryFilled =
+      profile?.beneficiaries.length > 0 ? true : false;
 
     const isFullfiledAccountData =
       !!isClientDetailsFilled &&
       !!isClientAddressesFilled &&
       !!isClientContactsFilled &&
-      !!isClientFinanceFilled;
+      !!isClientFinanceFilled &&
+      !!isClientBeneficiaryFilled;
 
     setIsFullfiledAccountInfo(isFullfiledAccountData);
   };

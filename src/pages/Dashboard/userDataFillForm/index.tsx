@@ -10,6 +10,7 @@ import { useAuth } from "../../../hook/auth";
 import { Profile } from "../../../types/auth";
 import { Address } from "./address";
 import { BankData } from "./bankData";
+import { Beneficiary } from "./beneficiary";
 import { Contact } from "./contact";
 import { Contract } from "./contract";
 import { GenerateData } from "./generateData";
@@ -26,6 +27,7 @@ export const UserDataProfile = () => {
   const navigate = useNavigate();
 
   const handleStepOnClick = (position: number) => {
+    console.log("vai para o proximo passo");
     setActiveFormStepPosition(position);
   };
 
@@ -42,6 +44,8 @@ export const UserDataProfile = () => {
     const isClientContactsFilled =
       profile?.clientContacts.length > 0 ? true : false;
     const isClientFinanceFilled = profile?.clientFinance == null ? false : true;
+    const isClientBeneficiaryFilled =
+      profile?.beneficiaries.length > 0 ? true : false;
 
     console.log("isClientDetailsFilled " + isClientDetailsFilled);
     console.log("isClientFinanceFilled " + isClientFinanceFilled);
@@ -56,7 +60,9 @@ export const UserDataProfile = () => {
       ? 3
       : !isClientFinanceFilled
       ? 4
-      : 5;
+      : !isClientBeneficiaryFilled
+      ? 5
+      : 6;
 
     setActiveFormStepPosition(currentStep);
   };
@@ -137,11 +143,20 @@ export const UserDataProfile = () => {
 
           <StepButtonIndicator
             icon={"heroicons:banknotes"}
-            name={"Contrato"}
+            name={"Beneficiário"}
             isStepActive={ActiveFormStepPosition == 5}
             handleStepClick={() => {}}
             position={5}
             isStepFilled={ActiveFormStepPosition > 5}
+          />
+
+          <StepButtonIndicator
+            icon={"heroicons:banknotes"}
+            name={"Contrato"}
+            isStepActive={ActiveFormStepPosition == 6}
+            handleStepClick={() => {}}
+            position={6}
+            isStepFilled={ActiveFormStepPosition > 6}
           />
         </div>
       </div>
@@ -180,6 +195,14 @@ export const UserDataProfile = () => {
         )}
 
         {ActiveFormStepPosition === 5 && (
+          <Beneficiary
+            handleConfirmationClick={() => {
+              handleStepOnClick(6);
+            }}
+          />
+        )}
+
+        {ActiveFormStepPosition === 6 && (
           <Contract
             handleConfirmationClick={() => {
               handleFinishForm();

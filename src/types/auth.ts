@@ -14,6 +14,26 @@ export interface Profile {
   clientParents: ClientParents | null;
   user: User;
   profileDetails: ProfileDetails | null;
+  beneficiaries: Beneficiary[];
+}
+
+export interface Beneficiary {
+  fullName: string;
+  nationality: string;
+  maritalStatus: string;
+  profession: string;
+  zipCode: string;
+  city: string;
+  state: string;
+  street: string;
+  number: string;
+  neighborhood: string;
+  complement: string;
+  reference: string;
+  email: string;
+  RG: string;
+  CPF: string;
+  clientId: string;
 }
 
 export interface User {
@@ -59,6 +79,11 @@ export interface ClientFinance {
   pixKey: string;
 }
 
+export interface ClientParents {
+  profileId: string;
+  fatherName: string;
+  motherName: string;
+}
 export interface ClientParents {
   profileId: string;
   fatherName: string;
