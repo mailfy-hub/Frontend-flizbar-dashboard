@@ -95,7 +95,7 @@ export const routesMapped: routeMapped[] = [
     subRoutes: [],
     addToSidebar: false,
     isOutletRoute: true,
-    blockSidebarInteractivity: true,
+    blockSidebarInteractivity: false,
   }),
   createRouteMapped({
     path: "/my-account",
@@ -373,6 +373,6 @@ export const routesMapped: routeMapped[] = [
     subRoutes: [],
     addToSidebar: false,
     isOutletRoute: true,
-    blockSidebarInteractivity: true,
+    blockSidebarInteractivity: false,
   }),
 ];
