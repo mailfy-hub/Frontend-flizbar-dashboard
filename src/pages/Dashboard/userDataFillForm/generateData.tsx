@@ -141,14 +141,17 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
         true
       );
 
-
-      if (!isCheckedProofAddress || !isCheckedDocumentFile) return;
+      if (!isCheckedProofAddress || !isCheckedDocumentFile) {
+        formik.setSubmitting(false);
+        return;
+      }
       handlePostClientData(values);
     },
   });
 
   const handlePostClientData = async (data: FormValues) => {
     try {
+      formik.setSubmitting(true);
       if (!userData) return;
 
       const formattedDate = data?.birthDate && new Date(data.birthDate);
@@ -196,9 +199,11 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
         await uploadFile(additionalFile, profile?.id!, "additionalFile");
       }
 
-     handleConfirmationClick();
+      handleConfirmationClick();
     } catch (error) {
       console.log(error);
+    } finally {
+      formik.setSubmitting(false);
     }
   };
 
@@ -785,6 +790,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
           }} */
           className="bg-GOLD_MAIN w-full md:w-auto"
           type="submit"
+          disabled={formik.isSubmitting}
         >
           Próxima etapa
         </Button>
