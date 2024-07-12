@@ -338,9 +338,13 @@ export const EditClient = () => {
             {contactsList.map((contact) => {
               return (
                 <div className="flex md:items-center flex-col md:flex-row items-end gap-6">
-                  <Input value={contact.name} type="email" label="Nome" />
                   <Input
-                    value={contact?.phone}
+                    defaultValue={contact.name}
+                    type="email"
+                    label="Nome"
+                  />
+                  <Input
+                    defaultValue={contact?.phone}
                     type="email"
                     label="Número de Telefone"
                   />

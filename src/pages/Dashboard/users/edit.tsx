@@ -115,7 +115,7 @@ export const UserEdit = () => {
             </div>
             <div className="grid md:grid-cols-2 gap-6">
               <Input
-                value={user?.username}
+                defaultValue={user?.username}
                 type="text"
                 label="Username*"
                 name="username"
