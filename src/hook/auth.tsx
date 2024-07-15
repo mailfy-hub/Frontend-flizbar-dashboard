@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../client/api";
 import {
   Profile,
+  ProfileDetails,
   SignUpProps,
   User,
   loginProps,
@@ -20,6 +21,7 @@ interface AuthContextProps {
   accessToken: string | null;
   handleFullfiledAccountInfo: (value: boolean) => void;
   isFullfiledAccountInfo: boolean;
+  updateProfileDetails: (profileDetails: ProfileDetails) => void;
 }
 
 const AuthContext = createContext({} as AuthContextProps);
@@ -180,6 +182,8 @@ export const AuthContextProvider = ({ children }: Props) => {
     const isClientBeneficiaryFilled =
       profile?.beneficiaries.length > 0 ? true : false;
     const isContractAcceptedFilled = profile?.contractAccepted;
+    const isClientAttachmentsFilled =
+      profile?.attachments.length > 0 ? true : false;
 
     const isFullfiledAccountData =
       !!isClientDetailsFilled &&
@@ -187,13 +191,26 @@ export const AuthContextProvider = ({ children }: Props) => {
       !!isClientContactsFilled &&
       !!isClientFinanceFilled &&
       !!isClientBeneficiaryFilled &&
-      isContractAcceptedFilled;
+      isContractAcceptedFilled &&
+      isClientAttachmentsFilled;
 
     setIsFullfiledAccountInfo(isFullfiledAccountData);
   };
 
   const handleFullfiledAccountInfo = (value: boolean) => {
     setIsFullfiledAccountInfo(value);
+  };
+
+  const updateProfileDetails = (profileDetails: ProfileDetails) => {
+    setProfile((state) => {
+      if (state === null) return null;
+  
+      return {
+        ...state,
+        profileDetails: profileDetails,
+        clientDetails: profileDetails,
+      };
+    });
   };
 
   useEffect(() => {
@@ -214,6 +231,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         profile,
         isFullfiledAccountInfo,
         handleFullfiledAccountInfo,
+        updateProfileDetails
       }}
     >
       {children}

@@ -9,6 +9,7 @@ import { StepButtonIndicator } from "../../../components/stepButtonIndicator";
 import { useAuth } from "../../../hook/auth";
 import { Profile } from "../../../types/auth";
 import { Address } from "./address";
+import { Attachments } from "./attachments";
 import { BankData } from "./bankData";
 import { Beneficiary } from "./beneficiary";
 import { Contact } from "./contact";
@@ -33,7 +34,7 @@ export const UserDataProfile = () => {
 
   const handleFinishForm = () => {
     navigate("/");
-    handleFullfiledAccountInfo(true)
+    handleFullfiledAccountInfo(true);
   };
 
   const verifyAccountData = (profile: Profile) => {
@@ -47,6 +48,8 @@ export const UserDataProfile = () => {
     const isClientFinanceFilled = profile?.clientFinance == null ? false : true;
     const isClientBeneficiaryFilled =
       profile?.beneficiaries.length > 0 ? true : false;
+    const isClientAttachmentsFilled =
+      profile?.attachments.length > 0 ? true : false;
 
     console.log("isClientDetailsFilled " + isClientDetailsFilled);
     console.log("isClientFinanceFilled " + isClientFinanceFilled);
@@ -63,7 +66,9 @@ export const UserDataProfile = () => {
       ? 4
       : !isClientBeneficiaryFilled
       ? 5
-      : 6;
+      : !isClientAttachmentsFilled
+      ? 6
+      : 7;
 
     setActiveFormStepPosition(currentStep);
   };
@@ -141,6 +146,7 @@ export const UserDataProfile = () => {
             position={4}
             isStepFilled={ActiveFormStepPosition > 4}
           />
+          <ChevronDoubleRightIcon color="#757575" height={16} />
 
           <StepButtonIndicator
             icon={"heroicons:banknotes"}
@@ -150,14 +156,25 @@ export const UserDataProfile = () => {
             position={5}
             isStepFilled={ActiveFormStepPosition > 5}
           />
+          <ChevronDoubleRightIcon color="#757575" height={16} />
 
           <StepButtonIndicator
-            icon={"heroicons:banknotes"}
-            name={"Contrato"}
+            icon={"heroicons:link-20-solid"}
+            name={"Anexos"}
             isStepActive={ActiveFormStepPosition == 6}
             handleStepClick={() => {}}
             position={6}
             isStepFilled={ActiveFormStepPosition > 6}
+          />
+          <ChevronDoubleRightIcon color="#757575" height={16} />
+
+          <StepButtonIndicator
+            icon={"heroicons:banknotes"}
+            name={"Contrato"}
+            isStepActive={ActiveFormStepPosition == 7}
+            handleStepClick={() => {}}
+            position={7}
+            isStepFilled={ActiveFormStepPosition > 7}
           />
         </div>
       </div>
@@ -204,6 +221,14 @@ export const UserDataProfile = () => {
         )}
 
         {ActiveFormStepPosition === 6 && (
+          <Attachments
+            handleConfirmationClick={() => {
+              handleStepOnClick(7);
+            }}
+          />
+        )}
+
+        {ActiveFormStepPosition === 7 && (
           <Contract
             handleConfirmationClick={() => {
               handleFinishForm();

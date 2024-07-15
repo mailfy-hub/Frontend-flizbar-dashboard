@@ -6,7 +6,7 @@ export interface Profile {
   imageUrl: string | null;
   contractAccepted: boolean;
   createdAt: string;
-  attachments: any[]; // Adjust the type based on the structure of the attachments if available
+  attachments: Attachment[]; // Adjust the type based on the structure of the attachments if available
   clientAddresses: ClientAddress[];
   clientContacts: ClientContact[]; // Adjust the type based on the structure of the client contacts if available
   clientDetails: ProfileDetails | null; // Adjust the type based on the structure of the client details if available
@@ -15,6 +15,17 @@ export interface Profile {
   user: User;
   profileDetails: ProfileDetails | null;
   beneficiaries: Beneficiary[];
+}
+
+export interface Attachment {
+  clientId: string;
+  createdAt: string;
+  id: string;
+  name: string;
+  size: number;
+  storageKey: string;
+  type: string;
+  url: string;
 }
 
 export interface Beneficiary {
