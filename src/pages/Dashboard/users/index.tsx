@@ -269,7 +269,7 @@ export const Users = () => {
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-            Página 2 <span className="font-normal text-BLACK">of 10</span>
+            Página 1 <span className="font-normal text-BLACK">of 10</span>
           </Typography>
           <div className="flex gap-4">
             <Button variant="text" className="flex items-center gap-1">
