@@ -34,6 +34,7 @@ export interface Beneficiary {
   RG: string;
   CPF: string;
   clientId: string;
+  id: string;
 }
 
 export interface User {
@@ -65,6 +66,7 @@ export interface ClientAddress {
   neighborhood: string;
   complement: string;
   reference: string;
+  id: string;
 }
 
 export interface ClientFinance {
@@ -77,6 +79,7 @@ export interface ClientFinance {
   agencyDigit: string;
   pixKeyType: string;
   pixKey: string;
+  id: string;
 }
 
 export interface ClientParents {
@@ -109,6 +112,8 @@ export interface ProfileDetails {
   birthDate: string;
   fatherName: string;
   motherName: string;
+  personType: "pf" | "pj" | null;
+  id: string;
 }
 
 export interface loginProps {
