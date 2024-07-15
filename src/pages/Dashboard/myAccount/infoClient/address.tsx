@@ -47,31 +47,27 @@ export const AddressData = () => {
   type FormValues = InferType<typeof validationSchema>;
 
   const initialValues: FormValues = {
-    addressType: profile?.clientAddresses[0].addressType
+    addressType: profile?.clientAddresses[0]
       ? profile?.clientAddresses[0].addressType
       : "",
-    zipCode: profile?.clientAddresses[0].zipCode
+    zipCode: profile?.clientAddresses[0]
       ? profile?.clientAddresses[0].zipCode
       : "",
-    city: profile?.clientAddresses[0].city
-      ? profile?.clientAddresses[0].city
-      : "",
-    state: profile?.clientAddresses[0].state
-      ? profile?.clientAddresses[0].state
-      : "",
-    street: profile?.clientAddresses[0].street
+    city: profile?.clientAddresses[0] ? profile?.clientAddresses[0].city : "",
+    state: profile?.clientAddresses[0] ? profile?.clientAddresses[0].state : "",
+    street: profile?.clientAddresses[0]
       ? profile?.clientAddresses[0].street
       : "",
-    number: profile?.clientAddresses[0].number
+    number: profile?.clientAddresses[0]
       ? profile?.clientAddresses[0].number
       : "",
-    neighborhood: profile?.clientAddresses[0].neighborhood
+    neighborhood: profile?.clientAddresses[0]
       ? profile?.clientAddresses[0].neighborhood
       : "",
-    complement: profile?.clientAddresses[0].complement
+    complement: profile?.clientAddresses[0]
       ? profile?.clientAddresses[0].complement
       : "",
-    reference: profile?.clientAddresses[0].reference
+    reference: profile?.clientAddresses[0]
       ? profile?.clientAddresses[0].reference
       : "",
   };
