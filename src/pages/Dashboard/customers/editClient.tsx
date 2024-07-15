@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { useLocation } from "react-router-dom";
 import { getProfileById } from "../../../client/profiles";
-// import { useAuth } from "../../../hook/auth";
-import { updateUser } from "../../../client/users";
+import {
+  updateUser,
+  updateDetailsUser,
+  IUserDetails,
+} from "../../../client/users";
 import { toast } from "react-toastify";
 
 type contact = {
@@ -24,13 +27,19 @@ type MaritalStatus =
   | "Outro";
 
 export const EditClient = () => {
-  // const { userData } = useAuth();
-
   const [documentType, setDocumentType] = useState<"pf" | "pj">("pf");
   const [updateEmail, setUpdateEmail] = useState<string>();
-  // const [generalDataUpdated, setGeneralDataUpdated] = useState({});
+  const [generalDataUpdated, setGeneralDataUpdated] = useState<IUserDetails>(
+    {}
+  );
   const handleDocumentType = (docType: string) => {
-    if (docType === "pf" || docType === "pj") setDocumentType(docType);
+    if (docType === "pf" || docType === "pj") {
+      setDocumentType(docType);
+      setGeneralDataUpdated({
+        ...generalDataUpdated,
+        documentType: docType,
+      });
+    }
   };
 
   const [selectedMaritalStatus, setSelectedMaritalStatus] =
@@ -48,17 +57,16 @@ export const EditClient = () => {
     },
   ]);
 
-  const [details, setDetails] = useState<any>();
+  const [details, setDetails] = useState<any>(); // General Data
+  const [bornDate, setBornDate] = useState<string>();
 
-  // const handleChangeGeneralData = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-  //   setGeneralDataUpdated({
-  //     ...generalDataUpdated,
-  //     [name]: value,
-  //   });
-  // };
-
-  // console.log("handleDocumentType", generalDataUpdated);
+  const handleChangeGeneralData = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setGeneralDataUpdated({
+      ...generalDataUpdated,
+      [name]: value,
+    });
+  };
 
   useEffect(() => {
     getProfileById(id).then((data) => {
@@ -77,6 +85,28 @@ export const EditClient = () => {
     } catch (error) {
       toast.error("Erro ao atualizar e-mail.");
     }
+  };
+
+  const handleUpdateGeneralData = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+
+    if (generalDataUpdated?.name) {
+      await updateUser({ name: generalDataUpdated.name }, details.userId).then(
+        () => {
+          toast.success("Nome atualizado com sucesso!");
+        }
+      );
+    }
+
+    const { name, ...updatedDataWithoutName } = generalDataUpdated;
+    await updateDetailsUser(
+      updatedDataWithoutName,
+      details?.clientDetails?.id
+    ).then(() => {
+      toast.success("Dados gerais atualizados com sucesso!");
+    });
   };
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,7 +139,11 @@ export const EditClient = () => {
     return `${day}/${month}/${year}`;
   }
 
-  // console.log("details", details);
+  useEffect(() => {
+    if (details) {
+      setBornDate(convertDate(details?.clientDetails?.birthDate));
+    }
+  }, [details]);
 
   return (
     <div className="">
@@ -137,7 +171,10 @@ export const EditClient = () => {
           </div>
         </div>
       </form>
-      <form className="bg-WHITE p-8 w-full rounded-md mt-8">
+      <form
+        onSubmit={handleUpdateGeneralData}
+        className="bg-WHITE p-8 w-full rounded-md mt-8"
+      >
         <div className="flex items-center gap-4">
           <Icon height={16} icon={"heroicons:user"} color="black" />
           <SectionTitle size="sm" text="Dados gerais" />
@@ -154,9 +191,11 @@ export const EditClient = () => {
             </Select>
             {documentType == "pf" ? (
               <Input
-                value={`${details?.user?.name} ${details?.user?.surname}`}
+                defaultValue={details?.user?.name || ""}
                 type="text"
                 label="Nome"
+                name="name"
+                onChange={handleChangeGeneralData}
               />
             ) : (
               <Input type="text" label="Razão social" />
@@ -165,14 +204,30 @@ export const EditClient = () => {
           <div className="grid md:grid-cols-2 gap-6">
             {documentType == "pf" && (
               <Input
-                value={convertDate(details?.clientDetails?.birthDate)}
+                defaultValue={bornDate}
                 type="text"
                 label="Date de nascimento"
+                onChange={(e) =>
+                  setGeneralDataUpdated({
+                    ...generalDataUpdated,
+                    birthDate: new Date(e.target.value).toISOString(),
+                  })
+                }
+                name="birthDate"
               />
             )}
-            <Select value="Brasileiro" label="Nacionalidade">
-              <Option>Brasileiro</Option>
-              <Option>Outra</Option>
+            <Select
+              value="Brasileiro"
+              label="Nacionalidade"
+              onChange={(val) =>
+                setGeneralDataUpdated({
+                  ...generalDataUpdated,
+                  nationality: val,
+                })
+              }
+            >
+              <Option value="Brasileiro">Brasileiro</Option>
+              <Option value="Outra">Outra</Option>
             </Select>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -182,21 +237,31 @@ export const EditClient = () => {
                   ? details?.clientDetails?.documentType
                   : ""
               }
+              onChange={(val) =>
+                setGeneralDataUpdated({
+                  ...generalDataUpdated,
+                  documentType: val,
+                })
+              }
               label="Tipo do documento"
             >
-              <Option>Inscrição estadual</Option>
-              <Option>Carteira de habilitação</Option>
-              <Option>Passaporte</Option>
-              <Option>International ID</Option>
+              <Option value="Inscrição estadual">Inscrição estadual</Option>
+              <Option value="Carteira de habilitação">
+                Carteira de habilitação
+              </Option>
+              <Option value="Passaporte">Passaporte</Option>
+              <Option value="International ID">International ID</Option>
             </Select>
             <Input
-              value={
+              defaultValue={
                 details?.clientDetails?.document
                   ? details?.clientDetails?.document
                   : ""
               }
+              name="document"
               type="text"
               label="Número do documento"
+              onChange={handleChangeGeneralData}
             />
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -208,15 +273,24 @@ export const EditClient = () => {
                     : ""
                 }
                 label="Gênero"
+                name="gender"
+                onChange={(val) =>
+                  setGeneralDataUpdated({
+                    ...generalDataUpdated,
+                    gender: val,
+                  })
+                }
               >
-                <Option>Masculino</Option>
-                <Option>Feminino</Option>
-                <Option>Prefiro não declarar</Option>
+                <Option value="Masculino">Masculino</Option>
+                <Option value="Feminino">Feminino</Option>
+                <Option value="Prefiro não declarar">
+                  Prefiro não declarar
+                </Option>
               </Select>
             )}
           </div>
           <div className="w-full">
-            <Button className="bg-GOLD_MAIN w-full md:w-auto">
+            <Button type="submit" className="bg-GOLD_MAIN w-full md:w-auto">
               Atualizar dados
             </Button>
           </div>
