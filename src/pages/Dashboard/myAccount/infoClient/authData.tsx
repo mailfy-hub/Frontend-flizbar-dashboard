@@ -1,10 +1,11 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, Input } from "@material-tailwind/react";
 import { useFormik } from "formik";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
+import { api } from "../../../../client/api";
 import { SectionTitle } from "../../../../components/sectionTitle";
 import { useAuth } from "../../../../hook/auth";
-import { toast } from "react-toastify";
 
 export const AuthData = () => {
   const { userData } = useAuth();
@@ -12,7 +13,7 @@ export const AuthData = () => {
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email("Insira um e-mail válido")
-      .required("Tipo da conta é obrigatório"),
+      .required("email é obrigatório"),
   });
 
   const formik = useFormik({
@@ -21,15 +22,21 @@ export const AuthData = () => {
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
       handlePutAccessInformation(values);
     },
   });
   type FormValues = Yup.InferType<typeof validationSchema>;
 
-  const handlePutAccessInformation = (values: FormValues) => {
+  const handlePutAccessInformation = async (values: FormValues) => {
     try {
-      console.log(values);
+      formik.setSubmitting(true);
+      await api.put(`/users/${userData?.id}`, {
+        email: values.email,
+      });
+      toast("Alterado com sucesso", {
+        type: "success",
+        autoClose: 3000,
+      });
     } catch (error) {
       console.log(error);
       toast("Erro ao atualizar.", {
@@ -62,7 +69,11 @@ export const AuthData = () => {
           />
         </div>
         <div className="w-full">
-          <Button className="bg-GOLD_MAIN w-full md:w-auto">
+          <Button
+            type="submit"
+            disabled={formik.isSubmitting || !formik.values.email}
+            className="bg-GOLD_MAIN w-full md:w-auto"
+          >
             Atualizar dados
           </Button>
         </div>
