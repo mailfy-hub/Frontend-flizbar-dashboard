@@ -46,6 +46,19 @@ export interface IUserDetails {
   name?: string,
 }
 
+export interface IUserAddress {
+  clientId?: string,
+  addressType?: string,
+  zipCode?: string,
+  city?: string,
+  state?: string,
+  street?: string,
+  number?: string,
+  neighborhood?: string
+  complement?: string,
+  reference?: string, 
+}
+
 export const updateUser = async (user: IUser, id: string) => {
   try {
     await api.put(`/users/${id}`, user)
@@ -67,6 +80,15 @@ export const getUserById = async (id: string) => {
 export const updateDetailsUser = async (details: IUserDetails, id: string) => {
   try {
     await api.put(`/profiles/details/${id}`, details)
+    return
+  } catch (error) {
+    throw new Error(error as string);
+  }
+}
+
+export const updateAddressUser = async (address: IUserAddress, id: string) => {
+  try {
+    await api.put(`/profiles/address/${id}`, address)
     return
   } catch (error) {
     throw new Error(error as string);
