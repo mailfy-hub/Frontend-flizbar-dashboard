@@ -213,7 +213,7 @@ export const GenerateData = ({ dataUser }: any) => {
                   <Input
                     name="name"
                     id="name"
-                    value={`${userData?.name} ${userData?.surname}`}
+                    value={`${profile?.user?.name} ${profile?.user?.surname}`}
                     type="text"
                     label="Nome"
                     disabled
