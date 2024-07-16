@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { api } from "../../../../client/api";
 import { SectionTitle } from "../../../../components/sectionTitle";
+import { useAuth } from "../../../../hook/auth";
 
 interface ClientContactFormik {
   contactsList: ClientContactServer[];
@@ -16,8 +17,8 @@ interface ClientContactServer {
   phone: string;
 }
 
-export const Contact = ({ userData }: any) => {
-  const profile = userData;
+export const Contact = () => {
+  const { profile } = useAuth();
   const ContactSchema = Yup.object().shape({
     contactsList: Yup.array().of(
       Yup.object().shape({
