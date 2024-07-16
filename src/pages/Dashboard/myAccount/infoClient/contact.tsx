@@ -57,7 +57,7 @@ export const Contact = ({ userData }: any) => {
       return;
     }
     const contactsFiltered = formik.values.contactsList.filter(
-      (contact) => contact.id !== id
+      (contact: any) => contact.id !== id
     );
     formik.setFieldValue("contactsList", contactsFiltered);
   };
@@ -96,7 +96,7 @@ export const Contact = ({ userData }: any) => {
         </div>
         <div className="mt-8 flex flex-col gap-6 ">
           <div className="grid gap-6">
-            {formik.values.contactsList.map((contact, index) => (
+            {formik.values.contactsList.map((contact: any, index: any) => (
               <div
                 key={index}
                 className="flex flex-col md:flex-row items-end md:items-center gap-6"

@@ -113,7 +113,9 @@ export const BankData = ({ userData }: any) => {
             error={formik.touched.bankName && Boolean(formik.errors.bankName)}
           />
           {formik.touched.bankName && formik.errors.bankName ? (
-            <div className="text-red-600">{formik.errors.bankName}</div>
+            <div className="text-red-600">
+              {formik.errors.bankName.toString()}
+            </div>
           ) : null}
         </div>
         <div className="grid md:grid-cols-2 gap-6">
@@ -129,7 +131,9 @@ export const BankData = ({ userData }: any) => {
             }
           />
           {formik.touched.accountNumber && formik.errors.accountNumber ? (
-            <div className="text-red-600">{formik.errors.accountNumber}</div>
+            <div className="text-red-600">
+              {formik.errors.accountNumber.toString()}
+            </div>
           ) : null}
           <Input
             type="text"
@@ -142,7 +146,9 @@ export const BankData = ({ userData }: any) => {
             }
           />
           {formik.touched.accountDigit && formik.errors.accountDigit ? (
-            <div className="text-red-600">{formik.errors.accountDigit}</div>
+            <div className="text-red-600">
+              {formik.errors.accountDigit?.toString()}
+            </div>
           ) : null}
         </div>
         <div className="grid md:grid-cols-2 gap-6">
@@ -157,7 +163,9 @@ export const BankData = ({ userData }: any) => {
             }
           />
           {formik.touched.agencyNumber && formik.errors.agencyNumber ? (
-            <div className="text-red-600">{formik.errors.agencyNumber}</div>
+            <div className="text-red-600">
+              {formik.errors.agencyNumber?.toString()}
+            </div>
           ) : null}
           <Input
             type="text"
@@ -170,7 +178,9 @@ export const BankData = ({ userData }: any) => {
             }
           />
           {formik.touched.agencyDigit && formik.errors.agencyDigit ? (
-            <div className="text-red-600">{formik.errors.agencyDigit}</div>
+            <div className="text-red-600">
+              {formik.errors.agencyDigit?.toString()}
+            </div>
           ) : null}
         </div>
         <div className="grid md:grid-cols-2 gap-6">
