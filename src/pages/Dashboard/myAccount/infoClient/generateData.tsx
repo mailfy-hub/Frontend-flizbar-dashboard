@@ -125,7 +125,6 @@ export const GenerateData = () => {
     initialValues,
     validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
       handlePutUserInformation(values);
     },
   });
@@ -180,265 +179,341 @@ export const GenerateData = () => {
     }
   };
 
+  const validationSchemaAccessData = Yup.object().shape({
+    email: Yup.string()
+      .email("Insira um e-mail válido")
+      .required("email é obrigatório"),
+  });
+
+  const formikAccessData = useFormik({
+    initialValues: {
+      email: userData?.email ? userData?.email : "",
+    },
+    validationSchema: validationSchemaAccessData,
+    onSubmit: (values) => {
+      handlePutAccessInformation(values);
+    },
+  });
+  type FormValuesAccessData = Yup.InferType<typeof validationSchemaAccessData>;
+
+  const handlePutAccessInformation = async (values: FormValuesAccessData) => {
+    try {
+      formikAccessData.setSubmitting(true);
+      await api.put(`/users/${userData?.id}`, {
+        email: values.email,
+      });
+      toast("Alterado com sucesso", {
+        type: "success",
+        autoClose: 3000,
+      });
+    } catch (error) {
+      console.log(error);
+      toast("Erro ao atualizar.", {
+        type: "error",
+        autoClose: 3000,
+      });
+    } finally {
+      formikAccessData.setSubmitting(false);
+    }
+  };
+
   return (
     <>
-      <form
-        onSubmit={formik.handleSubmit}
-        className="bg-WHITE p-8 w-full rounded-md "
-      >
-        <div>
+      <div>
+        <form
+          onSubmit={formikAccessData.handleSubmit}
+          className="bg-WHITE p-8 w-full rounded-md"
+        >
           <div className="flex items-center gap-4">
             <Icon height={16} icon={"heroicons:user"} color="black" />
-            <SectionTitle size="sm" text="Dados gerais" />
-          </div>
-          <div className="mt-8 flex flex-col gap-6 ">
-            <div className="grid md:grid-cols-2 gap-6">
-              <Select
-                id="personType"
-                name="personType"
-                value={formik.values.personType}
-                onChange={(selectedOption) => {
-                  console.log(selectedOption);
-                  formik.setFieldValue("personType", selectedOption);
-                }}
-                label="Tipo de pessoa"
-              >
-                <Option value="pf">Física</Option>
-                <Option value="pj">Jurídica</Option>
-                {/*  <Option value="pj">Jurídica</Option> */}
-              </Select>
-              {formik.values.personType == "pf" ? (
-                <Input
-                  name="name"
-                  id="name"
-                  value={`${userData?.name} ${userData?.surname}`}
-                  type="text"
-                  label="Nome"
-                  disabled
-                />
-              ) : (
-                <Input
-                  name="corporateName"
-                  id="corporateName"
-                  value={formik.values.corporateName}
-                  onChange={formik.handleChange}
-                  type="text"
-                  label="Razão social"
-                />
-              )}
-            </div>
-            <div className="grid md:grid-cols-2 gap-6">
-              {formik.values.personType == "pf" && (
-                <Input
-                  name="birthDate"
-                  id="birthDate"
-                  value={formik.values.birthDate
-                    ?.toISOString()
-                    .substring(0, 10)}
-                  onChange={formik.handleChange}
-                  type="date"
-                  label="Date de nascimento"
-                />
-              )}
-              <Select
-                name="nationality"
-                id="nationality"
-                value={formik.values.nationality}
-                onChange={(selectedValue) => {
-                  formik.setFieldValue("nationality", selectedValue);
-                }}
-                label="Nacionalidade"
-              >
-                <Option value="Brasileiro">Brasileiro</Option>
-                <Option value="Outra">Outra</Option>
-              </Select>
-            </div>
-            <div className="grid md:grid-cols-2 gap-6">
-              <Select
-                name="documentType"
-                id="documentType"
-                value={formik.values.documentType}
-                onChange={(selectedValue) => {
-                  formik.setFieldValue("documentType", selectedValue);
-                }}
-                label="Tipo do documento"
-              >
-                <Option value="Inscrição estadual">Inscrição estadual</Option>
-                <Option value="Carteira de habilitação">
-                  Carteira de habilitação
-                </Option>
-                <Option value="Passaporte">Passaporte</Option>
-              </Select>
-              <Input
-                name="document"
-                id="document"
-                value={formik.values.document}
-                onChange={formik.handleChange}
-                type="text"
-                label="Número do documento"
-              />
-            </div>
-            <div></div>
-          </div>
-        </div>
-        <div>
-          <div className="flex items-center gap-4 ">
-            <Icon height={16} icon={"heroicons:user"} color="black" />
-            <SectionTitle size="sm" text="Dados complementares" />
+            <SectionTitle size="sm" text="Dados de acesso" />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
               <Input
-                id="fatherName"
-                name="fatherName"
-                value={formik.values.fatherName}
-                onChange={formik.handleChange}
-                type="text"
-                label="Nome do pai"
-              />
-              <Input
-                id="motherName"
-                name="motherName"
-                value={formik.values.motherName}
-                onChange={formik.handleChange}
-                type="text"
-                label="Nome da mãe"
+                value={formikAccessData.values.email}
+                type="email"
+                id="email"
+                name="email"
+                label="E-mail de acesso"
+                onChange={formikAccessData.handleChange}
               />
             </div>
-            <div className="grid md:grid-cols-3 gap-6">
-              <Select
-                id="maritalStatus"
-                name="maritalStatus"
-                value={formik.values.maritalStatus}
-                onChange={(selectedValue) =>
-                  formik.setFieldValue("maritalStatus", selectedValue)
+            <div className="w-full">
+              <Button
+                type="submit"
+                disabled={
+                  formikAccessData.isSubmitting ||
+                  !formikAccessData.values.email
                 }
-                label="Estado civil"
+                className="bg-GOLD_MAIN w-full md:w-auto disabled:opacity-75"
               >
-                <Option value="Solteiro(a)">Solteiro(a)</Option>
-                <Option value="Casado(a)">Casado(a)</Option>
-                <Option value="Divorciado(a)">Divorciado(a)</Option>
-                <Option value="Viúvo(a)">Viúvo(a)</Option>
-                <Option value="União estável">União estável</Option>
-                <Option value="Outro">Outro</Option>
-              </Select>
-              <Select
-                id="education"
-                name="education"
-                value={formik.values.education}
-                onChange={(selectedValue) =>
-                  formik.setFieldValue("education", selectedValue)
-                }
-                label="Escolaridade"
-              >
-                <Option value="Ensino médio incompleto">
-                  Ensino médio incompleto
-                </Option>
-                <Option value="Ensino médio completo">
-                  Ensino médio completo
-                </Option>
-                <Option value="Curso técnico">Curso técnico</Option>
-                <Option value="Bacharelado Incompleto">
-                  Bacharelado Incompleto
-                </Option>
-                <Option value="Bacherelado Completo">
-                  Bacherelado Completo
-                </Option>
-                <Option value="Pós-graduação">Pós-graduação</Option>
-                <Option value="Mestrado">Mestrado</Option>
-                <Option value="Doutorado">Doutorado</Option>
-                <Option value="Outro">Outro</Option>
-              </Select>
-              <Select
-                id="politicalPerson"
-                name="politicalPerson"
-                value={formik.values.politicalPerson}
-                onChange={(selectedValue) => {
-                  formik.setFieldValue("politicalPerson", selectedValue);
-                }}
-                label="É pessoa politicamente exposta?"
-              >
-                <Option value="Sim">Sim</Option>
-                <Option value="Não">Não</Option>
-              </Select>
+                Atualizar dados
+              </Button>
             </div>
-            <div className="grid md:grid-cols-2 gap-6">
-              <Input
-                value={formik.values.profession}
-                id="profession"
-                name="profession"
-                onChange={formik.handleChange}
-                type="text"
-                label="Qual sua profissão?"
-              />
-              <Select
-                id="declaresUsTaxes"
-                name="declaresUsTaxes"
-                value={formik.values.declaresUsTaxes}
-                onChange={(selectedValue) => {
-                  formik.setFieldValue("declaresUsTaxes", selectedValue);
-                }}
-                label="Declara imposto ao governo dos EUA?"
-              >
-                <Option value={"Sim"}>Sim</Option>
-                <Option value={"Não"}>Não</Option>
-              </Select>
-            </div>
-            {formik.values.maritalStatus == "Stable Union" ||
-              (formik.values.maritalStatus == "Married" && (
-                <div className="grid md:grid-cols-2 gap-6">
-                  <Input
-                    id="spouseName"
-                    name="spouseName"
-                    value={formik.values.spouseName}
-                    onChange={formik.handleChange}
-                    label="Nome do cônjuge"
-                  />
-                </div>
-              ))}
-            {formik.values.maritalStatus == "Stable Union" ||
-              (formik.values.maritalStatus == "Married" && (
-                <div className="grid md:grid-cols-2 gap-6">
-                  <Select
-                    id="spouseDocumentType"
-                    name="spouseDocumentType"
-                    value={formik.values.spouseDocumentType}
-                    onChange={(selectedValue) => {
-                      formik.setFieldValue("spouseDocumentType", selectedValue);
-                    }}
-                    label="Tipo do documento"
-                    className="w-full"
-                  >
-                    <Option value="Inscrição estadual">
-                      Inscrição estadual
-                    </Option>
-                    <Option value="Carteira de habilitação">
-                      Carteira de habilitação
-                    </Option>
-                    <Option value="Passaporte">Passaporte</Option>
-                  </Select>
-                  <Input
-                    id="spousedocument"
-                    name="spousedocument"
-                    value={formik.values.spousedocument}
-                    onChange={formik.handleChange}
-                    label="Número do documento"
-                    className="w-full"
-                  />
-                </div>
-              ))}
           </div>
-        </div>
-        <div className="w-full flex justify-start mt-8">
-          <Button
-            className="bg-GOLD_MAIN w-full md:w-auto"
-            type="submit"
-            disabled={formik.isSubmitting}
-          >
-            Atualizar dados
-          </Button>
-        </div>
-      </form>
+        </form>
+        <form
+          onSubmit={formik.handleSubmit}
+          className="bg-WHITE p-8 w-full rounded-md "
+        >
+          <div>
+            <div className="flex items-center gap-4">
+              <Icon height={16} icon={"heroicons:user"} color="black" />
+              <SectionTitle size="sm" text="Dados gerais" />
+            </div>
+            <div className="mt-8 flex flex-col gap-6 ">
+              <div className="grid md:grid-cols-2 gap-6">
+                <Select
+                  id="personType"
+                  name="personType"
+                  value={formik.values.personType}
+                  onChange={(selectedOption) => {
+                    console.log(selectedOption);
+                    formik.setFieldValue("personType", selectedOption);
+                  }}
+                  label="Tipo de pessoa"
+                >
+                  <Option value="pf">Física</Option>
+                  <Option value="pj">Jurídica</Option>
+                  {/*  <Option value="pj">Jurídica</Option> */}
+                </Select>
+                {formik.values.personType == "pf" ? (
+                  <Input
+                    name="name"
+                    id="name"
+                    value={`${userData?.name} ${userData?.surname}`}
+                    type="text"
+                    label="Nome"
+                    disabled
+                  />
+                ) : (
+                  <Input
+                    name="corporateName"
+                    id="corporateName"
+                    value={formik.values.corporateName}
+                    onChange={formik.handleChange}
+                    type="text"
+                    label="Razão social"
+                  />
+                )}
+              </div>
+              <div className="grid md:grid-cols-2 gap-6">
+                {formik.values.personType == "pf" && (
+                  <Input
+                    name="birthDate"
+                    id="birthDate"
+                    value={formik.values.birthDate
+                      ?.toISOString()
+                      .substring(0, 10)}
+                    onChange={formik.handleChange}
+                    type="date"
+                    label="Date de nascimento"
+                  />
+                )}
+                <Select
+                  name="nationality"
+                  id="nationality"
+                  value={formik.values.nationality}
+                  onChange={(selectedValue) => {
+                    formik.setFieldValue("nationality", selectedValue);
+                  }}
+                  label="Nacionalidade"
+                >
+                  <Option value="Brasileiro">Brasileiro</Option>
+                  <Option value="Outra">Outra</Option>
+                </Select>
+              </div>
+              <div className="grid md:grid-cols-2 gap-6">
+                <Select
+                  name="documentType"
+                  id="documentType"
+                  value={formik.values.documentType}
+                  onChange={(selectedValue) => {
+                    formik.setFieldValue("documentType", selectedValue);
+                  }}
+                  label="Tipo do documento"
+                >
+                  <Option value="Inscrição estadual">Inscrição estadual</Option>
+                  <Option value="Carteira de habilitação">
+                    Carteira de habilitação
+                  </Option>
+                  <Option value="Passaporte">Passaporte</Option>
+                </Select>
+                <Input
+                  name="document"
+                  id="document"
+                  value={formik.values.document}
+                  onChange={formik.handleChange}
+                  type="text"
+                  label="Número do documento"
+                />
+              </div>
+              <div></div>
+            </div>
+          </div>
+          <div>
+            <div className="flex items-center gap-4 ">
+              <Icon height={16} icon={"heroicons:user"} color="black" />
+              <SectionTitle size="sm" text="Dados complementares" />
+            </div>
+            <div className="mt-8 flex flex-col gap-6 ">
+              <div className="grid md:grid-cols-2 gap-6">
+                <Input
+                  id="fatherName"
+                  name="fatherName"
+                  value={formik.values.fatherName}
+                  onChange={formik.handleChange}
+                  type="text"
+                  label="Nome do pai"
+                />
+                <Input
+                  id="motherName"
+                  name="motherName"
+                  value={formik.values.motherName}
+                  onChange={formik.handleChange}
+                  type="text"
+                  label="Nome da mãe"
+                />
+              </div>
+              <div className="grid md:grid-cols-3 gap-6">
+                <Select
+                  id="maritalStatus"
+                  name="maritalStatus"
+                  value={formik.values.maritalStatus}
+                  onChange={(selectedValue) =>
+                    formik.setFieldValue("maritalStatus", selectedValue)
+                  }
+                  label="Estado civil"
+                >
+                  <Option value="Solteiro(a)">Solteiro(a)</Option>
+                  <Option value="Casado(a)">Casado(a)</Option>
+                  <Option value="Divorciado(a)">Divorciado(a)</Option>
+                  <Option value="Viúvo(a)">Viúvo(a)</Option>
+                  <Option value="União estável">União estável</Option>
+                  <Option value="Outro">Outro</Option>
+                </Select>
+                <Select
+                  id="education"
+                  name="education"
+                  value={formik.values.education}
+                  onChange={(selectedValue) =>
+                    formik.setFieldValue("education", selectedValue)
+                  }
+                  label="Escolaridade"
+                >
+                  <Option value="Ensino médio incompleto">
+                    Ensino médio incompleto
+                  </Option>
+                  <Option value="Ensino médio completo">
+                    Ensino médio completo
+                  </Option>
+                  <Option value="Curso técnico">Curso técnico</Option>
+                  <Option value="Bacharelado Incompleto">
+                    Bacharelado Incompleto
+                  </Option>
+                  <Option value="Bacherelado Completo">
+                    Bacherelado Completo
+                  </Option>
+                  <Option value="Pós-graduação">Pós-graduação</Option>
+                  <Option value="Mestrado">Mestrado</Option>
+                  <Option value="Doutorado">Doutorado</Option>
+                  <Option value="Outro">Outro</Option>
+                </Select>
+                <Select
+                  id="politicalPerson"
+                  name="politicalPerson"
+                  value={formik.values.politicalPerson}
+                  onChange={(selectedValue) => {
+                    formik.setFieldValue("politicalPerson", selectedValue);
+                  }}
+                  label="É pessoa politicamente exposta?"
+                >
+                  <Option value="Sim">Sim</Option>
+                  <Option value="Não">Não</Option>
+                </Select>
+              </div>
+              <div className="grid md:grid-cols-2 gap-6">
+                <Input
+                  value={formik.values.profession}
+                  id="profession"
+                  name="profession"
+                  onChange={formik.handleChange}
+                  type="text"
+                  label="Qual sua profissão?"
+                />
+                <Select
+                  id="declaresUsTaxes"
+                  name="declaresUsTaxes"
+                  value={formik.values.declaresUsTaxes}
+                  onChange={(selectedValue) => {
+                    formik.setFieldValue("declaresUsTaxes", selectedValue);
+                  }}
+                  label="Declara imposto ao governo dos EUA?"
+                >
+                  <Option value={"Sim"}>Sim</Option>
+                  <Option value={"Não"}>Não</Option>
+                </Select>
+              </div>
+              {formik.values.maritalStatus == "Stable Union" ||
+                (formik.values.maritalStatus == "Married" && (
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <Input
+                      id="spouseName"
+                      name="spouseName"
+                      value={formik.values.spouseName}
+                      onChange={formik.handleChange}
+                      label="Nome do cônjuge"
+                    />
+                  </div>
+                ))}
+              {formik.values.maritalStatus == "Stable Union" ||
+                (formik.values.maritalStatus == "Married" && (
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <Select
+                      id="spouseDocumentType"
+                      name="spouseDocumentType"
+                      value={formik.values.spouseDocumentType}
+                      onChange={(selectedValue) => {
+                        formik.setFieldValue(
+                          "spouseDocumentType",
+                          selectedValue
+                        );
+                      }}
+                      label="Tipo do documento"
+                      className="w-full"
+                    >
+                      <Option value="Inscrição estadual">
+                        Inscrição estadual
+                      </Option>
+                      <Option value="Carteira de habilitação">
+                        Carteira de habilitação
+                      </Option>
+                      <Option value="Passaporte">Passaporte</Option>
+                    </Select>
+                    <Input
+                      id="spousedocument"
+                      name="spousedocument"
+                      value={formik.values.spousedocument}
+                      onChange={formik.handleChange}
+                      label="Número do documento"
+                      className="w-full"
+                    />
+                  </div>
+                ))}
+            </div>
+          </div>
+          <div className="w-full flex justify-start mt-8">
+            <Button
+              className="bg-GOLD_MAIN w-full md:w-auto"
+              type="submit"
+              disabled={formik.isSubmitting}
+            >
+              Atualizar dados
+            </Button>
+          </div>
+        </form>
+      </div>
     </>
   );
 };

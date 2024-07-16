@@ -34,14 +34,14 @@ interface TABLE_ROW_PROPS {
 }
 
 const TABLE_ROW: TABLE_ROW_PROPS[] = [
-  {
+/*   {
     wallet: "T-BOND Brazil",
     value: 2700.0,
     created_at: "22/05/2023",
     currency: "BRL",
     customer: "Marlon Lencina B. S.",
     code: "",
-  },
+  }, */
 ];
 
 export const Withdraw = () => {

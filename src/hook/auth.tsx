@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../client/api";
 import {
+  ClientContact,
   Profile,
   ProfileDetails,
   SignUpProps,
@@ -22,6 +23,7 @@ interface AuthContextProps {
   handleFullfiledAccountInfo: (value: boolean) => void;
   isFullfiledAccountInfo: boolean;
   updateProfileDetails: (profileDetails: ProfileDetails) => void;
+  updateProfileContacts: (contacts: ClientContact[]) => void;
 }
 
 const AuthContext = createContext({} as AuthContextProps);
@@ -213,6 +215,17 @@ export const AuthContextProvider = ({ children }: Props) => {
     });
   };
 
+  const updateProfileContacts = (Contacts: ClientContact[]) => {
+    setProfile((state) => {
+      if (state === null) return null;
+  
+      return {
+        ...state,
+        clientContacts: Contacts
+      };
+    });
+  }
+
   useEffect(() => {
     loadFromLocalStorage();
   }, []);
@@ -231,7 +244,8 @@ export const AuthContextProvider = ({ children }: Props) => {
         profile,
         isFullfiledAccountInfo,
         handleFullfiledAccountInfo,
-        updateProfileDetails
+        updateProfileDetails,
+        updateProfileContacts
       }}
     >
       {children}
