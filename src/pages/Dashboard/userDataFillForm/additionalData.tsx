@@ -69,22 +69,23 @@ export const AdditionalData = ({ handleConfirmationClick }: FormStepType) => {
               <Option>Não</Option>
             </Select>
           </div>
-          {selectedMaritalStatus == "União Estável" && (
-            <div className="grid md:grid-cols-2 gap-6">
-              <Input label="Nome do cônjuge" />
-            </div>
-          )}
-          {selectedMaritalStatus == "União Estável" && (
-            <div className="grid md:grid-cols-2 gap-6">
-              <Select label="Tipo do documento" className="w-full">
-                <Option value="Inscrição estadual">Inscrição estadual</Option>
-                <Option value="Carteira de habilitação">
-                  Carteira de habilitação
-                </Option>
-                <Option value="Passaporte">Passaporte</Option>
-              </Select>
-              <Input label="Número do documento" className="w-full" />
-            </div>
+          {(selectedMaritalStatus === "União Estável" ||
+            selectedMaritalStatus === "Casado(a)") && (
+            <>
+              <div className="grid md:grid-cols-2 gap-6">
+                <Input label="Nome do cônjuge" />
+              </div>
+              <div className="grid md:grid-cols-2 gap-6">
+                <Select label="Tipo do documento" className="w-full">
+                  <Option value="Inscrição estadual">Inscrição estadual</Option>
+                  <Option value="Carteira de habilitação">
+                    Carteira de habilitação
+                  </Option>
+                  <Option value="Passaporte">Passaporte</Option>
+                </Select>
+                <Input label="Número do documento" className="w-full" />
+              </div>
+            </>
           )}
         </div>
       </div>

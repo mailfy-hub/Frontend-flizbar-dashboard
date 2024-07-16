@@ -455,52 +455,49 @@ export const GenerateData = () => {
                   <Option value={"Não"}>Não</Option>
                 </Select>
               </div>
-              {formik.values.maritalStatus == "Stable Union" ||
-                (formik.values.maritalStatus == "Married" && (
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <Input
-                      id="spouseName"
-                      name="spouseName"
-                      value={formik.values.spouseName}
-                      onChange={formik.handleChange}
-                      label="Nome do cônjuge"
-                    />
-                  </div>
-                ))}
-              {formik.values.maritalStatus == "Stable Union" ||
-                (formik.values.maritalStatus == "Married" && (
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <Select
-                      id="spouseDocumentType"
-                      name="spouseDocumentType"
-                      value={formik.values.spouseDocumentType}
-                      onChange={(selectedValue) => {
-                        formik.setFieldValue(
-                          "spouseDocumentType",
-                          selectedValue
-                        );
-                      }}
-                      label="Tipo do documento"
-                      className="w-full"
-                    >
-                      <Option value="Inscrição estadual">
-                        Inscrição estadual
-                      </Option>
-                      <Option value="Carteira de habilitação">
-                        Carteira de habilitação
-                      </Option>
-                      <Option value="Passaporte">Passaporte</Option>
-                    </Select>
-                    <Input
-                      id="spousedocument"
-                      name="spousedocument"
-                      value={formik.values.spousedocument}
-                      onChange={formik.handleChange}
-                      label="Número do documento"
-                      className="w-full"
-                    />
-                  </div>
-                ))}
+              {(formik.values.maritalStatus == "União estável" ||
+                formik.values.maritalStatus == "Casado(a)") && (
+                <div className="grid md:grid-cols-2 gap-6">
+                  <Input
+                    id="spouseName"
+                    name="spouseName"
+                    value={formik.values.spouseName}
+                    onChange={formik.handleChange}
+                    label="Nome do cônjuge"
+                  />
+                </div>
+              )}
+              {(formik.values.maritalStatus == "União estável" ||
+                formik.values.maritalStatus == "Casado(a)") && (
+                <div className="grid md:grid-cols-2 gap-6">
+                  <Select
+                    id="spouseDocumentType"
+                    name="spouseDocumentType"
+                    value={formik.values.spouseDocumentType}
+                    onChange={(selectedValue) => {
+                      formik.setFieldValue("spouseDocumentType", selectedValue);
+                    }}
+                    label="Tipo do documento"
+                    className="w-full"
+                  >
+                    <Option value="Inscrição estadual">
+                      Inscrição estadual
+                    </Option>
+                    <Option value="Carteira de habilitação">
+                      Carteira de habilitação
+                    </Option>
+                    <Option value="Passaporte">Passaporte</Option>
+                  </Select>
+                  <Input
+                    id="spousedocument"
+                    name="spousedocument"
+                    value={formik.values.spousedocument}
+                    onChange={formik.handleChange}
+                    label="Número do documento"
+                    className="w-full"
+                  />
+                </div>
+              )}
             </div>
           </div>
           <div className="w-full flex justify-start mt-8">
