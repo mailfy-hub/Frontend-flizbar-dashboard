@@ -6,10 +6,10 @@ import * as Yup from "yup";
 import { InferType } from "yup";
 import { api } from "../../../../client/api";
 import { SectionTitle } from "../../../../components/sectionTitle";
-import { useAuth } from "../../../../hook/auth";
+// import { useAuth } from "../../../../hook/auth";
 
 export const GenerateData = ({ dataUser }: any) => {
-  const { userData } = useAuth();
+  // const { userData } = useAuth();
   const profile = dataUser;
 
   const validationSchema = Yup.object().shape({
@@ -133,7 +133,7 @@ export const GenerateData = ({ dataUser }: any) => {
 
   const handlePutUserInformation = async (data: FormValues) => {
     try {
-      if (!userData) return;
+      if (!profile) return;
       const formattedDate = data?.birthDate && new Date(data.birthDate);
 
       const mappedDataToServer = {
