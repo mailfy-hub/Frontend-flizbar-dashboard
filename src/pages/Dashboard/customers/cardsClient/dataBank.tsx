@@ -48,7 +48,6 @@ export const BankData = ({ userData }: any) => {
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
       handlePutFinanceInformation(values);
     },
   });

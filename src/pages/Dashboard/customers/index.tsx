@@ -46,9 +46,6 @@ export const Customers = () => {
   const getUserslist = async () => {
     try {
       const { data } = await api.get("admin/users/clients");
-
-      console.log(data, "data");
-
       const mappedData = data.reverse().map((user: User) => {
         return {
           ...user,

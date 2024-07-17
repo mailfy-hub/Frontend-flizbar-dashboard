@@ -269,7 +269,6 @@ export const GenerateData = () => {
                   name="personType"
                   value={formik.values.personType}
                   onChange={(selectedOption) => {
-                    console.log(selectedOption);
                     formik.setFieldValue("personType", selectedOption);
                   }}
                   label="Tipo de pessoa"
@@ -339,6 +338,7 @@ export const GenerateData = () => {
                     Carteira de habilitação
                   </Option>
                   <Option value="Passaporte">Passaporte</Option>
+                  <Option value="CPF">CPF</Option>
                 </Select>
                 <Input
                   name="document"

@@ -184,7 +184,6 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
               name="personType"
               value={formik.values.personType}
               onChange={(selectedOption) => {
-                console.log(selectedOption);
                 formik.setFieldValue("personType", selectedOption);
               }}
               label="Tipo de pessoa"

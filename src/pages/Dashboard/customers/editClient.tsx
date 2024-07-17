@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getProfileById } from "../../../client/profiles";
-import { Contact } from "../../Dashboard/myAccount/infoClient/contact";
+import { Contact } from "./cardsClient/contact";
 import { AddressData } from "./cardsClient/address";
-import { AuthData } from "./cardsClient/authData";
 import { Beneficiary } from "./cardsClient/beneficiary";
 import { BankData } from "./cardsClient/dataBank";
 import { GenerateData } from "./cardsClient/generateData";
@@ -51,18 +50,6 @@ export const EditClient = () => {
           </button>
           <button
             onClick={() => {
-              setActiveTab("auth-data");
-            }}
-            className={`py-4 border-b-[1px] font-display text-button16 ${
-              activeTab == "auth-data"
-                ? "border-GOLD_MAIN font-semibold text-BLACK "
-                : "border-transparent font-medium text-GRAY_400"
-            }`}
-          >
-            Dados de acesso
-          </button>
-          <button
-            onClick={() => {
               setActiveTab("bank-data");
             }}
             className={`py-4 border-b-[1px] font-display text-button16 ${
@@ -100,9 +87,9 @@ export const EditClient = () => {
         </div>
         <div className="">
           {activeTab == "generate-data" && <GenerateData dataUser={dataUser} />}
-          {activeTab == "auth-data" && <AuthData userData={dataUser} />}
+          {/* {activeTab == "auth-data" && <AuthData userData={dataUser} />} */}
           {activeTab == "bank-data" && <BankData userData={dataUser} />}
-          {activeTab == "contact" && <Contact />}
+          {activeTab == "contact" && <Contact userData={dataUser} />}
           {activeTab == "baneficiary" && <Beneficiary userData={dataUser} />}
           {activeTab == "address" && <AddressData userData={dataUser} />}
         </div>
