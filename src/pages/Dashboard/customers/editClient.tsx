@@ -39,6 +39,18 @@ export const EditClient = () => {
           </button>
           <button
             onClick={() => {
+              setActiveTab("address");
+            }}
+            className={`py-4 border-b-[1px] font-display text-button16 ${
+              activeTab == "address"
+                ? "border-GOLD_MAIN font-semibold text-BLACK "
+                : "border-transparent font-medium text-GRAY_400"
+            }`}
+          >
+            Endereço
+          </button>
+          <button
+            onClick={() => {
               setActiveTab("auth-data");
             }}
             className={`py-4 border-b-[1px] font-display text-button16 ${
@@ -84,18 +96,6 @@ export const EditClient = () => {
             }`}
           >
             Beneficiário
-          </button>
-          <button
-            onClick={() => {
-              setActiveTab("address");
-            }}
-            className={`py-4 border-b-[1px] font-display text-button16 ${
-              activeTab == "address"
-                ? "border-GOLD_MAIN font-semibold text-BLACK "
-                : "border-transparent font-medium text-GRAY_400"
-            }`}
-          >
-            Endereço
           </button>
         </div>
         <div className="">
