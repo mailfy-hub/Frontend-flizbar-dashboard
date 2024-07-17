@@ -305,7 +305,9 @@ export const GenerateData = () => {
                     value={formik.values.birthDate
                       ?.toISOString()
                       .substring(0, 10)}
-                    onChange={formik.handleChange}
+                    onChange={(selectedValue) => {
+                      formik.setFieldValue("birthDate", new Date(selectedValue.target.value));
+                    }}
                     type="date"
                     label="Date de nascimento"
                   />
