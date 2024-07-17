@@ -134,7 +134,7 @@ export const Routes = () => {
         <Route path="recovery" element={<RecoveryAccount />} />
       </Route>
 
-      <Route path="/reset-password/:id" element={<ResetPassword />} />
+      <Route path="/reset-password/:token/:id" element={<ResetPassword />} />
       <Route path="*" element={<NotFound />} />
     </RoutesRRD>
   );

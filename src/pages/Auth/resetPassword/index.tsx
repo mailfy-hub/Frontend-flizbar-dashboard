@@ -2,10 +2,16 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, Input, Typography } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
+import { api } from "../../../client/api";
 import { HeaderMobile } from "../../../components/headerMobile";
 import { SideImageAuthorization } from "../../../components/sideImageAuthorization";
 export function ResetPassword() {
+  const params = useParams();
+  const navigate = useNavigate();
+  console.log(JSON.stringify(params));
   const [inputPassType, setInputPassType] = useState("password");
 
   const formik = useFormik({
@@ -22,7 +28,7 @@ export function ResetPassword() {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      handleChangeAccountPassword(values.newPassword);
     },
   });
 
@@ -31,6 +37,29 @@ export function ResetPassword() {
       setInputPassType("text");
     } else {
       setInputPassType("password");
+    }
+  };
+
+  const handleChangeAccountPassword = async (password: string) => {
+    try {
+      formik.setSubmitting(true);
+      await api.post("/auth/reset-password", {
+        token: params.token,
+        password,
+      });
+      toast("Alterado com sucesso", {
+        type: "success",
+        autoClose: 3000,
+      });
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+      toast("Erro ao atualizar.", {
+        type: "error",
+        autoClose: 3000,
+      });
+    } finally {
+      formik.setSubmitting(false);
     }
   };
 
@@ -125,7 +154,11 @@ export function ResetPassword() {
 
             <div className="mt-6 flex flex-col items-center">
               <Button
-                disabled={formik.isSubmitting}
+                disabled={
+                  formik.isSubmitting ||
+                  !formik.values.confirmationPassword ||
+                  !formik.values.newPassword
+                }
                 fullWidth
                 className="mt-2 bg-GOLD_MAIN disabled:opacity-65"
                 type="submit"
