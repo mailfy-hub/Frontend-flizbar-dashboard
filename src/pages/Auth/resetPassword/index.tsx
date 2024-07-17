@@ -53,7 +53,6 @@ export function ResetPassword() {
       });
       navigate("/login");
     } catch (error) {
-      console.log(error);
       toast("Erro ao atualizar.", {
         type: "error",
         autoClose: 3000,
