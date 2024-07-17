@@ -13,11 +13,11 @@ export const BankData = () => {
     accountType: Yup.string().required("Tipo da conta é obrigatório"),
     bankName: Yup.string().required("Nome do banco é obrigatório"),
     accountNumber: Yup.string().required("Número da conta é obrigatório"),
-    accountDigit: Yup.string().required("Dígito da conta é obrigatório"),
+    accountDigit: Yup.string(),
     agencyNumber: Yup.string().required("Número da agência é obrigatório"),
-    agencyDigit: Yup.string().required("Dígito da agência é obrigatório"),
-    pixKeyType: Yup.string().required("Tipo da chave PIX é obrigatório"),
-    pixKey: Yup.string().required("Chave PIX é obrigatória"),
+    agencyDigit: Yup.string(),
+    pixKeyType: Yup.string(),
+    pixKey: Yup.string(),
   });
 
   const formik = useFormik({

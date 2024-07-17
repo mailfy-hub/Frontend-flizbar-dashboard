@@ -247,18 +247,18 @@ export const Contact = () => {
             Novo contato
           </Button> */}
           </div>
-        </div>
-        <div className="w-full flex gap-4 justify-end mt-8">
-          <Button
-            type="button"
-            onClick={handleOpenAddContact}
-            className="bg-gray-300 w-full md:w-auto text-gray-700"
-          >
-            Adicionar contato
-          </Button>
-          <Button type="submit" className="bg-GOLD_MAIN w-full md:w-auto">
-            Atualizar dados
-          </Button>
+          <div className="w-full flex flex-col md:flex-row gap-4 justify-between mt-8">
+            <Button type="submit" className="bg-GOLD_MAIN w-full md:w-auto">
+              Atualizar dados
+            </Button>
+            <Button
+              type="button"
+              onClick={handleOpenAddContact}
+              className="bg-gray-300 w-full md:w-auto text-gray-700"
+            >
+              Adicionar contato
+            </Button>
+          </div>
         </div>
       </form>
     </>

@@ -89,10 +89,10 @@ const ChartRendimentosPercentualData: Props = {
 };
 
 const data = [
-  { name: "Real (R$) ", value: 172.98 },
-  { name: "Dólar ($) ", value: 81.63 },
-  { name: "Euro (€)", value: 44.24 },
-  { name: "Iene (¥) ", value: 80.2 },
+  { name: "Real (R$) ", value: 1 },
+  { name: "Dólar ($) ", value: 1 },
+  { name: "Euro (€)", value: 1 },
+  { name: "Iene (¥) ", value: 1 },
 ];
 
 const COLORS = ["#A06A08", "#C89305", "#CBAD77", "#ECBF6E"];

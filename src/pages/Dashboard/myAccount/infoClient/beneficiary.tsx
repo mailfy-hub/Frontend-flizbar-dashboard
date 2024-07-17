@@ -490,11 +490,11 @@ export const Beneficiary = () => {
             </div>
           )}
         </div>
-      </div>
-      <div className="w-full flex justify-end mt-8">
-        <Button className="bg-GOLD_MAIN w-full md:w-auto" type="submit">
-          Próxima etapa
-        </Button>
+        <div className="w-full flex justify-start mt-8">
+          <Button className="bg-GOLD_MAIN w-full md:w-auto" type="submit">
+            Atualizar dados
+          </Button>
+        </div>
       </div>
     </form>
   );
