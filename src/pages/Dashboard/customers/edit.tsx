@@ -9,7 +9,7 @@ import { getProfileById } from "../../../client/profiles";
 
 export const CustomerEdit = () => {
   const navigate = useNavigate();
-  const [dataUser, setDataUser] = useState({});
+  const [dataUser, setDataUser] = useState<any>({});
 
   const location = useLocation();
   const { id } = location.state;
@@ -81,7 +81,9 @@ export const CustomerEdit = () => {
           Anexos
         </button>
       </div>
-      <div className="mt-8">{activeScreen === "client" && <EditClient />}</div>
+      <div className="mt-8">
+        {activeScreen === "client" && <EditClient data={dataUser} />}
+      </div>
       <div className="mt-8">
         {activeScreen === "wallets" && <EditWallets />}
       </div>
