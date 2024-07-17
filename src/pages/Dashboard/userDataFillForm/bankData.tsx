@@ -33,7 +33,6 @@ export const BankData = ({ handleConfirmationClick }: FormStepType) => {
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
       handlePostFinanceInformation(values);
       // handleConfirmationClick();
     },

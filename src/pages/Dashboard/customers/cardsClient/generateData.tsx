@@ -6,22 +6,16 @@ import * as Yup from "yup";
 import { InferType } from "yup";
 import { api } from "../../../../client/api";
 import { SectionTitle } from "../../../../components/sectionTitle";
-// import { useAuth } from "../../../../hook/auth";
 
 export const GenerateData = ({ dataUser }: any) => {
-  // const { userData } = useAuth();
+  const userData = dataUser;
+
   const profile = dataUser;
 
   const validationSchema = Yup.object().shape({
     personType: Yup.string()
       .oneOf(["pf", "pj"])
       .required("Tipo de pessoa é obrigatório"),
-    /* name: Yup.string().when("personType", {
-      is: "pf",
-      then(schema) {
-        return schema.required("name is required");
-      },
-    }), */
     birthDate: Yup.date().when("personType", {
       is: "pf",
       then(schema) {
@@ -126,7 +120,6 @@ export const GenerateData = ({ dataUser }: any) => {
     initialValues,
     validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
       handlePutUserInformation(values);
     },
   });
@@ -181,9 +174,80 @@ export const GenerateData = ({ dataUser }: any) => {
     }
   };
 
+  const validationSchemaAccessData = Yup.object().shape({
+    email: Yup.string()
+      .email("Insira um e-mail válido")
+      .required("email é obrigatório"),
+  });
+
+  const formikAccessData = useFormik({
+    initialValues: {
+      email: userData?.user?.email ? userData?.user?.email : "",
+    },
+    validationSchema: validationSchemaAccessData,
+    onSubmit: (values) => {
+      handlePutAccessInformation(values);
+    },
+  });
+  type FormValuesAccessData = Yup.InferType<typeof validationSchemaAccessData>;
+
+  const handlePutAccessInformation = async (values: FormValuesAccessData) => {
+    try {
+      formikAccessData.setSubmitting(true);
+      await api.put(`/users/${userData?.id}`, {
+        email: values.email,
+      });
+      toast("Alterado com sucesso", {
+        type: "success",
+        autoClose: 3000,
+      });
+    } catch (error) {
+      console.log(error);
+      toast("Erro ao atualizar.", {
+        type: "error",
+        autoClose: 3000,
+      });
+    } finally {
+      formikAccessData.setSubmitting(false);
+    }
+  };
+
   return (
-    profile && (
-      <>
+    <>
+      <div>
+        <form
+          onSubmit={formikAccessData.handleSubmit}
+          className="bg-WHITE p-8 w-full rounded-md"
+        >
+          <div className="flex items-center gap-4">
+            <Icon height={16} icon={"heroicons:user"} color="black" />
+            <SectionTitle size="sm" text="Dados de acesso" />
+          </div>
+          <div className="mt-8 flex flex-col gap-6 ">
+            <div className="grid md:grid-cols-2 gap-6">
+              <Input
+                value={formikAccessData.values.email}
+                type="email"
+                id="email"
+                name="email"
+                label="E-mail de acesso"
+                onChange={formikAccessData.handleChange}
+              />
+            </div>
+            <div className="w-full">
+              <Button
+                type="submit"
+                disabled={
+                  formikAccessData.isSubmitting ||
+                  !formikAccessData.values.email
+                }
+                className="bg-GOLD_MAIN w-full md:w-auto disabled:opacity-75"
+              >
+                Atualizar dados
+              </Button>
+            </div>
+          </div>
+        </form>
         <form
           onSubmit={formik.handleSubmit}
           className="bg-WHITE p-8 w-full rounded-md "
@@ -200,20 +264,18 @@ export const GenerateData = ({ dataUser }: any) => {
                   name="personType"
                   value={formik.values.personType}
                   onChange={(selectedOption) => {
-                    console.log(selectedOption);
                     formik.setFieldValue("personType", selectedOption);
                   }}
                   label="Tipo de pessoa"
                 >
                   <Option value="pf">Física</Option>
                   <Option value="pj">Jurídica</Option>
-                  {/*  <Option value="pj">Jurídica</Option> */}
                 </Select>
                 {formik.values.personType == "pf" ? (
                   <Input
                     name="name"
                     id="name"
-                    value={`${profile?.user?.name} ${profile?.user?.surname}`}
+                    value={`${userData?.user?.name} ${userData?.user?.surname}`}
                     type="text"
                     label="Nome"
                     disabled
@@ -270,6 +332,7 @@ export const GenerateData = ({ dataUser }: any) => {
                     Carteira de habilitação
                   </Option>
                   <Option value="Passaporte">Passaporte</Option>
+                  <Option value="CPF">CPF</Option>
                 </Select>
                 <Input
                   name="document"
@@ -386,52 +449,49 @@ export const GenerateData = ({ dataUser }: any) => {
                   <Option value={"Não"}>Não</Option>
                 </Select>
               </div>
-              {formik.values.maritalStatus == "Stable Union" ||
-                (formik.values.maritalStatus == "Married" && (
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <Input
-                      id="spouseName"
-                      name="spouseName"
-                      value={formik.values.spouseName}
-                      onChange={formik.handleChange}
-                      label="Nome do cônjuge"
-                    />
-                  </div>
-                ))}
-              {formik.values.maritalStatus == "Stable Union" ||
-                (formik.values.maritalStatus == "Married" && (
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <Select
-                      id="spouseDocumentType"
-                      name="spouseDocumentType"
-                      value={formik.values.spouseDocumentType}
-                      onChange={(selectedValue) => {
-                        formik.setFieldValue(
-                          "spouseDocumentType",
-                          selectedValue
-                        );
-                      }}
-                      label="Tipo do documento"
-                      className="w-full"
-                    >
-                      <Option value="Inscrição estadual">
-                        Inscrição estadual
-                      </Option>
-                      <Option value="Carteira de habilitação">
-                        Carteira de habilitação
-                      </Option>
-                      <Option value="Passaporte">Passaporte</Option>
-                    </Select>
-                    <Input
-                      id="spousedocument"
-                      name="spousedocument"
-                      value={formik.values.spousedocument}
-                      onChange={formik.handleChange}
-                      label="Número do documento"
-                      className="w-full"
-                    />
-                  </div>
-                ))}
+              {(formik.values.maritalStatus == "União estável" ||
+                formik.values.maritalStatus == "Casado(a)") && (
+                <div className="grid md:grid-cols-2 gap-6">
+                  <Input
+                    id="spouseName"
+                    name="spouseName"
+                    value={formik.values.spouseName}
+                    onChange={formik.handleChange}
+                    label="Nome do cônjuge"
+                  />
+                </div>
+              )}
+              {(formik.values.maritalStatus == "União estável" ||
+                formik.values.maritalStatus == "Casado(a)") && (
+                <div className="grid md:grid-cols-2 gap-6">
+                  <Select
+                    id="spouseDocumentType"
+                    name="spouseDocumentType"
+                    value={formik.values.spouseDocumentType}
+                    onChange={(selectedValue) => {
+                      formik.setFieldValue("spouseDocumentType", selectedValue);
+                    }}
+                    label="Tipo do documento"
+                    className="w-full"
+                  >
+                    <Option value="Inscrição estadual">
+                      Inscrição estadual
+                    </Option>
+                    <Option value="Carteira de habilitação">
+                      Carteira de habilitação
+                    </Option>
+                    <Option value="Passaporte">Passaporte</Option>
+                  </Select>
+                  <Input
+                    id="spousedocument"
+                    name="spousedocument"
+                    value={formik.values.spousedocument}
+                    onChange={formik.handleChange}
+                    label="Número do documento"
+                    className="w-full"
+                  />
+                </div>
+              )}
             </div>
           </div>
           <div className="w-full flex justify-start mt-8">
@@ -444,7 +504,7 @@ export const GenerateData = ({ dataUser }: any) => {
             </Button>
           </div>
         </form>
-      </>
-    )
+      </div>
+    </>
   );
 };

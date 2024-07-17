@@ -56,7 +56,6 @@ export const Contact = () => {
     initialValues,
     validationSchema: ContactSchema,
     onSubmit: (values) => {
-      console.log(values);
       handlePutContactsInformation(values);
     },
   });

@@ -28,7 +28,6 @@ export const UserDataProfile = () => {
   const navigate = useNavigate();
 
   const handleStepOnClick = (position: number) => {
-    console.log("vai para o proximo passo");
     setActiveFormStepPosition(position);
   };
 
@@ -38,7 +37,7 @@ export const UserDataProfile = () => {
   };
 
   const verifyAccountData = (profile: Profile) => {
-    console.log("profile data: " + profile);
+    // console.log("profile data: " + profile);
 
     const isClientDetailsFilled = profile?.clientDetails == null ? false : true;
     const isClientAddressesFilled =
@@ -51,10 +50,10 @@ export const UserDataProfile = () => {
     const isClientAttachmentsFilled =
       profile?.attachments.length > 0 ? true : false;
 
-    console.log("isClientDetailsFilled " + isClientDetailsFilled);
-    console.log("isClientFinanceFilled " + isClientFinanceFilled);
-    console.log("isClientContactsFilled " + isClientContactsFilled);
-    console.log("isClientAddressesFilled " + isClientAddressesFilled);
+    // console.log("isClientDetailsFilled " + isClientDetailsFilled);
+    // console.log("isClientFinanceFilled " + isClientFinanceFilled);
+    // console.log("isClientContactsFilled " + isClientContactsFilled);
+    // console.log("isClientAddressesFilled " + isClientAddressesFilled);
 
     const currentStep = !isClientDetailsFilled
       ? 1
@@ -74,8 +73,6 @@ export const UserDataProfile = () => {
   };
 
   useEffect(() => {
-    console.log("oi 🫡");
-
     if (!isLoadingData) {
       verifyAccountData(profile!);
     }

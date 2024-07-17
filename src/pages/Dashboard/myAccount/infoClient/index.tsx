@@ -48,8 +48,6 @@ export const InfoClient = () => {
     });
   };
 
-  console.log("userData", userData);
-
   return (
     <div>
       {userData?.isAdmin ? (
@@ -164,7 +162,6 @@ export const InfoClient = () => {
             >
               Beneficiários
             </button>
-          
           </div>
           <div className="">
             {activeTab == "generate-data" && <GenerateData />}

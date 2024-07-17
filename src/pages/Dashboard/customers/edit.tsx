@@ -1,19 +1,29 @@
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { EditClient } from "./editClient";
 import { EditFiles } from "./editFiles";
 import { EditWallets } from "./editWallets";
+import { getProfileById } from "../../../client/profiles";
 
 export const CustomerEdit = () => {
   const navigate = useNavigate();
+  const [dataUser, setDataUser] = useState<any>({});
+
+  const location = useLocation();
+  const { id } = location.state;
+
+  useEffect(() => {
+    getProfileById(id).then((data) => {
+      setDataUser(data);
+    });
+  }, []);
 
   const handleNavigateBack = () => {
     navigate(-1);
   };
 
-  
   const [activeScreen, setActiveScreen] = useState<
     "client" | "wallets" | "files"
   >("client");
@@ -71,11 +81,15 @@ export const CustomerEdit = () => {
           Anexos
         </button>
       </div>
-      <div className="mt-8">{activeScreen === "client" && <EditClient />}</div>
+      <div className="mt-8">
+        {activeScreen === "client" && <EditClient data={dataUser} />}
+      </div>
       <div className="mt-8">
         {activeScreen === "wallets" && <EditWallets />}
       </div>
-      <div className="mt-8">{activeScreen === "files" && <EditFiles />}</div>
+      <div className="mt-8">
+        {activeScreen === "files" && <EditFiles dataUser={dataUser} />}
+      </div>
     </div>
   );
 };
