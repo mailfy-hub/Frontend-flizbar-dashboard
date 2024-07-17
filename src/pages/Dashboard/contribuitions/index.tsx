@@ -38,7 +38,7 @@ interface TABLE_ROW_PROPS {
 }
 
 const TABLE_ROW: TABLE_ROW_PROPS[] = [
-  {
+  /* {
     code: "#TBR52536267",
     customer: "Emma Roberts",
     wallet: "T-BOND Brazil",
@@ -61,7 +61,7 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
     value: 50.0,
     created_at: "23/05/2024",
     currency: "EUR",
-  },
+  }, */
 ];
 
 export const Contribuitions = () => {

@@ -8,7 +8,6 @@ import { SectionTitle } from "../../../../components/sectionTitle";
 import { useAuth } from "../../../../hook/auth";
 import { CountryType, countries } from "../../../../utils/number-config";
 import { AddressData } from "./address";
-import { AuthData } from "./authData";
 import { BankData } from "./bankData";
 import { Beneficiary } from "./beneficiary";
 import { Contact } from "./contact";
@@ -119,15 +118,15 @@ export const InfoClient = () => {
             </button>
             <button
               onClick={() => {
-                setActiveTab("auth-data");
+                setActiveTab("address");
               }}
               className={`py-4 border-b-[1px] font-display text-button16 ${
-                activeTab == "auth-data"
+                activeTab == "address"
                   ? "border-GOLD_MAIN font-semibold text-BLACK "
                   : "border-transparent font-medium text-GRAY_400"
               }`}
             >
-              Dados de acesso
+              Endereço
             </button>
             <button
               onClick={() => {
@@ -163,28 +162,16 @@ export const InfoClient = () => {
                   : "border-transparent font-medium text-GRAY_400"
               }`}
             >
-              Beneficiário
+              Beneficiários
             </button>
-            <button
-              onClick={() => {
-                setActiveTab("address");
-              }}
-              className={`py-4 border-b-[1px] font-display text-button16 ${
-                activeTab == "address"
-                  ? "border-GOLD_MAIN font-semibold text-BLACK "
-                  : "border-transparent font-medium text-GRAY_400"
-              }`}
-            >
-              Endereço
-            </button>
+          
           </div>
           <div className="">
             {activeTab == "generate-data" && <GenerateData />}
-            {activeTab == "auth-data" && <AuthData />}
+            {activeTab == "address" && <AddressData />}
             {activeTab == "bank-data" && <BankData />}
             {activeTab == "contact" && <Contact />}
             {activeTab == "baneficiary" && <Beneficiary />}
-            {activeTab == "address" && <AddressData />}
           </div>
         </div>
       )}

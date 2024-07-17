@@ -2,16 +2,20 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { Typography } from "@material-tailwind/react";
 import { SectionTitle } from "../../../components/sectionTitle";
 
+interface TABLE_ROW_TYPE {
+  code: string;
+  wallet: string;
+}
 const TABLE_HEAD = ["Código", "Nome"];
-const TABLE_ROW = [
-  {
+const TABLE_ROW: TABLE_ROW_TYPE[] = [
+  /*   {
     code: "#TBR52536267",
     wallet: "Convencional",
   },
   {
     code: "#TUS26737352",
     wallet: "Fundo de emergência",
-  },
+  }, */
 ];
 
 export const InfoWallets = () => {

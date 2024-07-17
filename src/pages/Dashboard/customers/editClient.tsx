@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { AddressData } from "./cardsClient/address";
-import { AuthData } from "./cardsClient/authData";
-import { BankData } from "./cardsClient/dataBank";
-import { Beneficiary } from "./cardsClient/beneficiary";
-import { Contact } from "../../Dashboard/myAccount/infoClient/contact";
-import { GenerateData } from "./cardsClient/generateData";
 import { useLocation } from "react-router-dom";
 import { getProfileById } from "../../../client/profiles";
+import { Contact } from "../../Dashboard/myAccount/infoClient/contact";
+import { AddressData } from "./cardsClient/address";
+import { AuthData } from "./cardsClient/authData";
+import { Beneficiary } from "./cardsClient/beneficiary";
+import { BankData } from "./cardsClient/dataBank";
+import { GenerateData } from "./cardsClient/generateData";
 
 export const EditClient = () => {
   const [activeTab, setActiveTab] = useState("generate-data");
@@ -102,7 +102,7 @@ export const EditClient = () => {
           {activeTab == "generate-data" && <GenerateData dataUser={dataUser} />}
           {activeTab == "auth-data" && <AuthData userData={dataUser} />}
           {activeTab == "bank-data" && <BankData userData={dataUser} />}
-          {activeTab == "contact" && <Contact userData={dataUser} />}
+          {activeTab == "contact" && <Contact />}
           {activeTab == "baneficiary" && <Beneficiary userData={dataUser} />}
           {activeTab == "address" && <AddressData userData={dataUser} />}
         </div>

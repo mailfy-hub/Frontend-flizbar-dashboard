@@ -21,7 +21,8 @@ const ChartRendimentosData: Props = {
   series: [
     {
       name: "Rendimentos",
-      data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
+      /* data: [50, 40, 300, 320, 500, 350, 200, 230, 500], */
+      data: [0],
     },
   ],
   options: {
@@ -56,7 +57,8 @@ const ChartRendimentosPercentualData: Props = {
   series: [
     {
       name: "Rendimentos",
-      data: [3.0, 2.0, 6.5, 8.4, 4.1, 6.0, 2.0, 1.2, 4.5],
+      /* data: [3.0, 2.0, 6.5, 8.4, 4.1, 6.0, 2.0, 1.2, 4.5], */
+      data: [0],
     },
   ],
   options: {

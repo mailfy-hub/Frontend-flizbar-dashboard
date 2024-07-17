@@ -29,7 +29,7 @@ interface TableRowProps {
 }
 
 const TABLE_ROW: TableRowProps[] = [
-  {
+/*   {
     code: "#TBR52536267",
     type: "Resgate",
     value: 120.0,
@@ -37,7 +37,7 @@ const TABLE_ROW: TableRowProps[] = [
     currency: "USD",
     customer: "Marlon Lencina S. B.",
     fund: "T-Bond Brazil",
-  },
+  }, */
 ];
 
 export const Movements = () => {
