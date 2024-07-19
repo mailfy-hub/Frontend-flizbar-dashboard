@@ -42,24 +42,28 @@ export const Customers = () => {
   const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
   const [userIdSelected, setUserIdSelected] = useState("");
-  const [usersList, setUsersList] = useState<User[]>();
-  const getUserslist = async () => {
+  const [usersList, setUsersList] = useState<User[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [_totalItems, setTotalItems] = useState(0);
+  const itemsPerPage = 10;
+
+  const getUsersList = async (page: number) => {
     try {
-      const { data } = await api.get("admin/users/clients");
-      const mappedData = data.reverse().map((user: User) => {
-        return {
-          ...user,
-          // createdAt: formatDate(user.createdAt),
-        };
-      });
-      setUsersList(mappedData);
+      const { data } = await api.get(
+        `admin/users/clients?page=${page}&itemsPerPage=${itemsPerPage}`
+      );
+      setUsersList(data.items);
+      setTotalPages(data.pagination.totalPages);
+      setTotalItems(data.pagination.totalItems);
     } catch (error) {
-      /* empty */
+      console.error(error);
     }
   };
+
   useEffect(() => {
-    getUserslist();
-  }, []);
+    getUsersList(currentPage);
+  }, [currentPage]);
 
   const handleOpenSuccessDelete = () => {
     handleToggleConfirmationDialog();
@@ -93,6 +97,18 @@ export const Customers = () => {
       handleOpenSuccessDelete();
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
     }
   };
 
@@ -205,12 +221,6 @@ export const Customers = () => {
                             >
                               {`${name} ${surname}`}
                             </Typography>
-                            {/*                             <Typography
-                              variant="small"
-                              className="!font-normal text-gray-600"
-                            >
-                              {detail}
-                            </Typography> */}
                           </div>
                         </div>
                       </td>
@@ -225,7 +235,6 @@ export const Customers = () => {
                           </Typography>
                         </div>
                       </td>
-
                       <td className={classes}>
                         <Typography
                           variant="small"
@@ -273,14 +282,24 @@ export const Customers = () => {
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-            Página 1 <span className="font-normal text-BLACK">of 10</span>
+            Página {currentPage} de {totalPages}
           </Typography>
           <div className="flex gap-4">
-            <Button variant="text" className="flex items-center gap-1">
+            <Button
+              variant="text"
+              className="flex items-center gap-1"
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+            >
               <ChevronLeftIcon strokeWidth={3} className="h-3 w-3" />
               Anterior
             </Button>
-            <Button variant="text" className="flex items-center gap-1">
+            <Button
+              variant="text"
+              className="flex items-center gap-1"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
               Próximo
               <ChevronRightIcon strokeWidth={3} className="h-3 w-3" />
             </Button>
