@@ -379,7 +379,7 @@ export const routesMapped: routeMapped[] = [
   createRouteMapped({
     path: "/users-history",
     element: <History />,
-    name: "Atividades recente",
+    name: "Atividades Recente",
     icon: "mdi:history",
     isAdmin: true,
     subRoutes: [],
