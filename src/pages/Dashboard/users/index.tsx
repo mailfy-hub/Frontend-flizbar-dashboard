@@ -58,25 +58,34 @@ export const Users = () => {
     setOpenConfimationDialog(!openConfimationDialog);
   };
 
-  const [usersList, setUsersList] = useState<User[]>();
-  const getUserslist = async () => {
-    try {
-      const { data } = await api.get("admin/users/admins");
+  const [usersList, setUsersList] = useState<User[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [_totalItems, setTotalItems] = useState(0);
+  const itemsPerPage = 10;
 
-      const mappedData = data.reverse().map((user: User) => {
+  const getUsersList = async (page: number) => {
+    try {
+      const { data } = await api.get(
+        `admin/users/admins?page=${page}&itemsPerPage=${itemsPerPage}`
+      );
+      const mappedData = data.items.map((user: User) => {
         return {
           ...user,
           createdAt: formatDate(user.createdAt),
         };
       });
       setUsersList(mappedData);
+      setTotalPages(data.pagination.totalPages);
+      setTotalItems(data.pagination.totalItems);
     } catch (error) {
-      /* empty */
+      console.error(error);
     }
   };
+
   useEffect(() => {
-    getUserslist();
-  }, []);
+    getUsersList(currentPage);
+  }, [currentPage]);
 
   const [userIdSelected, setUserIdSelected] = useState("");
   const handleUserIdSelected = (id: string) => {
@@ -90,7 +99,7 @@ export const Users = () => {
 
   const handleCancelDeleteUser = () => {
     handleToggleConfirmationDialog();
-    handleUserIdSelected("");
+    setUserIdSelected("");
   };
 
   const DeleteUserAction = async () => {
@@ -103,6 +112,18 @@ export const Users = () => {
       handleOpenSuccessDelete();
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
     }
   };
 
@@ -213,12 +234,6 @@ export const Users = () => {
                             >
                               {`${name} ${surname}`}
                             </Typography>
-                            {/*                             <Typography
-                              variant="small"
-                              className="!font-normal text-gray-600"
-                            >
-                              {detail}
-                            </Typography> */}
                           </div>
                         </div>
                       </td>
@@ -268,14 +283,24 @@ export const Users = () => {
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-            Página 1 <span className="font-normal text-BLACK">of 10</span>
+            Página {currentPage} de {totalPages}
           </Typography>
           <div className="flex gap-4">
-            <Button variant="text" className="flex items-center gap-1">
+            <Button
+              variant="text"
+              className="flex items-center gap-1"
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+            >
               <ChevronLeftIcon strokeWidth={3} className="h-3 w-3" />
               Anterior
             </Button>
-            <Button variant="text" className="flex items-center gap-1">
+            <Button
+              variant="text"
+              className="flex items-center gap-1"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
               Próximo
               <ChevronRightIcon strokeWidth={3} className="h-3 w-3" />
             </Button>
