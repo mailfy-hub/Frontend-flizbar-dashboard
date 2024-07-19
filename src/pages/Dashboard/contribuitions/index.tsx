@@ -1,6 +1,4 @@
 import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
   DocumentArrowDownIcon,
   EyeIcon,
   TrashIcon,
@@ -282,17 +280,17 @@ export const Contribuitions = () => {
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-            Página 2 <span className="font-normal text-BLACK">of 10</span>
+            Página 1 <span className="font-normal text-BLACK">de 1</span>
           </Typography>
           <div className="flex gap-4">
-            <Button variant="text" className="flex items-center gap-1">
+            {/* <Button variant="text" className="flex items-center gap-1">
               <ChevronLeftIcon strokeWidth={3} className="h-3 w-3" />
               Anterior
             </Button>
             <Button variant="text" className="flex items-center gap-1">
               Próximo
               <ChevronRightIcon strokeWidth={3} className="h-3 w-3" />
-            </Button>
+            </Button> */}
           </div>
         </CardFooter>
       </Card>
