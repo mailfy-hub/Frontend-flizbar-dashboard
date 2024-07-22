@@ -194,89 +194,91 @@ export const Customers = () => {
             </thead>
             <tbody>
               {usersList &&
-                usersList.map(({ id, email, name, surname, phone, type }) => {
-                  const classes = "!p-6 ";
-                  return (
-                    <tr key={id}>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3">
+                usersList.map(
+                  ({ id, email, name, surname, phone, personType }) => {
+                    const classes = "!p-6 ";
+                    return (
+                      <tr key={id}>
+                        <td className={classes}>
+                          <div className="flex items-center gap-3">
+                            <div>
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="!font-semibold"
+                              >
+                                {id.slice(0, 8)}
+                              </Typography>
+                            </div>
+                          </div>
+                        </td>
+                        <td className={classes}>
+                          <div className="flex items-center gap-3">
+                            <div>
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="!font-semibold"
+                              >
+                                {`${name} ${surname}`}
+                              </Typography>
+                            </div>
+                          </div>
+                        </td>
+                        <td className={classes}>
                           <div>
                             <Typography
                               variant="small"
-                              color="blue-gray"
-                              className="!font-semibold"
+                              color="black"
+                              className="!font-normal"
                             >
-                              {id.slice(0, 8)}
+                              {personType?.toUpperCase()}
                             </Typography>
                           </div>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="!font-semibold"
-                            >
-                              {`${name} ${surname}`}
-                            </Typography>
-                          </div>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div>
+                        </td>
+                        <td className={classes}>
                           <Typography
                             variant="small"
-                            color="black"
-                            className="!font-normal"
+                            className="!font-normal text-gray-600"
                           >
-                            {type}
+                            {phone}
                           </Typography>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          className="!font-normal text-gray-600"
-                        >
-                          {phone}
-                        </Typography>
-                      </td>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          className="!font-normal text-gray-600"
-                        >
-                          {email}
-                        </Typography>
-                      </td>
-                      <td className={`${classes} flex justify-end `}>
-                        <Tooltip content="Cotações">
-                          <IconButton variant="text">
-                            <CircleStackIcon className="w-4 h-4 text-gray-400" />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip content="Editar usuário">
-                          <IconButton
-                            onClick={() => handleEdit(id)}
-                            variant="text"
+                        </td>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            className="!font-normal text-gray-600"
                           >
-                            <PencilIcon className="w-4 h-4 text-gray-400" />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip content="Deletar usuário">
-                          <IconButton
-                            onClick={() => handleDeleteUser(id)}
-                            variant="text"
-                          >
-                            <TrashIcon className="w-4 h-4 text-gray-400" />
-                          </IconButton>
-                        </Tooltip>
-                      </td>
-                    </tr>
-                  );
-                })}
+                            {email}
+                          </Typography>
+                        </td>
+                        <td className={`${classes} flex justify-end `}>
+                          <Tooltip content="Cotações">
+                            <IconButton variant="text">
+                              <CircleStackIcon className="w-4 h-4 text-gray-400" />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip content="Editar usuário">
+                            <IconButton
+                              onClick={() => handleEdit(id)}
+                              variant="text"
+                            >
+                              <PencilIcon className="w-4 h-4 text-gray-400" />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip content="Deletar usuário">
+                            <IconButton
+                              onClick={() => handleDeleteUser(id)}
+                              variant="text"
+                            >
+                              <TrashIcon className="w-4 h-4 text-gray-400" />
+                            </IconButton>
+                          </Tooltip>
+                        </td>
+                      </tr>
+                    );
+                  }
+                )}
             </tbody>
           </table>
         </CardBody>

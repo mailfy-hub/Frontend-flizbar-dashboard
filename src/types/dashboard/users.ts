@@ -13,5 +13,5 @@ export interface User {
   updatedAt: string;
   username: string;
   verified: boolean;
-  type: string
+  personType: string
 }
