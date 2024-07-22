@@ -36,6 +36,7 @@ import { WalletEdit } from "../pages/Dashboard/wallets/edit";
 import { WalletInsert } from "../pages/Dashboard/wallets/insert";
 import { Withdraw } from "../pages/Dashboard/withdraw";
 import { WithdrawInsert } from "../pages/Dashboard/withdraw/insert";
+import { History } from "../pages/Dashboard/history";
 
 interface subRoutesMapped {
   path: string;
@@ -374,5 +375,15 @@ export const routesMapped: routeMapped[] = [
     addToSidebar: false,
     isOutletRoute: true,
     blockSidebarInteractivity: false,
+  }),
+  createRouteMapped({
+    path: "/users-history",
+    element: <History />,
+    name: "Atividades Recente",
+    icon: "mdi:history",
+    isAdmin: true,
+    subRoutes: [],
+    addToSidebar: false,
+    isOutletRoute: true,
   }),
 ];
