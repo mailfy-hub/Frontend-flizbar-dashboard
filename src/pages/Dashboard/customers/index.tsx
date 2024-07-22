@@ -46,12 +46,13 @@ export const Customers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [_totalItems, setTotalItems] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
   const itemsPerPage = 10;
 
   const getUsersList = async (page: number) => {
     try {
       const { data } = await api.get(
-        `admin/users/clients?page=${page}&itemsPerPage=${itemsPerPage}`
+        `admin/users/clients?page=${page}&itemsPerPage=${itemsPerPage}&name=${searchTerm}`
       );
       setUsersList(data.items);
       setTotalPages(data.pagination.totalPages);
@@ -63,7 +64,7 @@ export const Customers = () => {
 
   useEffect(() => {
     getUsersList(currentPage);
-  }, [currentPage]);
+  }, [currentPage, searchTerm]);
 
   const handleOpenSuccessDelete = () => {
     handleToggleConfirmationDialog();
@@ -161,8 +162,10 @@ export const Customers = () => {
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
             <div className="w-full md:w-72">
               <Input
+                name="search client"
                 label="Nome do cliente"
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
             <Button
