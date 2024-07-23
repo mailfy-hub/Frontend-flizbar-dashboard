@@ -26,46 +26,13 @@ import exampleImageAporte from "../../../assets/example-image-aporte.png";
 import { ImageDialog } from "../../../components/imageDialog";
 import { SectionTitle } from "../../../components/sectionTitle";
 import SuccessDialog from "../../../components/successDialog";
-import { CurrencyRow } from "../../../components/table/currencyRow";
 import { useAuth } from "../../../hook/auth";
 import { Contribuition } from "../../../types/dashboard/contribuitions";
 import { formatDate } from "../../../utils/formatDate";
 
-interface TABLE_ROW_PROPS {
-  code: string;
-  customer: string;
-  contribuition: string;
-  value: number;
-  created_at: string;
-  currency: "BRL" | "USD" | "EUR" | "JPY";
-}
 
-const TABLE_ROW: TABLE_ROW_PROPS[] = [
-  /* {
-    code: "#TBR52536267",
-    customer: "Emma Roberts",
-    wallet: "T-BOND Brazil",
-    value: 2700.0,
-    created_at: "23/05/2024",
-    currency: "BRL",
-  },
-  {
-    code: "#TBR52536264",
-    customer: "Emma Roberts",
-    wallet: "T-BOND Brazil",
-    value: 120.0,
-    created_at: "23/05/2024",
-    currency: "USD",
-  },
-  {
-    code: "#TBR52536262",
-    customer: "Emma Roberts",
-    wallet: "T-BOND Brazil",
-    value: 50.0,
-    created_at: "23/05/2024",
-    currency: "EUR",
-  }, */
-];
+
+
 
 export const Contribuitions = () => {
   const { userData } = useAuth();

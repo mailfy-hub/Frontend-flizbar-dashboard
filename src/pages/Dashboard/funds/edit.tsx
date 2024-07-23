@@ -19,7 +19,7 @@ export const FundsEdit = () => {
   const { id } = useParams();
 
 
-  const [fund, setFund] = useState<Fund | null>(null);
+  const [_, setFund] = useState<Fund | null>(null);
 
   const handleNavigateBack = () => {
     navigate(-1);

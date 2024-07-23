@@ -26,17 +26,6 @@ import SuccessDialog from "../../../components/successDialog";
 import { Wallet } from "../../../types/dashboard/wallets";
 import { formatDate } from "../../../utils/formatDate";
 
-const TABLE_ROW = [
-  {
-    code: "#TBR52536267",
-    wallet: "Convencional",
-  },
-  {
-    code: "#TUS26737352",
-    wallet: "Fundo de emergência",
-  },
-];
-
 const TABLE_HEAD = ["Código", "Nome", "Tipo", "Ações"];
 
 export const Wallets = () => {
@@ -47,8 +36,6 @@ export const Wallets = () => {
   const handleEdit = () => {
     navigate("edit");
   };
-
-
 
   const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
@@ -65,7 +52,6 @@ export const Wallets = () => {
     setOpenConfimationDialog(!openConfimationDialog);
   };
 
-
   const [walletsList, setWalletsList] = useState<Wallet[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -78,8 +64,6 @@ export const Wallets = () => {
         `wallets?page=${page}&itemsPerPage=${itemsPerPage}`
       );
 
-
-   
       const mappedData = data.map((wallet: Wallet) => {
         return {
           ...wallet,
@@ -97,7 +81,6 @@ export const Wallets = () => {
   useEffect(() => {
     getWalletsList(currentPage);
   }, [currentPage]);
-
 
   const [walletIdSelected, setWalletIdSelected] = useState("");
   const handleWalletIdSelected = (id: string) => {
@@ -140,7 +123,7 @@ export const Wallets = () => {
   };
   return (
     <div>
-            <SuccessDialog
+      <SuccessDialog
         open={openSuccessDialog}
         handleClose={handleToggleSuccessDialog}
       />
@@ -164,11 +147,7 @@ export const Wallets = () => {
           >
             <span>Cancelar</span>
           </Button>
-          <Button
-            variant="gradient"
-            color="red"
-            onClick={DeleteWalletAction}
-          >
+          <Button variant="gradient" color="red" onClick={DeleteWalletAction}>
             <span>Confirmar</span>
           </Button>
         </DialogFooter>
@@ -221,79 +200,79 @@ export const Wallets = () => {
               </tr>
             </thead>
             <tbody>
-            {walletsList &&
+              {walletsList &&
                 walletsList.map(({ id, walletName, type }) => {
-
-                const classes = "!p-6 ";
-                return (
-                  <tr key={id}>
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        <div>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="!font-semibold"
-                          >
-                            {id}
-                          </Typography>
+                  const classes = "!p-6 ";
+                  return (
+                    <tr key={id}>
+                      <td className={classes}>
+                        <div className="flex items-center gap-3">
+                          <div>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="!font-semibold"
+                            >
+                              {id}
+                            </Typography>
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        <div>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="!font-semibold"
-                          >
-                            {walletName}
-                          </Typography>
-                         
+                      </td>
+                      <td className={classes}>
+                        <div className="flex items-center gap-3">
+                          <div>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="!font-semibold"
+                            >
+                              {walletName}
+                            </Typography>
+                          </div>
                         </div>
-                      </div>
-                    </td>
+                      </td>
 
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        <div>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="!font-semibold"
-                          >
-                            {type}
-                          </Typography>
-                         
+                      <td className={classes}>
+                        <div className="flex items-center gap-3">
+                          <div>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="!font-semibold"
+                            >
+                              {type}
+                            </Typography>
+                          </div>
                         </div>
-                      </div>
-                    </td>
+                      </td>
 
-                    <td className="flex items-center justify-end text-right p-4 border-b border-gray-300 gap-2">
-                      <Tooltip content="Editar usuário">
-                        <IconButton onClick={handleEdit} variant="text">
-                          <PencilIcon className="w-4 h-4 text-gray-400" />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip content="Deletar usuário">
-                        <IconButton onClick={() => handleDeleteWallet(id)} variant="text">
-                          <TrashIcon className="w-4 h-4 text-gray-400" />
-                        </IconButton>
-                      </Tooltip>
-                    </td>
-                  </tr>
-                );
-              })}
+                      <td className="flex items-center justify-end text-right p-4 border-b border-gray-300 gap-2">
+                        <Tooltip content="Editar usuário">
+                          <IconButton onClick={handleEdit} variant="text">
+                            <PencilIcon className="w-4 h-4 text-gray-400" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip content="Deletar usuário">
+                          <IconButton
+                            onClick={() => handleDeleteWallet(id)}
+                            variant="text"
+                          >
+                            <TrashIcon className="w-4 h-4 text-gray-400" />
+                          </IconButton>
+                        </Tooltip>
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-          Página {currentPage} de {totalPages}
+            Página {currentPage} de {totalPages}
           </Typography>
           <div className="flex gap-4">
-          <Button
+            <Button
               variant="text"
               className="flex items-center gap-1"
               onClick={handlePreviousPage}
