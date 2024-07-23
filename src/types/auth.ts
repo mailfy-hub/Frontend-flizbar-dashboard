@@ -66,9 +66,8 @@ export interface User {
 }
 
 export interface ClientAddress {
-  clientId: string;
+  clientId?: string;
   addressType: string;
-  documentNumber: string;
   zipCode: string;
   city: string;
   state: string;
@@ -77,11 +76,11 @@ export interface ClientAddress {
   neighborhood: string;
   complement: string;
   reference: string;
-  id: string;
+  id?: string;
 }
 
 export interface ClientFinance {
-  profileId: string;
+  profileId?: string;
   accountType: string;
   bankName: string;
   accountNumber: string;
@@ -90,7 +89,7 @@ export interface ClientFinance {
   agencyDigit: string;
   pixKeyType: string;
   pixKey: string;
-  id: string;
+  id?: string;
 }
 
 export interface ClientParents {

@@ -196,9 +196,15 @@ export const Contact = () => {
       </Dialog>
       <form onSubmit={formik.handleSubmit}>
         <div className="bg-WHITE p-8 w-full rounded-md ">
-          <div className="flex items-center gap-4">
-            <Icon height={16} icon={"heroicons:user-circle"} color="black" />
-            <SectionTitle size="sm" text="Contato" />
+          <div>
+            <div className="flex items-center gap-4">
+              <Icon height={16} icon={"heroicons:user-circle"} color="black" />
+              <SectionTitle size="sm" text="Contato adicional" />
+            </div>
+            <p className="mt-2 font-body text-body14 text-GRAY_400">
+              Se desejar, inclua um contato adicional como uma pessoa
+              alternativa para caso não conseguimos contato com você.
+            </p>
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid gap-6">
@@ -227,7 +233,6 @@ export const Contact = () => {
                     onBlur={formik.handleBlur}
                   />
 
-                  {formik.values.contactsList.length > 1 && (
                     <button
                       type="button"
                       onClick={() => handleDeleteContact(contact.id)}
@@ -235,7 +240,6 @@ export const Contact = () => {
                     >
                       Remover
                     </button>
-                  )}
                 </div>
               ))}
             </div>

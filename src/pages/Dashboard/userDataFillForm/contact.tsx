@@ -13,8 +13,8 @@ export const Contact = ({ handleConfirmationClick }: FormStepType) => {
   const ContactSchema = Yup.object().shape({
     contactsList: Yup.array().of(
       Yup.object().shape({
-        name: Yup.string().required("Nome é obrigatório"),
-        phone: Yup.string().required("Número de Telefone é obrigatório"),
+        name: Yup.string(),
+        phone: Yup.string(),
       })
     ),
   });
@@ -82,9 +82,15 @@ export const Contact = ({ handleConfirmationClick }: FormStepType) => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="bg-WHITE p-8 w-full rounded-md mt-8">
-        <div className="flex items-center gap-4">
-          <Icon height={16} icon={"heroicons:user-circle"} color="black" />
-          <SectionTitle size="sm" text="Contato" />
+        <div>
+          <div className="flex items-center gap-4">
+            <Icon height={16} icon={"heroicons:user-circle"} color="black" />
+            <SectionTitle size="sm" text="Contato adicional" />
+          </div>
+          <p className="mt-2 font-body text-body14 text-GRAY_400">
+            Se desejar, inclua um contato adicional como uma pessoa alternativa
+            para caso não conseguimos contato com você.
+          </p>
         </div>
         <div className="mt-8 flex flex-col gap-6 ">
           <div className="grid gap-6">

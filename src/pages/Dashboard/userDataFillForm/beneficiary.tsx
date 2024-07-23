@@ -151,9 +151,15 @@ export const Beneficiary = ({ handleConfirmationClick }: FormStepType) => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="bg-WHITE p-8 w-full rounded-md mt-8">
-        <div className="flex items-center gap-4">
-          <Icon height={16} icon={"heroicons:user"} color="black" />
-          <SectionTitle size="sm" text="Beneficiário" />
+        <div>
+          <div className="flex items-center gap-4">
+            <Icon height={16} icon={"heroicons:user"} color="black" />
+            <SectionTitle size="sm" text="Beneficiário" />
+          </div>
+          <p className="mt-2 font-body text-body14 text-GRAY_400">
+            Se desejar, inclua as informações de uma pessoa ou entidade que
+            receberá benefícios ou terá direitos associados.
+          </p>
         </div>
         <div className="mt-8 flex flex-col gap-6 ">
           <div className="grid md:grid-cols-2 gap-6">

@@ -8,7 +8,7 @@ import { SectionTitle } from "../../../components/sectionTitle";
 import { useAuth } from "../../../hook/auth";
 
 export const BankData = ({ handleConfirmationClick }: FormStepType) => {
-  const { userData } = useAuth();
+  const { userData, updateProfileFinance } = useAuth();
   const validationSchema = Yup.object().shape({
     accountType: Yup.string().required("Tipo da conta é obrigatório"),
     bankName: Yup.string().required("Nome do banco é obrigatório"),
@@ -45,6 +45,16 @@ export const BankData = ({ handleConfirmationClick }: FormStepType) => {
       await api.post(`profiles/${userData?.id}/finance`, {
         profileId: userData?.id,
         ...data,
+      });
+      updateProfileFinance({
+        accountType: data.accountType,
+        bankName: data.bankName,
+        accountNumber: data.accountNumber,
+        accountDigit: data.accountDigit,
+        agencyNumber: data.agencyNumber,
+        agencyDigit: data.agencyDigit,
+        pixKeyType: data.pixKeyType,
+        pixKey: data.pixKey,
       });
       handleConfirmationClick();
     } catch (error) {
@@ -94,6 +104,35 @@ export const BankData = ({ handleConfirmationClick }: FormStepType) => {
           <div className="grid md:grid-cols-2 gap-6">
             <Input
               type="text"
+              label="Número da agência"
+              name="agencyNumber"
+              value={formik.values.agencyNumber}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.agencyNumber &&
+                Boolean(formik.errors.agencyNumber)
+              }
+            />
+            {formik.touched.agencyNumber && formik.errors.agencyNumber ? (
+              <div className="text-red-600">{formik.errors.agencyNumber}</div>
+            ) : null}
+            <Input
+              type="text"
+              label="Dígito da agência"
+              name="agencyDigit"
+              value={formik.values.agencyDigit}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.agencyDigit && Boolean(formik.errors.agencyDigit)
+              }
+            />
+            {formik.touched.agencyDigit && formik.errors.agencyDigit ? (
+              <div className="text-red-600">{formik.errors.agencyDigit}</div>
+            ) : null}
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            <Input
+              type="text"
               label="Número da conta"
               name="accountNumber"
               value={formik.values.accountNumber}
@@ -121,35 +160,7 @@ export const BankData = ({ handleConfirmationClick }: FormStepType) => {
               <div className="text-red-600">{formik.errors.accountDigit}</div>
             ) : null}
           </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            <Input
-              type="text"
-              label="Número da agência"
-              name="agencyNumber"
-              value={formik.values.agencyNumber}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.agencyNumber &&
-                Boolean(formik.errors.agencyNumber)
-              }
-            />
-            {formik.touched.agencyNumber && formik.errors.agencyNumber ? (
-              <div className="text-red-600">{formik.errors.agencyNumber}</div>
-            ) : null}
-            <Input
-              type="text"
-              label="Dígito da agência"
-              name="agencyDigit"
-              value={formik.values.agencyDigit}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.agencyDigit && Boolean(formik.errors.agencyDigit)
-              }
-            />
-            {formik.touched.agencyDigit && formik.errors.agencyDigit ? (
-              <div className="text-red-600">{formik.errors.agencyDigit}</div>
-            ) : null}
-          </div>
+
           <div className="grid md:grid-cols-2 gap-6">
             <Select
               label="Tipo da chave PIX"

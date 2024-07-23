@@ -62,7 +62,7 @@ export const MyAccount = () => {
                 : "bg-gray-300 text-gray-500"
             } px-4 py-2 rounded-md font-display font-semibold transition-all `}
           >
-            Anexos
+            Meus anexos
           </button>
         )}
       </div>

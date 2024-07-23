@@ -31,7 +31,7 @@ interface dataAddressInformation {
 }
 
 export const Address = ({ handleConfirmationClick }: FormStepType) => {
-  const { userData, profile } = useAuth();
+  const { userData, profile, updateProfileAddress } = useAuth();
   const validationSchema = Yup.object().shape({
     addressType: Yup.string().required("Tipo de endereço é obrigatório"),
     zipCode: Yup.string().required("CEP é obrigatório"),
@@ -76,6 +76,17 @@ export const Address = ({ handleConfirmationClick }: FormStepType) => {
         ...data,
       };
       await api.post(`profiles/${userData?.id}/address`, dataFormatted);
+      updateProfileAddress({
+        addressType: data.addressType,
+        zipCode: data.zipCode,
+        city: data.city,
+        state: data.state,
+        street: data.street,
+        number: data.number,
+        neighborhood: data.neighborhood,
+        complement: data.complement ? data.complement : "",
+        reference: data.reference ? data.reference : "",
+      });
       handleConfirmationClick();
     } catch (error) {
       console.log(error);
@@ -127,8 +138,6 @@ export const Address = ({ handleConfirmationClick }: FormStepType) => {
       setIsLoadingZipcodeData(false);
     }
   };
-
-  
 
   return (
     <form onSubmit={formik.handleSubmit}>

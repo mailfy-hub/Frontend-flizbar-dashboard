@@ -140,6 +140,18 @@ export const InfoClient = () => {
             </button>
             <button
               onClick={() => {
+                setActiveTab("baneficiary");
+              }}
+              className={`py-4 border-b-[1px] font-display text-button16 ${
+                activeTab == "baneficiary"
+                  ? "border-GOLD_MAIN font-semibold text-BLACK "
+                  : "border-transparent font-medium text-GRAY_400"
+              }`}
+            >
+              Beneficiário
+            </button>
+            <button
+              onClick={() => {
                 setActiveTab("contact");
               }}
               className={`py-4 border-b-[1px] font-display text-button16 ${
@@ -149,18 +161,6 @@ export const InfoClient = () => {
               }`}
             >
               Contatos
-            </button>
-            <button
-              onClick={() => {
-                setActiveTab("baneficiary");
-              }}
-              className={`py-4 border-b-[1px] font-display text-button16 ${
-                activeTab == "baneficiary"
-                  ? "border-GOLD_MAIN font-semibold text-BLACK "
-                  : "border-transparent font-medium text-GRAY_400"
-              }`}
-            >
-              Beneficiários
             </button>
           </div>
           <div className="">

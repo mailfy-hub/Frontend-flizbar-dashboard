@@ -119,6 +119,34 @@ export const BankData = () => {
         <div className="grid md:grid-cols-2 gap-6">
           <Input
             type="text"
+            label="Número da agência"
+            name="agencyNumber"
+            value={formik.values.agencyNumber}
+            onChange={formik.handleChange}
+            error={
+              formik.touched.agencyNumber && Boolean(formik.errors.agencyNumber)
+            }
+          />
+          {formik.touched.agencyNumber && formik.errors.agencyNumber ? (
+            <div className="text-red-600">{formik.errors.agencyNumber}</div>
+          ) : null}
+          <Input
+            type="text"
+            label="Dígito da agência"
+            name="agencyDigit"
+            value={formik.values.agencyDigit}
+            onChange={formik.handleChange}
+            error={
+              formik.touched.agencyDigit && Boolean(formik.errors.agencyDigit)
+            }
+          />
+          {formik.touched.agencyDigit && formik.errors.agencyDigit ? (
+            <div className="text-red-600">{formik.errors.agencyDigit}</div>
+          ) : null}
+        </div>
+        <div className="grid md:grid-cols-2 gap-6">
+          <Input
+            type="text"
             label="Número da conta"
             name="accountNumber"
             value={formik.values.accountNumber}
@@ -145,34 +173,7 @@ export const BankData = () => {
             <div className="text-red-600">{formik.errors.accountDigit}</div>
           ) : null}
         </div>
-        <div className="grid md:grid-cols-2 gap-6">
-          <Input
-            type="text"
-            label="Número da agência"
-            name="agencyNumber"
-            value={formik.values.agencyNumber}
-            onChange={formik.handleChange}
-            error={
-              formik.touched.agencyNumber && Boolean(formik.errors.agencyNumber)
-            }
-          />
-          {formik.touched.agencyNumber && formik.errors.agencyNumber ? (
-            <div className="text-red-600">{formik.errors.agencyNumber}</div>
-          ) : null}
-          <Input
-            type="text"
-            label="Dígito da agência"
-            name="agencyDigit"
-            value={formik.values.agencyDigit}
-            onChange={formik.handleChange}
-            error={
-              formik.touched.agencyDigit && Boolean(formik.errors.agencyDigit)
-            }
-          />
-          {formik.touched.agencyDigit && formik.errors.agencyDigit ? (
-            <div className="text-red-600">{formik.errors.agencyDigit}</div>
-          ) : null}
-        </div>
+
         <div className="grid md:grid-cols-2 gap-6">
           <Select
             label="Tipo da chave PIX"

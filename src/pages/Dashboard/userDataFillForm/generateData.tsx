@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { InferType } from "yup";
 import { api } from "../../../client/api";
+import { DocumentTypeSelect } from "../../../components/documentTypeSelect";
 import { useAuth } from "../../../hook/auth";
 
 export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
@@ -237,21 +238,12 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
             </Select>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
-            <Select
-              name="documentType"
-              id="documentType"
+            <DocumentTypeSelect
+              personType={formik.values.personType}
               value={formik.values.documentType}
-              onChange={(selectedValue) => {
-                formik.setFieldValue("documentType", selectedValue);
-              }}
-              label="Tipo do documento"
-            >
-              <Option value="Inscrição estadual">Inscrição estadual</Option>
-              <Option value="Carteira de habilitação">
-                Carteira de habilitação
-              </Option>
-              <Option value="Passaporte">Passaporte</Option>
-            </Select>
+              setFieldValue={formik.setFieldValue}
+              fieldName={"documentType"}
+            />
             <Input
               name="document"
               id="document"
@@ -396,22 +388,12 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
           {(formik.values.maritalStatus == "União estável" ||
             formik.values.maritalStatus == "Casado(a)") && (
             <div className="grid md:grid-cols-2 gap-6">
-              <Select
-                id="spouseDocumentType"
-                name="spouseDocumentType"
+              <DocumentTypeSelect
+                personType={"pf"}
                 value={formik.values.spouseDocumentType}
-                onChange={(selectedValue) => {
-                  formik.setFieldValue("spouseDocumentType", selectedValue);
-                }}
-                label="Tipo do documento"
-                className="w-full"
-              >
-                <Option value="Inscrição estadual">Inscrição estadual</Option>
-                <Option value="Carteira de habilitação">
-                  Carteira de habilitação
-                </Option>
-                <Option value="Passaporte">Passaporte</Option>
-              </Select>
+                setFieldValue={formik.setFieldValue}
+                fieldName={"spouseDocumentType"}
+              />
               <Input
                 id="spousedocument"
                 name="spousedocument"

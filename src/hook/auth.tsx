@@ -1,7 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../client/api";
 import {
+  ClientAddress,
   ClientContact,
+  ClientFinance,
   Profile,
   ProfileDetails,
   SignUpProps,
@@ -24,6 +26,8 @@ interface AuthContextProps {
   isFullfiledAccountInfo: boolean;
   updateProfileDetails: (profileDetails: ProfileDetails) => void;
   updateProfileContacts: (contacts: ClientContact[]) => void;
+  updateProfileAddress: (address: ClientAddress) => void;
+  updateProfileFinance: (finance: ClientFinance) => void;
 }
 
 const AuthContext = createContext({} as AuthContextProps);
@@ -206,7 +210,7 @@ export const AuthContextProvider = ({ children }: Props) => {
   const updateProfileDetails = (profileDetails: ProfileDetails) => {
     setProfile((state) => {
       if (state === null) return null;
-  
+
       return {
         ...state,
         profileDetails: profileDetails,
@@ -218,13 +222,35 @@ export const AuthContextProvider = ({ children }: Props) => {
   const updateProfileContacts = (Contacts: ClientContact[]) => {
     setProfile((state) => {
       if (state === null) return null;
-  
+
       return {
         ...state,
-        clientContacts: Contacts
+        clientContacts: Contacts,
       };
     });
-  }
+  };
+
+  const updateProfileAddress = (Address: ClientAddress) => {
+    setProfile((state) => {
+      if (state === null) return null;
+
+      return {
+        ...state,
+        clientAddresses: [Address],
+      };
+    });
+  };
+
+  const updateProfileFinance = (Finance: ClientFinance) => {
+    setProfile((state) => {
+      if (state === null) return null;
+
+      return {
+        ...state,
+        clientFinance: Finance,
+      };
+    });
+  };
 
   useEffect(() => {
     loadFromLocalStorage();
@@ -245,7 +271,9 @@ export const AuthContextProvider = ({ children }: Props) => {
         isFullfiledAccountInfo,
         handleFullfiledAccountInfo,
         updateProfileDetails,
-        updateProfileContacts
+        updateProfileContacts,
+        updateProfileAddress,
+        updateProfileFinance
       }}
     >
       {children}

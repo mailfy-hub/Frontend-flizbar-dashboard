@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { InferType } from "yup";
 import { api } from "../../../../client/api";
+import { DocumentTypeSelect } from "../../../../components/documentTypeSelect";
 import { SectionTitle } from "../../../../components/sectionTitle";
 import { useAuth } from "../../../../hook/auth";
 
@@ -306,7 +307,10 @@ export const GenerateData = () => {
                       ?.toISOString()
                       .substring(0, 10)}
                     onChange={(selectedValue) => {
-                      formik.setFieldValue("birthDate", new Date(selectedValue.target.value));
+                      formik.setFieldValue(
+                        "birthDate",
+                        new Date(selectedValue.target.value)
+                      );
                     }}
                     type="date"
                     label="Date de nascimento"
@@ -326,22 +330,12 @@ export const GenerateData = () => {
                 </Select>
               </div>
               <div className="grid md:grid-cols-2 gap-6">
-                <Select
-                  name="documentType"
-                  id="documentType"
+                <DocumentTypeSelect
+                  personType={formik.values.personType}
                   value={formik.values.documentType}
-                  onChange={(selectedValue) => {
-                    formik.setFieldValue("documentType", selectedValue);
-                  }}
-                  label="Tipo do documento"
-                >
-                  <Option value="Inscrição estadual">Inscrição estadual</Option>
-                  <Option value="Carteira de habilitação">
-                    Carteira de habilitação
-                  </Option>
-                  <Option value="Passaporte">Passaporte</Option>
-                  <Option value="CPF">CPF</Option>
-                </Select>
+                  setFieldValue={formik.setFieldValue}
+                  fieldName="documentType"
+                />
                 <Input
                   name="document"
                   id="document"
@@ -472,24 +466,12 @@ export const GenerateData = () => {
               {(formik.values.maritalStatus == "União estável" ||
                 formik.values.maritalStatus == "Casado(a)") && (
                 <div className="grid md:grid-cols-2 gap-6">
-                  <Select
-                    id="spouseDocumentType"
-                    name="spouseDocumentType"
+                  <DocumentTypeSelect
+                    personType={"pf"}
                     value={formik.values.spouseDocumentType}
-                    onChange={(selectedValue) => {
-                      formik.setFieldValue("spouseDocumentType", selectedValue);
-                    }}
-                    label="Tipo do documento"
-                    className="w-full"
-                  >
-                    <Option value="Inscrição estadual">
-                      Inscrição estadual
-                    </Option>
-                    <Option value="Carteira de habilitação">
-                      Carteira de habilitação
-                    </Option>
-                    <Option value="Passaporte">Passaporte</Option>
-                  </Select>
+                    setFieldValue={formik.setFieldValue}
+                    fieldName={"spouseDocumentType"}
+                  />
                   <Input
                     id="spousedocument"
                     name="spousedocument"
