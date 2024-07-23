@@ -1,9 +1,12 @@
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, Input, Select } from "@material-tailwind/react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { api } from "../../../client/api";
 import { SectionTitle } from "../../../components/sectionTitle";
+import { Fund } from "../../../types/dashboard/funds";
+
 
 type fund = {
   index: string;
@@ -13,10 +16,31 @@ type fund = {
 
 export const FundsEdit = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+
+
+  const [fund, setFund] = useState<Fund | null>(null);
 
   const handleNavigateBack = () => {
     navigate(-1);
   };
+
+  const getFund = async (id: string) => {
+    try {
+      const { data } = await api.get(`/funds/${id}`);
+      setFund(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      getFund(id);
+    }
+  }, [id]);
+
+
   const [fundList, setFundList] = useState<fund[]>([
     {
       index: `${Date.now()}-${Math.random().toString(36)}`,

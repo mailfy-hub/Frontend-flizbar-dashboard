@@ -69,6 +69,8 @@ export const Users = () => {
       const { data } = await api.get(
         `admin/users/admins?page=${page}&itemsPerPage=${itemsPerPage}`
       );
+
+
       const mappedData = data.items.map((user: User) => {
         return {
           ...user,

@@ -18,35 +18,17 @@ import {
   Tooltip,
   Typography,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../../client/api";
 import { SectionTitle } from "../../../components/sectionTitle";
 import SuccessDialog from "../../../components/successDialog";
+import { Fund } from "../../../types/dashboard/funds";
+import { formatDate } from "../../../utils/formatDate";
 
-const TABLE_ROW = [
-  {
-    code: "#TBR52536267",
-    name: "T-Bond Brazil",
-    currency: "BRL",
-  },
-  {
-    code: "#TBR52536268",
-    name: "T-Bond USA",
-    currency: "USD",
-  },
-  {
-    code: "#TBR52536269",
-    name: "Baixo Risco",
-    currency: "USD",
-  },
-  {
-    code: "#TBR52536261",
-    name: "Alto Risco",
-    currency: "USD",
-  },
-];
 
-const TABLE_HEAD = ["Código", "Nome do fundo", "Moeda", "Ações"];
+
+const TABLE_HEAD = ["Código", "Nome do fundo", "Moeda", 'Percentual', "Tipo", "Ações"];
 
 export const Funds = () => {
   const navigate = useNavigate();
@@ -54,7 +36,7 @@ export const Funds = () => {
     navigate("insert");
   };
   const handleEdit = () => {
-    navigate("edit");
+    navigate(`edit/`);
   };
 
   const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
@@ -71,8 +53,82 @@ export const Funds = () => {
   const handleToggleConfirmationDialog = () => {
     setOpenConfimationDialog(!openConfimationDialog);
   };
+
+  const [fundsList, setFundsList] = useState<Fund[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [_totalItems, setTotalItems] = useState(0);
+  const itemsPerPage = 10;
+
+  const getFundsList = async (page: number) => {
+    try {
+      const { data } = await api.get(
+        `funds?page=${page}&itemsPerPage=${itemsPerPage}`
+      );
+
+   
+      const mappedData = data.map((fund: Fund) => {
+        return {
+          ...fund,
+          createdAt: formatDate(fund.createdAt),
+        };
+      });
+      setFundsList(mappedData);
+      setTotalPages(data.pagination.totalPages);
+      setTotalItems(data.pagination.totalItems);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getFundsList(currentPage);
+  }, [currentPage]);
+
+
+  const [fundIdSelected, setFundIdSelected] = useState("");
+  const handleFundIdSelected = (id: string) => {
+    setFundIdSelected(id);
+  };
+
+  const handleDeleteFund = async (id: string) => {
+    handleToggleConfirmationDialog();
+    handleFundIdSelected(id);
+  };
+
+  const handleCancelDeleteFund = () => {
+    handleToggleConfirmationDialog();
+    setFundIdSelected("");
+  };
+
+  const DeleteFundAction = async () => {
+    try {
+      await api.delete(`/funds/${fundIdSelected}`);
+      const filteredFundsList = fundsList?.filter(
+        (fund) => fund.id !== fundIdSelected
+      );
+      setFundsList(filteredFundsList);
+      handleOpenSuccessDelete();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   return (
     <div>
+      
             <SuccessDialog
         open={openSuccessDialog}
         handleClose={handleToggleSuccessDialog}
@@ -92,7 +148,7 @@ export const Funds = () => {
           <Button
             variant="text"
             color="red"
-            onClick={handleToggleConfirmationDialog}
+            onClick={handleCancelDeleteFund}
             className="mr-1"
           >
             <span>Cancelar</span>
@@ -100,7 +156,7 @@ export const Funds = () => {
           <Button
             variant="gradient"
             color="red"
-            onClick={handleOpenSuccessDelete}
+            onClick={DeleteFundAction}
           >
             <span>Confirmar</span>
           </Button>
@@ -154,81 +210,122 @@ export const Funds = () => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROW.map(({ code, currency, name }) => {
-                const classes = "!p-6 ";
-                return (
-                  <tr key={code}>
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        <div>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="!font-semibold"
-                          >
-                            {code}
-                          </Typography>
-                        </div>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        <div>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="!font-semibold"
-                          >
-                            {name}
-                          </Typography>
-                          {/*                             <Typography
+
+            {fundsList &&
+                fundsList.map(({ id, name, currency, defaultPercentage, type }) => {
+                  const classes = "!p-6 ";
+                  return (
+                    <tr key={id}>
+                      <td className={classes}>
+                        <div className="flex items-center gap-3">
+                          <div>
+                            <Typography
                               variant="small"
-                              className="!font-normal text-gray-600"
+                              color="blue-gray"
+                              className="!font-semibold"
                             >
-                              {detail}
-                            </Typography> */}
+                              {id.slice(0, 8)}
+                            </Typography>
+                          </div>
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <div className="flex items-center gap-3">
+                          <div>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="!font-semibold"
+                            >
+                              {`${name}`}
+                            </Typography>
+                          </div>
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <div>
+                          <Typography
+                            variant="small"
+                            color="black"
+                            className="!font-normal"
+                          >
+                            {currency}
+                          </Typography>
+                        </div>
+                      </td>
+
+                      <td className={classes}>
+                        <div>
+                          <Typography
+                            variant="small"
+                            color="black"
+                            className="!font-normal"
+                          >
+                            {defaultPercentage}
+                          </Typography>
+                        </div>
+                      </td>
+
+                      <td className={classes}>
+                      <div className="flex items-center gap-3">
+                        <div>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="!font-semibold"
+                          >
+                            {type}
+                          </Typography>
+                         
                         </div>
                       </div>
                     </td>
-                    <td className={classes}>
-                      <div>
-                        <Typography
-                          variant="small"
-                          color="black"
-                          className="!font-normal"
-                        >
-                          {currency}
-                        </Typography>
-                      </div>
-                    </td>
-                    <td className="flex items-center justify-end text-right p-4 border-b border-gray-300 gap-2">
-                      <Tooltip content="Editar usuário">
-                        <IconButton onClick={handleEdit} variant="text">
-                          <PencilIcon className="w-4 h-4 text-gray-400" />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip content="Deletar usuário">
-                        <IconButton onClick={handleToggleConfirmationDialog} variant="text">
-                          <TrashIcon className="w-4 h-4 text-gray-400" />
-                        </IconButton>
-                      </Tooltip>
-                    </td>
-                  </tr>
-                );
-              })}
+
+                     
+                      <td className="flex items-center justify-end text-right p-4 border-b border-gray-300 gap-2">
+                        <Tooltip content="Editar fundo">
+                          <IconButton
+                            onClick={() => handleEdit()}
+                            variant="text"
+                          >
+                            <PencilIcon className="w-4 h-4 text-gray-400" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip content="Deletar fundo">
+                          <IconButton
+                            onClick={() => handleDeleteFund(id)}
+                            variant="text"
+                          >
+                            <TrashIcon className="w-4 h-4 text-gray-400" />
+                          </IconButton>
+                        </Tooltip>
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-            Página 2 <span className="font-normal text-BLACK">of 10</span>
+          Página {currentPage} de {totalPages}
           </Typography>
           <div className="flex gap-4">
-            <Button variant="text" className="flex items-center gap-1">
+          <Button
+              variant="text"
+              className="flex items-center gap-1"
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+            >
               <ChevronLeftIcon strokeWidth={3} className="h-3 w-3" />
               Anterior
             </Button>
-            <Button variant="text" className="flex items-center gap-1">
+            <Button
+              variant="text"
+              className="flex items-center gap-1"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
               Próximo
               <ChevronRightIcon strokeWidth={3} className="h-3 w-3" />
             </Button>

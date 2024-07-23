@@ -18,10 +18,13 @@ import {
   Tooltip,
   Typography,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../../client/api";
 import { SectionTitle } from "../../../components/sectionTitle";
 import SuccessDialog from "../../../components/successDialog";
+import { Wallet } from "../../../types/dashboard/wallets";
+import { formatDate } from "../../../utils/formatDate";
 
 const TABLE_ROW = [
   {
@@ -34,7 +37,7 @@ const TABLE_ROW = [
   },
 ];
 
-const TABLE_HEAD = ["Código", "Nome", "Ações"];
+const TABLE_HEAD = ["Código", "Nome", "Tipo", "Ações"];
 
 export const Wallets = () => {
   const navigate = useNavigate();
@@ -44,6 +47,8 @@ export const Wallets = () => {
   const handleEdit = () => {
     navigate("edit");
   };
+
+
 
   const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
@@ -58,6 +63,80 @@ export const Wallets = () => {
 
   const handleToggleConfirmationDialog = () => {
     setOpenConfimationDialog(!openConfimationDialog);
+  };
+
+
+  const [walletsList, setWalletsList] = useState<Wallet[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [_totalItems, setTotalItems] = useState(0);
+  const itemsPerPage = 10;
+
+  const getWalletsList = async (page: number) => {
+    try {
+      const { data } = await api.get(
+        `wallets?page=${page}&itemsPerPage=${itemsPerPage}`
+      );
+
+
+   
+      const mappedData = data.map((wallet: Wallet) => {
+        return {
+          ...wallet,
+          createdAt: formatDate(wallet.createdAt),
+        };
+      });
+      setWalletsList(mappedData);
+      setTotalPages(data.pagination.totalPages);
+      setTotalItems(data.pagination.totalItems);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getWalletsList(currentPage);
+  }, [currentPage]);
+
+
+  const [walletIdSelected, setWalletIdSelected] = useState("");
+  const handleWalletIdSelected = (id: string) => {
+    setWalletIdSelected(id);
+  };
+
+  const handleDeleteWallet = async (id: string) => {
+    handleToggleConfirmationDialog();
+    handleWalletIdSelected(id);
+  };
+
+  const handleCancelDeleteWallet = () => {
+    handleToggleConfirmationDialog();
+    setWalletIdSelected("");
+  };
+
+  const DeleteWalletAction = async () => {
+    try {
+      await api.delete(`/wallets/${walletIdSelected}`);
+      const filteredWalletsList = walletsList?.filter(
+        (wallet) => wallet.id !== walletIdSelected
+      );
+      setWalletsList(filteredWalletsList);
+      handleOpenSuccessDelete();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
   };
   return (
     <div>
@@ -80,7 +159,7 @@ export const Wallets = () => {
           <Button
             variant="text"
             color="red"
-            onClick={handleToggleConfirmationDialog}
+            onClick={handleCancelDeleteWallet}
             className="mr-1"
           >
             <span>Cancelar</span>
@@ -88,7 +167,7 @@ export const Wallets = () => {
           <Button
             variant="gradient"
             color="red"
-            onClick={handleOpenSuccessDelete}
+            onClick={DeleteWalletAction}
           >
             <span>Confirmar</span>
           </Button>
@@ -142,10 +221,12 @@ export const Wallets = () => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROW.map(({ code, wallet }) => {
+            {walletsList &&
+                walletsList.map(({ id, walletName, type }) => {
+
                 const classes = "!p-6 ";
                 return (
-                  <tr key={code}>
+                  <tr key={id}>
                     <td className={classes}>
                       <div className="flex items-center gap-3">
                         <div>
@@ -154,7 +235,7 @@ export const Wallets = () => {
                             color="blue-gray"
                             className="!font-semibold"
                           >
-                            {code}
+                            {id}
                           </Typography>
                         </div>
                       </div>
@@ -167,17 +248,28 @@ export const Wallets = () => {
                             color="blue-gray"
                             className="!font-semibold"
                           >
-                            {wallet}
+                            {walletName}
                           </Typography>
-                          {/*                             <Typography
-                              variant="small"
-                              className="!font-normal text-gray-600"
-                            >
-                              {detail}
-                            </Typography> */}
+                         
                         </div>
                       </div>
                     </td>
+
+                    <td className={classes}>
+                      <div className="flex items-center gap-3">
+                        <div>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="!font-semibold"
+                          >
+                            {type}
+                          </Typography>
+                         
+                        </div>
+                      </div>
+                    </td>
+
                     <td className="flex items-center justify-end text-right p-4 border-b border-gray-300 gap-2">
                       <Tooltip content="Editar usuário">
                         <IconButton onClick={handleEdit} variant="text">
@@ -185,7 +277,7 @@ export const Wallets = () => {
                         </IconButton>
                       </Tooltip>
                       <Tooltip content="Deletar usuário">
-                        <IconButton onClick={handleToggleConfirmationDialog} variant="text">
+                        <IconButton onClick={() => handleDeleteWallet(id)} variant="text">
                           <TrashIcon className="w-4 h-4 text-gray-400" />
                         </IconButton>
                       </Tooltip>
@@ -198,14 +290,24 @@ export const Wallets = () => {
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-            Página 2 <span className="font-normal text-BLACK">of 10</span>
+          Página {currentPage} de {totalPages}
           </Typography>
           <div className="flex gap-4">
-            <Button variant="text" className="flex items-center gap-1">
+          <Button
+              variant="text"
+              className="flex items-center gap-1"
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+            >
               <ChevronLeftIcon strokeWidth={3} className="h-3 w-3" />
               Anterior
             </Button>
-            <Button variant="text" className="flex items-center gap-1">
+            <Button
+              variant="text"
+              className="flex items-center gap-1"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
               Próximo
               <ChevronRightIcon strokeWidth={3} className="h-3 w-3" />
             </Button>

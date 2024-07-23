@@ -1,4 +1,6 @@
 import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
   DocumentArrowDownIcon,
   EyeIcon,
   TrashIcon,
@@ -17,19 +19,22 @@ import {
   Tooltip,
   Typography,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../../client/api";
 import exampleImageAporte from "../../../assets/example-image-aporte.png";
 import { ImageDialog } from "../../../components/imageDialog";
 import { SectionTitle } from "../../../components/sectionTitle";
 import SuccessDialog from "../../../components/successDialog";
 import { CurrencyRow } from "../../../components/table/currencyRow";
 import { useAuth } from "../../../hook/auth";
+import { Contribuition } from "../../../types/dashboard/contribuitions";
+import { formatDate } from "../../../utils/formatDate";
 
 interface TABLE_ROW_PROPS {
   code: string;
   customer: string;
-  wallet: string;
+  contribuition: string;
   value: number;
   created_at: string;
   currency: "BRL" | "USD" | "EUR" | "JPY";
@@ -71,7 +76,7 @@ export const Contribuitions = () => {
 
   const TABLE_HEAD =
     userData?.isAdmin
-      ? ["Código", "Cliente", "Carteira", "Valor", "Data de criação", "Ações"]
+      ? ["Código", "Cliente", "Valor do Aporte", "Valor do Dólar", "Status", "Data de criação", "Ações"]
       : ["Código", "Carteira", "Valor", "Data de criação"];
 
   const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
@@ -98,6 +103,83 @@ export const Contribuitions = () => {
   const handleDetails = () => {
     navigate("details");
   };
+
+
+
+  const [contribuitionsList, setContribuitionsList] = useState<Contribuition[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [_totalItems, setTotalItems] = useState(0);
+  const itemsPerPage = 10;
+
+  const getContribuitionsList = async (page: number) => {
+    try {
+      const { data } = await api.get(
+        `contributions?page=${page}&itemsPerPage=${itemsPerPage}`
+      );
+
+      console.log('API Response:', data); // Log adicional
+
+   
+      const mappedData = data.map((contribuition: Contribuition) => {
+        return {
+          ...contribuition,
+          createdAt: formatDate(contribuition.createdAt),
+        };
+      });
+      setContribuitionsList(mappedData);
+      setTotalPages(data.pagination.totalPages);
+      setTotalItems(data.pagination.totalItems);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getContribuitionsList(currentPage);
+  }, [currentPage]);
+
+
+  const [contribuitionIdSelected, setContribuitionIdSelected] = useState("");
+  const handleContribuitionIdSelected = (id: string) => {
+    setContribuitionIdSelected(id);
+  };
+
+  const handleDeleteContribuition = async (id: string) => {
+    handleToggleConfirmationDialog();
+    handleContribuitionIdSelected(id);
+  };
+
+  const handleCancelDeleteContribuition = () => {
+    handleToggleConfirmationDialog();
+    setContribuitionIdSelected("");
+  };
+
+  const DeleteContribuitionAction = async () => {
+    try {
+      await api.delete(`/contributions/${contribuitionIdSelected}`);
+      const filteredContribuitionsList = contribuitionsList?.filter(
+        (contribuition) => contribuition.id !== contribuitionIdSelected
+      );
+      setContribuitionsList(filteredContribuitionsList);
+      handleOpenSuccessDelete();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   return (
     <div>
       <ImageDialog
@@ -125,7 +207,7 @@ export const Contribuitions = () => {
           <Button
             variant="text"
             color="red"
-            onClick={handleToggleConfirmationDialog}
+            onClick={handleCancelDeleteContribuition}
             className="mr-1"
           >
             <span>Cancelar</span>
@@ -133,7 +215,7 @@ export const Contribuitions = () => {
           <Button
             variant="gradient"
             color="red"
-            onClick={handleOpenSuccessDelete}
+            onClick={DeleteContribuitionAction}
           >
             <span>Confirmar</span>
           </Button>
@@ -183,11 +265,13 @@ export const Contribuitions = () => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROW.map(
-                ({ code, customer, created_at, value, wallet, currency }) => {
+            {contribuitionsList &&
+                contribuitionsList.map(({ id, clientID,   contributionAmount,  dollarValue, status , createdAt}) => {
+
+       
                   const classes = "!p-6 ";
                   return (
-                    <tr key={code}>
+                    <tr key={id}>
                       <td className={classes}>
                         <div className="flex items-center gap-3">
                           <div>
@@ -196,7 +280,7 @@ export const Contribuitions = () => {
                               color="blue-gray"
                               className="!font-semibold"
                             >
-                              {code}
+                              {id}
                             </Typography>
                           </div>
                         </div>
@@ -210,7 +294,7 @@ export const Contribuitions = () => {
                               color="black"
                               className="!font-normal"
                             >
-                              {customer}
+                              {clientID}
                             </Typography>
                           </div>
                         </td>
@@ -223,26 +307,35 @@ export const Contribuitions = () => {
                             color="black"
                             className="!font-normal"
                           >
-                            {wallet}
+                            {contributionAmount}
                           </Typography>
                         </div>
                       </td>
 
-                      <td className={`${classes} flex items-center gap-2`}>
-                        {/* <span className="font-display font-semibold text-body16 text-GOLD_MAIN">
-                          {CURRENCY_MAP[currency]}
-                        </span>
-                        <p className="font-display font-semibold text-body16 text-BLACK">
-                          {value}
-                        </p> */}
-                        <CurrencyRow currency={currency} value={value} />
-                      </td>
                       <td className={classes}>
                         <Typography
                           variant="small"
                           className="!font-normal text-gray-600"
                         >
-                          {created_at}
+                          {dollarValue}
+                        </Typography>
+                      </td>
+
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          className="!font-normal text-gray-600"
+                        >
+                          {status}
+                        </Typography>
+                      </td>
+
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          className="!font-normal text-gray-600"
+                        >
+                          {createdAt}
                         </Typography>
                       </td>
 
@@ -261,14 +354,11 @@ export const Contribuitions = () => {
                               <DocumentArrowDownIcon className="w-4 h-4 text-gray-400" />
                             </IconButton>
                           </Tooltip>
-                          <Tooltip content="Excluir">
-                            <IconButton
-                              onClick={handleToggleConfirmationDialog}
-                              variant="text"
-                            >
-                              <TrashIcon className="w-4 h-4 text-gray-400" />
-                            </IconButton>
-                          </Tooltip>
+                          <Tooltip content="Deletar usuário">
+                        <IconButton onClick={() => handleDeleteContribuition(id)} variant="text">
+                          <TrashIcon className="w-4 h-4 text-gray-400" />
+                        </IconButton>
+                      </Tooltip>
                         </td>
                       )}
                     </tr>
@@ -280,17 +370,27 @@ export const Contribuitions = () => {
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-            Página 1 <span className="font-normal text-BLACK">de 1</span>
+          Página {currentPage} de {totalPages}
           </Typography>
           <div className="flex gap-4">
-            {/* <Button variant="text" className="flex items-center gap-1">
+          <Button
+              variant="text"
+              className="flex items-center gap-1"
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+            >
               <ChevronLeftIcon strokeWidth={3} className="h-3 w-3" />
               Anterior
             </Button>
-            <Button variant="text" className="flex items-center gap-1">
+            <Button
+              variant="text"
+              className="flex items-center gap-1"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
               Próximo
               <ChevronRightIcon strokeWidth={3} className="h-3 w-3" />
-            </Button> */}
+            </Button>
           </div>
         </CardFooter>
       </Card>
