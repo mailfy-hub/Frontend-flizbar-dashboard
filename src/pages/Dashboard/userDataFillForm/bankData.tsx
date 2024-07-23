@@ -1,23 +1,35 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, Input, Option, Select } from "@material-tailwind/react";
+import axios from "axios";
 import { useFormik } from "formik";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { FormStepType } from ".";
 import { api } from "../../../client/api";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { useAuth } from "../../../hook/auth";
 
+export interface bankType {
+  code: number;
+  fullName: string;
+  ispb: string;
+  name: string;
+}
+
 export const BankData = ({ handleConfirmationClick }: FormStepType) => {
+  const [bankList, setBankList] = useState<bankType[]>([]);
+  const [filteredBanks, setFilteredBanks] = useState<bankType[]>([]);
+
   const { userData, updateProfileFinance } = useAuth();
   const validationSchema = Yup.object().shape({
     accountType: Yup.string().required("Tipo da conta é obrigatório"),
     bankName: Yup.string().required("Nome do banco é obrigatório"),
     accountNumber: Yup.string().required("Número da conta é obrigatório"),
     accountDigit: Yup.string().required("Dígito da conta é obrigatório"),
-    agencyNumber: Yup.string().required("Número da agência é obrigatório"),
-    agencyDigit: Yup.string().required("Dígito da agência é obrigatório"),
-    pixKeyType: Yup.string().required("Tipo da chave PIX é obrigatório"),
-    pixKey: Yup.string().required("Chave PIX é obrigatória"),
+    agencyNumber: Yup.string(),
+    agencyDigit: Yup.string(),
+    pixKeyType: Yup.string(),
+    pixKey: Yup.string(),
   });
 
   const formik = useFormik({
@@ -34,7 +46,6 @@ export const BankData = ({ handleConfirmationClick }: FormStepType) => {
     validationSchema,
     onSubmit: (values) => {
       handlePostFinanceInformation(values);
-      // handleConfirmationClick();
     },
   });
 
@@ -51,16 +62,39 @@ export const BankData = ({ handleConfirmationClick }: FormStepType) => {
         bankName: data.bankName,
         accountNumber: data.accountNumber,
         accountDigit: data.accountDigit,
-        agencyNumber: data.agencyNumber,
-        agencyDigit: data.agencyDigit,
-        pixKeyType: data.pixKeyType,
-        pixKey: data.pixKey,
+        agencyNumber: data.agencyNumber ? data.agencyNumber : "",
+        agencyDigit: data.agencyDigit ? data.agencyDigit : "",
+        pixKeyType: data.pixKeyType ? data.pixKeyType : "",
+        pixKey: data.pixKey ? data.pixKey : "",
       });
       handleConfirmationClick();
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleBankList = async () => {
+    try {
+      const response = await axios.get(`https://brasilapi.com.br/api/banks/v1`);
+      setBankList(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleBankSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    formik.setFieldValue("bankName", e.target.value);
+    const searchValue = e.target.value.toLowerCase();
+    const filtered = bankList.filter(
+      (bank) =>
+        bank.fullName && bank.fullName.toLowerCase().includes(searchValue)
+    );
+    setFilteredBanks(filtered);
+  };
+
+  useEffect(() => {
+    handleBankList();
+  }, []);
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -89,7 +123,36 @@ export const BankData = ({ handleConfirmationClick }: FormStepType) => {
             </Select>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
-            <Input
+            <div className="relative">
+              <Input
+                type="text"
+                label="Nome do banco"
+                name="bankName"
+                id="bankName"
+                value={formik.values.bankName}
+                onChange={handleBankSearch}
+              />
+              {formik.touched.bankName && formik.errors.bankName ? (
+                <div className="text-red-600">{formik.errors.bankName}</div>
+              ) : null}
+              {filteredBanks.length > 0 && (
+                <div className="absolute z-10 w-full bg-white border border-gray-300 mt-1 rounded-md max-h-60 overflow-y-auto">
+                  {filteredBanks.map((bank, idx) => (
+                    <div
+                      key={idx}
+                      className="p-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => {
+                        formik.setFieldValue("bankName", bank.fullName);
+                        setFilteredBanks([]);
+                      }}
+                    >
+                      {bank.fullName}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            {/* <Input
               type="text"
               label="Nome do banco"
               name="bankName"
@@ -99,7 +162,7 @@ export const BankData = ({ handleConfirmationClick }: FormStepType) => {
             />
             {formik.touched.bankName && formik.errors.bankName ? (
               <div className="text-red-600">{formik.errors.bankName}</div>
-            ) : null}
+            ) : null} */}
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             <Input
