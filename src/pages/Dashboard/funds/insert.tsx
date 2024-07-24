@@ -1,14 +1,17 @@
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Button, Input, Select } from "@material-tailwind/react";
+import { Button, Input, Select, Option } from "@material-tailwind/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
+import { api } from "../../../client/api";
+import { toast } from "react-toastify";
 
-type fund = {
-  index: string;
+type Fund = {
   name: string;
   currency: string;
+  type: string;
+  defaultPercentage: string;
 };
 
 export const FundsInsert = () => {
@@ -17,27 +20,41 @@ export const FundsInsert = () => {
     navigate(-1);
   };
 
-  const [fundList, setFundList] = useState<fund[]>([
-    {
-      index: `${Date.now()}-${Math.random().toString(36)}`,
-      name: "",
-      currency: "",
-    },
-  ]);
+  const [fund, setFund] = useState<Fund>({
+    name: "",
+    currency: "",
+    type: "",
+    defaultPercentage: "",
+  });
 
-  const handleNewFund = () => {
-    const newFund = {
-      index: `${Date.now()}-${Math.random().toString(36)}`,
-      name: "",
-      currency: "",
-    };
+  const handleInputChange = (name: string, value: string) => {
+    setFund((prevFund) => ({
+      ...prevFund,
+      [name]: value,
+    }));
+  };
 
-    setFundList((state) => [newFund, ...state]);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    console.log("Dados enviados:", fund);
+
+    try {
+      const response = await api.post("/funds", fund);
+      toast("Fundo adicionado com sucesso", {
+        type: "success",
+        autoClose: 3000,
+      });
+      navigate(-1);
+    } catch (error) {
+      console.error("Erro ao adicionar fundo:", error.response ? error.response.data : error.message);
+      toast("Erro ao adicionar fundo", {
+        type: "error",
+        autoClose: 3000,
+      });
+    }
   };
-  const handleRemoveFund = (idx: string) => {
-    const fundListFiltered = fundList.filter((fund) => fund.index !== idx);
-    setFundList(fundListFiltered);
-  };
+
   return (
     <div>
       <div className="flex items-center gap-4">
@@ -49,47 +66,61 @@ export const FundsInsert = () => {
         </button>
         <SectionTitle text="Preencha o formulário de inclusão" />
       </div>
-      <form className="mt-12">
+      <form className="mt-12" onSubmit={handleSubmit}>
         <div className="bg-WHITE p-8 w-full rounded-md">
           <div className="flex items-center gap-4">
-            <Icon
-              height={16}
-              icon={"heroicons:currency-dollar"}
-              color="black"
-            />
+            <Icon height={16} icon={"heroicons:currency-dollar"} color="black" />
             <SectionTitle size="sm" text="Fundo" />
           </div>
-          <div className="mt-8 flex flex-col gap-6 ">
-            {fundList.map((fund) => {
-              return (
-                <div className="flex items-center gap-6">
-                  <div className="flex-1 grid md:grid-cols-2 gap-6">
-                    <Input type="text" label="Nome" />
-                    <Select label="Moeda">
-                      <option value=""></option>
-                    </Select>
-                  </div>
-                  {fundList.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        handleRemoveFund(fund.index);
-                      }}
-                      className="font-body font-medium text-GRAY text-body14 underline hover:text-GOLD_MAIN text-nowrap"
-                    >
-                      Remover
-                    </button>
-                  )}
-                </div>
-              );
-            })}
-            <div>
-              <Button onClick={handleNewFund}>Vincular novo fundo</Button>
+          <div className="mt-8 flex flex-col gap-6">
+            <div className="flex-1 grid md:grid-cols-2 gap-6">
+              <Input
+                type="text"
+                label="Nome"
+                name="name"
+                value={fund.name}
+                onChange={(e) =>
+                  handleInputChange(e.target.name, e.target.value)
+                }
+              />
+              <Select
+                label="Moeda"
+                name="currency"
+                value={fund.currency}
+                onChange={(value) =>
+                  handleInputChange("currency", value)
+                }
+              >
+                <Option value="BRL">BRL</Option>
+                <Option value="USD">USD</Option>
+                <Option value="EUR">EUR</Option>
+                <Option value="JPY">JPY</Option>
+              </Select>
+              <Select
+                label="Tipo"
+                name="type"
+                value={fund.type}
+                onChange={(value) =>
+                  handleInputChange("type", value)
+                }
+              >
+                <Option value="conventional">Convencional</Option>
+                <Option value="emergency">Emergencial</Option>
+              </Select>
+              <Input
+                type="text"
+                label="Percentual Padrão"
+                name="defaultPercentage"
+                value={fund.defaultPercentage}
+                onChange={(e) =>
+                  handleInputChange(e.target.name, e.target.value)
+                }
+              />
             </div>
           </div>
         </div>
         <div className="w-full flex justify-end mt-8">
-          <Button className="bg-GOLD_MAIN w-full md:w-auto">
+          <Button className="bg-GOLD_MAIN w-full md:w-auto" type="submit">
             Adicionar Fundo
           </Button>
         </div>
