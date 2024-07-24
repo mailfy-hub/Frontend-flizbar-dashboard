@@ -1,6 +1,8 @@
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
-import { Typography } from "@material-tailwind/react";
+import { Button, Option, Select, Typography } from "@material-tailwind/react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { CurrencyRow } from "../../../components/table/currencyRow";
 
@@ -25,9 +27,23 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
 
 export const ContribuitionDetails = () => {
   const navigate = useNavigate();
+  const [status, setStatus] = useState("Pendente");
 
   const handleNavigateBack = () => {
     navigate(-1);
+  };
+
+  const handleAllocate = () => {
+    // Função que vai criar a movimentação do Aporte
+    // Distribuir o valor nos respectivos fundos e percentuais definidos para cada um
+
+    setStatus("Concluído");
+    toast("Sucesso", {
+      type: "success",
+      autoClose: 3000,
+    });
+
+    // Impedir que o status seja editado após a alocação
   };
 
   return (
@@ -93,6 +109,26 @@ export const ContribuitionDetails = () => {
               </div>
             </div>
           </div>
+          <div className="mt-6">
+            <Select
+              label="Status do aporte"
+              disabled={status === "Concluído"}
+              value={status}
+              onChange={(value) => value && setStatus(value)}
+              className="pt-2"
+            >
+              <Option value="Pendente">Pendente</Option>
+              <Option value="Aprovado">Aprovado</Option>
+              <Option value="Rejeitado">Rejeitado</Option>
+            </Select>
+          </div>
+          {status === "Aprovado" && (
+            <div className="mt-6">
+              <Button onClick={handleAllocate} color="green">
+                Alocar Aporte
+              </Button>
+            </div>
+          )}
         </div>
         <table className="w-full min-w-max table-auto text-left bg-WHITE rounded-md mt-8">
           <thead>

@@ -210,7 +210,7 @@ export const routesMapped: routeMapped[] = [
       },
       {
         name: "Detalhes do aporte",
-        path: "details",
+        path: "details/:id",
         element: <ContribuitionDetails />,
       },
     ],

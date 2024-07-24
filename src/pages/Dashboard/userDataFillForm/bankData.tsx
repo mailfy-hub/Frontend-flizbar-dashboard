@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, Input, Option, Select } from "@material-tailwind/react";
 import axios from "axios";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
 import { FormStepType } from ".";
 import { api } from "../../../client/api";
@@ -17,6 +17,7 @@ export interface bankType {
 }
 
 export const BankData = ({ handleConfirmationClick }: FormStepType) => {
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [bankList, setBankList] = useState<bankType[]>([]);
   const [filteredBanks, setFilteredBanks] = useState<bankType[]>([]);
 
@@ -96,6 +97,19 @@ export const BankData = ({ handleConfirmationClick }: FormStepType) => {
     handleBankList();
   }, []);
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setFilteredBanks([]);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="bg-WHITE p-8 w-full rounded-md mt-8">
@@ -131,12 +145,13 @@ export const BankData = ({ handleConfirmationClick }: FormStepType) => {
                 id="bankName"
                 value={formik.values.bankName}
                 onChange={handleBankSearch}
+                onSelect={handleBankSearch}
               />
               {formik.touched.bankName && formik.errors.bankName ? (
                 <div className="text-red-600">{formik.errors.bankName}</div>
               ) : null}
-              {filteredBanks.length > 0 && (
-                <div className="absolute z-10 w-full bg-white border border-gray-300 mt-1 rounded-md max-h-60 overflow-y-auto">
+              {filteredBanks.length > 0 && formik.values.bankName && (
+                <div ref={dropdownRef} className="absolute z-50 w-full bg-white border border-gray-300 mt-1 rounded-md max-h-60 overflow-y-auto">
                   {filteredBanks.map((bank, idx) => (
                     <div
                       key={idx}

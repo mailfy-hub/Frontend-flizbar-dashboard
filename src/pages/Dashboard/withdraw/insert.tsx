@@ -43,7 +43,7 @@ export const WithdrawInsert = () => {
               )}
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-              <Select label="Fundo de origem">
+              <Select label="Carteira">
                 <option value=""></option>
               </Select>
               <Input type="number" label="Valor do resgate" />

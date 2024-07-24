@@ -40,14 +40,14 @@ export const FundsInsert = () => {
     console.log("Dados enviados:", fund);
 
     try {
-      const response = await api.post("/funds", fund);
+      await api.post("/funds", fund);
       toast("Fundo adicionado com sucesso", {
         type: "success",
         autoClose: 3000,
       });
       navigate(-1);
     } catch (error) {
-      console.error("Erro ao adicionar fundo:", error.response ? error.response.data : error.message);
+      // console.error("Erro ao adicionar fundo:", error.response ? error.response.data : error.message);
       toast("Erro ao adicionar fundo", {
         type: "error",
         autoClose: 3000,
@@ -88,7 +88,7 @@ export const FundsInsert = () => {
                 name="currency"
                 value={fund.currency}
                 onChange={(value) =>
-                  handleInputChange("currency", value)
+                  value && handleInputChange("currency", value)
                 }
               >
                 <Option value="BRL">BRL</Option>
@@ -101,7 +101,7 @@ export const FundsInsert = () => {
                 name="type"
                 value={fund.type}
                 onChange={(value) =>
-                  handleInputChange("type", value)
+                  value && handleInputChange("type", value)
                 }
               >
                 <Option value="conventional">Convencional</Option>

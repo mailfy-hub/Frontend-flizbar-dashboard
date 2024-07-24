@@ -1,6 +1,6 @@
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Button, Input, Select } from "@material-tailwind/react";
+import { Button, Input, Option, Select } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { useAuth } from "../../../hook/auth";
@@ -51,6 +51,11 @@ export const ContribuitionInsert = () => {
                 label="Valor da cotação do dolar"
                 value={5.12}
               />
+              <Select label="Status">
+                M<Option>Pendente</Option>
+                M<Option>Aprovado</Option>
+                M<Option>Concluído</Option>
+              </Select>
             </div>
           </div>
         </div>
