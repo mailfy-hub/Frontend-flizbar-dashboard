@@ -1,0 +1,58 @@
+{
+  "welcome": "Bienvenido a nuestra aplicación",
+  "header": {},
+  "default": {
+    "login": {
+      "title": "Inicia sesión en tu cuenta",
+      "subtitle": "Qué bueno verte de nuevo, por favor inicia sesión",
+      "text": "Inicia sesión y visualiza tus ganancias",
+      "textSecondary": "tus ingresos.",
+      "labelEmail": "Tu correo electrónico",
+      "placeHolderEmail": "Ingresa tu correo electrónico",
+      "labelPassword": "Contraseña de acceso",
+      "forgotPassword": "Olvidé mi contraseña",
+      "button": "Iniciar sesión",
+      "register": "¿Aún no tienes una cuenta?",
+      "linkRegister": "Registrarse",
+      "back": "Volver al sitio",
+      "error": {
+        "email": "Correo electrónico inválido",
+        "password": "Contraseña inválida"
+      }
+    },
+    "register": {
+      "título": "Registrarse",
+      "subtitle": "Encantado de conocerte, regístrate.",
+      "labelName": "Tu nombre",
+      "placeHolderName": "Ingresa tu nombre",
+      "labelSurname": "Tu apellido",
+      "placeHolderSurname": "Ingrese su apellido",
+      "labelEmail": "Tu correo electrónico",
+      "placeHolderEmail": "Ingrese su correo electrónico",
+      "labelPassword": "Contraseña de acceso",
+      "textTerms": "He leído y acepto el ",
+      "linkTerms": "términos y condiciones",
+      "botón": "REGISTRARSE",
+      "haveAccount": "¿Ya tienes una cuenta?",
+      "linkLogin": "Iniciar sesión"
+    },
+    "termsAndConditions": {
+      "title": "Contrato de servicio",
+      "subtitle": "Términos y condiciones de uso de Flizbar",
+      "welcomeText": "¡Bienvenido a Flizbar! Al registrarte, aceptas los siguientes términos y condiciones de uso:",
+      "firstTerms": "1. Flizbar es una plataforma de gestión financiera basada en capital de mercado.",
+      "secondTerm": "2. El usuario es responsable de mantener la confidencialidad de su contraseña y cuenta.",
+      "thirdTerm": "3. Está prohibido utilizar la plataforma para actividades ilegales o no autorizadas.",
+      "fourthTerm": "4. Flizbar se reserva el derecho de cancelar cuentas que violen estos términos.",
+      "fifthTerm": "5. El uso continuado de la plataforma implica la aceptación de posibles cambios en los términos.",
+      "sixthTerm": "6. Flizbar no es responsable de las pérdidas financieras que surjan del uso de la plataforma.",
+      "seventhTerm": "7. La información proporcionada por el usuario debe ser exacta y veraz.",
+      "eighthTerm": "8. Aceptas recibir comunicaciones electrónicas de Flizbar.",
+      "ninthTerm": "9. Todos los datos del usuario se tratan de acuerdo con la política de privacidad de Flizbar.",
+      "tenthTerm": "10. Si tiene alguna pregunta, comuníquese con el soporte."
+    },
+    "labelPhone": "Teléfono",
+    "placeHolderLabelPhone": "Ingresa tu número",
+    "buttonClose": "Cerrar"
+  }
+}

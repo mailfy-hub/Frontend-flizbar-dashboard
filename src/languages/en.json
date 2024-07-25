@@ -1,0 +1,58 @@
+{
+  "welcome": "Welcome to our application",
+  "header": {},
+  "default": {
+    "login": {
+      "title": "Log in to your account",
+      "subtitle": "Good to see you again, please log in",
+      "text": "Log in and view your earnings",
+      "textSecondary": "your income.",
+      "labelEmail": "Your email",
+      "placeHolderEmail": "Enter your email",
+      "labelPassword": "Access password",
+      "forgotPassword": "I forgot my password",
+      "button": "Log in",
+      "register": "Don't have an account yet?",
+      "linkRegister": "Register",
+      "back": "Back to site",
+      "error": {
+        "email": "Invalid email",
+        "password": "Invalid password"
+      }
+    },
+    "register": {
+      "title": "Register",
+      "subtitle": "Nice to meet you, register.",
+      "labelName": "Your name",
+      "placeHolderName": "Enter your name",
+      "labelSurname": "Your last name",
+      "placeHolderSurname": "Enter your last name",
+      "labelEmail": "Your email",
+      "placeHolderEmail": "Enter your email",
+      "labelPassword": "Access password",
+      "textTerms": "I have read and accept the ",
+      "linkTerms": "terms and conditions",
+      "button": "REGISTER",
+      "haveAccount": "Already have an account?",
+      "linkLogin": "Log in"
+    },
+    "termsAndConditions": {
+      "title": "Service contract",
+      "subtitle": "Flizbar Terms and Conditions of Use",
+      "welcomeText": "Welcome to Flizbar! By registering, you agree to the following terms and conditions of use:",
+      "firstTerm": "1. Flizbar is a market capital-based financial management platform.",
+      "secondTerm": "2. The user is responsible for maintaining the confidentiality of their password and account.",
+      "thirdTerm": "3. Using the platform for illegal or unauthorized activities is prohibited.",
+      "fourthTerm": "4. Flizbar reserves the right to terminate accounts that violate these terms.",
+      "fifthTerm": "5. Continued use of the platform implies acceptance of possible changes to the terms.",
+      "sixthTerm": "6. Flizbar is not responsible for financial losses arising from the use of the platform.",
+      "seventhTerm": "7. Information provided by the user must be accurate and truthful.",
+      "eighthTerm": "8. You agree to receive electronic communications from Flizbar.",
+      "ninthTerm": "9. All user data is treated in accordance with Flizbar's privacy policy.",
+      "tenthTerm": "10. If you have any questions, please contact support."
+    },
+    "labelPhone": "Phone",
+    "placeHolderLabelPhone": "Enter your number",
+    "buttonClose": "Close"
+  }
+}

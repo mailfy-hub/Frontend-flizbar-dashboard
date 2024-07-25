@@ -1,0 +1,58 @@
+{
+  "welcome": "Bem vindo a nossa aplicação",
+  "header": {},
+  "default": {
+    "login": {
+      "title": "Entre na sua conta",
+      "subtitle": "Que bom te ver de novo, faça seu login",
+      "text": "Faça seu login e visualize",
+      "textSecondary": "seus rendimentos.",
+      "labelEmail": "Seu e-mail",
+      "placeHolderEmail": "Insira seu e-mail",
+      "labelPassword": "Senha de acesso",
+      "forgotPassword": "Esqueci minha senha",
+      "button": "Entrar",
+      "register": "Ainda não tem uma conta?",
+      "linkRegister": "Cadastrar",
+      "back": "Voltar ao site",
+      "error": {
+        "email": "E-mail inválido",
+        "password": "Senha inválida"
+      }
+    },
+    "register": {
+      "title": "Cadastre-se",
+      "subtitle": "Prazer em te conhecer, faça seu cadastro.",
+      "labelName": "Seu nome",
+      "placeHolderName": "Insira seu nome",
+      "labelSurname": "Seu sobrenome",
+      "placeHolderSurname": "Insira seu sobrenome",
+      "labelEmail": "Seu e-mail",
+      "placeHolderEmail": "Insira seu e-mail",
+      "labelPassword": "Senha de acesso",
+      "textTerms": "Eu li e aceito os ",
+      "linkTerms": "termos e condições",
+      "button": "CADASTRAR",
+      "haveAccount": "Já tem uma conta?",
+      "linkLogin": "Fazer login"
+    },
+    "termsAndConditions": {
+      "title": "Contrato de serviço",
+      "subtitle": "Termos e Condições de Uso da Flizbar",
+      "welcomeText": "Bem-vindo à Flizbar! Ao se cadastrar, você concorda com os seguintes termos e condições de uso:",
+      "firstTerm": "1. A Flizbar é uma plataforma de gerenciamento financeiro baseada em capital de mercado.",
+      "secondTerm": "2. O usuário é responsável por manter a confidencialidade de sua senha e conta.",
+      "thirdTerm": "3. É proibido utilizar a plataforma para atividades ilegais ou não autorizadas.",
+      "fourthTerm": "4. A Flizbar se reserva o direito de encerrar contas que violem estes termos.",
+      "fifthTerm": "5. O uso contínuo da plataforma implica na aceitação de possíveis alterações nos termos.",
+      "sixthTerm": "6. A Flizbar não se responsabiliza por perdas financeiras decorrentes do uso da plataforma.",
+      "seventhTerm": "7. As informações fornecidas pelo usuário devem ser precisas e verdadeiras.",
+      "eighthTerm": "8. O usuário concorda em receber comunicações eletrônicas da Flizbar.",
+      "ninthTerm": "9. Todos os dados do usuário são tratados conforme a política de privacidade da Flizbar.",
+      "tenthTerm": "10. Em caso de dúvidas, entre em contato com nosso suporte."
+    },
+    "labelPhone": "Telefone",
+    "placeHolderLabelPhone": "Insira seu número",
+    "buttonClose": "Fechar"
+  }
+}
