@@ -7,15 +7,20 @@ import {
 } from "@material-tailwind/react";
 import { InputHTMLAttributes } from "react";
 import { CountryType, countries } from "../../utils/number-config";
+import { useTranslation } from "react-i18next";
 
+interface InputWithDropdownProps extends InputHTMLAttributes<HTMLInputElement> {
+  selectedCountry: CountryType;
+  handleChangeCountry: (selected: CountryType) => void;
+}
 
-interface InputWithDropdownProps
-  extends InputHTMLAttributes<HTMLInputElement> {
-    selectedCountry: CountryType;
-    handleChangeCountry: (selected: CountryType) => void;
-  }
+export function InputWithDropdown({
+  selectedCountry,
+  handleChangeCountry,
+  ...props
+}: InputWithDropdownProps) {
+  const { t } = useTranslation();
 
-export function InputWithDropdown({ selectedCountry, handleChangeCountry,  ...props }: InputWithDropdownProps) {
   return (
     <div className="relative flex w-full ">
       <Menu placement="bottom-start">
@@ -54,7 +59,7 @@ export function InputWithDropdown({ selectedCountry, handleChangeCountry,  ...pr
       <input
         {...props}
         type="tel"
-        placeholder="Insira seu número"
+        placeholder={t("default.placeHolderLabelPhone")}
         className="rounded-l-none border-[1px] !border-blue-gray-200 h-10 w-full px-4 bg-transparent rounded-tr-md rounded-br-md"
       />
     </div>
