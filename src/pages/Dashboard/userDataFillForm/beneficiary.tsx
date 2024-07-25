@@ -32,7 +32,23 @@ interface dataAddressInformation {
   unidade: string;
 }
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const validFileExtensions = ["jpg", "gif", "png", "jpeg", "svg", "webp", "pdf"];
+
 export const Beneficiary = ({ handleConfirmationClick }: FormStepType) => {
+  const [personDocumentFile, setPersonDocumentFile] = useState<File | null>(
+    null
+  );
+  const [personDocumentFileError, setPersonDocumentFileError] =
+    useState<string>("");
+
+  const [proofAddressFile, setProofAddressFile] = useState<File | null>(null);
+  const [proofAddressFileError, setProofAddressFileError] =
+    useState<string>("");
+
+  const [additionalFile, setAdditionalFile] = useState<File | null>(null);
+  const [additionalFileError, _] = useState<string>("");
+
   const { profile } = useAuth();
   const [zipCodeData, setZipcodeData] =
     useState<dataAddressInformation | null>();
@@ -81,8 +97,32 @@ export const Beneficiary = ({ handleConfirmationClick }: FormStepType) => {
     initialValues,
     validationSchema,
     validateOnBlur: false,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      const isCheckedDocumentFile = handleCheckDocFiles(
+        personDocumentFile,
+        setPersonDocumentFileError,
+        true
+      );
+
+      const isCheckedProofAddress = handleCheckDocFiles(
+        proofAddressFile,
+        setProofAddressFileError,
+        true
+      );
+
+      if (!isCheckedProofAddress || !isCheckedDocumentFile) {
+        return;
+      }
+
       handlePostClientData(values);
+      await uploadFile(personDocumentFile, profile?.id!, "personDocument");
+      await uploadFile(proofAddressFile, profile?.id!, "proofAddress");
+
+      if (additionalFile) {
+        await uploadFile(additionalFile, profile?.id!, "additionalFile");
+      }
+
+      handleConfirmationClick();
     },
   });
 
@@ -176,6 +216,69 @@ export const Beneficiary = ({ handleConfirmationClick }: FormStepType) => {
   useEffect(() => {
     console.log(formik.errors);
   }, [formik.errors]);
+
+  const handleCheckDocFiles = (
+    file: File | null,
+    setError: React.Dispatch<React.SetStateAction<string>>,
+    isRequired: boolean
+  ): boolean => {
+    if (!file) {
+      if (!isRequired) {
+        return true;
+      }
+      setError("Você precisa anexar um arquivo.");
+      return false;
+    }
+
+    const fileExtension = file.name.split(".").pop()?.toLowerCase();
+
+    if (!fileExtension || !validFileExtensions.includes(fileExtension)) {
+      setError(
+        "Formato de arquivo não permitido. Apenas imagens (jpg, png, gif, svg) são aceitas."
+      );
+      return false;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      setError(
+        "O arquivo excede o limite de 10MB. Tente fazer o upload de um arquivo menor."
+      );
+      return false;
+    }
+
+    setError("");
+    return true;
+  };
+
+  const uploadFile = async (
+    file: File | null,
+    clientId: string,
+    docName: string
+  ): Promise<void> => {
+    if (!file) return;
+
+    const formData = new FormData();
+
+    const data = {
+      clientId: clientId,
+      name: docName,
+      identifier: "beneficiary",
+    };
+
+    formData.append("file", file);
+    formData.append("data", JSON.stringify(data));
+
+    try {
+      const response = await api.post("/attachment/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(`${data} uploaded:`, response.data);
+    } catch (error) {
+      console.error(`Error uploading ${data}:`, error);
+    }
+  };
 
   return (
     <form
@@ -543,6 +646,202 @@ export const Beneficiary = ({ handleConfirmationClick }: FormStepType) => {
           )}
         </div>
       </div>
+      {!isCheckedNotBeneficiary && (
+        <div className="bg-WHITE p-8 w-full rounded-md mt-8">
+          <div className="flex items-center gap-4">
+            <Icon height={16} icon={"heroicons:link-20-solid"} color="black" />
+            <SectionTitle size="sm" text="Anexos" />
+          </div>
+          <div className="mt-8 flex flex-col gap-8">
+            <div>
+              <div>
+                <p className="font-display text-body16 font-semibold text-BLACK">
+                  Documento RG ou CPF
+                </p>
+                {personDocumentFileError && (
+                  <p className="text-red-500 text-body16 font-semibold">
+                    {personDocumentFileError}
+                  </p>
+                )}
+              </div>
+
+              {personDocumentFile ? (
+                <div className="px-8 py-8 mt-4 group relative w-full md:h-[124px] rounded-md border-[1px] border-gray-400 border-dashed  transition-all flex flex-col md:flex-row justify-between md:items-center gap-2">
+                  <div className="flex flex-col gap-2">
+                    <p>{personDocumentFile?.name}</p>
+
+                    <div className="flex items-center gap-2">
+                      <Icon
+                        height={16}
+                        icon={"heroicons:check-circle"}
+                        className="text-green-500"
+                      />
+                      <p className="text-body16 font-semibold text-green-500">
+                        Arquivo carregado com sucesso
+                      </p>
+                    </div>
+                  </div>
+
+                  <Button
+                    className="w-full md:w-auto mt-4 md:mt-0"
+                    type="button"
+                    onClick={() => {
+                      setPersonDocumentFile(null);
+                    }}
+                  >
+                    Clique aqui para remover
+                  </Button>
+                </div>
+              ) : (
+                <div className="mt-4 group relative w-full h-[124px] rounded-md border-[1px] border-gray-400 border-dashed hover:border-GOLD_MAIN transition-all flex justify-center items-center gap-2">
+                  <Icon
+                    height={18}
+                    icon={"heroicons:document-arrow-down"}
+                    className="text-GRAY_400 group-hover:text-GOLD_MAIN"
+                  />
+                  <p className="text-body18 text-GRAY_400 font-display group-hover:text-BLACK">
+                    Clique aqui para selecionar seu arquivo
+                  </p>
+                  <input
+                    className="absolute opacity-0 top-0 right-0 bottom-0 left-0 cursor-pointer"
+                    type="file"
+                    name="personDocument"
+                    id="personDocument"
+                    onChange={(event) => {
+                      if (!event.currentTarget.files) return;
+                      setPersonDocumentFile(event.currentTarget.files[0]);
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+            <div>
+              <div>
+                <p className="font-display text-body16 font-semibold text-BLACK">
+                  Comprovante de residência
+                </p>
+                {proofAddressFileError && (
+                  <p className="text-red-500 text-body16 font-semibold">
+                    {proofAddressFileError}
+                  </p>
+                )}
+              </div>
+
+              {proofAddressFile ? (
+                <div className="px-8 py-8 mt-4 group relative w-full md:h-[124px] rounded-md border-[1px] border-gray-400 border-dashed  transition-all flex flex-col md:flex-row justify-between md:items-center gap-2">
+                  <div className="flex flex-col gap-2">
+                    <p>{proofAddressFile?.name}</p>
+
+                    <div className="flex items-center gap-2">
+                      <Icon
+                        height={16}
+                        icon={"heroicons:check-circle"}
+                        className="text-green-500"
+                      />
+                      <p className="text-body16 font-semibold text-green-500">
+                        Arquivo carregado com sucesso
+                      </p>
+                    </div>
+                  </div>
+
+                  <Button
+                    className="w-full md:w-auto mt-4 md:mt-0"
+                    type="button"
+                    onClick={() => {
+                      setProofAddressFile(null);
+                    }}
+                  >
+                    Clique aqui para remover
+                  </Button>
+                </div>
+              ) : (
+                <div className="mt-4 group relative w-full h-[124px] rounded-md border-[1px] border-gray-400 border-dashed hover:border-GOLD_MAIN transition-all flex justify-center items-center gap-2">
+                  <Icon
+                    height={18}
+                    icon={"heroicons:document-arrow-down"}
+                    className="text-GRAY_400 group-hover:text-GOLD_MAIN"
+                  />
+                  <p className="text-body18 text-GRAY_400 font-display group-hover:text-BLACK">
+                    Clique aqui para selecionar seu arquivo
+                  </p>
+                  <input
+                    className="absolute opacity-0 top-0 right-0 bottom-0 left-0 cursor-pointer"
+                    type="file"
+                    name="personDocument"
+                    id="personDocument"
+                    onChange={(event) => {
+                      if (!event.currentTarget.files) return;
+                      setProofAddressFile(event.currentTarget.files[0]);
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+            <div>
+              <div>
+                <p className="font-display text-body16 font-semibold text-BLACK">
+                  Documento complementar (Quando houver)
+                </p>
+                {additionalFileError && (
+                  <p className="text-red-500 text-body16 font-semibold">
+                    {additionalFileError}
+                  </p>
+                )}
+              </div>
+
+              {additionalFile ? (
+                <div className="px-8 py-8 mt-4 group relative w-full md:h-[124px] rounded-md border-[1px] border-gray-400 border-dashed  transition-all flex flex-col md:flex-row justify-between md:items-center gap-2">
+                  <div className="flex flex-col gap-2">
+                    <p>{additionalFile?.name}</p>
+
+                    <div className="flex items-center gap-2">
+                      <Icon
+                        height={16}
+                        icon={"heroicons:check-circle"}
+                        className="text-green-500"
+                      />
+                      <p className="text-body16 font-semibold text-green-500">
+                        Arquivo carregado com sucesso
+                      </p>
+                    </div>
+                  </div>
+
+                  <Button
+                    className="w-full md:w-auto mt-4 md:mt-0"
+                    type="button"
+                    onClick={() => {
+                      setAdditionalFile(null);
+                    }}
+                  >
+                    Clique aqui para remover
+                  </Button>
+                </div>
+              ) : (
+                <div className="mt-4 group relative w-full h-[124px] rounded-md border-[1px] border-gray-400 border-dashed hover:border-GOLD_MAIN transition-all flex justify-center items-center gap-2">
+                  <Icon
+                    height={18}
+                    icon={"heroicons:document-arrow-down"}
+                    className="text-GRAY_400 group-hover:text-GOLD_MAIN"
+                  />
+                  <p className="text-body18 text-GRAY_400 font-display group-hover:text-BLACK">
+                    Clique aqui para selecionar seu arquivo
+                  </p>
+                  <input
+                    className="absolute opacity-0 top-0 right-0 bottom-0 left-0 cursor-pointer"
+                    type="file"
+                    name="additionalDocument"
+                    id="additionalDocument"
+                    onChange={(event) => {
+                      if (!event.currentTarget.files) return;
+                      setAdditionalFile(event.currentTarget.files[0]);
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
       <div className="w-full flex justify-end mt-8">
         <Button className="bg-GOLD_MAIN w-full md:w-auto" type="submit">
           Próxima etapa

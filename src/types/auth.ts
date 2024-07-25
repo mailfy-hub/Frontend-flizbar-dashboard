@@ -26,6 +26,7 @@ export interface Attachment {
   storageKey: string;
   type: string;
   url: string;
+  identifier: string | null;
 }
 
 export interface Beneficiary {
