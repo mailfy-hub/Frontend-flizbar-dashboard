@@ -5,7 +5,7 @@ import { ScrollToTop } from "./utils/scrollToTop";
 import "react-tooltip/dist/react-tooltip.css";
 export function App() {
   const { i18n } = useTranslation();
-  const [language, setLanguage] = useState("pt");
+  const [language, setLanguage] = useState("en");
 
   useEffect(() => {
     i18n.changeLanguage(language);

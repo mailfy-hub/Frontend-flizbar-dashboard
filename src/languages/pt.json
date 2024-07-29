@@ -119,6 +119,25 @@
         "button": "ADICIONAR APORTE"
       }
     },
+    "rescues": {
+      "title": "Todos os resgates",
+      "tableTitle": "Tabela de resgates",
+      "text": "Veja informações sobre todos os seus resgates",
+      "code": "Código",
+      "client": "Cliente",
+      "found": "Fundo",
+      "value": "Valor",
+      "createdAt": "Data de criação",
+      "actions": "Ações",
+      "button": "ADICIONAR RESGATE",
+      "addRescueForm": {
+        "title": "Preencha o formulário de inclusão",
+        "subtitle": "Resgate",
+        "dateOfRescue": "Data do resgate",
+        "wallet": "Carteira",
+        "ransomValue": "Valor do resgate"
+      }
+    },
     "pagination": {
       "page": "Página",
       "previous": "Anterior",

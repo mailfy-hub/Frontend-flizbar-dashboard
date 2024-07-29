@@ -118,6 +118,25 @@
         "button": "ADD CONTRIBUTION"
       }
     },
+    "rescues": {
+      "title": "All rescues",
+      "tableTitle": "Rescues table",
+      "text": "View information about all your rescues",
+      "code": "Code",
+      "client": "Client",
+      "found": "Fund",
+      "value": "Amount",
+      "createdAt": "Created date",
+      "actions": "Actions",
+      "button": "ADD RESCUE",
+      "addRescueForm": {
+        "title": "Fill out the add form",
+        "subtitle": "Rescue",
+        "dateOfRescue": "Date of rescue",
+        "wallet": "Wallet",
+        "ransomValue": "Ransom value"
+      }
+    },
     "pagination": {
       "page": "Page",
       "previous": "Previous",

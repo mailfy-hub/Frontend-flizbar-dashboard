@@ -119,6 +119,25 @@
         "button": "AÑADIR CONTRIBUCIÓN"
       }
     },
+    "rescues": {
+      "title": "Todos los canjes",
+      "tableTitle": "Tabla de canjes",
+      "text": "Ver información sobre todos tus canjes",
+      "code": "Código",
+      "client": "Cliente",
+      "found": "Fondos",
+      "value": "Valor",
+      "createdAt": "Fecha de creación",
+      "actions": "Acciones",
+      "button": "AÑADIR CANJE",
+      "addRescueForm": {
+        "title": "Rellena el formulario de inclusión",
+        "subtitle": "Rescate",
+        "dateOfRescue": "Fecha del rescate",
+        "wallet": "billetera",
+        "ransomValue": "Valor del rescate"
+      }
+    },
     "pagination": {
       "page": "Página",
       "previous": "Anterior",
