@@ -138,6 +138,27 @@
         "ransomValue": "Valor do resgate"
       }
     },
+    "movements": {
+      "title": "Todas as movimentações",
+      "tableTitle": "Tabela de movimentações",
+      "text": "Visualize todas as suas movimentações no sistema de forma conjunta",
+      "code": "Código",
+      "client": "Cliente",
+      "date": "Data",
+      "type": "Tipo",
+      "found": "Fundo",
+      "value": "Valor",
+      "actions": "Ações",
+      "button": "ADICIONAR MOVIMENTAÇÃO",
+      "addMovementForm": {
+        "title": "Preencha o formulário de inclusão",
+        "subtitle": "Movimentação",
+        "dateOfMovement": "Data da movimentação",
+        "client": "Cliente",
+        "wallet": "Carteira",
+        "value": "Valor da movimentação"
+      }
+    },
     "pagination": {
       "page": "Página",
       "previous": "Anterior",

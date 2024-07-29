@@ -1,6 +1,4 @@
-import {
-  EyeIcon,
-} from "@heroicons/react/16/solid";
+import { EyeIcon } from "@heroicons/react/16/solid";
 import {
   Card,
   CardBody,
@@ -14,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { CurrencyRow } from "../../../components/table/currencyRow";
 import { useAuth } from "../../../hook/auth";
+import { useTranslation } from "react-i18next";
 
 interface TableRowProps {
   currency: "BRL" | "USD" | "EUR" | "JPY";
@@ -26,7 +25,7 @@ interface TableRowProps {
 }
 
 const TABLE_ROW: TableRowProps[] = [
-/*   {
+  /*   {
     code: "#TBR52536267",
     type: "Resgate",
     value: 120.0,
@@ -39,17 +38,32 @@ const TABLE_ROW: TableRowProps[] = [
 
 export const Movements = () => {
   const { userData } = useAuth();
-
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const handleNavigateDetails = () => {
     navigate("/contributions/details");
   };
   const TABLE_HEAD = userData?.isAdmin
-    ? ["Código", "Cliente", "Data", "Tipo", "Fundo", "Valor", "Ações"]
-    : ["Código", "Data", "Tipo", "Fundo", "Valor"];
+    ? [
+        `${t("default.movements.code")}`,
+        `${t("default.movements.client")}`,
+        `${t("default.movements.date")}`,
+        `${t("default.movements.type")}`,
+        `${t("default.movements.found")}`,
+        `${t("default.movements.value")}`,
+        `${t("default.movements.actions")}`,
+      ]
+    : [
+        `${t("default.movements.code")}`,
+        `${t("default.movements.date")}`,
+        `${t("default.movements.type")}`,
+        `${t("default.movements.found")}`,
+        `${t("default.movements.value")}`,
+      ];
   return (
     <div>
-      <SectionTitle text="Todas movimentações" />
+      <SectionTitle text={t("default.movements.title")} />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
           floated={false}
@@ -58,10 +72,10 @@ export const Movements = () => {
         >
           <div>
             <Typography variant="h6" color="black">
-              Tabela de movimentações
+              {t("default.movements.tableTitle")}
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
-              Visualize todas suas movimentações no sistema de forma conjunta
+              {t("default.movements.text")}
             </Typography>
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max"></div>
@@ -190,7 +204,10 @@ export const Movements = () => {
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-            Página 1 <span className="font-normal text-BLACK">de 1</span>
+            {t("default.pagination.page")} 1{" "}
+            <span className="font-normal text-BLACK">
+              {t("default.pagination.of")} 1
+            </span>
           </Typography>
           <div className="flex gap-4">
             {/* <Button variant="text" className="flex items-center gap-1">

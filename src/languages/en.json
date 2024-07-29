@@ -79,7 +79,7 @@
       "value": "value",
       "firstCard": "Contributions",
       "secondCard": "Withdrawals",
-      "thirdCard": "Transactions",
+      "thirdCard": "Movements",
       "fourthCard": "My account",
       "fifthCard": "Total",
       "yourWallet": "Your Wallet",
@@ -135,6 +135,27 @@
         "dateOfRescue": "Date of rescue",
         "wallet": "Wallet",
         "ransomValue": "Ransom value"
+      }
+    },
+    "movements": {
+      "title": "All movements",
+      "tableTitle": "Movement table",
+      "text": "See information about all your movements",
+      "code": "Code",
+      "client": "Client",
+      "date": "Date",
+      "type": "Type",
+      "found": "Fund",
+      "value": "Value",
+      "actions": "Actions",
+      "button": "ADD MOVEMENT",
+      "addMovementForm": {
+        "title": "Fill in the inclusion form",
+        "subtitle": "Movement",
+        "dateOfMovement": "Date of movement",
+        "client": "Client",
+        "wallet": "Wallet",
+        "value": "Movement value"
       }
     },
     "pagination": {
