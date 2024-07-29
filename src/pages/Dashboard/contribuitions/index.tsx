@@ -171,12 +171,8 @@ export const Contribuitions = () => {
         open={openConfimationDialog}
         handler={handleToggleConfirmationDialog}
       >
-        <DialogHeader>
-          Tem certeza que deseja <br /> deletar este registro?
-        </DialogHeader>
-        <DialogBody>
-          Essa ação é irreversível, tome cuidado ao prosseguir.
-        </DialogBody>
+        <DialogHeader>{t("default.modals.title")}</DialogHeader>
+        <DialogBody>{t("default.contributions.text")}</DialogBody>
         <DialogFooter>
           <Button
             variant="text"
@@ -184,14 +180,14 @@ export const Contribuitions = () => {
             onClick={handleCancelDeleteContribuition}
             className="mr-1"
           >
-            <span>Cancelar</span>
+            <span>{t("default.modals.buttonCancel")}</span>
           </Button>
           <Button
             variant="gradient"
             color="red"
             onClick={DeleteContribuitionAction}
           >
-            <span>Confirmar</span>
+            <span>{t("default.modals.buttonConfirm")}</span>
           </Button>
         </DialogFooter>
       </Dialog>
