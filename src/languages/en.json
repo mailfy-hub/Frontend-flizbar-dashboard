@@ -110,6 +110,12 @@
       "next": "Next",
       "of": "of"
     },
+    "modals": {
+      "title": "Are you sure you want to delete this record?",
+      "text": "This action is irreversible, be careful when proceeding.",
+      "buttonCancel": "Cancel",
+      "buttonConfirm": "Delete"
+    },
     "labelPhone": "Phone",
     "placeHolderLabelPhone": "Enter your number",
     "buttonClose": "Close"

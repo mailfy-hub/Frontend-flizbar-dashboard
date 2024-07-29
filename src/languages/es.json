@@ -111,6 +111,12 @@
       "next": "Siguiente",
       "of": "de"
     } ,
+    "modals": {
+      "title": "¿Estás seguro de que deseas eliminar este registro?",
+      "text": "Esta acción es irreversible, tenga cuidado al proceder.",
+      "buttonCancel": "Cancelar",
+      "buttonConfirm": "Eliminar"
+    },
     "labelPhone": "Teléfono",
     "placeHolderLabelPhone": "Ingresa tu número",
     "buttonClose": "Cerrar"

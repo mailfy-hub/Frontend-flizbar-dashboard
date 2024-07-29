@@ -102,7 +102,6 @@
       "createdAt": "Data de criação",
       "actions": "Ações",
       "button": "Adicionar aporte",
-
       "wallet": "Carteira",
       "value": "Valor"
     },
@@ -111,7 +110,13 @@
       "previous": "Anterior",
       "next": "Próximo",
       "of": "de"
-    } ,
+    },
+    "modals": {
+      "title": "Tem certeza que deseja deletar este registro?",
+      "text": "Essa ação é irreversível, tome cuidado ao prosseguir.",
+      "buttonCancel": "Cancelar",
+      "buttonConfirm": "Deletar"
+    },
     "labelPhone": "Telefone",
     "placeHolderLabelPhone": "Insira seu número",
     "buttonClose": "Fechar"
