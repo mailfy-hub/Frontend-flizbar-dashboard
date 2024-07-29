@@ -1,6 +1,20 @@
 {
   "welcome": "Bienvenido a nuestra aplicación",
-  "header": {},
+  "header": {
+    "dashboard": "Panel de control",
+    "users": "Usuarios",
+    "clients": "Clientes",
+    "founds": "Fondos",
+    "wallet": "billetera",
+    "aport": "Contribuciones",
+    "incomes": "Ingresos",
+    "rescues": "Redenciones",
+    "movements": "Movimientos",
+    "readjustments": "Reajustes",
+    "comparativeValues": "Valores comparativos",
+    "quotes": "Citas",
+    "interestCalculated": "Interés calculado"
+  },
   "default": {
     "login": {
       "title": "Inicia sesión en tu cuenta",
@@ -50,6 +64,31 @@
       "eighthTerm": "8. Aceptas recibir comunicaciones electrónicas de Flizbar.",
       "ninthTerm": "9. Todos los datos del usuario se tratan de acuerdo con la política de privacidad de Flizbar.",
       "tenthTerm": "10. Si tiene alguna pregunta, comuníquese con el soporte."
+    },
+    "dashboard": {
+      "title": "Panel de control",
+      "Subtitle": "PANEL HACER",
+      "typeUser": "ADMINISTRADOR",
+      "welcome": "Bienvenido",
+      "text": "Qué bueno verte de regreso, ¿qué haremos hoy?",
+      "quickAccess": "Acceso Rápido",
+      "titleFullfillForm": "Completa todos tus datos",
+      "textFullfillForm": "Completa los datos de tu cuenta, haz clic aquí para ser redirigido.",
+      "approximateTotalValue": "Valor total aproximado",
+      "infoApproxiTotalValue": "Los valores totales son estimados y pueden variar según el tipo de cambio del dólar del día de la transacción.",
+      "value": "valor",
+      "firstCard": "Contribuciones",
+      "secondCard": "Redenciones",
+      "thirdCard": "Movimientos",
+      "fourthCard": "Mi Cuenta",
+      "fifthCard": "Total",
+      "yourWallet": "Tu billetera",
+
+      "assetDevelopment": "Evolución Patrimonial",
+      "incomePercentage": "Porcentaje de ingresos",
+      "lowRisk": "Bajo Riesgo",
+      "highRisk": "Alto Riesgo",
+      "graphicalView": "Vista gráfica"
     },
     "labelPhone": "Teléfono",
     "placeHolderLabelPhone": "Ingresa tu número",

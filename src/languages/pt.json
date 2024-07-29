@@ -1,6 +1,20 @@
 {
   "welcome": "Bem vindo a nossa aplicação",
-  "header": {},
+  "header": {
+    "dashboard": "Dashboard",
+    "users": "Usuários",
+    "clients": "Clientes",
+    "founds": "Fundos",
+    "wallet": "Carteira",
+    "aport": "Aportes",
+    "incomes": "Rendimentos",
+    "rescues": "Ressgates",
+    "movements": "Movimentações",
+    "readjustments": "Readequações",
+    "comparativeValues": "Valores comparativos",
+    "quotes": "Cotações",
+    "interestCalculated": "Juros calculados"
+  },
   "default": {
     "login": {
       "title": "Entre na sua conta",
@@ -50,6 +64,31 @@
       "eighthTerm": "8. O usuário concorda em receber comunicações eletrônicas da Flizbar.",
       "ninthTerm": "9. Todos os dados do usuário são tratados conforme a política de privacidade da Flizbar.",
       "tenthTerm": "10. Em caso de dúvidas, entre em contato com nosso suporte."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "Subtitle": "PAINEL DO ",
+      "typeUser": "ADMINISTRADOR",
+      "welcome": "Bem-vindo",
+      "text": "Que bom te você de volta, o que faremos hoje?",
+      "quickAccess": "Acesso Rápido",
+      "titleFullfillForm": "Preencha com todos os seus dados",
+      "textFullfillForm": "Complete os dados da sua conta, clique aqui para ser redirecionado.",
+      "approximateTotalValue": "Valor total aproximado",
+      "infoApproxiTotalValue": "Os valores totais são estimados e podem variar de acordo com a cotação do dólar no dia da transação.",
+      "value": "valor",
+      "firstCard": "Aportes",
+      "secondCard": "Resgates",
+      "thirdCard": "Movimentações",
+      "fourthCard": "Minha conta",
+      "fifthCard": "Total",
+      "yourWallet": "Sua carteira",
+      "assetDevelopment": "Evolução Patrimonial",
+      "incomePercentage": "Percentual de Rendimentos",
+      "lowRisk": "Baixo Risco",
+      "highRisk": "Alto Risco",
+      "graphicalView": "Visualização Gráfica",
+      "": ""
     },
     "labelPhone": "Telefone",
     "placeHolderLabelPhone": "Insira seu número",

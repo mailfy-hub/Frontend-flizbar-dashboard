@@ -1,6 +1,20 @@
 {
   "welcome": "Welcome to our application",
-  "header": {},
+  "header": {
+      "dashboard": "Dashboard",
+      "users": "Users",
+      "clients": "Clients",
+      "founds": "Funds",
+      "wallet": "Wallet",
+      "aport": "Contributions",
+      "incomes": "Incomes",
+      "rescues": "Redemptions",
+      "movements": "Movements",
+      "readjustments": "Readjustments",
+      "comparativeValues": "Comparative values",
+      "quotes": "Quotes",
+      "interestCalculated": "Calculated interest"
+  },
   "default": {
     "login": {
       "title": "Log in to your account",
@@ -50,6 +64,30 @@
       "eighthTerm": "8. You agree to receive electronic communications from Flizbar.",
       "ninthTerm": "9. All user data is treated in accordance with Flizbar's privacy policy.",
       "tenthTerm": "10. If you have any questions, please contact support."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "Subtitle": "DASHBOARD",
+      "typeUser": "ADMINISTRATOR",
+      "welcome": "Welcome",
+      "text": "Good to have you back, what are we going to do today?",
+      "quickAccess": "Quick Access",
+      "titleFullfillForm": "Fill in all your details",
+      "textFullfillForm": "Complete your account details, click here to be redirected.",
+      "approximateTotalValue": "Approximate total value",
+      "infoApproxiTotalValue": "Total values ​​are estimated and may vary depending on the dollar exchange rate on the day of the transaction.",
+      "value": "value",
+      "firstCard": "Contributions",
+      "secondCard": "Withdrawals",
+      "thirdCard": "Transactions",
+      "fourthCard": "My account",
+      "fifthCard": "Total",
+      "yourWallet": "Your Wallet",
+      "assetDevelopment": "Asset Development", 
+      "incomePercentage": "Income Percentage", 
+      "lowRisk": "Low Risk",
+      "highRisk": "High Risk",
+      "graphicalView": "Graphical View"
     },
     "labelPhone": "Phone",
     "placeHolderLabelPhone": "Enter your number",
