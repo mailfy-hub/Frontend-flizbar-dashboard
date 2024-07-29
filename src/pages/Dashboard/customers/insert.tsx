@@ -112,8 +112,14 @@ export const CustomerInsert = () => {
                 <Input type="date" label="Date de nascimento*" />
               )}
               <Select label="Nacionalidade*">
-                <Option>Brasileiro</Option>
-                <Option>Outra</Option>
+                <Option value="Brasileiro">Brasileiro</Option>
+                <Option value="Português">Português</Option>
+                <Option value="Argentino">Argentino</Option>
+                <Option value="Iraniano">Iraniano</Option>
+                <Option value="Americano">Americano</Option>
+                <Option value="Inglês">Inglês</Option>
+                <Option value="Espanhol">Espanhol</Option>
+                <Option value="Outra">Outra</Option>
 
               </Select>
             </div>

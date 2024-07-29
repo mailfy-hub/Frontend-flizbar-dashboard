@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Button, Input, Option, Select } from "@material-tailwind/react";
+import { Button, Input, Option, Select, Typography } from "@material-tailwind/react";
 import axios from "axios";
 import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
@@ -26,7 +26,7 @@ export const BankData = ({ handleConfirmationClick }: FormStepType) => {
     accountType: Yup.string().required("Tipo da conta é obrigatório"),
     bankName: Yup.string().required("Nome do banco é obrigatório"),
     accountNumber: Yup.string().required("Número da conta é obrigatório"),
-    accountDigit: Yup.string().required("Dígito da conta é obrigatório"),
+    accountDigit: Yup.string(),
     agencyNumber: Yup.string(),
     agencyDigit: Yup.string(),
     pixKeyType: Yup.string(),
@@ -146,10 +146,10 @@ export const BankData = ({ handleConfirmationClick }: FormStepType) => {
                 value={formik.values.bankName}
                 onChange={handleBankSearch}
                 onSelect={handleBankSearch}
+                error={
+                  formik.touched.bankName && Boolean(formik.errors.bankName)
+                }
               />
-              {formik.touched.bankName && formik.errors.bankName ? (
-                <div className="text-red-600">{formik.errors.bankName}</div>
-              ) : null}
               {filteredBanks.length > 0 && formik.values.bankName && (
                 <div ref={dropdownRef} className="absolute z-50 w-full bg-white border border-gray-300 mt-1 rounded-md max-h-60 overflow-y-auto">
                   {filteredBanks.map((bank, idx) => (
@@ -191,22 +191,13 @@ export const BankData = ({ handleConfirmationClick }: FormStepType) => {
                 Boolean(formik.errors.agencyNumber)
               }
             />
-            {formik.touched.agencyNumber && formik.errors.agencyNumber ? (
-              <div className="text-red-600">{formik.errors.agencyNumber}</div>
-            ) : null}
             <Input
               type="text"
               label="Dígito da agência"
               name="agencyDigit"
               value={formik.values.agencyDigit}
               onChange={formik.handleChange}
-              error={
-                formik.touched.agencyDigit && Boolean(formik.errors.agencyDigit)
-              }
             />
-            {formik.touched.agencyDigit && formik.errors.agencyDigit ? (
-              <div className="text-red-600">{formik.errors.agencyDigit}</div>
-            ) : null}
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             <Input
@@ -220,23 +211,13 @@ export const BankData = ({ handleConfirmationClick }: FormStepType) => {
                 Boolean(formik.errors.accountNumber)
               }
             />
-            {formik.touched.accountNumber && formik.errors.accountNumber ? (
-              <div className="text-red-600">{formik.errors.accountNumber}</div>
-            ) : null}
             <Input
               type="text"
               label="Dígito da conta"
               name="accountDigit"
               value={formik.values.accountDigit}
               onChange={formik.handleChange}
-              error={
-                formik.touched.accountDigit &&
-                Boolean(formik.errors.accountDigit)
-              }
             />
-            {formik.touched.accountDigit && formik.errors.accountDigit ? (
-              <div className="text-red-600">{formik.errors.accountDigit}</div>
-            ) : null}
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -248,9 +229,6 @@ export const BankData = ({ handleConfirmationClick }: FormStepType) => {
               onChange={(selectedValue) => {
                 formik.setFieldValue("pixKeyType", selectedValue);
               }}
-              error={
-                formik.touched.pixKeyType && Boolean(formik.errors.pixKeyType)
-              }
             >
               <Option value="E-mail">Chave e-mail</Option>
               <Option value="Telefone">Chave número de telefone</Option>
@@ -269,7 +247,12 @@ export const BankData = ({ handleConfirmationClick }: FormStepType) => {
           </div>
         </div>
       </div>
-      <div className="w-full flex justify-end mt-8">
+      <div className={`w-full flex ${formik.isValid ? 'justify-end' : 'justify-between'} mt-8`}>
+        {!formik.isValid && (
+          <Typography variant="small" className="text-red-500">
+            Os campos marcados são obrigatórios
+          </Typography>
+        )}
         <Button className="bg-GOLD_MAIN w-full md:w-auto" type="submit">
           Próxima etapa
         </Button>

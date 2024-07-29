@@ -155,7 +155,7 @@ export const Attachments = ({ handleConfirmationClick }: FormStepType) => {
       <div className="bg-WHITE p-8 w-full rounded-md mt-8">
         <div className="flex items-center gap-4">
           <Icon height={16} icon={"heroicons:link-20-solid"} color="black" />
-          <SectionTitle size="sm" text="Anexos" />
+          <SectionTitle size="sm" text="Meus Anexos" />
         </div>
         <div className="mt-8 flex flex-col gap-8">
           {profile?.clientDetails?.personType === "pf" ? (

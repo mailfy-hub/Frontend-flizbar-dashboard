@@ -69,6 +69,7 @@ export const Address = ({ handleConfirmationClick }: FormStepType) => {
     },
   });
 
+
   const handlePostAddressInformation = async (data: FormValues) => {
     try {
       const dataFormatted = {
@@ -194,6 +195,7 @@ export const Address = ({ handleConfirmationClick }: FormStepType) => {
                   formik.setFieldValue("addressType", selectedValue)
                 }
                 value={formik.values.addressType}
+                error={formik.touched.addressType && Boolean(formik.errors.addressType)}
               >
                 <Option value="Residencial">Residencial</Option>
                 <Option value="Comercial">Comercial</Option>
@@ -205,6 +207,7 @@ export const Address = ({ handleConfirmationClick }: FormStepType) => {
                 label="Cidade"
                 onChange={formik.handleChange}
                 value={formik.values.city}
+                error={formik.touched.city && Boolean(formik.errors.city)}
               />
               <Select
                 id="state"
@@ -213,6 +216,7 @@ export const Address = ({ handleConfirmationClick }: FormStepType) => {
                   formik.setFieldValue("state", selectedValeu)
                 }
                 value={formik.values.state}
+                error={formik.touched.state && Boolean(formik.errors.state)}
               >
                 <Option value="AC">AC</Option>
                 <Option value="AL">AL</Option>
@@ -252,6 +256,7 @@ export const Address = ({ handleConfirmationClick }: FormStepType) => {
                 label="Logradouro"
                 onChange={formik.handleChange}
                 value={formik.values.street}
+                error={formik.touched.street && Boolean(formik.errors.street)}
               />
               <Input
                 id="number"
@@ -259,6 +264,7 @@ export const Address = ({ handleConfirmationClick }: FormStepType) => {
                 label="Número"
                 onChange={formik.handleChange}
                 value={formik.values.number}
+                error={formik.touched.number && Boolean(formik.errors.number)}
               />
               <Input
                 id="neighborhood"
@@ -266,6 +272,7 @@ export const Address = ({ handleConfirmationClick }: FormStepType) => {
                 label="Bairro"
                 onChange={formik.handleChange}
                 value={formik.values.neighborhood}
+                error={formik.touched.neighborhood && Boolean(formik.errors.neighborhood)}
               />
             </div>
           )}
@@ -289,7 +296,12 @@ export const Address = ({ handleConfirmationClick }: FormStepType) => {
           )}
         </div>
       </div>
-      <div className="w-full flex justify-end mt-8">
+      <div className={`w-full flex ${formik.isValid ? 'justify-end' : 'justify-between'} mt-8`}>
+        {!formik.isValid && (
+          <Typography variant="small" className="text-red-500">
+            Os campos marcados são obrigatórios
+          </Typography>
+        )}
         <Button className="bg-GOLD_MAIN w-full md:w-auto" type="submit">
           Próxima etapa
         </Button>
