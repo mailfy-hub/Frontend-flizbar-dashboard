@@ -89,6 +89,27 @@
       "highRisk": "High Risk",
       "graphicalView": "Graphical View"
     },
+      "contributions": {
+      "title": "All contributions",
+      "tableTitle": "Contributions table",
+      "text": "See information about all your contributions",
+      "code": "Code",
+      "client": "Client",
+      "contributionValue": "Contribution value",
+      "dollarValue": "Value in dollars",
+      "status": "Status",
+      "createdAt": "Creation date",
+      "actions": "Actions",
+      "button": "Add contribution",
+      "wallet": "Wallet",
+      "value": "Value"
+    },
+    "pagination": {
+      "page": "Page",
+      "previous": "Previous",
+      "next": "Next",
+      "of": "of"
+    },
     "labelPhone": "Phone",
     "placeHolderLabelPhone": "Enter your number",
     "buttonClose": "Close"

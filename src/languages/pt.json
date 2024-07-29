@@ -90,6 +90,28 @@
       "graphicalView": "Visualização Gráfica",
       "": ""
     },
+    "contributions": {
+      "title": "Todos os aportes",
+      "tableTitle": "Tabela de aportes",
+      "text": "Veja informações sobre todos os seus aportes",
+      "code": "Código",
+      "client": "Cliente",
+      "contributionValue": "Valor do aporte",
+      "dollarValue": "Valor em dólar",
+      "status": "Status",
+      "createdAt": "Data de criação",
+      "actions": "Ações",
+      "button": "Adicionar aporte",
+
+      "wallet": "Carteira",
+      "value": "Valor"
+    },
+    "pagination": {
+      "page": "Página",
+      "previous": "Anterior",
+      "next": "Próximo",
+      "of": "de"
+    } ,
     "labelPhone": "Telefone",
     "placeHolderLabelPhone": "Insira seu número",
     "buttonClose": "Fechar"

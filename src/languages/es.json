@@ -90,6 +90,27 @@
       "highRisk": "Alto Riesgo",
       "graphicalView": "Vista gráfica"
     },
+    "contributions": {
+      "title": "Todas las contribuciones",
+      "tableTitle": "Tabla de contribuciones",
+      "text": "Ver información de todos tus aportes",
+      "code": "Código",
+      "client": "Cliente",
+      "contributionValue": "Valor de la contribución",
+      "dollarValue": "Valor en dólares",
+      "status": "Estado",
+      "date": "Fecha de creación",
+      "actions": "Acciones",
+      "button": "Agregar contribución",
+      "wallet": "billetera",
+      "value": "Valor"
+    },
+    "pagination": {
+      "page": "Página",
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "of": "de"
+    } ,
     "labelPhone": "Teléfono",
     "placeHolderLabelPhone": "Ingresa tu número",
     "buttonClose": "Cerrar"

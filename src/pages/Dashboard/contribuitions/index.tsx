@@ -29,22 +29,33 @@ import SuccessDialog from "../../../components/successDialog";
 import { useAuth } from "../../../hook/auth";
 import { Contribuition } from "../../../types/dashboard/contribuitions";
 import { formatDate } from "../../../utils/formatDate";
-
-
-
-
+import { useTranslation } from "react-i18next";
 
 export const Contribuitions = () => {
   const { userData } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const handleInsert = () => {
     navigate("insert");
   };
 
-  const TABLE_HEAD =
-    userData?.isAdmin
-      ? ["Código", "Cliente", "Valor do Aporte", "Valor do Dólar", "Status", "Data de criação", "Ações"]
-      : ["Código", "Carteira", "Valor", "Data de criação"];
+  const TABLE_HEAD = userData?.isAdmin
+    ? [
+        `${t("default.contributions.code")}`,
+        `${t("default.contributions.client")}`,
+        `${t("default.contributions.contributionValue")}`,
+        `${t("default.contributions.dollarValue")}`,
+        `${t("default.contributions.status")}`,
+        `${t("default.contributions.createdAt")}`,
+        `${t("default.contributions.actions")}`,
+      ]
+    : [
+        `${t("default.contributions.code")}`,
+        `${t("default.contributions.wallet")}`,
+        `${t("default.contributions.value")}`,
+        `${t("default.contributions.createdAt")}`,
+      ];
 
   const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
@@ -71,9 +82,9 @@ export const Contribuitions = () => {
     navigate("details");
   };
 
-
-
-  const [contribuitionsList, setContribuitionsList] = useState<Contribuition[]>([]);
+  const [contribuitionsList, setContribuitionsList] = useState<Contribuition[]>(
+    []
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [_totalItems, setTotalItems] = useState(0);
@@ -85,9 +96,6 @@ export const Contribuitions = () => {
         `contributions?page=${page}&itemsPerPage=${itemsPerPage}`
       );
 
-      console.log('API Response:', data); // Log adicional
-
-   
       const mappedData = data.map((contribuition: Contribuition) => {
         return {
           ...contribuition,
@@ -105,7 +113,6 @@ export const Contribuitions = () => {
   useEffect(() => {
     getContribuitionsList(currentPage);
   }, [currentPage]);
-
 
   const [contribuitionIdSelected, setContribuitionIdSelected] = useState("");
   const handleContribuitionIdSelected = (id: string) => {
@@ -188,7 +195,7 @@ export const Contribuitions = () => {
           </Button>
         </DialogFooter>
       </Dialog>
-      <SectionTitle text="Todos aportes" />
+      <SectionTitle text={t("default.contributions.title")} />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
           floated={false}
@@ -197,10 +204,10 @@ export const Contribuitions = () => {
         >
           <div>
             <Typography variant="h6" color="black">
-              Tabela de aportes
+              {t("default.contributions.tableTitle")}
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
-              Veja informações sobre todos seus aportes
+              {t("default.contributions.text")}
             </Typography>
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
@@ -210,7 +217,7 @@ export const Contribuitions = () => {
               }}
               className="md:max-w-fit w-full bg-GOLD_MAIN"
             >
-              ADICIONAR APORTE
+              {t("default.contributions.button")}
             </Button>
           </div>
         </CardHeader>
@@ -232,28 +239,47 @@ export const Contribuitions = () => {
               </tr>
             </thead>
             <tbody>
-            {contribuitionsList &&
-                contribuitionsList.map(({ id, clientID,   contributionAmount,  dollarValue, status , createdAt}) => {
-
-       
-                  const classes = "!p-6 ";
-                  return (
-                    <tr key={id}>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="!font-semibold"
-                            >
-                              {id}
-                            </Typography>
+              {contribuitionsList &&
+                contribuitionsList.map(
+                  ({
+                    id,
+                    clientID,
+                    contributionAmount,
+                    dollarValue,
+                    status,
+                    createdAt,
+                  }) => {
+                    const classes = "!p-6 ";
+                    return (
+                      <tr key={id}>
+                        <td className={classes}>
+                          <div className="flex items-center gap-3">
+                            <div>
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="!font-semibold"
+                              >
+                                {id}
+                              </Typography>
+                            </div>
                           </div>
-                        </div>
-                      </td>
+                        </td>
 
-                      {userData?.isAdmin && (
+                        {userData?.isAdmin && (
+                          <td className={classes}>
+                            <div>
+                              <Typography
+                                variant="small"
+                                color="black"
+                                className="!font-normal"
+                              >
+                                {clientID}
+                              </Typography>
+                            </div>
+                          </td>
+                        )}
+
                         <td className={classes}>
                           <div>
                             <Typography
@@ -261,93 +287,87 @@ export const Contribuitions = () => {
                               color="black"
                               className="!font-normal"
                             >
-                              {clientID}
+                              {contributionAmount}
                             </Typography>
                           </div>
                         </td>
-                      )}
 
-                      <td className={classes}>
-                        <div>
+                        <td className={classes}>
                           <Typography
                             variant="small"
-                            color="black"
-                            className="!font-normal"
+                            className="!font-normal text-gray-600"
                           >
-                            {contributionAmount}
+                            {dollarValue}
                           </Typography>
-                        </div>
-                      </td>
-
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          className="!font-normal text-gray-600"
-                        >
-                          {dollarValue}
-                        </Typography>
-                      </td>
-
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          className="!font-normal text-gray-600"
-                        >
-                          {status}
-                        </Typography>
-                      </td>
-
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          className="!font-normal text-gray-600"
-                        >
-                          {createdAt}
-                        </Typography>
-                      </td>
-
-                      {userData?.isAdmin && (
-                        <td className={`${classes} flex justify-start `}>
-                          <Tooltip content="Visualizar">
-                            <IconButton onClick={handleDetails} variant="text">
-                              <EyeIcon className="w-4 h-4 text-gray-400" />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip content="Comprovante">
-                            <IconButton
-                              onClick={handleToggleDialogImage}
-                              variant="text"
-                            >
-                              <DocumentArrowDownIcon className="w-4 h-4 text-gray-400" />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip content="Deletar usuário">
-                        <IconButton onClick={() => handleDeleteContribuition(id)} variant="text">
-                          <TrashIcon className="w-4 h-4 text-gray-400" />
-                        </IconButton>
-                      </Tooltip>
                         </td>
-                      )}
-                    </tr>
-                  );
-                }
-              )}
+
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            className="!font-normal text-gray-600"
+                          >
+                            {status}
+                          </Typography>
+                        </td>
+
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            className="!font-normal text-gray-600"
+                          >
+                            {createdAt}
+                          </Typography>
+                        </td>
+
+                        {userData?.isAdmin && (
+                          <td className={`${classes} flex justify-start `}>
+                            <Tooltip content="Visualizar">
+                              <IconButton
+                                onClick={handleDetails}
+                                variant="text"
+                              >
+                                <EyeIcon className="w-4 h-4 text-gray-400" />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip content="Comprovante">
+                              <IconButton
+                                onClick={handleToggleDialogImage}
+                                variant="text"
+                              >
+                                <DocumentArrowDownIcon className="w-4 h-4 text-gray-400" />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip content="Deletar usuário">
+                              <IconButton
+                                onClick={() => handleDeleteContribuition(id)}
+                                variant="text"
+                              >
+                                <TrashIcon className="w-4 h-4 text-gray-400" />
+                              </IconButton>
+                            </Tooltip>
+                          </td>
+                        )}
+                      </tr>
+                    );
+                  }
+                )}
             </tbody>
           </table>
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-          Página {currentPage} de {totalPages}
+            {t("default.pagination.page")} {currentPage}{" "}
+            {t("default.pagination.of")} {totalPages}
           </Typography>
           <div className="flex gap-4">
-          <Button
+            <Button
               variant="text"
               className="flex items-center gap-1"
               onClick={handlePreviousPage}
               disabled={currentPage === 1}
             >
               <ChevronLeftIcon strokeWidth={3} className="h-3 w-3" />
-              Anterior
+              {t("default.pagination.previous")}
             </Button>
             <Button
               variant="text"
@@ -355,7 +375,7 @@ export const Contribuitions = () => {
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
             >
-              Próximo
+              {t("default.pagination.next")}
               <ChevronRightIcon strokeWidth={3} className="h-3 w-3" />
             </Button>
           </div>
