@@ -5,15 +5,14 @@ import {
   DefaultLineChartConfig,
 } from "../../../components/lineChart";
 import { SectionTitle } from "../../../components/sectionTitle";
-
 import { Props } from "react-apexcharts";
 import { useAuth } from "../../../hook/auth";
-
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import ImageHeroAdmin from "../../../assets/admin-banner-image.png";
+import { useTranslation } from "react-i18next";
 
 const ChartRendimentosData: Props = {
   type: "line",
@@ -127,7 +126,7 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 export const Home = () => {
   const { userData, isFullfiledAccountInfo } = useAuth();
-
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const handleNavigateFullfillForm = () => {
@@ -150,11 +149,10 @@ export const Home = () => {
                 </div>
                 <div className="w-full">
                   <h4 className="font-display font-semibold text-BLACK text-body18 leading-tight">
-                    Preencha com todos seus dados
+                    {t("default.dashboard.titleFullfillForm")}
                   </h4>
                   <p className="font-body font-normal text-GRAY_400 text-body16 mt-1">
-                    Complete os dados da sua conta, clique aqui para ser
-                    redirecionado.
+                    {t("default.dashboard.textFullfillForm")}
                   </p>
                 </div>
               </div>
@@ -167,17 +165,19 @@ export const Home = () => {
             </div>
           )}
           <div className="">
-            <SectionTitle text="Sua carteira" />
+            <SectionTitle text={t("default.dashboard.yourWallet")} />
             <div className="grid grid-cols-1 md:grid-cols-4 md:flex-row gap-0 md:gap-8 mt-8">
               <div className="col-span-3 w-full grid md:grid-cols-3 gap-8">
                 <div className="col-span-2 w-full bg-GOLD_DARK h-[124px] rounded-lg p-6 flex flex-col justify-between">
                   <div className="">
                     <p className="font-display font-medium text-WHITE text-body16 leading-tight flex gap-2">
-                      Valor Total Aproximado
+                      {t("default.dashboard.approximateTotalValue")}
                       <span
                         className="cursor-pointer "
                         data-tooltip-id="cotation-tooltip"
-                        data-tooltip-content="Os valores totais são estimados e podem variar de acordo com a cotação do dólar no dia da transação."
+                        data-tooltip-content={t(
+                          "default.dashboard.infoApproxiTotalValue"
+                        )}
                         style={{
                           maxWidth: "248px",
                           textAlign: "center",
@@ -258,13 +258,15 @@ export const Home = () => {
         <div className="w-full h-[248px] bg-GRAY_800 rounded-md p-8 flex items-center justify-between">
           <div className="h-full w-full flex flex-col justify-center">
             <span className="font-body font-normal uppercase text-GOLD_DARK text-sm14">
-              PAINEL DO <b>ADMISTRADOR</b>
+              {t("default.dashboard.Subtitle")}{" "}
+              <b>{t("default.dashboard.typeUser")}</b>
             </span>
             <h1 className="font-display font-normal text-white text-head32 mt-2">
-              Bem-vindo <b>{userData?.name.split(" ")[0]}</b>
+              {t("default.dashboard.welcome")}{" "}
+              <b>{userData?.name.split(" ")[0]}</b>
             </h1>
             <p className="font-body font-normal text-GRAY_500 text-body18 mt-2">
-              Que bom ter você devolta, o que faremos hoje?
+              {t("default.dashboard.text")}
             </p>
           </div>
           <div>
@@ -273,27 +275,27 @@ export const Home = () => {
         </div>
       )}
       <div className="mt-12">
-        <SectionTitle text="Acesso Rápido" />
+        <SectionTitle text={t("default.dashboard.quickAccess")} />
         <div className="w-full mt-8 grid md:grid-cols-4 gap-8">
           <FastAccessButton
             icon={"radix-icons:dashboard"}
             link="/contributions"
-            pageName="Aportes"
+            pageName={t("default.dashboard.firstCard")}
           />
           <FastAccessButton
             icon={"heroicons:arrow-uturn-down"}
             link="/withdraw"
-            pageName="Resgates"
+            pageName={t("default.dashboard.secondCard")}
           />
           <FastAccessButton
             icon={"heroicons:arrows-right-left"}
             link="/movements"
-            pageName="Movimentações"
+            pageName={t("default.dashboard.thirdCard")}
           />
           <FastAccessButton
             icon={"heroicons:user-circle-16-solid"}
             link="/my-account"
-            pageName="Minha conta"
+            pageName={t("default.dashboard.fourthCard")}
           />
         </div>
       </div>
@@ -305,13 +307,13 @@ export const Home = () => {
                */}{" "}
               <DefaultLineChart
                 chartProps={ChartRendimentosData}
-                chartTitle="Total"
-                chartSubtitle="Evolução Patrimonial"
+                chartTitle={t("default.dashboard.fifthCard")}
+                chartSubtitle={t("default.dashboard.assetDevelopment")}
               />
               <DefaultLineChart
                 chartProps={ChartRendimentosPercentualData}
-                chartTitle="Total"
-                chartSubtitle="Percentual de Rendimentos"
+                chartTitle={t("default.dashboard.fifthCard")}
+                chartSubtitle={t("default.dashboard.incomePercentage")}
               />
             </div>
           </div>
@@ -322,30 +324,30 @@ export const Home = () => {
               <DefaultLineChart
                 chartProps={ChartRendimentosData}
                 chartTitle="T-Bond USA"
-                chartSubtitle="Evolução Patrimonial"
+                chartSubtitle={t("default.dashboard.assetDevelopment")}
               />
               <DefaultLineChart
                 chartProps={ChartRendimentosPercentualData}
                 chartTitle="T-Bond USA"
-                chartSubtitle="Percentual de Rendimentos"
+                chartSubtitle={t("default.dashboard.incomePercentage")}
               />
             </div>
           </div>
 
           <div className="mt-12">
-            <SectionTitle text="Visualização Gráfica" />
+            <SectionTitle text={t("default.dashboard.graphicalView")} />
             <div className="grid md:grid-cols-2 gap-8 mt-8">
               {/*                 <Chart {...ChartRendimentosData} />
                */}{" "}
               <DefaultLineChart
                 chartProps={ChartRendimentosData}
                 chartTitle="T-Bond Brazil"
-                chartSubtitle="Evolução Patrimonial"
+                chartSubtitle={t("default.dashboard.assetDevelopment")}
               />
               <DefaultLineChart
                 chartProps={ChartRendimentosPercentualData}
                 chartTitle="T-Bond Brazil"
-                chartSubtitle="Percentual de Rendimentos"
+                chartSubtitle={t("default.dashboard.incomePercentage")}
               />
             </div>
           </div>
@@ -356,13 +358,13 @@ export const Home = () => {
                */}{" "}
               <DefaultLineChart
                 chartProps={ChartRendimentosData}
-                chartTitle="Baixo Risco"
-                chartSubtitle="Evolução Patrimonial"
+                chartTitle={t("default.dashboard.lowRisk")}
+                chartSubtitle={t("default.dashboard.assetDevelopment")}
               />
               <DefaultLineChart
                 chartProps={ChartRendimentosPercentualData}
-                chartTitle="Baixo Risco"
-                chartSubtitle="Percentual de Rendimentos"
+                chartTitle={t("default.dashboard.lowRisk")}
+                chartSubtitle={t("default.dashboard.incomePercentage")}
               />
             </div>
           </div>
@@ -372,13 +374,13 @@ export const Home = () => {
                */}{" "}
               <DefaultLineChart
                 chartProps={ChartRendimentosData}
-                chartTitle="Alto Risco"
-                chartSubtitle="Evolução Patrimonial"
+                chartTitle={t("default.dashboard.highRisk")}
+                chartSubtitle={t("default.dashboard.assetDevelopment")}
               />
               <DefaultLineChart
                 chartProps={ChartRendimentosPercentualData}
-                chartTitle="Alto Risco"
-                chartSubtitle="Percentual de Rendimentos"
+                chartTitle={t("default.dashboard.highRisk")}
+                chartSubtitle={t("default.dashboard.incomePercentage")}
               />
             </div>
           </div>
