@@ -12,7 +12,6 @@ import { useAuth } from "../../../hook/auth";
 
 export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
   const { userData, updateProfileDetails } = useAuth();
-
   const validationSchema = Yup.object().shape({
     personType: Yup.string()
       .oneOf(["pf", "pj"])
@@ -55,20 +54,20 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
     profession: Yup.string().required("Qual sua profissão é obrigatória"),
     declaresUsTaxes: Yup.string().required("Campo obrigatório"),
     spouseName: Yup.string().when("maritalStatus", {
-      is: "Stable Union",
+      is: ("Casado(a)" || "União Estável"),
       then(schema) {
         return schema.required("Must enter a spouse name");
       },
     }),
     spouseDocumentType: Yup.string().when("maritalStatus", {
-      is: "Stable Union" || "Married",
+      is: ("Casado(a)" || "União Estável"),
       then(schema) {
         return schema.required("Must enter a spouse name");
       },
     }),
     spousedocument: Yup.string().when("maritalStatus", {
-      is: "Stable Union",
-      then(schema) {
+      is: ("Casado(a)" || "União Estável"),
+      then(schema) { 
         return schema.required("Must enter a spouse name");
       },
     }),
@@ -103,6 +102,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
       handlePostClientData(values);
     },
   });
+  console.log(formik)
 
 
   const handlePostClientData = async (data: FormValues) => {
@@ -400,7 +400,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 value={formik.values.spouseName}
                 onChange={formik.handleChange}
                 label="Nome do cônjuge"
-                error={!!formik.values.spouseName}
+                error={formik.touched.spouseName && Boolean(formik.errors.spouseName)}
               />
             </div>
           )}
@@ -413,7 +413,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 setFieldValue={formik.setFieldValue}
                 fieldName={"spouseDocumentType"}
                 type=" do cônjuge"
-                error={!!formik.values.spouseDocumentType}
+                error={formik.touched.spouseDocumentType && Boolean(formik.errors.spouseDocumentType)}
               />
               <Input
                 id="spousedocument"
@@ -422,7 +422,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 onChange={formik.handleChange}
                 label="Número do documento do cônjuge"
                 className="w-full"
-                error={!!formik.values.spousedocument}
+                error={formik.touched.spousedocument && Boolean(formik.errors.spousedocument)}
               />
             </div>
           )}
