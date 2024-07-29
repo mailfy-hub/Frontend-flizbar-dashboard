@@ -103,7 +103,21 @@
       "actions": "Acciones",
       "button": "Agregar contribución",
       "wallet": "billetera",
-      "value": "Valor"
+      "value": "Valor",
+      "addContributionForm": {
+        "title": "Rellena el formulario de inclusión",
+        "subtitle": "Contribución",
+        "dateOfContribution": "Fecha de contribución",
+        "client": "Cliente",
+        "wallet": "Billetera",
+        "contributionValue": "Valor de la contribución",
+        "dollarValue": "Valor de cotización en dólares",
+        "status": "Estado",
+        "approved": "Aprobado",
+        "pending": "Pendiente",
+        "concluded": "Completado",
+        "button": "AÑADIR CONTRIBUCIÓN"
+      }
     },
     "pagination": {
       "page": "Página",

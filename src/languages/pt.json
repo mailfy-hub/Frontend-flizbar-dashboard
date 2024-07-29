@@ -103,7 +103,21 @@
       "actions": "Ações",
       "button": "Adicionar aporte",
       "wallet": "Carteira",
-      "value": "Valor"
+      "value": "Valor",
+      "addContributionForm": {
+        "title": "Preencha o formulário de inclusão",
+        "subtitle": "Aporte",
+        "dateOfContribution": "Data do aporte",
+        "client": "Cliente",
+        "wallet": "Carteira",
+        "contributionValue": "Valor do aporte",
+        "dollarValue": "Valor da cotação do dolar",
+        "status": "Status",
+        "approved": "Aprovado",
+        "pending": "Pendente",
+        "concluded": "Concluído",
+        "button": "ADICIONAR APORTE"
+      }
     },
     "pagination": {
       "page": "Página",
