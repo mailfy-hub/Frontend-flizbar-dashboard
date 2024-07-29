@@ -4,8 +4,11 @@ import { useAuth } from "../../../hook/auth";
 import { InfoClient } from "./infoClient";
 import { InfoFiles } from "./infoFiles";
 import { InfoWallets } from "./infoWallets";
+import { useTranslation } from "react-i18next";
 
 export const MyAccount = () => {
+  const { t } = useTranslation();
+
   const [activeScreen, setActiveScreen] = useState<
     "client" | "wallets" | "files"
   >("client");
@@ -19,7 +22,7 @@ export const MyAccount = () => {
   return (
     <div>
       <div className="flex items-center gap-4">
-        <SectionTitle text="Seus dados da conta" />
+        <SectionTitle text={t("default.myAccount.title")} />
       </div>
       <div className="mt-12 flex items-center gap-2">
         {!userData?.isAdmin && (

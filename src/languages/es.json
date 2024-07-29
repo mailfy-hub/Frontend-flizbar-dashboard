@@ -138,6 +138,18 @@
         "ransomValue": "Valor del rescate"
       }
     },
+    "myAccount": {
+      "title": "Los detalles de tu cuenta",
+      "button": "Actualizar datos",
+      "admin": {
+        "title": "Datos de acceso",
+        "email": "Acceder al correo electrónico",
+        "name": "nombre",
+        "surname": "Apellido",
+        "phoneNumber": "Teléfono"
+      },
+      "client": {}
+    },
     "pagination": {
       "page": "Página",
       "previous": "Anterior",

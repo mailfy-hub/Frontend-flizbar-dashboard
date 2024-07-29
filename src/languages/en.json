@@ -158,6 +158,18 @@
         "value": "Movement value"
       }
     },
+      "myAccount": {
+      "title": "Your account details",
+      "button": "Update data",
+      "admin": {
+        "title": "Access details",
+        "email": "Access email",
+        "name": "First name",
+        "surname": "Last name",
+        "phoneNumber": "Phone"
+      },
+      "client": {}
+    },
     "pagination": {
       "page": "Page",
       "previous": "Previous",

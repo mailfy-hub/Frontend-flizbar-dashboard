@@ -159,6 +159,18 @@
         "value": "Valor da movimentação"
       }
     },
+    "myAccount": {
+      "title": "Seus dados da conta",
+      "button": "Atualizar dados",
+      "admin": {
+        "title": "Dados de acesso",
+        "email": "Email de acesso",
+        "name": "Nome",
+        "surname": "Sobrenome",
+        "phoneNumber": "Telefone"
+      },
+      "client": {}
+    },
     "pagination": {
       "page": "Página",
       "previous": "Anterior",
