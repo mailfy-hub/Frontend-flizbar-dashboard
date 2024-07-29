@@ -60,7 +60,8 @@ export const AuthContextProvider = ({ children }: Props) => {
         Authorization: `Bearer ${data.accessToken}`,
       };
 
-      await loadUserProfile(data.user.id);
+      const profile = await loadUserProfile(data.user.id);
+      verifyAccountData(profile);
 
       // setUserData(data.user);
       setAccessToken(data.accessToken);
@@ -273,7 +274,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         updateProfileDetails,
         updateProfileContacts,
         updateProfileAddress,
-        updateProfileFinance
+        updateProfileFinance,
       }}
     >
       {children}

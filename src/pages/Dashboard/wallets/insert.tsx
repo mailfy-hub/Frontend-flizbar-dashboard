@@ -1,6 +1,6 @@
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Button, Input, Select } from "@material-tailwind/react";
+import { Button, Input, Option, Select } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 
@@ -30,13 +30,12 @@ export const WalletInsert = () => {
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
               <Input type="text" label="Nome da carteira" />
-            </div>
-            <div className="grid md:grid-cols-2 gap-6">
-              <Select label="Fundo">
-                <option value=""></option>
+              <Select label="Tipo do fundo">
+                <Option value="">Convecional</Option>
+                <Option value="">Emergencial</Option>
               </Select>
-              <Input type="number" label="Porcentagem" />
             </div>
+
           </div>
         </div>
         <div className="w-full flex justify-end mt-8">

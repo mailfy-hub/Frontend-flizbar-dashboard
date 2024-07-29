@@ -17,6 +17,7 @@ import { CustomerInsert } from "../pages/Dashboard/customers/insert";
 import { Funds } from "../pages/Dashboard/funds";
 import { FundsEdit } from "../pages/Dashboard/funds/edit";
 import { FundsInsert } from "../pages/Dashboard/funds/insert";
+import { History } from "../pages/Dashboard/history";
 import { Home } from "../pages/Dashboard/home";
 import { Income } from "../pages/Dashboard/income";
 import { IncomeInsert } from "../pages/Dashboard/income/insert";
@@ -36,7 +37,6 @@ import { WalletEdit } from "../pages/Dashboard/wallets/edit";
 import { WalletInsert } from "../pages/Dashboard/wallets/insert";
 import { Withdraw } from "../pages/Dashboard/withdraw";
 import { WithdrawInsert } from "../pages/Dashboard/withdraw/insert";
-import { History } from "../pages/Dashboard/history";
 
 interface subRoutesMapped {
   path: string;
@@ -162,7 +162,7 @@ export const routesMapped: routeMapped[] = [
     subRoutes: [
       {
         name: "Edite seu fundo",
-        path: "edit",
+        path: "edit/:id",
         element: <FundsEdit />,
       },
       {
@@ -210,7 +210,7 @@ export const routesMapped: routeMapped[] = [
       },
       {
         name: "Detalhes do aporte",
-        path: "details",
+        path: "details/:id",
         element: <ContribuitionDetails />,
       },
     ],

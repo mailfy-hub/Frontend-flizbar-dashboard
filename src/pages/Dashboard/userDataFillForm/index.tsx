@@ -20,6 +20,7 @@ export interface FormStepType {
   handleConfirmationClick: () => void;
 }
 
+
 export const UserDataProfile = () => {
   const { profile, isLoadingData, handleFullfiledAccountInfo } = useAuth();
   const [ActiveFormStepPosition, setActiveFormStepPosition] =
@@ -37,8 +38,6 @@ export const UserDataProfile = () => {
   };
 
   const verifyAccountData = (profile: Profile) => {
-    // console.log("profile data: " + profile);
-
     const isClientDetailsFilled = profile?.clientDetails == null ? false : true;
     const isClientAddressesFilled =
       profile?.clientAddresses.length > 0 ? true : false;
@@ -49,11 +48,6 @@ export const UserDataProfile = () => {
       profile?.beneficiaries.length > 0 ? true : false;
     const isClientAttachmentsFilled =
       profile?.attachments.length > 0 ? true : false;
-
-    // console.log("isClientDetailsFilled " + isClientDetailsFilled);
-    // console.log("isClientFinanceFilled " + isClientFinanceFilled);
-    // console.log("isClientContactsFilled " + isClientContactsFilled);
-    // console.log("isClientAddressesFilled " + isClientAddressesFilled);
 
     const currentStep = !isClientDetailsFilled
       ? 1
@@ -205,6 +199,7 @@ export const UserDataProfile = () => {
           <BankData
             handleConfirmationClick={() => {
               handleStepOnClick(5);
+              console.log(ActiveFormStepPosition);
             }}
           />
         )}

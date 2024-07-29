@@ -35,8 +35,9 @@ export const Funds = () => {
   const handleNavigate = () => {
     navigate("insert");
   };
-  const handleEdit = () => {
-    navigate(`edit/`);
+  
+  const handleEdit = (id: string) => {
+    navigate(`edit/${id}`);
   };
 
   const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
@@ -285,7 +286,7 @@ export const Funds = () => {
                       <td className="flex items-center justify-end text-right p-4 border-b border-gray-300 gap-2">
                         <Tooltip content="Editar fundo">
                           <IconButton
-                            onClick={() => handleEdit()}
+                            onClick={() => handleEdit(id)}
                             variant="text"
                           >
                             <PencilIcon className="w-4 h-4 text-gray-400" />

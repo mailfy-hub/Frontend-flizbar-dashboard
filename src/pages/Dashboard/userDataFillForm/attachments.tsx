@@ -1,9 +1,9 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { Button } from "@material-tailwind/react";
 import { FormEvent, useState } from "react";
 import { api } from "../../../client/api";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { useAuth } from "../../../hook/auth";
-import { Button } from "@material-tailwind/react";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const validFileExtensions = ["jpg", "gif", "png", "jpeg", "svg", "webp", "pdf"];
@@ -81,6 +81,7 @@ export const Attachments = ({ handleConfirmationClick }: FormStepType) => {
     const data = {
       clientId: clientId,
       name: docName,
+      identifier: "client",
     };
 
     formData.append("file", file);
