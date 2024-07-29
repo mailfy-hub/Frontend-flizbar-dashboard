@@ -12,6 +12,9 @@ i18n
       pt: {
         translation: getDictionary('pt'),
       },
+      es: {
+        translation: getDictionary('es'),
+      },
     },
     lng: 'en', // idioma padrão
     fallbackLng: 'en',
