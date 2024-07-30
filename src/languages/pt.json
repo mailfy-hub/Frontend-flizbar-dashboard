@@ -169,7 +169,100 @@
         "surname": "Sobrenome",
         "phoneNumber": "Telefone"
       },
-      "client": {}
+      "client": {
+        "clientData": "Dados do cliente",
+        "buttonUpdateData": "ATUALIZAR DADOS",
+        "generalData": {
+          "title": "Dados gerais",
+          "titleSecondary": "Dados de acesso",
+          "titleTertiary": "Dados complementares",
+          "email":"Email de acesso",
+          "labelTypePerson": "Tipo de pessoa",
+          "labelBornDate": "Data de nascimento",
+          "nationality": "Nacionalidade",
+          "documentType": "Tipo do documento",
+          "documentNumber": "Número do documento",
+          "fatherName": "Nome do pai",
+          "matherName": "Nome da mãe",
+          "maritalStatus": "Estado civil",
+          "education": "Escolaridade",
+          "personExportPolitically": "É pessoa politicamente exporta?",
+          "profession": "QUal sua profissão?",
+          "taxesUSGovernment": "Declara impostos para o governo dos EUA?"
+        },
+        "address": {
+          "title": "Endereço",
+          "typeAddress": "Tipo do endereço",
+          "city": "Cidade",
+          "state": "Estado",
+          "street": "Rua",
+          "number": "Número",
+          "complement": "Complemento",
+          "neighborhood": "Bairro",
+          "reference": "Referência"
+        },
+        "bankDetails": {
+          "title": "Dados bancários",
+          "accountType": {
+            "title": "Tipo da conta",
+            "currentAccount": "Conta corrente",
+            "jointAccount": "Conta conjunta",
+            "savingsAccount": "Conta poupança",
+            "other": "Outro"
+          },
+          "bankName": "Nome do banco",
+          "agencyNumber": "Número da agência",
+          "accountDigt": "Dígito da conta",
+          "pixKeyType": {
+            "title": "Tipo de chave PIX",
+            "email": "Chave E-mail",
+            "phone": "Chave número de telefone",
+            "cpf": "Chave CPF",
+            "cnpj": "Chave CNPJ",
+            "randomKey": "Chave aleatória"
+          },
+          "pixKey": "Chave PIX"
+        },
+        "beneficiary": {
+          "title": "Beneficiário",
+          "text": "Se desejar, inclua as informações de uma pessoa ou entidade que receberá benefícios ou terá direitos associados.",
+          "name": "Nome",
+          "email": "E-mail",
+          "rg": "RG",
+          "cpf": "CPF",
+          "nacionality": "Nacionalidade",
+          "maritalStatus": {
+            "title": "Estado civil",
+            "single": "Solteiro",
+            "married": "Casado",
+            "divorced": "Divorciado",
+            "widower": "Viúvo",
+            "stableUnion": "União estável",
+            "other": "Outro"
+          },
+          "profession": "Qual é sua profissão?",
+          "titleSecondary": "Endereço do beneficiário"
+        },
+        "contacts": {
+          "title": "Contatos",
+          "titleSecondary": "Contato adicional",
+          "text": "Se desejar, inclua um contato adicional como uma pessoa alternativa para caso não conseguimos contato com você.",
+          "ButtonAddContact": "ADICIONAR CONTATO"
+        },
+        "wallets": {
+          "title": "Carteiras",
+          "text": "Esse cliente não possui nenhuma carteira.",
+          "code": "Código",
+          "name": "Nome"
+        },
+        "myAnexes": {
+          "title": "Meus anexos",
+          "secondaryTitle": "Anexos do cliente",
+          "text": "Esse cliente não possui nenhum anexo.",
+          "tertiaryTitle": "Anexos do beneficiário",
+          "secondaryText": "Esse beneficiário não possui nenhum anexo."
+        }
+      }
     },
     "pagination": {
       "page": "Página",

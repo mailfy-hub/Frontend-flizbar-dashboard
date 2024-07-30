@@ -168,8 +168,102 @@
         "surname": "Last name",
         "phoneNumber": "Phone"
       },
-      "client": {}
+      "client": {
+        "clientData": "Client data",
+        "buttonUpdateData": "UPDATE DATA",
+        "generalData": {
+          "title": "General data",
+          "titleSecondary": "Access data",
+          "titleTertiary": "Additional data",
+          "email":"Access email",
+          "labelTypePerson": "Person type",
+          "labelBornDate": "Born Date",
+          "nationality": "Nationality",
+          "documentType": "Document type",
+          "documentNumber": "Document number",
+          "fatherName": "Father's name",
+          "matherName": "Mother's name",
+          "maritalStatus": "Marital status",
+          "education": "Education",
+          "personExportPolitically": "Are you a politically exporting person?",
+          "profession": "What is your profession?",
+          "taxesUSGovernment": "Do you file taxes for the US government?"
+        },
+        "address": {
+          "title": "Address",
+          "typeAddress": "Address Type",
+          "city": "City",
+          "state": "State",
+          "street": "Street",
+          "number": "Number",
+          "complement": "Complement",
+          "neighborhood": "Neighborhood",
+          "reference": "Reference"
+        },
+        "bankDetails": {
+          "title": "Bank Details",
+          "accountType": {
+            "title": "Account Type",
+            "currentAccount": "Current Account",
+            "jointAccount": "Joint Account",
+            "savingsAccount": "Savings Account",
+            "other": "Other"
+          },
+          "bankName": "Bank Name",
+          "agencyNumber": "Branch Number",
+          "accountDigt": "Account Digt",
+          "pixKeyType": {
+            "title": "PIX Key Type",
+            "email": "Email Key",
+            "phone": "Phone Number Key",
+            "cpf": "CPF Key",
+            "cnpj": "CNPJ Key",
+            "randomKey": "Random Key"
+          },
+          "pixKey": "PIX Key"
+        },
+        "beneficiary": {
+          "title": "Beneficiary",
+          "text": "If desired, include the information of a person or entity that will receive benefits or have associated rights.",
+          "name": "Name",
+          "email": "Email",
+          "rg": "RG",
+          "cpf": "CPF",
+          "nacionality": "Nationality",
+          "maritalStatus": {
+            "title": "Marital Status",
+            "single": "Single",
+            "married": "Married",
+            "divorced": "Divorced",
+            "widower": "Widower",
+            "stableUnion": "Stable Union",
+            "other": "Other"
+          },
+          "profession": "What is your profession?",
+          "titleSecondary": "Beneficiary Address"
+        },
+        "contacts": {
+          "title": "Contacts",
+          "titleSecondary": "Additional Contact",
+          "text": "If you wish, add an additional contact as an alternative person in case we are unable to contact you.",
+          "ButtonAddContact": "ADD CONTACT"
+        },
+        "wallets": {
+          "title": "Wallets",
+          "text": "This customer does not have any wallets.",
+          "code": "Code",
+          "name": "Name"
+        },
+        "myAnexes": {
+          "title": "My Attachments",
+          "secondaryTitle": "Customer Attachments",
+          "text": "This customer does not have any attachments.",
+          "tertiaryTitle": "Payee Attachments",
+          "secondaryText": "This payee does not have any attachments."
+        }
+    }
     },
+
     "pagination": {
       "page": "Page",
       "previous": "Previous",
