@@ -396,6 +396,12 @@ export const Beneficiary = ({ handleConfirmationClick }: FormStepType) => {
                       label="Nacionalidade"
                     >
                       <Option value="Brasileiro">Brasileiro</Option>
+                      <Option value="Português">Português</Option>
+                      <Option value="Argentino">Argentino</Option>
+                      <Option value="Iraniano">Iraniano</Option>
+                      <Option value="Americano">Americano</Option>
+                      <Option value="Inglês">Inglês</Option>
+                      <Option value="Espanhol">Espanhol</Option>
                       <Option value="Outra">Outra</Option>
                     </Select>
                     {formik.touched.nationality &&

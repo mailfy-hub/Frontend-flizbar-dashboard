@@ -267,6 +267,7 @@ export const GenerateData = ({ dataUser }: any) => {
                     formik.setFieldValue("personType", selectedOption);
                   }}
                   label="Tipo de pessoa"
+                  error={formik.touched.personType && Boolean(formik.errors.personType)}
                 >
                   <Option value="pf">Física</Option>
                   <Option value="pj">Jurídica</Option>
@@ -278,7 +279,6 @@ export const GenerateData = ({ dataUser }: any) => {
                     value={`${userData?.user?.name} ${userData?.user?.surname}`}
                     type="text"
                     label="Nome"
-                    disabled
                   />
                 ) : (
                   <Input
@@ -288,6 +288,7 @@ export const GenerateData = ({ dataUser }: any) => {
                     onChange={formik.handleChange}
                     type="text"
                     label="Razão social"
+                    error={formik.touched.corporateName && Boolean(formik.errors.corporateName)}
                   />
                 )}
               </div>
@@ -302,6 +303,7 @@ export const GenerateData = ({ dataUser }: any) => {
                     onChange={formik.handleChange}
                     type="date"
                     label="Date de nascimento"
+                    error={formik.touched.birthDate && Boolean(formik.errors.birthDate)}
                   />
                 )}
                 <Select
@@ -312,8 +314,15 @@ export const GenerateData = ({ dataUser }: any) => {
                     formik.setFieldValue("nationality", selectedValue);
                   }}
                   label="Nacionalidade"
+                  error={formik.touched.nationality && Boolean(formik.errors.nationality)}
                 >
                   <Option value="Brasileiro">Brasileiro</Option>
+                  <Option value="Português">Português</Option>
+                  <Option value="Argentino">Argentino</Option>
+                  <Option value="Iraniano">Iraniano</Option>
+                  <Option value="Americano">Americano</Option>
+                  <Option value="Inglês">Inglês</Option>
+                  <Option value="Espanhol">Espanhol</Option>
                   <Option value="Outra">Outra</Option>
                 </Select>
               </div>
@@ -326,6 +335,7 @@ export const GenerateData = ({ dataUser }: any) => {
                     formik.setFieldValue("documentType", selectedValue);
                   }}
                   label="Tipo do documento"
+                  error={formik.touched.documentType && Boolean(formik.errors.documentType)}
                 >
                   <Option value="Inscrição estadual">Inscrição estadual</Option>
                   <Option value="Carteira de habilitação">
@@ -341,6 +351,7 @@ export const GenerateData = ({ dataUser }: any) => {
                   onChange={formik.handleChange}
                   type="text"
                   label="Número do documento"
+                  error={formik.touched.document && Boolean(formik.errors.document)}
                 />
               </div>
               <div></div>
@@ -360,6 +371,7 @@ export const GenerateData = ({ dataUser }: any) => {
                   onChange={formik.handleChange}
                   type="text"
                   label="Nome do pai"
+                  error={formik.touched.fatherName && Boolean(formik.errors.fatherName)}
                 />
                 <Input
                   id="motherName"
@@ -368,6 +380,7 @@ export const GenerateData = ({ dataUser }: any) => {
                   onChange={formik.handleChange}
                   type="text"
                   label="Nome da mãe"
+                  error={formik.touched.motherName && Boolean(formik.errors.motherName)}
                 />
               </div>
               <div className="grid md:grid-cols-3 gap-6">
@@ -379,6 +392,7 @@ export const GenerateData = ({ dataUser }: any) => {
                     formik.setFieldValue("maritalStatus", selectedValue)
                   }
                   label="Estado civil"
+                  error={formik.touched.maritalStatus && Boolean(formik.errors.maritalStatus)}
                 >
                   <Option value="Solteiro(a)">Solteiro(a)</Option>
                   <Option value="Casado(a)">Casado(a)</Option>
@@ -395,6 +409,7 @@ export const GenerateData = ({ dataUser }: any) => {
                     formik.setFieldValue("education", selectedValue)
                   }
                   label="Escolaridade"
+                  error={formik.touched.education && Boolean(formik.errors.education)}
                 >
                   <Option value="Ensino médio incompleto">
                     Ensino médio incompleto
@@ -403,11 +418,11 @@ export const GenerateData = ({ dataUser }: any) => {
                     Ensino médio completo
                   </Option>
                   <Option value="Curso técnico">Curso técnico</Option>
-                  <Option value="Bacharelado Incompleto">
-                    Bacharelado Incompleto
+                  <Option value="Ensino superior Incompleto">
+                    Ensino superior Incompleto
                   </Option>
-                  <Option value="Bacherelado Completo">
-                    Bacherelado Completo
+                  <Option value="Ensino superior Completo">
+                    Ensino superior Completo
                   </Option>
                   <Option value="Pós-graduação">Pós-graduação</Option>
                   <Option value="Mestrado">Mestrado</Option>
@@ -422,6 +437,7 @@ export const GenerateData = ({ dataUser }: any) => {
                     formik.setFieldValue("politicalPerson", selectedValue);
                   }}
                   label="É pessoa politicamente exposta?"
+                  error={formik.touched.politicalPerson && Boolean(formik.errors.politicalPerson)}
                 >
                   <Option value="Sim">Sim</Option>
                   <Option value="Não">Não</Option>
@@ -435,6 +451,7 @@ export const GenerateData = ({ dataUser }: any) => {
                   onChange={formik.handleChange}
                   type="text"
                   label="Qual sua profissão?"
+                  error={formik.touched.profession && Boolean(formik.errors.profession)}
                 />
                 <Select
                   id="declaresUsTaxes"
@@ -444,6 +461,7 @@ export const GenerateData = ({ dataUser }: any) => {
                     formik.setFieldValue("declaresUsTaxes", selectedValue);
                   }}
                   label="Declara imposto ao governo dos EUA?"
+                  error={formik.touched.declaresUsTaxes && Boolean(formik.errors.declaresUsTaxes)}
                 >
                   <Option value={"Sim"}>Sim</Option>
                   <Option value={"Não"}>Não</Option>
@@ -458,6 +476,7 @@ export const GenerateData = ({ dataUser }: any) => {
                     value={formik.values.spouseName}
                     onChange={formik.handleChange}
                     label="Nome do cônjuge"
+                    error={!!formik.values.spouseName}
                   />
                 </div>
               )}
@@ -471,8 +490,9 @@ export const GenerateData = ({ dataUser }: any) => {
                     onChange={(selectedValue) => {
                       formik.setFieldValue("spouseDocumentType", selectedValue);
                     }}
-                    label="Tipo do documento"
+                    label="Tipo do documento do cônjuge"
                     className="w-full"
+                    error={!!formik.values.spouseDocumentType}
                   >
                     <Option value="Inscrição estadual">
                       Inscrição estadual
@@ -487,8 +507,9 @@ export const GenerateData = ({ dataUser }: any) => {
                     name="spousedocument"
                     value={formik.values.spousedocument}
                     onChange={formik.handleChange}
-                    label="Número do documento"
+                    label="Número do documento do cônjuge"
                     className="w-full"
+                    error={!!formik.values.spousedocument}
                   />
                 </div>
               )}

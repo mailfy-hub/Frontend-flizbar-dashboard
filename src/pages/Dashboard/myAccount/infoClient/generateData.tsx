@@ -326,6 +326,12 @@ export const GenerateData = () => {
                   label="Nacionalidade"
                 >
                   <Option value="Brasileiro">Brasileiro</Option>
+                  <Option value="Português">Português</Option>
+                  <Option value="Argentino">Argentino</Option>
+                  <Option value="Iraniano">Iraniano</Option>
+                  <Option value="Americano">Americano</Option>
+                  <Option value="Inglês">Inglês</Option>
+                  <Option value="Espanhol">Espanhol</Option>
                   <Option value="Outra">Outra</Option>
                 </Select>
               </div>
@@ -471,6 +477,7 @@ export const GenerateData = () => {
                     value={formik.values.spouseDocumentType}
                     setFieldValue={formik.setFieldValue}
                     fieldName={"spouseDocumentType"}
+                    type=""
                   />
                   <Input
                     id="spousedocument"

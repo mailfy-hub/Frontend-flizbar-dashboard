@@ -10,6 +10,8 @@ interface DocumentTypeSelectProps {
   fieldName: string;
   value?: string;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
+  type?: string;
+  [key: string]: any
 }
 
 export const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
@@ -17,6 +19,8 @@ export const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
   value = "",
   setFieldValue,
   fieldName,
+  type,
+  ...rest
 }) => {
   const optionsPF: OptionType[] = [
     { value: "CPF", label: "CPF" },
@@ -42,7 +46,8 @@ export const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
       onChange={(selectedValue) => {
         setFieldValue(fieldName, selectedValue);
       }}
-      label="Tipo do documento"
+      label={`Tipo do documento${type}`}
+      {...rest}
     >
       {options.map((option) => (
         <Option key={option.value} value={option.value}>
