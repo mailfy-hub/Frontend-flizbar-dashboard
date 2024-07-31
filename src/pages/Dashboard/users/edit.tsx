@@ -10,10 +10,12 @@ import { CountryType, countries } from "../../../utils/number-config";
 import { InputWithDropdown } from "../../../components/inputWithDropdown";
 import { updateUser, IUser } from "../../../client/users";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 export const UserEdit = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const { t } = useTranslation();
 
   const [user, setUser] = useState<User | null>(null);
   const [userUpdate, setUserUpdate] = useState({});
@@ -70,27 +72,32 @@ export const UserEdit = () => {
             className="text-GRAY_400 hover:text-GOLD_DARK transition-all"
           />
         </button>
-        <SectionTitle text="Dados do usuário" />
+        <SectionTitle
+          text={t("default.myAccount.admin.users.addUserForm.titleTertiary")}
+        />
       </div>
       <form className="mt-12">
         <div className="bg-WHITE p-8 w-full rounded-md">
           <div className="flex items-center gap-4">
             <Icon height={16} icon={"heroicons:user"} color="black" />
-            <SectionTitle size="sm" text="Usuário" />
+            <SectionTitle
+              size="sm"
+              text={t("default.myAccount.admin.users.addUserForm.title")}
+            />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
               <Input
                 defaultValue={user?.name}
                 type="text"
-                label="Nome*"
+                label={t("default.myAccount.admin.users.addUserForm.name")}
                 name="name"
                 onChange={handleInputChange}
               />
               <Input
                 defaultValue={user?.surname}
                 type="text"
-                label="Sobrenome*"
+                label={t("default.myAccount.admin.users.addUserForm.surname")}
                 name="surname"
                 onChange={handleInputChange}
               />
@@ -99,7 +106,7 @@ export const UserEdit = () => {
               <Input
                 defaultValue={user?.email}
                 type="email"
-                label="E-mail de acesso*"
+                label={t("default.myAccount.admin.users.addUserForm.email")}
                 name="email"
                 onChange={handleInputChange}
               />
@@ -117,7 +124,7 @@ export const UserEdit = () => {
               <Input
                 defaultValue={user?.username}
                 type="text"
-                label="Username*"
+                label={t("default.myAccount.admin.users.addUserForm.userName")}
                 name="username"
                 onChange={handleInputChange}
               />
@@ -130,7 +137,7 @@ export const UserEdit = () => {
             type="button"
             onClick={() => updateUserData(userUpdate as IUser)}
           >
-            Atualizar dados
+            {t("default.myAccount.admin.users.addUserForm.titleTertiary")}
           </Button>
         </div>
       </form>

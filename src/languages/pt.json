@@ -167,7 +167,28 @@
         "email": "Email de acesso",
         "name": "Nome",
         "surname": "Sobrenome",
-        "phoneNumber": "Telefone"
+        "phoneNumber": "Telefone",
+        "users": {
+          "title": "Todos os usuários",
+          "tableTitle": "Tabela de usuários",
+          "text": "Veja informações sobre todos os seus usuários",
+          "code": "Código",
+          "name": "Nome",
+          "email": "Endereço de e-mail",
+          "createdAt":"Data de criação",
+          "actions": "Ações",
+          "button": "ADICIONAR USUÁRIO",
+          "addUserForm": {
+            "title": "Usuário",
+            "titleSecondary": "Preencha o formulário de inclusão",
+            "titleTertiary": "Dados do usuário",
+            "name": "Nome",
+            "surname": "Sobrenome*",
+            "userName": "Nome de usuário",
+            "email": "E-mail de acesso*",
+            "password": "Senha*"
+          }
+        }
       },
       "client": {
         "clientData": "Dados do cliente",

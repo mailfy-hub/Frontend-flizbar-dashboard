@@ -166,7 +166,28 @@
         "email": "Access email",
         "name": "First name",
         "surname": "Last name",
-        "phoneNumber": "Phone"
+        "phoneNumber": "Phone",
+        "users": {
+          "title": "All users",
+          "tableTitle": "User table",
+          "text": "See information about all your users",
+          "code": "Code",
+          "name": "Name",
+          "email": "Email address",
+          "createdAt":"Creation date",
+          "actions": "Actions",
+          "button": "ADD USER",
+          "addUserForm": {
+            "title": "User",
+            "titleSecondary": "Fill in the opt-in form",
+            "titleTertiary": "User Data",
+            "name": "Name*",
+            "surname": "Surname*",
+            "userName": "User name",
+            "email": "Access email*",
+            "password": "Password*"
+          }
+        }
       },
       "client": {
         "clientData": "Client data",
