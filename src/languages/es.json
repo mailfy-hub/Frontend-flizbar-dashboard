@@ -329,7 +329,12 @@
       "numberAccountRequired": "El número de cuenta es obligatorio",
       "agencyNumberRequired": "El número de agencia es obligatorio",
       "nameRequired": "El nombre es obligatorio",
-      "phoneNumberRequired": "El número de teléfono es obligatorio"
+      "phoneNumberRequired": "El número de teléfono es obligatorio",
+      "fullNameRequired": "El nombre completo es obligatorio",
+      "rgRequired": "RG es obligatorio",
+      "cpfRequired": "CPF es obligatorio",
+      "emailRequired": "El correo electrónico es obligatorio",
+      "emailInvalid": "Introduzca un correo electrónico válido"
     },
     "labelPhone": "Teléfono",
     "placeHolderLabelPhone": "Ingresa tu número",

@@ -354,7 +354,12 @@
       "numberAccountRequired": "Account number is required",
       "agencyNumberRequired": "Branch number is required",
       "nameRequired": "Name is required",
-      "phoneNumberRequired": "Phone number is required"
+      "phoneNumberRequired": "Phone number is required",
+      "fullNameRequired": "Full name is required",
+      "rgRequired": "RG is required",
+      "cpfRequired": "CPF is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Enter a valid email address"
     },
     "labelPhone": "Phone",
     "placeHolderLabelPhone": "Enter your number",

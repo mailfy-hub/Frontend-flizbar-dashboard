@@ -191,7 +191,7 @@
           "maritalStatus": "Estado civil",
           "education": "Escolaridade",
           "personExportPolitically": "É pessoa politicamente exporta?",
-          "profession": "QUal sua profissão?",
+          "profession": "Qual sua profissão?",
           "taxesUSGovernment": "Declara impostos para o governo dos EUA?",
           "spouseName": "Nome do cônjuge",
           "name": "Nome",
@@ -354,7 +354,12 @@
       "numberAccountRequired": "O número da conta é obrigatório",
       "agencyNumberRequired": "O número da agência é obrigatório",
       "nameRequired": "O nome é obrigatório",
-      "phoneNumberRequired": "O número de telefone é obrigatório"
+      "phoneNumberRequired": "O número de telefone é obrigatório",
+      "fullNameRequired": "O nome completo é obrigatório",
+      "rgRequired": "O RG é obrigatório",
+      "cpfRequired": "O CPF é obrigatório",
+      "emailRequired": "O e-mail é obrigatório",
+      "emailInvalid": "Insira um e-mail inválido"
 
     },
     "labelPhone": "Telefone",
