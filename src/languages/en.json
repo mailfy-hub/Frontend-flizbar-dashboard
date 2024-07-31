@@ -176,10 +176,14 @@
           "titleSecondary": "Access data",
           "titleTertiary": "Additional data",
           "email":"Access email",
-          "labelTypePerson": "Person type",
+          "typePerson": {
+            "labelTypePerson": "Type Person",
+            "physical": "Physical",
+            "legal": "Legal"
+          },
           "labelBornDate": "Born Date",
           "nationality": "Nationality",
-          "documentType": "Document type",
+          "labelDocumentType": "Document type",
           "documentNumber": "Document number",
           "fatherName": "Father's name",
           "matherName": "Mother's name",
@@ -187,7 +191,10 @@
           "education": "Education",
           "personExportPolitically": "Are you a politically exporting person?",
           "profession": "What is your profession?",
-          "taxesUSGovernment": "Do you file taxes for the US government?"
+          "taxesUSGovernment": "Do you file taxes for the US government?",
+          "spouseName": "Spouse's name",
+          "name": "Nome",
+          "companyName": "Company name"
         },
         "address": {
           "title": "Address",
@@ -230,15 +237,7 @@
           "rg": "RG",
           "cpf": "CPF",
           "nacionality": "Nationality",
-          "maritalStatus": {
-            "title": "Marital Status",
-            "single": "Single",
-            "married": "Married",
-            "divorced": "Divorced",
-            "widower": "Widower",
-            "stableUnion": "Stable Union",
-            "other": "Other"
-          },
+          "maritalStatus": "Marital Status",
           "profession": "What is your profession?",
           "titleSecondary": "Beneficiary Address"
         },
@@ -276,8 +275,61 @@
       "buttonCancel": "Cancel",
       "buttonConfirm": "Delete"
     },
+    "documentTypes": {
+      "cpf": "CPF",
+      "rg": "RG",
+      "passport": "Passport",
+      "driverLicense": "Driver's license",
+      "nationalId": "National ID",
+      "cnpj": "CNPJ",
+      "iban": "IBAN"
+    },
+    "nationality": {
+      "brazilian": "Brazilian",
+      "other": "Other"
+    },
+    "maritalStatus": {
+      "single": "Single",
+      "married": "Married",
+      "divorced": "Divorced",
+      "widower": "Widower",
+      "stableUnion": "Stable Union",
+      "other": "Other"
+    },
+    "education": {
+      "incompleteHighSchool": "Incomplete high school",
+      "completeHighSchool": "Complete high school",
+      "technicalCourse": "Technical course",
+      "incompleteBachelorDegree": "Incomplete bachelor's education",
+      "completeBachelorDegree": "Complete bachelor's education",
+      "postgraduate": "Postgraduate",
+      "master": "Master",
+      "doctorate": "Doctorate",
+      "other": "Other"
+    },
+    "otherSelectOptions": {
+      "yes": "Yes",
+      "no": "No"
+    },
     "labelPhone": "Phone",
     "placeHolderLabelPhone": "Enter your number",
-    "buttonClose": "Close"
+    "buttonClose": "Close",
+    "error": {
+      "typePersonRequired": "Person type is required",
+      "bornDateRequired": "Birth date is required",
+      "nationalityRequired": "Nationality is required",
+      "documentTypeRequired": "Document type is required",
+      "documentNumberRequired": "Document number is required",
+      "genderRequired": "Gender is required",
+      "companyNameRequired": "Company name is required",
+      "fatherNameRequired": "Father's name is required",
+      "matherNameRequired": "Mother's name is required",
+      "maritalStatusRequired": "Marital status is required",
+      "educationRequired": "Education is required",
+      "personExportPoliticallyRequired": "Politically exposed person is required",
+      "professionRequired": "Profession is require",
+      "requiredField": "Required field",
+      "spouseNameRequired": "Spouse name is required"
+    }
   }
 }

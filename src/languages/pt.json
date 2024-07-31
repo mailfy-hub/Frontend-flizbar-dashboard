@@ -177,10 +177,14 @@
           "titleSecondary": "Dados de acesso",
           "titleTertiary": "Dados complementares",
           "email":"Email de acesso",
-          "labelTypePerson": "Tipo de pessoa",
+          "typePerson": {
+            "labelTypePerson": "Tipo de pessoa",
+            "physical": "Física",
+            "legal": "Jurídica"
+          },
           "labelBornDate": "Data de nascimento",
           "nationality": "Nacionalidade",
-          "documentType": "Tipo do documento",
+          "labelDocumentType": "Tipo de documento",
           "documentNumber": "Número do documento",
           "fatherName": "Nome do pai",
           "matherName": "Nome da mãe",
@@ -188,7 +192,10 @@
           "education": "Escolaridade",
           "personExportPolitically": "É pessoa politicamente exporta?",
           "profession": "QUal sua profissão?",
-          "taxesUSGovernment": "Declara impostos para o governo dos EUA?"
+          "taxesUSGovernment": "Declara impostos para o governo dos EUA?",
+          "spouseName": "Nome do cônjuge",
+          "name": "Nome",
+          "companyName": "Razão social"
         },
         "address": {
           "title": "Endereço",
@@ -231,15 +238,7 @@
           "rg": "RG",
           "cpf": "CPF",
           "nacionality": "Nacionalidade",
-          "maritalStatus": {
-            "title": "Estado civil",
-            "single": "Solteiro",
-            "married": "Casado",
-            "divorced": "Divorciado",
-            "widower": "Viúvo",
-            "stableUnion": "União estável",
-            "other": "Outro"
-          },
+          "maritalStatus": "Estado civil",
           "profession": "Qual é sua profissão?",
           "titleSecondary": "Endereço do beneficiário"
         },
@@ -270,6 +269,42 @@
       "next": "Próximo",
       "of": "de"
     },
+    "documentTypes": {
+      "cpf": "CPF",
+      "rg": "RG",
+      "passport": "Passaporte",
+      "driverLicense": "Carteira de habilitação",
+      "nationalId": "Identidade nacional",
+      "cnpj": "CNPJ",
+      "iban": "IBAN"
+    },
+    "nationality": {
+      "brazilian": "Brasileiro",
+      "other": "Outro"
+    },
+    "maritalStatus": {
+      "single": "Solteiro(a)",
+      "married": "Casado(a)",
+      "divorced": "Divorciado(a)",
+      "widower": "Viúvo(a)",
+      "stableUnion": "União estável",
+      "other": "Outro"
+    },
+    "education": {
+      "incompleteHighSchool": "Ensino médio incompleto",
+      "completeHighSchool": "Ensino médio completo",
+      "incompleteBachelorDegree": "Ensino superior incompleto",
+      "technicalCourse": "Curso técnico",
+      "completeBachelorDegree": "Ensino superior completo",
+      "postgraduate": "Pós-graduação",
+      "master": "Mestrado",
+      "doctorate": "Doutorado",
+      "other": "Outro"
+    },
+    "otherSelectOptions": {
+      "yes": "Sim",
+      "no": "Não"
+    },
     "modals": {
       "title": "Tem certeza que deseja deletar este registro?",
       "text": "Essa ação é irreversível, tome cuidado ao prosseguir.",
@@ -278,6 +313,23 @@
     },
     "labelPhone": "Telefone",
     "placeHolderLabelPhone": "Insira seu número",
-    "buttonClose": "Fechar"
+    "buttonClose": "Fechar",
+    "error": {
+      "typePersonRequired": "O tipo de pessoa é obrigatório",
+      "bornDateRequired": "A data de nascimento é obrigatória",
+      "nationalityRequired": "A nacionalidade é obrigatória",
+      "documentTypeRequired": "O tipo de documento é obrigatório",
+      "documentNumberRequired": "O número do documento é obrigatório",
+      "genderRequired": "O gênero é obrigatório",
+      "companyNameRequired": "A razão social é obrigatória",
+      "fatherNameRequired": "O nome do pai é obrigatório",
+      "matherNameRequired": "O nome da mãe é obrigatório",
+      "maritalStatusRequired": "O estado civil é obrigatório",
+      "educationRequired": "A escolaridade é obrigatória",
+      "personExportPoliticallyRequired": "Pessoa politicamente exposta é obrigatório",
+      "professionRequired": "A profissão é obrigatória",
+      "requiredField": "Campo obrigatório",
+      "spouseNameRequired": "O nome do cônjuge é obrigatório"
+    }
   }
 }

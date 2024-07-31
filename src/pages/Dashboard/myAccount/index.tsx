@@ -36,7 +36,7 @@ export const MyAccount = () => {
                 : "bg-gray-300 text-gray-500"
             } px-4 py-2 rounded-md font-display font-semibold transition-all `}
           >
-            Dados do cliente
+            {t("default.myAccount.client.clientData")}
           </button>
         )}
         {!userData?.isAdmin && (
@@ -50,7 +50,7 @@ export const MyAccount = () => {
                 : "bg-gray-300 text-gray-500"
             } px-4 py-2 rounded-md font-display font-semibold transition-all `}
           >
-            Carteiras
+            {t("default.myAccount.client.wallets.title")}
           </button>
         )}
 
@@ -65,7 +65,7 @@ export const MyAccount = () => {
                 : "bg-gray-300 text-gray-500"
             } px-4 py-2 rounded-md font-display font-semibold transition-all `}
           >
-            Meus anexos
+            {t("default.myAccount.client.myAnexes.title")}
           </button>
         )}
       </div>

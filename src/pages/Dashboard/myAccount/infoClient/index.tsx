@@ -116,7 +116,7 @@ export const InfoClient = () => {
                   : "border-transparent font-medium text-GRAY_400"
               }`}
             >
-              Dados gerais
+              {t("default.myAccount.client.generalData.title")}
             </button>
             <button
               onClick={() => {
@@ -128,7 +128,7 @@ export const InfoClient = () => {
                   : "border-transparent font-medium text-GRAY_400"
               }`}
             >
-              Endereço
+              {t("default.myAccount.client.address.title")}
             </button>
             <button
               onClick={() => {
@@ -140,7 +140,7 @@ export const InfoClient = () => {
                   : "border-transparent font-medium text-GRAY_400"
               }`}
             >
-              Dados bancários
+              {t("default.myAccount.client.bankDetails.title")}
             </button>
             <button
               onClick={() => {
@@ -152,7 +152,7 @@ export const InfoClient = () => {
                   : "border-transparent font-medium text-GRAY_400"
               }`}
             >
-              Beneficiário
+              {t("default.myAccount.client.beneficiary.title")}
             </button>
             <button
               onClick={() => {
@@ -164,7 +164,7 @@ export const InfoClient = () => {
                   : "border-transparent font-medium text-GRAY_400"
               }`}
             >
-              Contatos
+              {t("default.myAccount.client.contacts.title")}
             </button>
           </div>
           <div className="">

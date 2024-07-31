@@ -159,7 +159,7 @@
           "labelTypePerson": "Tipo de persona",
           "labelBornDate": "Fecha de nacimiento",
           "nationality": "Nacionalidad",
-          "documentType": "Tipo de documento",
+          "labelDocumentType": "Tipo de documento",
           "documentNumber": "Número de documento",
           "fatherName": "Nombre del padre",
           "matherName": "Nombre de la madre",
@@ -167,7 +167,10 @@
           "education": "Educación",
           "personExportPolitically": "¿La persona es políticamente exportadora?",
           "profession": "¿Cuál es tu profesión?",
-          "taxesUSGovernment": "¿Presentan impuestos para el gobierno de EUA?"
+          "taxesUSGovernment": "¿Presentan impuestos para el gobierno de EUA?",
+          "spouseName": "Nombre de la esposa",
+          "name": "Nombre",
+          "companyName": "Razón social"
         },
         "address": {
           "title": "Dirección",
@@ -210,15 +213,7 @@
           "rg": "RG",
           "cpf": "CPF",
           "nacionality": "Nacionalidad",
-          "maritalStatus": {
-            "title": "Estado civil",
-            "single": "soltero",
-            "married": "Casado",
-            "divorced": "Divorciado",
-            "widower": "Viuvo",
-            "stableUnion": "Unión estable",
-            "other": "Otro"
-          },
+          "maritalStatus": "Estado civil",
           "profession": "¿Cuál es tu profesión?",
           "titleSecondary": "Dirección del beneficiario"
         },
@@ -248,7 +243,43 @@
       "previous": "Anterior",
       "next": "Siguiente",
       "of": "de"
-    } ,
+    },
+    "documentTypes": {
+      "cpf": "CPF",
+      "rg": "RG",
+      "passport": "Pasaporte",
+      "driverLicense": "Licencia de conducir",
+      "nationalId": "Identificación nacional",
+      "cnpj": "CNPJ",
+      "iban": "IBAN"
+    },
+    "nationality": {
+      "brazilian": "Brasileño",
+      "other": "Otro"
+    },
+    "maritalStatus": {
+      "single": "Soltero",
+      "married": "Casado",
+      "divorced": "Divorciado",
+      "widower": "Viuvo",
+      "stableUnion": "Unión estable",
+      "other": "Otro"
+    },
+    "education": {
+      "incompleteHighSchool": "Educación secundaria incompleta",
+      "completeHighSchool": "Educación secundaria completa",
+      "technicalCourse": "Curso técnico",
+      "incompleteBachelorDegree": "Educación universitaria incompleta",
+      "completeBachelorDegree": "Educación universitaria completa",
+      "postgraduate": "Postgrado",
+      "master": "Maestro",
+      "doctorate": "Doctorado",
+      "other": "Otro"
+    },
+    "otherSelectOptions": {
+      "yes": "Sí",
+      "no": "No"
+    },
     "modals": {
       "title": "¿Estás seguro de que deseas eliminar este registro?",
       "text": "Esta acción es irreversible, tenga cuidado al proceder.",
@@ -257,6 +288,23 @@
     },
     "labelPhone": "Teléfono",
     "placeHolderLabelPhone": "Ingresa tu número",
-    "buttonClose": "Cerrar"
+    "buttonClose": "Cerrar",
+    "error": {
+      "typePersonRequired": "Se requiere tipo de persona",
+      "bornDateRequired": "La fecha de nacimiento es obligatoria",
+      "nationalityRequired": "Se requiere nacionalidad",
+      "documentTypeRequired": "Se requiere tipo de documento",
+      "documentNumberRequired": "El número de documento es requerido",
+      "genderRequired": "Se requiere género",
+      "companyNameRequired": "El nombre de la empresa es obligatorio",
+      "fatherNameRequired": "El nombre del padre es obligatorio",
+      "matherNameRequired": "El nombre de la madre es obligatorio",
+      "maritalStatusRequired": "Se requiere estado civil",
+      "educationRequired": "La educación es obligatoria",
+      "personExportPoliticallyRequired": "Se requiere persona políticamente expuesta",
+      "professionRequired": "Se requiere profesión",
+      "requiredField": "Campo obligatorio",
+      "spouseNameRequired": "Se requiere el nombre del cónyuge"
+    }
   }
 }

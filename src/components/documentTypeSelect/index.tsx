@@ -1,4 +1,5 @@
 import { Option, Select } from "@material-tailwind/react";
+import { useTranslation } from "react-i18next";
 
 type OptionType = {
   value: string;
@@ -18,11 +19,16 @@ export const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
   setFieldValue,
   fieldName,
 }) => {
+  const { t } = useTranslation();
+
   const optionsPF: OptionType[] = [
-    { value: "CPF", label: "CPF" },
-    { value: "RG", label: "RG" },
-    { value: "PASSAPORTE", label: "PASSAPORTE" },
-    { value: "CARTEIRA DE HABILITAÇÃO", label: "CARTEIRA DE HABILITAÇÃO" },
+    { value: "CPF", label: `${t("default.documentTypes.cpf")}` },
+    { value: "RG", label: `${t("default.documentTypes.rg")}` },
+    { value: "PASSPORT", label: `${t("default.documentTypes.passport")}` },
+    {
+      value: "DRIVER LICENSE",
+      label: `${t("default.documentTypes.driverLicense")}`,
+    },
     { value: "NATIONAL ID", label: "NATIONAL ID" },
     { value: "RNE", label: "RNE" },
   ];
@@ -42,7 +48,7 @@ export const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
       onChange={(selectedValue) => {
         setFieldValue(fieldName, selectedValue);
       }}
-      label="Tipo do documento"
+      label={t("default.myAccount.client.generalData.labelDocumentType")}
     >
       {options.map((option) => (
         <Option key={option.value} value={option.value}>
