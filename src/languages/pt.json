@@ -248,7 +248,8 @@
           "title": "Contatos",
           "titleSecondary": "Contato adicional",
           "text": "Se desejar, inclua um contato adicional como uma pessoa alternativa para caso não conseguimos contato com você.",
-          "ButtonAddContact": "ADICIONAR CONTATO"
+          "buttonAddContact": "ADICIONAR CONTATO",
+          "buttonRemoveContact": "Remover"
         },
         "wallets": {
           "title": "Carteiras",
@@ -309,9 +310,12 @@
     },
     "modals": {
       "title": "Tem certeza que deseja deletar este registro?",
+      "titleSecondary": "Criar novo contato",
       "text": "Essa ação é irreversível, tome cuidado ao prosseguir.",
+      "name": "Nome",
+      "phoneNumber": "Número de telefone",
       "buttonCancel": "Cancelar",
-      "buttonConfirm": "Deletar"
+      "buttonConfirm": "Confirmar"
     },
     "addressType": {
       "residential": "Residencial",
@@ -345,11 +349,12 @@
       "referenceRequired": "A referência é obrigatória",
       "zipCodeNotFound": "CEP não encontrado",
       "serverError": "Erro de servidor, tente novamente ou retorne mais tarde.",
-
       "accountTypeRequired": "O tipo de conta é obrigatório",
       "bankNameRequired": "O nome do banco é obrigatório",
       "numberAccountRequired": "O número da conta é obrigatório",
-      "agencyNumberRequired": "O número da agência é obrigatório"
+      "agencyNumberRequired": "O número da agência é obrigatório",
+      "nameRequired": "O nome é obrigatório",
+      "phoneNumberRequired": "O número de telefone é obrigatório"
 
     },
     "labelPhone": "Telefone",

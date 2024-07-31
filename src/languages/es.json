@@ -223,7 +223,8 @@
           "title": "Contactos",
           "titleSecondary": "Contacto adicional",
           "text": "Si lo deseas, incluye un contacto adicional como persona alternativa en caso de que no podamos comunicarnos contigo.",
-          "ButtonAddContact": "AÑADIR CONTACTO"
+          "buttonAddContact": "AÑADIR CONTACTO",
+          "buttonRemoveContact": "Eliminar"
         },
         "wallets": {
           "title": "Carteras",
@@ -284,9 +285,12 @@
     },
     "modals": {
       "title": "¿Estás seguro de que deseas eliminar este registro?",
+      "titleSecondary": "Crear nuevo contacto",
       "text": "Esta acción es irreversible, tenga cuidado al proceder.",
+      "name": "Nombre",
+      "phoneNumber": "Número de teléfono",
       "buttonCancel": "Cancelar",
-      "buttonConfirm": "Eliminar"
+      "buttonConfirm": "Confirmar"
     },
     "addressType": {
       "residential": "Residencial",
@@ -320,11 +324,12 @@
       "referenceRequired": "La referencia es obligatoria",
       "zipCodeNotFound": "Código postal no encontrado",
       "serverError": "Error del servidor, inténtalo de nuevo o vuelve más tarde.",
-
       "accountTypeRequired": "Se requiere tipo de cuenta",
       "bankNameRequired": "El nombre del banco es obligatorio",
       "numberAccountRequired": "El número de cuenta es obligatorio",
-      "agencyNumberRequired": "El número de agencia es obligatorio"
+      "agencyNumberRequired": "El número de agencia es obligatorio",
+      "nameRequired": "El nombre es obligatorio",
+      "phoneNumberRequired": "El número de teléfono es obligatorio"
     },
     "labelPhone": "Teléfono",
     "placeHolderLabelPhone": "Ingresa tu número",

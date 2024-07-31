@@ -247,7 +247,8 @@
           "title": "Contacts",
           "titleSecondary": "Additional Contact",
           "text": "If you wish, add an additional contact as an alternative person in case we are unable to contact you.",
-          "ButtonAddContact": "ADD CONTACT"
+          "buttonAddContact": "ADD CONTACT",
+          "buttonRemoveContact": "Remove"
         },
         "wallets": {
           "title": "Wallets",
@@ -273,9 +274,12 @@
     },
     "modals": {
       "title": "Are you sure you want to delete this record?",
+      "titleSecondary": "Create New Contact",
       "text": "This action is irreversible, be careful when proceeding.",
+      "name": "Name",
+      "phoneNumber": "Phone number",
       "buttonCancel": "Cancel",
-      "buttonConfirm": "Delete"
+      "buttonConfirm": "Confirm"
     },
     "documentTypes": {
       "cpf": "CPF",
@@ -345,11 +349,12 @@
       "referenceRequired": "Reference is required",
       "zipCodeNotFound": "Zip code not found",
       "serverError": "Server error, please try again or come back later.",
-
       "accountTypeRequired": "Account type is required",
       "bankNameRequired": "Bank name is required",
       "numberAccountRequired": "Account number is required",
-      "agencyNumberRequired": "Branch number is required"
+      "agencyNumberRequired": "Branch number is required",
+      "nameRequired": "Name is required",
+      "phoneNumberRequired": "Phone number is required"
     },
     "labelPhone": "Phone",
     "placeHolderLabelPhone": "Enter your number",
