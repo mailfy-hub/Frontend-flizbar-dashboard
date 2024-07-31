@@ -311,9 +311,11 @@
       "buttonCancel": "Cancelar",
       "buttonConfirm": "Deletar"
     },
-    "labelPhone": "Telefone",
-    "placeHolderLabelPhone": "Insira seu número",
-    "buttonClose": "Fechar",
+    "addressType": {
+      "residential": "Residencial",
+      "commercial": "Comercial",
+      "other": "Outro"
+    },
     "error": {
       "typePersonRequired": "O tipo de pessoa é obrigatório",
       "bornDateRequired": "A data de nascimento é obrigatória",
@@ -339,7 +341,13 @@
       "numberRequired": "O número é obrigatório",
       "neighborhoodRequired": "O bairro é obrigatório",
       "complementRequired": "O complemento é obrigatório",
-      "referenceRequired": "A referência é obrigatória"
-    }
+      "referenceRequired": "A referência é obrigatória",
+      "zipCodeNotFound": "CEP não encontrado",
+      "serverError": "Erro de servidor, tente novamente ou retorne mais tarde."
+    },
+    "labelPhone": "Telefone",
+    "placeHolderLabelPhone": "Insira seu número",
+    "buttonClose": "Fechar",
+    "loadingZipCodeData": "Carregando dados do CEP ..."
   }
 }

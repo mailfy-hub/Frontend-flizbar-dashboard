@@ -162,7 +162,10 @@ export const AddressData = () => {
     >
       <div className="flex items-center gap-4">
         <Icon height={16} icon={"heroicons:map-pin"} color="black" />
-        <SectionTitle size="sm" text="Endereço" />
+        <SectionTitle
+          size="sm"
+          text={t("default.myAccount.client.address.title")}
+        />
       </div>
 
       <div className="mt-8 flex flex-col gap-6 ">
@@ -189,7 +192,7 @@ export const AddressData = () => {
                     variant={"small"}
                     color={"black"}
                   >
-                    Carregando dados do CEP...
+                    {t("default.loadingZipCodeData")}
                   </Typography>
                 </div>
               )}
@@ -208,26 +211,30 @@ export const AddressData = () => {
           <div className="grid md:grid-cols-3 gap-6">
             <Select
               id="addressType"
-              label="Tipo do endereço"
+              label={t("default.myAccount.client.address.typeAddress")}
               onChange={(selectedValue) =>
                 formik.setFieldValue("addressType", selectedValue)
               }
               value={formik.values.addressType}
             >
-              <Option value="Residencial">Residencial</Option>
-              <Option value="Comercial">Comercial</Option>
-              <Option value="Outro">Outro</Option>
+              <Option value="Residential">
+                {t("default.addressType.residential")}
+              </Option>
+              <Option value="Comercial">
+                {t("default.addressType.commercial")}
+              </Option>
+              <Option value="Other">{t("default.addressType.other")}</Option>
             </Select>
             <Input
               id="city"
               type="text"
-              label="Cidade"
+              label={t("default.myAccount.client.address.city")}
               onChange={formik.handleChange}
               value={formik.values.city}
             />
             <Select
               id="state"
-              label="Estado"
+              label={t("default.myAccount.client.address.state")}
               onChange={(selectedValeu) =>
                 formik.setFieldValue("state", selectedValeu)
               }
@@ -268,21 +275,21 @@ export const AddressData = () => {
             <Input
               id="street"
               type="text"
-              label="Logradouro"
+              label={t("default.myAccount.client.address.street")}
               onChange={formik.handleChange}
               value={formik.values.street}
             />
             <Input
               id="number"
               type="text"
-              label="Número"
+              label={t("default.myAccount.client.address.number")}
               onChange={formik.handleChange}
               value={formik.values.number}
             />
             <Input
               id="neighborhood"
               type="text"
-              label="Bairro"
+              label={t("default.myAccount.client.address.neighborhood")}
               onChange={formik.handleChange}
               value={formik.values.neighborhood}
             />
@@ -293,14 +300,14 @@ export const AddressData = () => {
             <Input
               id="complement"
               type="text"
-              label="Complemento"
+              label={t("default.myAccount.client.address.complement")}
               onChange={formik.handleChange}
               value={formik.values.complement}
             />
             <Input
               id="reference"
               type="text"
-              label="Referência"
+              label={t("default.myAccount.client.address.reference")}
               onChange={formik.handleChange}
               value={formik.values.reference}
             />
@@ -309,7 +316,7 @@ export const AddressData = () => {
       </div>
       <div className="w-full flex justify-start mt-8">
         <Button className="bg-GOLD_MAIN w-full md:w-auto" type="submit">
-          Atualizar dados
+          {t("default.myAccount.client.buttonUpdateData")}
         </Button>
       </div>
     </form>

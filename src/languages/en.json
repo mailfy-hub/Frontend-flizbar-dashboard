@@ -296,6 +296,11 @@
       "stableUnion": "Stable Union",
       "other": "Other"
     },
+    "addressType": {
+      "residential": "Residential",
+      "commercial": "Commercial",
+      "other": "Other"
+    },
     "education": {
       "incompleteHighSchool": "Incomplete high school",
       "completeHighSchool": "Complete high school",
@@ -311,9 +316,6 @@
       "yes": "Yes",
       "no": "No"
     },
-    "labelPhone": "Phone",
-    "placeHolderLabelPhone": "Enter your number",
-    "buttonClose": "Close",
     "error": {
       "typePersonRequired": "Person type is required",
       "bornDateRequired": "Birth date is required",
@@ -339,7 +341,13 @@
       "numberRequired": "Number is required",
       "neighborhoodRequired": "Neighborhood is required",
       "complementRequired": "Complement is required",
-      "referenceRequired": "Reference is required"
-    }
+      "referenceRequired": "Reference is required",
+      "zipCodeNotFound": "Zip code not found",
+      "serverError": "Server error, please try again or come back later."
+    },
+    "labelPhone": "Phone",
+    "placeHolderLabelPhone": "Enter your number",
+    "buttonClose": "Close",
+    "loadingZipCodeData": "Loading address data ..."
   }
 }

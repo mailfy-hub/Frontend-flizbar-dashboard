@@ -286,9 +286,11 @@
       "buttonCancel": "Cancelar",
       "buttonConfirm": "Eliminar"
     },
-    "labelPhone": "Teléfono",
-    "placeHolderLabelPhone": "Ingresa tu número",
-    "buttonClose": "Cerrar",
+    "addressType": {
+      "residential": "Residencial",
+      "commercial": "Comercial",
+      "other": "Otro"
+    },
     "error": {
       "typePersonRequired": "Se requiere tipo de persona",
       "bornDateRequired": "La fecha de nacimiento es obligatoria",
@@ -314,7 +316,13 @@
       "numberRequired": "El número es obligatorio",
       "neighborhoodRequired": "El barrio es obligatorio",
       "complementRequired": "El complemento es obligatorio",
-      "referenceRequired": "La referencia es obligatoria"
-    }
+      "referenceRequired": "La referencia es obligatoria",
+      "zipCodeNotFound": "Código postal no encontrado",
+      "serverError": "Error del servidor, inténtalo de nuevo o vuelve más tarde."
+    },
+    "labelPhone": "Teléfono",
+    "placeHolderLabelPhone": "Ingresa tu número",
+    "buttonClose": "Cerrar",
+    "loadingZipCodeData": "Cargando datos del código postal ..."
   }
 }
