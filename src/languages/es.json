@@ -194,7 +194,9 @@
           },
           "bankName": "Nombre del banco",
           "agencyNumber": "Número de agencia",
-          "accountDigt": "Dígito de cuenta",
+          "accountDigit": "Dígito de cuenta",
+          "agencyDigit": "Dígito de la agencia",
+          "numberAccount": "Número de cuenta",
           "pixKeyType": {
             "title": "Tipo de clave PIX",
             "email": "Clave de correo electrónico",
@@ -307,7 +309,6 @@
       "professionRequired": "Se requiere profesión",
       "requiredField": "Campo obligatorio",
       "spouseNameRequired": "Se requiere el nombre del cónyuge",
-
       "addressTypeRequired": "Se requiere tipo de dirección",
       "zipCodeRequired": "El código postal es obligatorio",
       "cityRequired": "La ciudad es obligatoria",
@@ -318,7 +319,12 @@
       "complementRequired": "El complemento es obligatorio",
       "referenceRequired": "La referencia es obligatoria",
       "zipCodeNotFound": "Código postal no encontrado",
-      "serverError": "Error del servidor, inténtalo de nuevo o vuelve más tarde."
+      "serverError": "Error del servidor, inténtalo de nuevo o vuelve más tarde.",
+
+      "accountTypeRequired": "Se requiere tipo de cuenta",
+      "bankNameRequired": "El nombre del banco es obligatorio",
+      "numberAccountRequired": "El número de cuenta es obligatorio",
+      "agencyNumberRequired": "El número de agencia es obligatorio"
     },
     "labelPhone": "Teléfono",
     "placeHolderLabelPhone": "Ingresa tu número",

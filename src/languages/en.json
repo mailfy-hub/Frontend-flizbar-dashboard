@@ -218,7 +218,9 @@
           },
           "bankName": "Bank Name",
           "agencyNumber": "Branch Number",
-          "accountDigt": "Account Digt",
+          "accountDigit": "Account Digt",
+          "agencyDigit": "Agency Digit",
+          "numberAccount": "Account Number",
           "pixKeyType": {
             "title": "PIX Key Type",
             "email": "Email Key",
@@ -332,7 +334,6 @@
       "professionRequired": "Profession is require",
       "requiredField": "Required field",
       "spouseNameRequired": "Spouse name is required",
-
       "addressTypeRequired": "Address type is required",
       "zipCodeRequired": "Zip code is required",
       "cityRequired": "City is required",
@@ -343,7 +344,12 @@
       "complementRequired": "Complement is required",
       "referenceRequired": "Reference is required",
       "zipCodeNotFound": "Zip code not found",
-      "serverError": "Server error, please try again or come back later."
+      "serverError": "Server error, please try again or come back later.",
+
+      "accountTypeRequired": "Account type is required",
+      "bankNameRequired": "Bank name is required",
+      "numberAccountRequired": "Account number is required",
+      "agencyNumberRequired": "Branch number is required"
     },
     "labelPhone": "Phone",
     "placeHolderLabelPhone": "Enter your number",

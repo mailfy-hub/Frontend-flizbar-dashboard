@@ -215,11 +215,13 @@
             "currentAccount": "Conta corrente",
             "jointAccount": "Conta conjunta",
             "savingsAccount": "Conta poupança",
-            "other": "Outro"
+            "other": "Outra"
           },
           "bankName": "Nome do banco",
           "agencyNumber": "Número da agência",
-          "accountDigt": "Dígito da conta",
+          "accountDigit": "Dígito da conta",
+          "agencyDigit": "Dígito da agência",
+          "numberAccount": "Número da conta",
           "pixKeyType": {
             "title": "Tipo de chave PIX",
             "email": "Chave E-mail",
@@ -332,7 +334,6 @@
       "professionRequired": "A profissão é obrigatória",
       "requiredField": "Campo obrigatório",
       "spouseNameRequired": "O nome do cônjuge é obrigatório",
-
       "addressTypeRequired": "O tipo de endereço é obrigatório",
       "zipCodeRequired": "O CEP é obrigatório",
       "cityRequired": "A cidade é obrigatória",
@@ -343,7 +344,13 @@
       "complementRequired": "O complemento é obrigatório",
       "referenceRequired": "A referência é obrigatória",
       "zipCodeNotFound": "CEP não encontrado",
-      "serverError": "Erro de servidor, tente novamente ou retorne mais tarde."
+      "serverError": "Erro de servidor, tente novamente ou retorne mais tarde.",
+
+      "accountTypeRequired": "O tipo de conta é obrigatório",
+      "bankNameRequired": "O nome do banco é obrigatório",
+      "numberAccountRequired": "O número da conta é obrigatório",
+      "agencyNumberRequired": "O número da agência é obrigatório"
+
     },
     "labelPhone": "Telefone",
     "placeHolderLabelPhone": "Insira seu número",
