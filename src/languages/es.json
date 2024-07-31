@@ -238,6 +238,21 @@
           "text": "Este cliente no tiene ningún archivo adjunto.",
           "tertiaryTitle": "Adjuntos de beneficiarios",
           "secondaryText": "Este beneficiario no tiene ningún archivo adjunto."
+        },
+        "interestCalculator": {
+          "title": "Tu calculadora de interés compuesto",
+          "secondaryTitle": "Calculadora de intereses",
+          "initialValue": "Valor inicial",
+          "monthlyValue": "Valor mensual",
+          "interestRate": "Tasa de interés (%) anual",
+          "interestRateSecondary": "Tasa de interés",
+          "annual": "(Anual)",
+          "periodIn": "Periodo en",
+          "periodOfTime": "Período de tiempo",
+          "button": "REALIZAR EL CÁLCULO DE INTERESES",
+          "totalAmountInvested": "Monto total invertido:",
+          "totalInInterest": "Total en intereses:",
+          "totalFinalAmount": "Valor total final:"
         }
       }
     },
@@ -296,6 +311,12 @@
       "residential": "Residencial",
       "commercial": "Comercial",
       "other": "Otro"
+    },
+    "periodOfTime": {
+      "days": "Días",
+      "weeks": "Semanas",
+      "months": "Meses",
+      "years": "Años"
     },
     "error": {
       "typePersonRequired": "Se requiere tipo de persona",

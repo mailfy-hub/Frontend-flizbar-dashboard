@@ -262,6 +262,21 @@
           "text": "This customer does not have any attachments.",
           "tertiaryTitle": "Payee Attachments",
           "secondaryText": "This payee does not have any attachments."
+        },
+        "interestCalculator": {
+          "title": "Your Compound Interest Calculator",
+          "secondaryTitle": "Interest Calculator",
+          "initialValue": "Initial Value",
+          "monthlyValue": "Monthly Value",
+          "interestRate": "Interest Rate (Annual %)",
+          "interestRateSecondary": "Interest Rate",
+          "annual": "(Annual)",
+          "periodIn": "Period in",
+          "periodOfTime": "Period of Time",
+          "button": "PERFORM INTEREST CALCULATION",
+          "totalAmountInvested": "Total amount invested:",
+          "totalInInterest": "Total in interest:",
+          "totalFinalAmount": "Total final amount:"
         }
     }
     },
@@ -321,6 +336,12 @@
     "otherSelectOptions": {
       "yes": "Yes",
       "no": "No"
+    },
+    "periodOfTime": {
+      "days": "Days",
+      "weeks": "Weeks",
+      "months": "Months",
+      "years": "Years"
     },
     "error": {
       "typePersonRequired": "Person type is required",

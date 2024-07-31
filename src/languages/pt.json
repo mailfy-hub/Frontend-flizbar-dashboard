@@ -263,6 +263,21 @@
           "text": "Esse cliente não possui nenhum anexo.",
           "tertiaryTitle": "Anexos do beneficiário",
           "secondaryText": "Esse beneficiário não possui nenhum anexo."
+        },
+        "interestCalculator": {
+          "title": "Sua calculadora de juros compostos",
+          "secondaryTitle": "Calculadora de juros",
+          "initialValue": "Valor inicial",
+          "monthlyValue": "Valor mensal",
+          "interestRate": "Taxa de juros (Anual %)",
+          "interestRateSecondary": "Taxa de juros",
+          "annual": "(Anual)",
+          "periodIn": "Período em",
+          "periodOfTime": "Período de tempo",
+          "button": "REALIZAR CÁLCULO DE JUROS",
+          "totalAmountInvested": "Valor total investido:",
+          "totalInInterest": "Total em juros:",
+          "totalFinalAmount": "Valor total final:"
         }
       }
     },
@@ -322,6 +337,12 @@
       "commercial": "Comercial",
       "other": "Outro"
     },
+    "periodOfTime": {
+      "days": "Dia(s)",
+      "weeks": "Semana(s)",
+      "months": "Mese(s)",
+      "years": "Ano(s)"
+    },
     "error": {
       "typePersonRequired": "O tipo de pessoa é obrigatório",
       "bornDateRequired": "A data de nascimento é obrigatória",
@@ -360,7 +381,6 @@
       "cpfRequired": "O CPF é obrigatório",
       "emailRequired": "O e-mail é obrigatório",
       "emailInvalid": "Insira um e-mail inválido"
-
     },
     "labelPhone": "Telefone",
     "placeHolderLabelPhone": "Insira seu número",
