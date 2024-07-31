@@ -329,7 +329,17 @@
       "personExportPoliticallyRequired": "Politically exposed person is required",
       "professionRequired": "Profession is require",
       "requiredField": "Required field",
-      "spouseNameRequired": "Spouse name is required"
+      "spouseNameRequired": "Spouse name is required",
+
+      "addressTypeRequired": "Address type is required",
+      "zipCodeRequired": "Zip code is required",
+      "cityRequired": "City is required",
+      "stateRequired": "State is required",
+      "streetRequired": "Street is required",
+      "numberRequired": "Number is required",
+      "neighborhoodRequired": "Neighborhood is required",
+      "complementRequired": "Complement is required",
+      "referenceRequired": "Reference is required"
     }
   }
 }

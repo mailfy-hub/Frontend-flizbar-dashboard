@@ -15,6 +15,7 @@ import { InferType } from "yup";
 import { api } from "../../../../client/api";
 import { SectionTitle } from "../../../../components/sectionTitle";
 import { useAuth } from "../../../../hook/auth";
+import { useTranslation } from "react-i18next";
 
 interface dataAddressInformation {
   bairro: string;
@@ -32,14 +33,20 @@ interface dataAddressInformation {
 
 export const AddressData = () => {
   const { profile } = useAuth();
+  const { t } = useTranslation();
+
   const validationSchema = Yup.object().shape({
-    addressType: Yup.string().required("Tipo de endereço é obrigatório"),
-    zipCode: Yup.string().required("CEP é obrigatório"),
-    city: Yup.string().required("Cidade é obrigatória"),
-    state: Yup.string().required("Estado é obrigatório"),
-    street: Yup.string().required("Logradouro é obrigatório"),
-    number: Yup.string().required("Número é obrigatório"),
-    neighborhood: Yup.string().required("Bairro é obrigatório"),
+    addressType: Yup.string().required(
+      `${t("default.error.addressTypeRequired")}`
+    ),
+    zipCode: Yup.string().required(`${t("default.error.zipCodeRequired")}`),
+    city: Yup.string().required(`${t("default.error.cityRequired")}`),
+    state: Yup.string().required(`${t("default.error.stateRequired")}`),
+    street: Yup.string().required(`${t("default.error.streetRequired")}`),
+    number: Yup.string().required(`${t("default.error.numberRequired")}`),
+    neighborhood: Yup.string().required(
+      `${t("default.error.neighborhoodRequired")}`
+    ),
     complement: Yup.string(),
     reference: Yup.string(),
   });

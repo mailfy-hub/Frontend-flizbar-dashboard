@@ -329,7 +329,17 @@
       "personExportPoliticallyRequired": "Pessoa politicamente exposta é obrigatório",
       "professionRequired": "A profissão é obrigatória",
       "requiredField": "Campo obrigatório",
-      "spouseNameRequired": "O nome do cônjuge é obrigatório"
+      "spouseNameRequired": "O nome do cônjuge é obrigatório",
+
+      "addressTypeRequired": "O tipo de endereço é obrigatório",
+      "zipCodeRequired": "O CEP é obrigatório",
+      "cityRequired": "A cidade é obrigatória",
+      "stateRequired": "O estado é obrigatório",
+      "streetRequired": "A rua é obrigatória",
+      "numberRequired": "O número é obrigatório",
+      "neighborhoodRequired": "O bairro é obrigatório",
+      "complementRequired": "O complemento é obrigatório",
+      "referenceRequired": "A referência é obrigatória"
     }
   }
 }
