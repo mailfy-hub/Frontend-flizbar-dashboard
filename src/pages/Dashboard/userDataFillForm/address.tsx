@@ -64,7 +64,6 @@ export const Address = ({ handleConfirmationClick }: FormStepType) => {
     initialValues,
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
       handlePostAddressInformation(values);
     },
   });

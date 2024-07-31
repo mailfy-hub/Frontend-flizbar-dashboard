@@ -53,13 +53,13 @@ export const UserDataProfile = () => {
       ? 1
       : !isClientAddressesFilled
       ? 2
-      : !isClientContactsFilled
-      ? 3
       : !isClientFinanceFilled
-      ? 4
+      ? 3
       : !isClientBeneficiaryFilled
-      ? 5
+      ? 4
       : !isClientAttachmentsFilled
+      ? 5
+      : !isClientContactsFilled
       ? 6
       : 7;
 
@@ -192,7 +192,6 @@ export const UserDataProfile = () => {
           <BankData
             handleConfirmationClick={() => {
               handleStepOnClick(4);
-              console.log(ActiveFormStepPosition);
             }}
           />
         )}

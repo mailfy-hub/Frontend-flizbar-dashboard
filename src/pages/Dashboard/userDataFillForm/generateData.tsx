@@ -78,7 +78,6 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
   const initialValues: FormValues = {
     personType: "pf",
     corporateName: "",
-    birthDate: new Date(),
     documentType: "",
     document: "",
     gender: "",
@@ -102,8 +101,6 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
       handlePostClientData(values);
     },
   });
-  console.log(formik)
-
 
   const handlePostClientData = async (data: FormValues) => {
     try {
@@ -224,7 +221,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 onChange={formik.handleChange}
                 type="date"
                 label="Date de nascimento"
-                error={formik.touched.birthDate && Boolean(formik.errors.birthDate)}
+                error={Boolean(formik.errors.birthDate)}
               />
             )}
             <Select
