@@ -114,12 +114,15 @@ export const GenerateData = () => {
       ? profile?.clientDetails?.profession
       : "",
     declaresUsTaxes: profile?.clientDetails?.declaresUsTaxes ? "Sim" : "Não",
-    spouseName: profile?.clientDetails?.spouse
-      ? profile?.clientDetails?.profession
+    spouseName: profile?.clientDetails?.spouseDetails
+      ? profile?.clientDetails?.spouseDetails?.spouseName
       : "",
     spouseDocumentType: profile?.clientDetails?.spouseDetails
-      ? profile?.clientDetails?.profession
+      ? profile?.clientDetails?.spouseDetails?.spouseDocumentType
       : "",
+    spousedocument: profile?.clientDetails?.spouseDetails
+    ? profile?.clientDetails?.spouseDetails?.spousedocument
+    : "",
   };
 
   const formik = useFormik({
@@ -285,7 +288,6 @@ export const GenerateData = () => {
                     value={`${userData?.name} ${userData?.surname}`}
                     type="text"
                     label="Nome"
-                    disabled
                   />
                 ) : (
                   <Input
@@ -341,6 +343,7 @@ export const GenerateData = () => {
                   value={formik.values.documentType}
                   setFieldValue={formik.setFieldValue}
                   fieldName="documentType"
+                  type=""
                 />
                 <Input
                   name="document"
@@ -411,15 +414,13 @@ export const GenerateData = () => {
                     Ensino médio completo
                   </Option>
                   <Option value="Curso técnico">Curso técnico</Option>
-                  <Option value="Bacharelado Incompleto">
-                    Bacharelado Incompleto
+                  <Option value="Ensino superior Incompleto">
+                    Ensino superior Incompleto
                   </Option>
-                  <Option value="Bacherelado Completo">
-                    Bacherelado Completo
+                  <Option value="Ensino superior Completo">
+                    Ensino superior Completo
                   </Option>
-                  <Option value="Pós-graduação">Pós-graduação</Option>
-                  <Option value="Mestrado">Mestrado</Option>
-                  <Option value="Doutorado">Doutorado</Option>
+                  <Option value="Pós Graduação/Mestrado/Doutorado">Pós Graduação/Mestrado/Doutorado</Option>
                   <Option value="Outro">Outro</Option>
                 </Select>
                 <Select
