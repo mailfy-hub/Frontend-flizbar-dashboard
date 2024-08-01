@@ -118,7 +118,11 @@ export interface ProfileDetails {
   declaresUsTaxes: boolean;
   isEnterprise: boolean;
   personalPhone: string;
-  spouseDetails: string;
+  spouseDetails: {
+    spouseName?: string,
+    spouseDocumentType?: string,
+    spousedocument?: string,
+  };
   spouse: boolean;
   birthDate: string;
   fatherName?: string;

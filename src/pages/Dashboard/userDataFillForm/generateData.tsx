@@ -116,8 +116,8 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
         politicalPerson: data.politicalPerson == "true" ? true : false,
         declaresUsTaxes: data.declaresUsTaxes == "true" ? true : false,
         spouseDetails:
-          data.maritalStatus == "Stable Union" ||
-          data.maritalStatus == "Married"
+          data.maritalStatus == "União Estável" ||
+          data.maritalStatus == "Casado(a)"
             ? {
                 spouseName: data.spouseName,
                 spouseDocumentType: data.spouseDocumentType,
@@ -125,8 +125,8 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
               }
             : {},
         spouse:
-          data.maritalStatus == "Stable Union" ||
-          data.maritalStatus == "Married"
+          data.maritalStatus == "União Estável" ||
+          data.maritalStatus == "Casado(a)"
             ? true
             : false,
       };
@@ -152,8 +152,19 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
         politicalPerson: data.politicalPerson == "true" ? true : false,
         profession: data.profession,
         declaresUsTaxes: data.declaresUsTaxes == "true" ? true : false,
-        spouseDetails: "",
-        spouse: false,
+        spouseDetails: data.maritalStatus == "União Estável" ||
+        data.maritalStatus == "Casado(a)"
+          ? {
+              spouseName: data.spouseName,
+              spouseDocumentType: data.spouseDocumentType,
+              spousedocument: data.spousedocument,
+            }
+          : {},
+      spouse:
+        data.maritalStatus == "União Estável" ||
+        data.maritalStatus == "Casado(a)"
+          ? true
+          : false,
         corporateName: data.corporateName ? data.corporateName : "",
         id: userData.id,
         isEnterprise: data.corporateName ? true : false,
