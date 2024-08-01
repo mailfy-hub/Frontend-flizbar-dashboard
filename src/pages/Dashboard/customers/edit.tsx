@@ -15,9 +15,15 @@ export const CustomerEdit = () => {
   const { id } = location.state;
 
   useEffect(() => {
-    getProfileById(id).then((data) => {
-      setDataUser(data);
-    });
+    async function fetchData() {
+      await getProfileById(id).then((data) => {
+        setDataUser(data);
+      })
+      .catch(err => console.log(err))
+    }
+
+    fetchData()
+    
   }, []);
 
   const handleNavigateBack = () => {

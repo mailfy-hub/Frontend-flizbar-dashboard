@@ -337,12 +337,12 @@ export const GenerateData = ({ dataUser }: any) => {
                   label="Tipo do documento"
                   error={formik.touched.documentType && Boolean(formik.errors.documentType)}
                 >
-                  <Option value="Inscrição estadual">Inscrição estadual</Option>
-                  <Option value="Carteira de habilitação">
-                    Carteira de habilitação
-                  </Option>
-                  <Option value="Passaporte">Passaporte</Option>
                   <Option value="CPF">CPF</Option>
+                  <Option value="RG">RG</Option>
+                  <Option value="NATIONAL ID">NATIONAL ID</Option>
+                  <Option value="CARTEIRA DE HABILITAÇÃO">CARTEIRA DE HABILITAÇÃO</Option>
+                  <Option value="PASSAPORTE">PASSAPORTE</Option>
+                  <Option value="RNE">RNE</Option>
                 </Select>
                 <Input
                   name="document"
@@ -424,9 +424,7 @@ export const GenerateData = ({ dataUser }: any) => {
                   <Option value="Ensino superior Completo">
                     Ensino superior Completo
                   </Option>
-                  <Option value="Pós-graduação">Pós-graduação</Option>
-                  <Option value="Mestrado">Mestrado</Option>
-                  <Option value="Doutorado">Doutorado</Option>
+                  <Option value="Pós graduação/Mestrado/Doutorado">Pós graduação/Mestrado/Doutorado</Option>
                   <Option value="Outro">Outro</Option>
                 </Select>
                 <Select
@@ -494,13 +492,12 @@ export const GenerateData = ({ dataUser }: any) => {
                     className="w-full"
                     error={!!formik.values.spouseDocumentType}
                   >
-                    <Option value="Inscrição estadual">
-                      Inscrição estadual
-                    </Option>
-                    <Option value="Carteira de habilitação">
-                      Carteira de habilitação
-                    </Option>
-                    <Option value="Passaporte">Passaporte</Option>
+                    <Option value="CPF">CPF</Option>
+                    <Option value="RG">RG</Option>
+                    <Option value="NATIONAL ID">NATIONAL ID</Option>
+                    <Option value="CARTEIRA DE HABILITAÇÃO">CARTEIRA DE HABILITAÇÃO</Option>
+                    <Option value="PASSAPORTE">PASSAPORTE</Option>
+                    <Option value="RNE">RNE</Option>
                   </Select>
                   <Input
                     id="spousedocument"

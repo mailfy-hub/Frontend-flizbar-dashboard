@@ -125,9 +125,12 @@ export const CustomerInsert = () => {
             </div>
             <div className="grid md:grid-cols-2 gap-6">
               <Select label="Tipo do documento*">
-                <Option>Inscrição estadual</Option>
-                <Option>Carteira de habilitação</Option>
-                <Option>Passaporte</Option>
+                <Option value="CPF">CPF</Option>
+                <Option value="RG">RG</Option>
+                <Option value="NATIONAL ID">NATIONAL ID</Option>
+                <Option value="CARTEIRA DE HABILITAÇÃO">CARTEIRA DE HABILITAÇÃO</Option>
+                <Option value="PASSAPORTE">PASSAPORTE</Option>
+                <Option value="RNE">RNE</Option>
               </Select>
               <Input type="text" label="Número do documento*" />
             </div>
@@ -238,9 +241,7 @@ export const CustomerInsert = () => {
                 <Option>Nível Técnico</Option>
                 <Option>Superior Incompleto</Option>
                 <Option>Superior Completo</Option>
-                <Option>Pós graduação</Option>
-                <Option>Mestrado</Option>
-                <Option>Doutorado</Option>
+                <Option>Pós graduação/Mestrado/Doutorado</Option>
                 <Option>Outro</Option>
               </Select>
               <Select label="É pessoa politicamente exposta?*">
