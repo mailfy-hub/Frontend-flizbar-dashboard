@@ -21,18 +21,14 @@ import {
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../../../client/api";
 import exampleImageAporte from "../../../assets/example-image-aporte.png";
+import { api } from "../../../client/api";
 import { ImageDialog } from "../../../components/imageDialog";
 import { SectionTitle } from "../../../components/sectionTitle";
 import SuccessDialog from "../../../components/successDialog";
 import { useAuth } from "../../../hook/auth";
 import { Contribuition } from "../../../types/dashboard/contribuitions";
 import { formatDate } from "../../../utils/formatDate";
-
-
-
-
 
 export const Contribuitions = () => {
   const { userData } = useAuth();
@@ -41,10 +37,17 @@ export const Contribuitions = () => {
     navigate("insert");
   };
 
-  const TABLE_HEAD =
-    userData?.isAdmin
-      ? ["Código", "Cliente", "Valor do Aporte", "Valor do Dólar", "Status", "Data de criação", "Ações"]
-      : ["Código", "Carteira", "Valor", "Data de criação"];
+  const TABLE_HEAD = userData?.isAdmin
+    ? [
+        "Código",
+        "Cliente",
+        "Valor do Aporte",
+        "Valor do Dólar",
+        "Status",
+        "Data de criação",
+        "Ações",
+      ]
+    : ["Código", "Carteira", "Valor", "Data de criação"];
 
   const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
@@ -71,9 +74,9 @@ export const Contribuitions = () => {
     navigate("details");
   };
 
-
-
-  const [contribuitionsList, setContribuitionsList] = useState<Contribuition[]>([]);
+  const [contribuitionsList, setContribuitionsList] = useState<Contribuition[]>(
+    []
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [_totalItems, setTotalItems] = useState(0);
@@ -85,9 +88,8 @@ export const Contribuitions = () => {
         `contributions?page=${page}&itemsPerPage=${itemsPerPage}`
       );
 
-      console.log('API Response:', data); // Log adicional
+      console.log("API Response:", data); // Log adicional
 
-   
       const mappedData = data.map((contribuition: Contribuition) => {
         return {
           ...contribuition,
@@ -105,7 +107,6 @@ export const Contribuitions = () => {
   useEffect(() => {
     getContribuitionsList(currentPage);
   }, [currentPage]);
-
 
   const [contribuitionIdSelected, setContribuitionIdSelected] = useState("");
   const handleContribuitionIdSelected = (id: string) => {
@@ -232,28 +233,47 @@ export const Contribuitions = () => {
               </tr>
             </thead>
             <tbody>
-            {contribuitionsList &&
-                contribuitionsList.map(({ id, clientID,   contributionAmount,  dollarValue, status , createdAt}) => {
-
-       
-                  const classes = "!p-6 ";
-                  return (
-                    <tr key={id}>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="!font-semibold"
-                            >
-                              {id}
-                            </Typography>
+              {contribuitionsList &&
+                contribuitionsList.map(
+                  ({
+                    id,
+                    clientID,
+                    contributionAmount,
+                    dollarValue,
+                    status,
+                    createdAt,
+                  }) => {
+                    const classes = "!p-6 ";
+                    return (
+                      <tr key={id}>
+                        <td className={classes}>
+                          <div className="flex items-center gap-3">
+                            <div>
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="!font-semibold"
+                              >
+                                {id}
+                              </Typography>
+                            </div>
                           </div>
-                        </div>
-                      </td>
+                        </td>
 
-                      {userData?.isAdmin && (
+                        {userData?.isAdmin && (
+                          <td className={classes}>
+                            <div>
+                              <Typography
+                                variant="small"
+                                color="black"
+                                className="!font-normal"
+                              >
+                                {clientID}
+                              </Typography>
+                            </div>
+                          </td>
+                        )}
+
                         <td className={classes}>
                           <div>
                             <Typography
@@ -261,86 +281,79 @@ export const Contribuitions = () => {
                               color="black"
                               className="!font-normal"
                             >
-                              {clientID}
+                              {contributionAmount}
                             </Typography>
                           </div>
                         </td>
-                      )}
 
-                      <td className={classes}>
-                        <div>
+                        <td className={classes}>
                           <Typography
                             variant="small"
-                            color="black"
-                            className="!font-normal"
+                            className="!font-normal text-gray-600"
                           >
-                            {contributionAmount}
+                            {dollarValue}
                           </Typography>
-                        </div>
-                      </td>
-
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          className="!font-normal text-gray-600"
-                        >
-                          {dollarValue}
-                        </Typography>
-                      </td>
-
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          className="!font-normal text-gray-600"
-                        >
-                          {status}
-                        </Typography>
-                      </td>
-
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          className="!font-normal text-gray-600"
-                        >
-                          {createdAt}
-                        </Typography>
-                      </td>
-
-                      {userData?.isAdmin && (
-                        <td className={`${classes} flex justify-start `}>
-                          <Tooltip content="Visualizar">
-                            <IconButton onClick={handleDetails} variant="text">
-                              <EyeIcon className="w-4 h-4 text-gray-400" />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip content="Comprovante">
-                            <IconButton
-                              onClick={handleToggleDialogImage}
-                              variant="text"
-                            >
-                              <DocumentArrowDownIcon className="w-4 h-4 text-gray-400" />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip content="Deletar usuário">
-                        <IconButton onClick={() => handleDeleteContribuition(id)} variant="text">
-                          <TrashIcon className="w-4 h-4 text-gray-400" />
-                        </IconButton>
-                      </Tooltip>
                         </td>
-                      )}
-                    </tr>
-                  );
-                }
-              )}
+
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            className="!font-normal text-gray-600"
+                          >
+                            {status}
+                          </Typography>
+                        </td>
+
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            className="!font-normal text-gray-600"
+                          >
+                            {createdAt}
+                          </Typography>
+                        </td>
+
+                        {userData?.isAdmin && (
+                          <td className={`${classes} flex justify-start `}>
+                            <Tooltip content="Visualizar">
+                              <IconButton
+                                onClick={handleDetails}
+                                variant="text"
+                              >
+                                <EyeIcon className="w-4 h-4 text-gray-400" />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip content="Comprovante">
+                              <IconButton
+                                onClick={handleToggleDialogImage}
+                                variant="text"
+                              >
+                                <DocumentArrowDownIcon className="w-4 h-4 text-gray-400" />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip content="Deletar usuário">
+                              <IconButton
+                                onClick={() => handleDeleteContribuition(id)}
+                                variant="text"
+                              >
+                                <TrashIcon className="w-4 h-4 text-gray-400" />
+                              </IconButton>
+                            </Tooltip>
+                          </td>
+                        )}
+                      </tr>
+                    );
+                  }
+                )}
             </tbody>
           </table>
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-          Página {currentPage} de {totalPages}
+            Página {currentPage} de {totalPages}
           </Typography>
           <div className="flex gap-4">
-          <Button
+            <Button
               variant="text"
               className="flex items-center gap-1"
               onClick={handlePreviousPage}
