@@ -18,19 +18,15 @@ interface WalletType {
 }
 
 interface UserType {
+  documentType: string;
+  email: string;
   id: string;
   name: string;
+  personType: string;
+  phone: string;
+  profileId: string;
   surname: string;
   username: string;
-  email: string;
-  phone: string;
-  password: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
-  isAdmin: boolean;
-  lastAccess: string | null;
-  verified: boolean;
 }
 
 interface UserFormValues {
@@ -67,7 +63,8 @@ export const ContribuitionInsert = () => {
 
   const getClientsList = async () => {
     try {
-      const response = await api.get("users");
+      const response = await api.get("/admin/users/clients-without-pagination");
+      console.log(response);
       setClients(response.data);
     } catch (error) {
       console.log(error);
@@ -153,6 +150,11 @@ export const ContribuitionInsert = () => {
         };
         const response = await api.post("contributions", data);
         console.log("Form submitted successfully:", response);
+        navigate("/contributions");
+        toast("Aporte inserido com sucesso!", {
+          type: "success",
+          autoClose: 3000,
+        });
       } catch (error) {
         console.log("Form submission error:", error);
       }
@@ -288,7 +290,7 @@ const AdminForm = ({ formik, clients, wallets }: AdminFormProps) => {
               error={formik.touched.clientID && Boolean(formik.errors.clientID)}
             >
               {clients.map((client) => (
-                <Option key={client.id} value={client.id}>
+                <Option key={client.profileId} value={client.profileId}>
                   {client.name} {client.surname} - {client.email}
                 </Option>
               ))}
