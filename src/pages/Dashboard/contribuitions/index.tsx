@@ -70,16 +70,16 @@ export const Contribuitions = () => {
     setIsDialogImageOpen((prevOpen) => !prevOpen);
   };
 
-  const handleDetails = () => {
-    navigate("details");
+  const handleDetails = (id: string) => {
+    navigate(`details/${id}`);
   };
 
   const [contribuitionsList, setContribuitionsList] = useState<Contribuition[]>(
     []
   );
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [_totalItems, setTotalItems] = useState(0);
+  const [totalPages] = useState(1);
+  const [_totalItems] = useState(0);
   const itemsPerPage = 10;
 
   const getContribuitionsList = async (page: number) => {
@@ -88,7 +88,7 @@ export const Contribuitions = () => {
         `contributions?page=${page}&itemsPerPage=${itemsPerPage}`
       );
 
-      console.log("API Response:", data); // Log adicional
+      // console.log("API Response:", data); // Log adicional
 
       const mappedData = data.map((contribuition: Contribuition) => {
         return {
@@ -97,8 +97,8 @@ export const Contribuitions = () => {
         };
       });
       setContribuitionsList(mappedData);
-      setTotalPages(data.pagination.totalPages);
-      setTotalItems(data.pagination.totalItems);
+      /*  setTotalPages(data.pagination.totalPages);
+      setTotalItems(data.pagination.totalItems); */
     } catch (error) {
       console.error(error);
     }
@@ -317,7 +317,7 @@ export const Contribuitions = () => {
                           <td className={`${classes} flex justify-start `}>
                             <Tooltip content="Visualizar">
                               <IconButton
-                                onClick={handleDetails}
+                                onClick={() => handleDetails(id)}
                                 variant="text"
                               >
                                 <EyeIcon className="w-4 h-4 text-gray-400" />

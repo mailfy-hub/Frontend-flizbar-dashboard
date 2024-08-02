@@ -329,7 +329,6 @@ const AdminForm = ({ formik, clients, wallets }: AdminFormProps) => {
               label="Valor da cotação do dólar"
               name="dollarValue"
               value={formik.values.dollarValue}
-              disabled
               onChange={formik.handleChange}
             />
             <Select
