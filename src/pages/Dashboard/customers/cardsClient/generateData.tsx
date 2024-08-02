@@ -14,10 +14,10 @@ export const GenerateData = ({ dataUser }: any) => {
 
   const validationSchema = Yup.object().shape({
     personType: Yup.string()
-      .oneOf(["pf", "pj"])
+      .oneOf(["Física", "Jurídica"])
       .required("Tipo de pessoa é obrigatório"),
     birthDate: Yup.date().when("personType", {
-      is: "pf",
+      is: "Física",
       then(schema) {
         return schema.required("birth date is required");
       },
@@ -26,14 +26,14 @@ export const GenerateData = ({ dataUser }: any) => {
     documentType: Yup.string().required("doctype is required"),
     document: Yup.string().required("docnum is required"),
     gender: Yup.string().when("personType", {
-      is: "pf",
+      is: "Física",
       then(schema) {
         return schema.required("Must enter a gender");
       },
     }),
     /* personalPhone: Yup.string().required("personalPhone is required"), */
     corporateName: Yup.string().when("personType", {
-      is: "pj",
+      is: "Jurídica",
       then(schema) {
         return schema.required("Must enter a company name");
       },
@@ -48,19 +48,19 @@ export const GenerateData = ({ dataUser }: any) => {
     profession: Yup.string().required("Qual sua profissão é obrigatória"),
     declaresUsTaxes: Yup.string().required("Campo obrigatório"),
     spouseName: Yup.string().when("maritalStatus", {
-      is: "Stable Union",
+      is: ("União Estável" || "Casado(a)"),
       then(schema) {
         return schema.required("Must enter a spouse name");
       },
     }),
     spouseDocumentType: Yup.string().when("maritalStatus", {
-      is: "Stable Union" || "Married",
+      is: ("União Estável" || "Casado(a)"),
       then(schema) {
         return schema.required("Must enter a spouse name");
       },
     }),
     spousedocument: Yup.string().when("maritalStatus", {
-      is: "Stable Union",
+      is:("União Estável" || "Casado(a)"),
       then(schema) {
         return schema.required("Must enter a spouse name");
       },
@@ -72,7 +72,7 @@ export const GenerateData = ({ dataUser }: any) => {
   const initialValues: FormValues = {
     personType: profile?.clientDetails?.personType
       ? profile?.clientDetails?.personType
-      : "pf",
+      : "Física",
     corporateName: profile?.clientDetails?.corporateName
       ? profile?.clientDetails?.corporateName
       : "",
@@ -141,8 +141,8 @@ export const GenerateData = ({ dataUser }: any) => {
         politicalPerson: data.politicalPerson == "true" ? true : false,
         declaresUsTaxes: data.declaresUsTaxes == "true" ? true : false,
         spouseDetails:
-          data.maritalStatus == "Stable Union" ||
-          data.maritalStatus == "Married"
+          data.maritalStatus == "União Estável" ||
+          data.maritalStatus == "Casado(a)"
             ? {
                 spouseName: data.spouseName,
                 spouseDocumentType: data.spouseDocumentType,
@@ -150,8 +150,8 @@ export const GenerateData = ({ dataUser }: any) => {
               }
             : {},
         spouse:
-          data.maritalStatus == "Stable Union" ||
-          data.maritalStatus == "Married"
+          data.maritalStatus == "União Estável" ||
+          data.maritalStatus == "Casado(a)"
             ? true
             : false,
       };
@@ -274,10 +274,10 @@ export const GenerateData = ({ dataUser }: any) => {
                   label="Tipo de pessoa"
                   error={formik.touched.personType && Boolean(formik.errors.personType)}
                 >
-                  <Option value="pf">Física</Option>
-                  <Option value="pj">Jurídica</Option>
+                  <Option value="Física">Física</Option>
+                  <Option value="Jurídica">Jurídica</Option>
                 </Select>
-                {formik.values.personType == "pf" ? (
+                {formik.values.personType == "Física" ? (
                   <Input
                     name="name"
                     id="name"
@@ -298,7 +298,7 @@ export const GenerateData = ({ dataUser }: any) => {
                 )}
               </div>
               <div className="grid md:grid-cols-2 gap-6">
-                {formik.values.personType == "pf" && (
+                {formik.values.personType == "Física" && (
                   <Input
                     name="birthDate"
                     id="birthDate"
@@ -403,7 +403,7 @@ export const GenerateData = ({ dataUser }: any) => {
                   <Option value="Casado(a)">Casado(a)</Option>
                   <Option value="Divorciado(a)">Divorciado(a)</Option>
                   <Option value="Viúvo(a)">Viúvo(a)</Option>
-                  <Option value="União estável">União estável</Option>
+                  <Option value="União Estável">União Estável</Option>
                   <Option value="Outro">Outro</Option>
                 </Select>
                 <Select
@@ -423,13 +423,13 @@ export const GenerateData = ({ dataUser }: any) => {
                     Ensino médio completo
                   </Option>
                   <Option value="Curso técnico">Curso técnico</Option>
-                  <Option value="Ensino superior Incompleto">
+                  <Option value="Ensino superior incompleto">
                     Ensino superior Incompleto
                   </Option>
-                  <Option value="Ensino superior Completo">
+                  <Option value="Ensino superior completo">
                     Ensino superior Completo
                   </Option>
-                  <Option value="Pós graduação/Mestrado/Doutorado">Pós graduação/Mestrado/Doutorado</Option>
+                  <Option value="Pós Graduação/Mestrado/Doutorado">Pós Graduação/Mestrado/Doutorado</Option>
                   <Option value="Outro">Outro</Option>
                 </Select>
                 <Select

@@ -201,7 +201,7 @@ export const AddressData = ({ userData }: any) => {
             )}
           </div>
         </div>
-        {formik.values.zipCode.length == 8 && (
+        {formik.values.zipCode.length >= 8 && (
           <div className="grid md:grid-cols-3 gap-6">
             <Select
               id="addressType"
