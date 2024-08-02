@@ -109,10 +109,13 @@ export const GenerateData = ({ dataUser }: any) => {
       : "",
     declaresUsTaxes: profile?.clientDetails?.declaresUsTaxes ? "Sim" : "Não",
     spouseName: profile?.clientDetails?.spouse
-      ? profile?.clientDetails?.profession
+      ? profile?.clientDetails?.spouseDetails?.spouseName
       : "",
-    spouseDocumentType: profile?.clientDetails?.spouseDetails
-      ? profile?.clientDetails?.profession
+    spouseDocumentType: profile?.clientDetails?.spouse
+      ? profile?.clientDetails?.spouseDetails?.spouseDocumentType
+      : "",
+      spousedocument: profile?.clientDetails?.spouse
+      ? profile?.clientDetails?.spouseDetails?.spousedocument
       : "",
   };
 
@@ -123,6 +126,8 @@ export const GenerateData = ({ dataUser }: any) => {
       handlePutUserInformation(values);
     },
   });
+
+  console.log(formik)
 
   const handlePutUserInformation = async (data: FormValues) => {
     try {
@@ -474,7 +479,7 @@ export const GenerateData = ({ dataUser }: any) => {
                     value={formik.values.spouseName}
                     onChange={formik.handleChange}
                     label="Nome do cônjuge"
-                    error={!!formik.values.spouseName}
+                    error={formik.touched.spouseName && Boolean(formik.errors.spouseName)}
                   />
                 </div>
               )}
@@ -490,7 +495,7 @@ export const GenerateData = ({ dataUser }: any) => {
                     }}
                     label="Tipo do documento do cônjuge"
                     className="w-full"
-                    error={!!formik.values.spouseDocumentType}
+                    error={formik.touched.spouseDocumentType && Boolean(formik.errors.spouseDocumentType)}
                   >
                     <Option value="CPF">CPF</Option>
                     <Option value="RG">RG</Option>
@@ -506,7 +511,7 @@ export const GenerateData = ({ dataUser }: any) => {
                     onChange={formik.handleChange}
                     label="Número do documento do cônjuge"
                     className="w-full"
-                    error={!!formik.values.spousedocument}
+                    error={formik.touched.spousedocument && Boolean(formik.errors.spousedocument)}
                   />
                 </div>
               )}

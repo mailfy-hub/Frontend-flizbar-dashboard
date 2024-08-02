@@ -27,6 +27,7 @@ import { SectionTitle } from "../../../components/sectionTitle";
 import SuccessDialog from "../../../components/successDialog";
 import { User } from "../../../types/dashboard/users";
 import { api } from "../../../client/api";
+import { getProfileById } from "../../../client/profiles";
 
 const TABLE_HEAD = ["Id", "Nome", "Tipo", "Telefone", "E-mail", "Ações"];
 
@@ -35,8 +36,13 @@ export const Customers = () => {
   const handleInsert = () => {
     navigate("insert");
   };
-  const handleEdit = (id: string) => {
-    navigate("edit", { state: { id: id } });
+  const handleEdit = async (id: string) => {
+    setIsLoading(true)
+    await getProfileById(id).then((data) => {
+      navigate("edit", { state: { dataUser: data } });
+    })
+    .catch(err => console.log(err))
+    
   };
 
   const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
@@ -47,6 +53,7 @@ export const Customers = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [_totalItems, setTotalItems] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(false)
   const itemsPerPage = 10;
 
   const getUsersList = async (page: number) => {
@@ -265,6 +272,7 @@ export const Customers = () => {
                             <IconButton
                               onClick={() => handleEdit(id)}
                               variant="text"
+                              disabled={isLoading}
                             >
                               <PencilIcon className="w-4 h-4 text-gray-400" />
                             </IconButton>
