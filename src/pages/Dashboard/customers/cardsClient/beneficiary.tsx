@@ -34,7 +34,7 @@ interface dataAddressInformation {
 export const Beneficiary = ({ userData }: any) => {
   const profile = userData;
   const [isCheckedNotBeneficiary, setIsCheckedNotBeneficiary] = useState(
-    profile?.beneficiaries[0].fullName === "" ? true : false
+    profile?.beneficiaries?.length > 0 ? false : true
   );
 
   const validationSchema = Yup.object().shape({

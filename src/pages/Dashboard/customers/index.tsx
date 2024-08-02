@@ -242,7 +242,7 @@ export const Customers = () => {
                               color="black"
                               className="!font-normal"
                             >
-                              {personType?.toUpperCase()}
+                              {personType}
                             </Typography>
                           </div>
                         </td>
@@ -263,7 +263,7 @@ export const Customers = () => {
                           </Typography>
                         </td>
                         <td className={`${classes} flex justify-end `}>
-                          <Tooltip content="Cotações">
+                          <Tooltip content="Dashboard">
                             <IconButton variant="text">
                               <CircleStackIcon className="w-4 h-4 text-gray-400" />
                             </IconButton>

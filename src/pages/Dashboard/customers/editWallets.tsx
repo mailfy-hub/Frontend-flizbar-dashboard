@@ -29,7 +29,7 @@ export const EditWallets = () => {
                 onClick={handleNewWallet}
                 className="bg-GOLD_MAIN w-full md:w-auto mt-8"
               >
-                Adicionar nova carteira
+                Adicionar Aporte
               </Button>
             </div>
           </>
