@@ -2,6 +2,9 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { SectionTitle } from "../../../components/sectionTitle";
+import { Tooltip } from "react-tooltip";
+import { IconButton } from "@material-tailwind/react";
+import { PencilIcon } from "@heroicons/react/16/solid";
 
 type Attachment = {
   url: string;
@@ -64,9 +67,17 @@ console.log(dataUser)
                       />
                     </div>
                     <div>
+                    
                       <p className="text-WHITE text-body14 font-display font-semibold">
                         {mappedFileName[attach.name]}
                       </p>
+                      <Tooltip content="Editar usuário">
+                            <IconButton
+                              
+                            >
+                              <PencilIcon className="w-4 h-4 text-gray-400" />
+                            </IconButton>
+                          </Tooltip>
                       <span className="text-WHITE text-body14 font-body">
                         {formatDate(attach.createdAt)}
                       </span>
