@@ -10,7 +10,8 @@ import { ComparativeValuesEdit } from "../pages/Dashboard/comparativeValues/edit
 import { ComparativeValuesInsert } from "../pages/Dashboard/comparativeValues/insert";
 import { Contribuitions } from "../pages/Dashboard/contribuitions";
 import { ContribuitionDetails } from "../pages/Dashboard/contribuitions/details";
-import { ContribuitionInsert } from "../pages/Dashboard/contribuitions/insertContribuition";
+import { ContribuitionEdit } from "../pages/Dashboard/contribuitions/edit";
+import { ContribuitionInsert } from "../pages/Dashboard/contribuitions/insert";
 import { Customers } from "../pages/Dashboard/customers";
 import { CustomerEdit } from "../pages/Dashboard/customers/edit";
 import { CustomerInsert } from "../pages/Dashboard/customers/insert";
@@ -207,6 +208,11 @@ export const routesMapped: routeMapped[] = [
         name: "Faça um aporte",
         path: "insert",
         element: <ContribuitionInsert />,
+      },
+      {
+        name: "Edite seu aporte",
+        path: "edit/:id",
+        element: <ContribuitionEdit />,
       },
       {
         name: "Detalhes do aporte",

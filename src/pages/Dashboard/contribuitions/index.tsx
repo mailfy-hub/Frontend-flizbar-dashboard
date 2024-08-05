@@ -3,6 +3,7 @@ import {
   ChevronRightIcon,
   DocumentArrowDownIcon,
   EyeIcon,
+  PencilIcon,
   TrashIcon,
 } from "@heroicons/react/16/solid";
 import {
@@ -72,6 +73,10 @@ export const Contribuitions = () => {
 
   const handleDetails = (id: string) => {
     navigate(`details/${id}`);
+  };
+
+  const handleEdit = (id: string) => {
+    navigate(`edit/${id}`);
   };
 
   const [contribuitionsList, setContribuitionsList] = useState<Contribuition[]>(
@@ -315,6 +320,14 @@ export const Contribuitions = () => {
 
                         {userData?.isAdmin && (
                           <td className={`${classes} flex justify-start `}>
+                            <Tooltip content="Editar">
+                              <IconButton
+                                onClick={() => handleEdit(id)}
+                                variant="text"
+                              >
+                                <PencilIcon className="w-4 h-4 text-gray-400" />
+                              </IconButton>
+                            </Tooltip>
                             <Tooltip content="Visualizar">
                               <IconButton
                                 onClick={() => handleDetails(id)}
