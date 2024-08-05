@@ -202,7 +202,8 @@
           "number": "Número",
           "complement": "Complemento",
           "neighborhood": "Barrio",
-          "reference": "Referencia"
+          "reference": "Referencia",
+          "zipCode": "Código postal"
         },
         "bankDetails": {
           "title": "Datos bancarios",
@@ -238,7 +239,8 @@
           "nacionality": "Nacionalidad",
           "maritalStatus": "Estado civil",
           "profession": "¿Cuál es tu profesión?",
-          "titleSecondary": "Dirección del beneficiario"
+          "titleSecondary": "Dirección del beneficiario",
+          "nextStepButton": "PRÓXIMA ETAPA"
         },
         "contacts": {
           "title": "Contactos",
@@ -251,7 +253,12 @@
           "title": "Carteras",
           "text": "Este cliente no tiene billetera.",
           "code": "Código",
-          "name": "Nombre"
+          "name": "Nombre",
+          "addNewWallet": "AÑADIR NUEVA BILLETERA",
+          "selectAWallet": "Selecciona una billetera",
+          "conventional": "Convencional",
+          "emergencyFund": "Fondo de emergencia",
+          "linkWallet": "Billetera de enlace"
         },
         "myAnexes": {
           "title": "Mis archivos adjuntos",
@@ -277,6 +284,22 @@
         }
       }
     },
+    "clients": {
+      "title": "Todos los clientes",
+      "titleSecondary": "Tabla de clientes",
+      "text": "Ver información sobre todos tus clientes",
+      "clientName": "Nombre del cliente",
+      "button": "AÑADIR CLIENTE",
+      "id": "ID",
+      "name": "Nombre",
+      "type": "Tipo",
+      "phone": "Teléfono",
+      "email": "Correo electrónico",
+      "actions": "Acciones",
+      "quotes": "Citas",
+      "editUser": "Editar usuario",
+      "deleteUser": "Eliminar usuario"
+    },
     "pagination": {
       "page": "Página",
       "previous": "Anterior",
@@ -290,7 +313,8 @@
       "driverLicense": "Licencia de conducir",
       "nationalId": "Identificación nacional",
       "cnpj": "CNPJ",
-      "iban": "IBAN"
+      "iban": "IBAN",
+      "stateRegistration": "Registro estatal"
     },
     "nationality": {
       "brazilian": "Brasileño",
@@ -303,6 +327,12 @@
       "widower": "Viuvo",
       "stableUnion": "Unión estable",
       "other": "Otro"
+    },
+    "gender": {
+      "title": "Género",
+      "male": "Masculino",
+      "female": "Femenino",
+      "other": "Prefiero no declarar"
     },
     "education": {
       "incompleteHighSchool": "Educación secundaria incompleta",
@@ -329,6 +359,7 @@
       "buttonConfirm": "Confirmar"
     },
     "addressType": {
+      "title": "Tipo de dirección",
       "residential": "Residencial",
       "commercial": "Comercial",
       "other": "Otro"

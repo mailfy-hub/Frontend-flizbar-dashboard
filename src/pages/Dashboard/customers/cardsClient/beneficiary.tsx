@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { InferType } from "yup";
 import { api } from "../../../../client/api";
+import { useTranslation } from "react-i18next";
 
 interface dataAddressInformation {
   bairro: string;
@@ -32,25 +33,34 @@ interface dataAddressInformation {
 
 export const Beneficiary = ({ userData }: any) => {
   const profile = userData;
+  const { t } = useTranslation();
 
   const validationSchema = Yup.object().shape({
-    nationality: Yup.string().required("nacionality is required"),
-    maritalStatus: Yup.string().required("Estado civil é obrigatório"),
-    profession: Yup.string().required("Qual sua profissão é obrigatória"),
-    zipCode: Yup.string().required("CEP é obrigatório"),
-    city: Yup.string().required("Cidade é obrigatória"),
-    state: Yup.string().required("Estado é obrigatório"),
-    street: Yup.string().required("Logradouro é obrigatório"),
-    number: Yup.string().required("Número é obrigatório"),
-    neighborhood: Yup.string().required("Bairro é obrigatório"),
+    nationality: Yup.string().required(
+      `${t("default.error.nationalityRequired")}`
+    ),
+    maritalStatus: Yup.string().required(
+      `${t("default.error.maritalStatusRequired")}`
+    ),
+    profession: Yup.string().required(
+      `${t("default.error.professionRequired")}`
+    ),
+    zipCode: Yup.string().required(`${t("default.error.zipCodeRequired")}`),
+    city: Yup.string().required(`${t("default.error.cityRequired")}`),
+    state: Yup.string().required(`${t("default.error.stateRequired")}`),
+    street: Yup.string().required(`${t("default.error.streetRequired")}`),
+    number: Yup.string().required(`${t("default.error.numberRequired")}`),
+    neighborhood: Yup.string().required(
+      `${t("default.error.neighborhoodRequired")}`
+    ),
     complement: Yup.string(),
     reference: Yup.string(),
-    fullName: Yup.string().required("Nome completo é obrigatório."),
-    RG: Yup.string().required("RG é obrigatório."),
-    CPF: Yup.string().required("CPF é obrigatório."),
+    fullName: Yup.string().required(`${t("default.error.fullNameRequired")}`),
+    RG: Yup.string().required(`${t("default.error.rgRequired")}`),
+    CPF: Yup.string().required(`${t("default.error.cpfRequired")}`),
     email: Yup.string()
-      .email("Insira um e-mail válido")
-      .required("E-mail é obrigatório."),
+      .email(`${t("default.error.emailValid")}`)
+      .required(`${t("default.error.emailRequired")}`),
   });
 
   type FormValues = InferType<typeof validationSchema>;
@@ -103,13 +113,13 @@ export const Beneficiary = ({ userData }: any) => {
         clientId: profile?.id,
         ...data,
       });
-      toast("Alterado com sucesso", {
+      toast("Updated successfully", {
         type: "success",
         autoClose: 3000,
       });
     } catch (error) {
       console.log(error);
-      toast("Erro ao atualizar.", {
+      toast("Error updating", {
         type: "error",
         autoClose: 3000,
       });
@@ -123,9 +133,9 @@ export const Beneficiary = ({ userData }: any) => {
   const mappedError = useMemo(() => {
     switch (zipcodeGetError) {
       case "zip code not found":
-        return "Cep não encontrado";
+        return "Cep not found";
       default:
-        "Erro de servidor, tente novamente ou retorne mais tarde.";
+        "Server error, please try again or come back later.";
         break;
     }
   }, [zipcodeGetError]);
@@ -170,7 +180,10 @@ export const Beneficiary = ({ userData }: any) => {
       <div className="bg-WHITE p-8 w-full rounded-md ">
         <div className="flex items-center gap-4">
           <Icon height={16} icon={"heroicons:user"} color="black" />
-          <SectionTitle size="sm" text="Beneficiário" />
+          <SectionTitle
+            size="sm"
+            text={t("default.myAccount.client.beneficiary.title")}
+          />
         </div>
         <div className="mt-8 flex flex-col gap-6 ">
           <div className="grid md:grid-cols-2 gap-6">
@@ -179,7 +192,7 @@ export const Beneficiary = ({ userData }: any) => {
                 name="fullName"
                 id="fullName"
                 type="text"
-                label="Nome"
+                label={t("default.myAccount.client.beneficiary.name")}
                 value={formik.values.fullName}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -195,7 +208,7 @@ export const Beneficiary = ({ userData }: any) => {
                 name="email"
                 id="email"
                 type="email"
-                label="E-mail"
+                label={t("default.myAccount.client.beneficiary.email")}
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -252,10 +265,12 @@ export const Beneficiary = ({ userData }: any) => {
                 onChange={(selectedValue) => {
                   formik.setFieldValue("nationality", selectedValue);
                 }}
-                label="Nacionalidade"
+                label={t("default.myAccount.client.beneficiary.nacionality")}
               >
-                <Option value="Brasileiro">Brasileiro</Option>
-                <Option value="Outra">Outra</Option>
+                <Option value="Brazilian">
+                  {t("default.nationality.brazilian")}
+                </Option>
+                <Option value="Other">{t("default.nationality.other")}</Option>
               </Select>
               {formik.touched.nationality && formik.errors.nationality && (
                 <Typography variant="small" color="red">
@@ -271,14 +286,26 @@ export const Beneficiary = ({ userData }: any) => {
                 onChange={(selectedValue) =>
                   formik.setFieldValue("maritalStatus", selectedValue)
                 }
-                label="Estado civil"
+                label={t("default.myAccount.client.beneficiary.maritalStatus")}
               >
-                <Option value="Solteiro(a)">Solteiro(a)</Option>
-                <Option value="Casado(a)">Casado(a)</Option>
-                <Option value="Divorciado(a)">Divorciado(a)</Option>
-                <Option value="Viúvo(a)">Viúvo(a)</Option>
-                <Option value="União estável">União estável</Option>
-                <Option value="Outro">Outro</Option>
+                <Option value="Solteiro(a)">
+                  {t("default.maritalStatus.single")}
+                </Option>
+                <Option value="Casado(a)">
+                  {t("default.maritalStatus.married")}
+                </Option>
+                <Option value="Divorciado(a)">
+                  {t("default.maritalStatus.divorced")}
+                </Option>
+                <Option value="Viúvo(a)">
+                  {t("default.maritalStatus.widower")}
+                </Option>
+                <Option value="União estável">
+                  {t("default.maritalStatus.stableUnion")}
+                </Option>
+                <Option value="Outro">
+                  {t("default.maritalStatus.other")}
+                </Option>
               </Select>
               {formik.touched.maritalStatus && formik.errors.maritalStatus && (
                 <Typography variant="small" color="red">
@@ -296,7 +323,7 @@ export const Beneficiary = ({ userData }: any) => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 type="text"
-                label="Qual sua profissão?"
+                label={t("default.myAccount.client.beneficiary.profession")}
               />
               {formik.touched.profession && formik.errors.profession && (
                 <Typography variant="small" color="red">
@@ -308,7 +335,10 @@ export const Beneficiary = ({ userData }: any) => {
         </div>
         <div className="flex items-center gap-4 mt-12">
           <Icon height={16} icon={"heroicons:map-pin"} color="black" />
-          <SectionTitle size="sm" text="Endereço do Beneficiário" />
+          <SectionTitle
+            size="sm"
+            text={t("default.myAccount.client.beneficiary.titleSecondary")}
+          />
         </div>
         <div className="mt-8 flex flex-col gap-6 ">
           <div className=" gap-6">
@@ -334,7 +364,7 @@ export const Beneficiary = ({ userData }: any) => {
                       variant={"small"}
                       color={"black"}
                     >
-                      Carregando dados do CEP...
+                      {t("default.loadingZipCodeData")}
                     </Typography>
                   </div>
                 )}
@@ -355,7 +385,7 @@ export const Beneficiary = ({ userData }: any) => {
                 <Input
                   id="city"
                   type="text"
-                  label="Cidade"
+                  label={t("default.myAccount.client.address.city")}
                   onChange={formik.handleChange}
                   value={formik.values.city}
                 />
@@ -368,7 +398,7 @@ export const Beneficiary = ({ userData }: any) => {
               <div>
                 <Select
                   id="state"
-                  label="Estado"
+                  label={t("default.myAccount.client.address.state")}
                   onChange={(selectedValue) =>
                     formik.setFieldValue("state", selectedValue)
                   }
@@ -412,7 +442,7 @@ export const Beneficiary = ({ userData }: any) => {
                 <Input
                   id="street"
                   type="text"
-                  label="Logradouro"
+                  label={t("default.myAccount.client.address.street")}
                   onChange={formik.handleChange}
                   value={formik.values.street}
                 />
@@ -430,7 +460,7 @@ export const Beneficiary = ({ userData }: any) => {
                 <Input
                   id="number"
                   type="text"
-                  label="Número"
+                  label={t("default.myAccount.client.address.number")}
                   onChange={formik.handleChange}
                   value={formik.values.number}
                 />
@@ -444,7 +474,7 @@ export const Beneficiary = ({ userData }: any) => {
                 <Input
                   id="neighborhood"
                   type="text"
-                  label="Bairro"
+                  label={t("default.myAccount.client.address.neighborhood")}
                   onChange={formik.handleChange}
                   value={formik.values.neighborhood}
                 />
@@ -458,7 +488,7 @@ export const Beneficiary = ({ userData }: any) => {
                 <Input
                   id="complement"
                   type="text"
-                  label="Complemento"
+                  label={t("default.myAccount.client.address.complement")}
                   onChange={formik.handleChange}
                   value={formik.values.complement}
                 />
@@ -476,7 +506,7 @@ export const Beneficiary = ({ userData }: any) => {
                 <Input
                   id="reference"
                   type="text"
-                  label="Referência"
+                  label={t("default.myAccount.client.address.reference")}
                   onChange={formik.handleChange}
                   value={formik.values.reference}
                 />
@@ -492,7 +522,7 @@ export const Beneficiary = ({ userData }: any) => {
       </div>
       <div className="w-full flex justify-end mt-8">
         <Button className="bg-GOLD_MAIN w-full md:w-auto" type="submit">
-          Próxima etapa
+          {t("default.myAccount.client.beneficiary.nextStepButton")}
         </Button>
       </div>
     </form>

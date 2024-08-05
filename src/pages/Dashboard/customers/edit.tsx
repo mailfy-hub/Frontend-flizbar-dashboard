@@ -6,12 +6,15 @@ import { EditClient } from "./editClient";
 import { EditFiles } from "./editFiles";
 import { EditWallets } from "./editWallets";
 import { getProfileById } from "../../../client/profiles";
+import { useTranslation } from "react-i18next";
 
 export const CustomerEdit = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const location = useLocation();
+
   const [dataUser, setDataUser] = useState<any>({});
 
-  const location = useLocation();
   const { id } = location.state;
 
   useEffect(() => {
@@ -41,7 +44,7 @@ export const CustomerEdit = () => {
             className="text-GRAY_400 hover:text-GOLD_DARK transition-all"
           />
         </button>
-        <SectionTitle text="Dados do cliente" />
+        <SectionTitle text={t("default.myAccount.client.clientData")} />
       </div>
       <div className="mt-12 flex items-center gap-2">
         <button
@@ -54,7 +57,7 @@ export const CustomerEdit = () => {
               : "bg-gray-300 text-gray-500"
           } px-4 py-2 rounded-md font-display font-semibold transition-all `}
         >
-          Dados do cliente
+          {t("default.myAccount.client.clientData")}
         </button>
         <button
           onClick={() => {
@@ -66,7 +69,7 @@ export const CustomerEdit = () => {
               : "bg-gray-300 text-gray-500"
           } px-4 py-2 rounded-md font-display font-semibold transition-all `}
         >
-          Carteiras
+          {t("default.myAccount.client.wallets.title")}
         </button>
         <button
           onClick={() => {
@@ -78,7 +81,7 @@ export const CustomerEdit = () => {
               : "bg-gray-300 text-gray-500"
           } px-4 py-2 rounded-md font-display font-semibold transition-all `}
         >
-          Anexos
+          {t("default.myAccount.client.myAnexes.title")}
         </button>
       </div>
       <div className="mt-8">

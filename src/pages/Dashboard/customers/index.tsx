@@ -27,17 +27,27 @@ import { SectionTitle } from "../../../components/sectionTitle";
 import SuccessDialog from "../../../components/successDialog";
 import { User } from "../../../types/dashboard/users";
 import { api } from "../../../client/api";
-
-const TABLE_HEAD = ["Id", "Nome", "Tipo", "Telefone", "E-mail", "Ações"];
+import { useTranslation } from "react-i18next";
 
 export const Customers = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const handleInsert = () => {
     navigate("insert");
   };
   const handleEdit = (id: string) => {
     navigate("edit", { state: { id: id } });
   };
+
+  const TABLE_HEAD = [
+    `${t("default.clients.id")}`,
+    `${t("default.clients.name")}`,
+    `${t("default.clients.type")}`,
+    `${t("default.clients.phone")}`,
+    `${t("default.clients.email")}`,
+    `${t("default.clients.actions")}`,
+  ];
 
   const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
@@ -124,12 +134,8 @@ export const Customers = () => {
         open={openConfimationDialog}
         handler={handleToggleConfirmationDialog}
       >
-        <DialogHeader>
-          Tem certeza que deseja <br /> deletar este registro?
-        </DialogHeader>
-        <DialogBody>
-          Essa ação é irreversível, tome cuidado ao prosseguir.
-        </DialogBody>
+        <DialogHeader>{t("default.modals.title")}</DialogHeader>
+        <DialogBody>{t("default.modals.text")}</DialogBody>
         <DialogFooter>
           <Button
             variant="text"
@@ -137,14 +143,14 @@ export const Customers = () => {
             onClick={handleToggleConfirmationDialog}
             className="mr-1"
           >
-            <span>Cancelar</span>
+            <span>{t("default.modals.buttonCancel")}</span>
           </Button>
           <Button variant="gradient" color="red" onClick={DeleteUserAction}>
-            <span>Confirmar</span>
+            <span>{t("default.modals.buttonConfirm")}</span>
           </Button>
         </DialogFooter>
       </Dialog>
-      <SectionTitle text="Todos clientes" />
+      <SectionTitle text={t("default.clients.title")} />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
           floated={false}
@@ -153,17 +159,17 @@ export const Customers = () => {
         >
           <div>
             <Typography variant="h6" color="black">
-              Tabela de clientes
+              {t("default.clients.titleSecondary")}
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
-              Veja informações sobre todos seus clientes
+              {t("default.clients.text")}
             </Typography>
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
             <div className="w-full md:w-72">
               <Input
                 name="search client"
-                label="Nome do cliente"
+                label={t("default.clients.clientName")}
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -174,7 +180,7 @@ export const Customers = () => {
               }}
               className="md:max-w-fit w-full bg-GOLD_MAIN"
             >
-              ADICIONAR CLIENTE
+              {t("default.clients.button")}
             </Button>
           </div>
         </CardHeader>
@@ -256,12 +262,12 @@ export const Customers = () => {
                           </Typography>
                         </td>
                         <td className={`${classes} flex justify-end `}>
-                          <Tooltip content="Cotações">
+                          <Tooltip content={t("default.clients.quotes")}>
                             <IconButton variant="text">
                               <CircleStackIcon className="w-4 h-4 text-gray-400" />
                             </IconButton>
                           </Tooltip>
-                          <Tooltip content="Editar usuário">
+                          <Tooltip content={t("default.clients.editUser")}>
                             <IconButton
                               onClick={() => handleEdit(id)}
                               variant="text"
@@ -269,7 +275,7 @@ export const Customers = () => {
                               <PencilIcon className="w-4 h-4 text-gray-400" />
                             </IconButton>
                           </Tooltip>
-                          <Tooltip content="Deletar usuário">
+                          <Tooltip content={t("default.clients.deleteUser")}>
                             <IconButton
                               onClick={() => handleDeleteUser(id)}
                               variant="text"
@@ -287,7 +293,8 @@ export const Customers = () => {
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-            Página {currentPage} de {totalPages}
+            {t("default.pagination.page")} {currentPage}{" "}
+            {t("default.pagination.of")} {totalPages}
           </Typography>
           <div className="flex gap-4">
             <Button
@@ -297,7 +304,7 @@ export const Customers = () => {
               disabled={currentPage === 1}
             >
               <ChevronLeftIcon strokeWidth={3} className="h-3 w-3" />
-              Anterior
+              {t("default.pagination.previous")}
             </Button>
             <Button
               variant="text"
@@ -305,7 +312,7 @@ export const Customers = () => {
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
             >
-              Próximo
+              {t("default.pagination.next")}
               <ChevronRightIcon strokeWidth={3} className="h-3 w-3" />
             </Button>
           </div>

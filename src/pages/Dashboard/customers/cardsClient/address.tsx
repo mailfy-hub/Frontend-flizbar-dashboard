@@ -14,7 +14,7 @@ import * as Yup from "yup";
 import { InferType } from "yup";
 import { api } from "../../../../client/api";
 import { SectionTitle } from "../../../../components/sectionTitle";
-// import { useAuth } from "../../../../hook/auth";
+import { useTranslation } from "react-i18next";
 
 interface dataAddressInformation {
   bairro: string;
@@ -31,18 +31,21 @@ interface dataAddressInformation {
 }
 
 export const AddressData = ({ userData }: any) => {
-  // const { profile } = useAuth();
-
+  const { t } = useTranslation();
   const profile = userData;
 
   const validationSchema = Yup.object().shape({
-    addressType: Yup.string().required("Tipo de endereço é obrigatório"),
-    zipCode: Yup.string().required("CEP é obrigatório"),
-    city: Yup.string().required("Cidade é obrigatória"),
-    state: Yup.string().required("Estado é obrigatório"),
-    street: Yup.string().required("Logradouro é obrigatório"),
-    number: Yup.string().required("Número é obrigatório"),
-    neighborhood: Yup.string().required("Bairro é obrigatório"),
+    addressType: Yup.string().required(
+      `${t("default.error.addressTypeRequired")}`
+    ),
+    zipCode: Yup.string().required(`${t("default.error.zipCodeRequired")}`),
+    city: Yup.string().required(`${t("default.error.cityRequired")}`),
+    state: Yup.string().required(`${t("default.error.stateRequired")}`),
+    street: Yup.string().required(`${t("default.error.streetRequired")}`),
+    number: Yup.string().required(`${t("default.error.numberRequired")}`),
+    neighborhood: Yup.string().required(
+      `${t("default.error.neighborhoodRequired")}`
+    ),
     complement: Yup.string(),
     reference: Yup.string(),
   });
@@ -158,7 +161,10 @@ export const AddressData = ({ userData }: any) => {
     >
       <div className="flex items-center gap-4">
         <Icon height={16} icon={"heroicons:map-pin"} color="black" />
-        <SectionTitle size="sm" text="Endereço" />
+        <SectionTitle
+          size="sm"
+          text={t("default.myAccount.client.address.title")}
+        />
       </div>
 
       <div className="mt-8 flex flex-col gap-6 ">
@@ -169,7 +175,7 @@ export const AddressData = ({ userData }: any) => {
                 <Input
                   id="zipCode"
                   type="text"
-                  label="Cep"
+                  label={t("default.myAccount.client.address.zipCode")}
                   maxLength={8}
                   minLength={8}
                   onChange={handleChangeZipcode}
@@ -185,7 +191,7 @@ export const AddressData = ({ userData }: any) => {
                     variant={"small"}
                     color={"black"}
                   >
-                    Carregando dados do CEP...
+                    {t("default.loadingZipCodeData")}
                   </Typography>
                 </div>
               )}
@@ -204,26 +210,30 @@ export const AddressData = ({ userData }: any) => {
           <div className="grid md:grid-cols-3 gap-6">
             <Select
               id="addressType"
-              label="Tipo do endereço"
+              label={t("default.addressType.title")}
               onChange={(selectedValue) =>
                 formik.setFieldValue("addressType", selectedValue)
               }
               value={formik.values.addressType}
             >
-              <Option value="Residencial">Residencial</Option>
-              <Option value="Comercial">Comercial</Option>
-              <Option value="Outro">Outro</Option>
+              <Option value="Residential">
+                {t("default.addressType.residential")}
+              </Option>
+              <Option value="Commercial">
+                {t("default.addressType.commercial")}
+              </Option>
+              <Option value="Other">{t("default.addressType.other")}</Option>
             </Select>
             <Input
               id="city"
               type="text"
-              label="Cidade"
+              label={t("default.myAccount.client.address.city")}
               onChange={formik.handleChange}
               value={formik.values.city}
             />
             <Select
               id="state"
-              label="Estado"
+              label={t("default.myAccount.client.address.state")}
               onChange={(selectedValeu) =>
                 formik.setFieldValue("state", selectedValeu)
               }
@@ -264,21 +274,21 @@ export const AddressData = ({ userData }: any) => {
             <Input
               id="street"
               type="text"
-              label="Logradouro"
+              label={t("default.myAccount.client.address.street")}
               onChange={formik.handleChange}
               value={formik.values.street}
             />
             <Input
               id="number"
               type="text"
-              label="Número"
+              label={t("default.myAccount.client.address.number")}
               onChange={formik.handleChange}
               value={formik.values.number}
             />
             <Input
               id="neighborhood"
               type="text"
-              label="Bairro"
+              label={t("default.myAccount.client.address.neighborhood")}
               onChange={formik.handleChange}
               value={formik.values.neighborhood}
             />
@@ -289,14 +299,14 @@ export const AddressData = ({ userData }: any) => {
             <Input
               id="complement"
               type="text"
-              label="Complemento"
+              label={t("default.myAccount.client.address.complement")}
               onChange={formik.handleChange}
               value={formik.values.complement}
             />
             <Input
               id="reference"
               type="text"
-              label="Referência"
+              label={t("default.myAccount.client.address.reference")}
               onChange={formik.handleChange}
               value={formik.values.reference}
             />
@@ -305,7 +315,7 @@ export const AddressData = ({ userData }: any) => {
       </div>
       <div className="w-full flex justify-start mt-8">
         <Button className="bg-GOLD_MAIN w-full md:w-auto" type="submit">
-          Atualizar dados
+          {t("default.myAccount.client.buttonUpdateData")}
         </Button>
       </div>
     </form>

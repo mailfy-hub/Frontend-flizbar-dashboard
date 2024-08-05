@@ -214,7 +214,7 @@
           "profession": "What is your profession?",
           "taxesUSGovernment": "Do you file taxes for the US government?",
           "spouseName": "Spouse's name",
-          "name": "Nome",
+          "name": "Name",
           "companyName": "Company name"
         },
         "address": {
@@ -226,7 +226,8 @@
           "number": "Number",
           "complement": "Complement",
           "neighborhood": "Neighborhood",
-          "reference": "Reference"
+          "reference": "Reference",
+          "zipCode": "Zip Code"
         },
         "bankDetails": {
           "title": "Bank Details",
@@ -262,7 +263,8 @@
           "nacionality": "Nationality",
           "maritalStatus": "Marital Status",
           "profession": "What is your profession?",
-          "titleSecondary": "Beneficiary Address"
+          "titleSecondary": "Beneficiary Address",
+          "nextStepButton": "NEXT STEP"
         },
         "contacts": {
           "title": "Contacts",
@@ -275,7 +277,12 @@
           "title": "Wallets",
           "text": "This customer does not have any wallets.",
           "code": "Code",
-          "name": "Name"
+          "name": "Name",
+          "addNewWallet": "ADD NEW WALLET",
+          "selectAWallet": "Select a wallet",
+          "conventional": "Conventional",
+          "emergencyFund": "Emergency Fund",
+          "linkWallet": "Link Wallet"
         },
         "myAnexes": {
           "title": "My Attachments",
@@ -302,6 +309,23 @@
     }
     },
 
+    "clients": {
+      "title": "All clients",
+      "titleSecondary": "Client table",
+      "text": "See information about all your clients",
+      "clientName": "Client name",
+      "button": "ADD CLIENT",
+      "id": "ID",
+      "name": "Name",
+      "type": "Type",
+      "phone": "Phone",
+      "email": "Email",
+      "actions": "Actions",
+      "quotes": "Quotes",
+      "editUser": "Edit user",
+      "deleteUser": "Delete user"
+    },
+
     "pagination": {
       "page": "Page",
       "previous": "Previous",
@@ -324,7 +348,8 @@
       "driverLicense": "Driver's license",
       "nationalId": "National ID",
       "cnpj": "CNPJ",
-      "iban": "IBAN"
+      "iban": "IBAN",
+      "stateRegistration": "State registration"
     },
     "nationality": {
       "brazilian": "Brazilian",
@@ -338,7 +363,14 @@
       "stableUnion": "Stable Union",
       "other": "Other"
     },
+    "gender": {
+      "title": "Gender",
+      "male": "Male",
+      "female": "Female",
+      "other": "I prefer not declare"
+    },
     "addressType": {
+      "title": "Address Type",
       "residential": "Residential",
       "commercial": "Commercial",
       "other": "Other"
