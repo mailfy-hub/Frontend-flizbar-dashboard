@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import {
   Button,
+  Checkbox,
   Input,
   Option,
   Select,
@@ -34,6 +35,9 @@ interface dataAddressInformation {
 export const Beneficiary = ({ userData }: any) => {
   const profile = userData;
   const { t } = useTranslation();
+  const [isCheckedNotBeneficiary, setIsCheckedNotBeneficiary] = useState(
+    profile?.beneficiaries?.length > 0 ? false : true
+  );
 
   const validationSchema = Yup.object().shape({
     nationality: Yup.string().required(
@@ -185,341 +189,352 @@ export const Beneficiary = ({ userData }: any) => {
             text={t("default.myAccount.client.beneficiary.title")}
           />
         </div>
-        <div className="mt-8 flex flex-col gap-6 ">
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <Input
-                name="fullName"
-                id="fullName"
-                type="text"
-                label={t("default.myAccount.client.beneficiary.name")}
-                value={formik.values.fullName}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-              {formik.touched.fullName && formik.errors.fullName && (
-                <Typography variant="small" color="red">
-                  {formik.errors.fullName}
-                </Typography>
-              )}
-            </div>
-            <div>
-              <Input
-                name="email"
-                id="email"
-                type="email"
-                label={t("default.myAccount.client.beneficiary.email")}
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-              {formik.touched.email && formik.errors.email && (
-                <Typography variant="small" color="red">
-                  {formik.errors.email}
-                </Typography>
-              )}
-            </div>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <Input
-                name="RG"
-                id="RG"
-                type="text"
-                label="RG"
-                value={formik.values.RG}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-              {formik.touched.RG && formik.errors.RG && (
-                <Typography variant="small" color="red">
-                  {formik.errors.RG}
-                </Typography>
-              )}
-            </div>
-            <div>
-              <Input
-                name="CPF"
-                id="CPF"
-                type="text"
-                label="CPF"
-                maxLength={11}
-                minLength={11}
-                value={formik.values.CPF}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-              {formik.touched.CPF && formik.errors.CPF && (
-                <Typography variant="small" color="red">
-                  {formik.errors.CPF}
-                </Typography>
-              )}
-            </div>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <Select
-                name="nationality"
-                id="nationality"
-                value={formik.values.nationality}
-                onChange={(selectedValue) => {
-                  formik.setFieldValue("nationality", selectedValue);
-                }}
-                label={t("default.myAccount.client.beneficiary.nacionality")}
-              >
-                <Option value="Brazilian">
-                  {t("default.nationality.brazilian")}
-                </Option>
-                <Option value="Other">{t("default.nationality.other")}</Option>
-              </Select>
-              {formik.touched.nationality && formik.errors.nationality && (
-                <Typography variant="small" color="red">
-                  {formik.errors.nationality}
-                </Typography>
-              )}
-            </div>
-            <div>
-              <Select
-                id="maritalStatus"
-                name="maritalStatus"
-                value={formik.values.maritalStatus}
-                onChange={(selectedValue) =>
-                  formik.setFieldValue("maritalStatus", selectedValue)
-                }
-                label={t("default.myAccount.client.beneficiary.maritalStatus")}
-              >
-                <Option value="Solteiro(a)">
-                  {t("default.maritalStatus.single")}
-                </Option>
-                <Option value="Casado(a)">
-                  {t("default.maritalStatus.married")}
-                </Option>
-                <Option value="Divorciado(a)">
-                  {t("default.maritalStatus.divorced")}
-                </Option>
-                <Option value="Viúvo(a)">
-                  {t("default.maritalStatus.widower")}
-                </Option>
-                <Option value="União estável">
-                  {t("default.maritalStatus.stableUnion")}
-                </Option>
-                <Option value="Outro">
-                  {t("default.maritalStatus.other")}
-                </Option>
-              </Select>
-              {formik.touched.maritalStatus && formik.errors.maritalStatus && (
-                <Typography variant="small" color="red">
-                  {formik.errors.maritalStatus}
-                </Typography>
-              )}
-            </div>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <Input
-                value={formik.values.profession}
-                id="profession"
-                name="profession"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                type="text"
-                label={t("default.myAccount.client.beneficiary.profession")}
-              />
-              {formik.touched.profession && formik.errors.profession && (
-                <Typography variant="small" color="red">
-                  {formik.errors.profession}
-                </Typography>
-              )}
-            </div>
+        <div>
+          <div className="flex items-center gap-2 mt-4">
+            <Checkbox
+              onChange={(e) => {
+                setIsCheckedNotBeneficiary(e.target.checked);
+              }}
+              label={"Não desejo adicionar um beneficiário"}
+              defaultChecked={isCheckedNotBeneficiary}
+            />
           </div>
         </div>
-        <div className="flex items-center gap-4 mt-12">
-          <Icon height={16} icon={"heroicons:map-pin"} color="black" />
-          <SectionTitle
-            size="sm"
-            text={t("default.myAccount.client.beneficiary.titleSecondary")}
-          />
-        </div>
-        <div className="mt-8 flex flex-col gap-6 ">
-          <div className=" gap-6">
-            <div>
-              <div className="flex items-center gap-8">
-                <div className="md:max-w-[448px]">
-                  <Input
-                    id="zipCode"
-                    type="text"
-                    label="Cep"
-                    maxLength={8}
-                    minLength={8}
-                    onChange={handleChangeZipcode}
-                    value={formik.values.zipCode}
-                    className="w-full"
-                  />
-                </div>
-
-                {isLoadingZipcodeData && (
-                  <div>
-                    <Typography
-                      className="mt-2"
-                      variant={"small"}
-                      color={"black"}
-                    >
-                      {t("default.loadingZipCodeData")}
-                    </Typography>
-                  </div>
-                )}
-              </div>
-
-              {zipcodeGetError && (
+        {!isCheckedNotBeneficiary && (
+          <>
+            <div className="mt-8 flex flex-col gap-6 ">
+              <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <Typography className="mt-2" variant={"small"} color={"red"}>
-                    {mappedError}
-                  </Typography>
+                  <Input
+                    name="fullName"
+                    id="fullName"
+                    type="text"
+                    label="Nome"
+                    value={formik.values.fullName}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.fullName && formik.errors.fullName && (
+                    <Typography variant="small" color="red">
+                      {formik.errors.fullName}
+                    </Typography>
+                  )}
+                </div>
+                <div>
+                  <Input
+                    name="email"
+                    id="email"
+                    type="email"
+                    label="E-mail"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.email && formik.errors.email && (
+                    <Typography variant="small" color="red">
+                      {formik.errors.email}
+                    </Typography>
+                  )}
+                </div>
+              </div>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <Input
+                    name="RG"
+                    id="RG"
+                    type="text"
+                    label="RG"
+                    value={formik.values.RG}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.RG && formik.errors.RG && (
+                    <Typography variant="small" color="red">
+                      {formik.errors.RG}
+                    </Typography>
+                  )}
+                </div>
+                <div>
+                  <Input
+                    name="CPF"
+                    id="CPF"
+                    type="text"
+                    label="CPF"
+                    maxLength={11}
+                    minLength={11}
+                    value={formik.values.CPF}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.CPF && formik.errors.CPF && (
+                    <Typography variant="small" color="red">
+                      {formik.errors.CPF}
+                    </Typography>
+                  )}
+                </div>
+              </div>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <Select
+                    name="nationality"
+                    id="nationality"
+                    value={formik.values.nationality}
+                    onChange={(selectedValue) => {
+                      formik.setFieldValue("nationality", selectedValue);
+                    }}
+                    label="Nacionalidade"
+                  >
+                    <Option value="Brasileiro">Brasileiro</Option>
+                    <Option value="Português">Português</Option>
+                    <Option value="Argentino">Argentino</Option>
+                    <Option value="Iraniano">Iraniano</Option>
+                    <Option value="Americano">Americano</Option>
+                    <Option value="Inglês">Inglês</Option>
+                    <Option value="Espanhol">Espanhol</Option>
+                    <Option value="Outra">Outra</Option>
+                  </Select>
+                  {formik.touched.nationality && formik.errors.nationality && (
+                    <Typography variant="small" color="red">
+                      {formik.errors.nationality}
+                    </Typography>
+                  )}
+                </div>
+                <div>
+                  <Select
+                    id="maritalStatus"
+                    name="maritalStatus"
+                    value={formik.values.maritalStatus}
+                    onChange={(selectedValue) =>
+                      formik.setFieldValue("maritalStatus", selectedValue)
+                    }
+                    label="Estado civil"
+                  >
+                    <Option value="Solteiro(a)">Solteiro(a)</Option>
+                    <Option value="Casado(a)">Casado(a)</Option>
+                    <Option value="Divorciado(a)">Divorciado(a)</Option>
+                    <Option value="Viúvo(a)">Viúvo(a)</Option>
+                    <Option value="União estável">União estável</Option>
+                    <Option value="Outro">Outro</Option>
+                  </Select>
+                  {formik.touched.maritalStatus &&
+                    formik.errors.maritalStatus && (
+                      <Typography variant="small" color="red">
+                        {formik.errors.maritalStatus}
+                      </Typography>
+                    )}
+                </div>
+              </div>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <Input
+                    value={formik.values.profession}
+                    id="profession"
+                    name="profession"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    type="text"
+                    label="Qual sua profissão?"
+                  />
+                  {formik.touched.profession && formik.errors.profession && (
+                    <Typography variant="small" color="red">
+                      {formik.errors.profession}
+                    </Typography>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 mt-12">
+              <Icon height={16} icon={"heroicons:map-pin"} color="black" />
+              <SectionTitle size="sm" text="Endereço do Beneficiário" />
+            </div>
+            <div className="mt-8 flex flex-col gap-6 ">
+              <div className=" gap-6">
+                <div>
+                  <div className="flex items-center gap-8">
+                    <div className="md:max-w-[448px]">
+                      <Input
+                        id="zipCode"
+                        type="text"
+                        label="Cep"
+                        maxLength={8}
+                        minLength={8}
+                        onChange={handleChangeZipcode}
+                        value={formik.values.zipCode}
+                        className="w-full"
+                      />
+                    </div>
+
+                    {isLoadingZipcodeData && (
+                      <div>
+                        <Typography
+                          className="mt-2"
+                          variant={"small"}
+                          color={"black"}
+                        >
+                          Carregando dados do CEP...
+                        </Typography>
+                      </div>
+                    )}
+                  </div>
+
+                  {zipcodeGetError && (
+                    <div>
+                      <Typography
+                        className="mt-2"
+                        variant={"small"}
+                        color={"red"}
+                      >
+                        {mappedError}
+                      </Typography>
+                    </div>
+                  )}
+                </div>
+              </div>
+              {formik.values.zipCode.length === 8 && (
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div>
+                    <Input
+                      id="city"
+                      type="text"
+                      label="Cidade"
+                      onChange={formik.handleChange}
+                      value={formik.values.city}
+                    />
+                    {formik.touched.city && formik.errors.city && (
+                      <Typography variant="small" color="red">
+                        {formik.errors.city}
+                      </Typography>
+                    )}
+                  </div>
+                  <div>
+                    <Select
+                      id="state"
+                      label="Estado"
+                      onChange={(selectedValue) =>
+                        formik.setFieldValue("state", selectedValue)
+                      }
+                      value={formik.values.state}
+                    >
+                      <Option value="AC">AC</Option>
+                      <Option value="AL">AL</Option>
+                      <Option value="AP">AP</Option>
+                      <Option value="AM">AM</Option>
+                      <Option value="BA">BA</Option>
+                      <Option value="CE">CE</Option>
+                      <Option value="DF">DF</Option>
+                      <Option value="ES">ES</Option>
+                      <Option value="GO">GO</Option>
+                      <Option value="MA">MA</Option>
+                      <Option value="MT">MT</Option>
+                      <Option value="MS">MS</Option>
+                      <Option value="MG">MG</Option>
+                      <Option value="PA">PA</Option>
+                      <Option value="PB">PB</Option>
+                      <Option value="PR">PR</Option>
+                      <Option value="PE">PE</Option>
+                      <Option value="PI">PI</Option>
+                      <Option value="RJ">RJ</Option>
+                      <Option value="RN">RN</Option>
+                      <Option value="RS">RS</Option>
+                      <Option value="RO">RO</Option>
+                      <Option value="RR">RR</Option>
+                      <Option value="SC">SC</Option>
+                      <Option value="SP">SP</Option>
+                      <Option value="SE">SE</Option>
+                      <Option value="TO">TO</Option>
+                    </Select>
+                    {formik.touched.state && formik.errors.state && (
+                      <Typography variant="small" color="red">
+                        {formik.errors.state}
+                      </Typography>
+                    )}
+                  </div>
+                  <div>
+                    <Input
+                      id="street"
+                      type="text"
+                      label="Logradouro"
+                      onChange={formik.handleChange}
+                      value={formik.values.street}
+                    />
+                    {formik.touched.street && formik.errors.street && (
+                      <Typography variant="small" color="red">
+                        {formik.errors.street}
+                      </Typography>
+                    )}
+                  </div>
+                </div>
+              )}
+              {formik.values.zipCode.length === 8 && (
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div>
+                    <Input
+                      id="number"
+                      type="text"
+                      label="Número"
+                      onChange={formik.handleChange}
+                      value={formik.values.number}
+                    />
+                    {formik.touched.number && formik.errors.number && (
+                      <Typography variant="small" color="red">
+                        {formik.errors.number}
+                      </Typography>
+                    )}
+                  </div>
+                  <div>
+                    <Input
+                      id="neighborhood"
+                      type="text"
+                      label="Bairro"
+                      onChange={formik.handleChange}
+                      value={formik.values.neighborhood}
+                    />
+                    {formik.touched.neighborhood &&
+                      formik.errors.neighborhood && (
+                        <Typography variant="small" color="red">
+                          {formik.errors.neighborhood}
+                        </Typography>
+                      )}
+                  </div>
+                  <div>
+                    <Input
+                      id="complement"
+                      type="text"
+                      label="Complemento"
+                      onChange={formik.handleChange}
+                      value={formik.values.complement}
+                    />
+                    {formik.touched.complement && formik.errors.complement && (
+                      <Typography variant="small" color="red">
+                        {formik.errors.complement}
+                      </Typography>
+                    )}
+                  </div>
+                </div>
+              )}
+              {formik.values.zipCode.length === 8 && (
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div>
+                    <Input
+                      id="reference"
+                      type="text"
+                      label="Referência"
+                      onChange={formik.handleChange}
+                      value={formik.values.reference}
+                    />
+                    {formik.touched.reference && formik.errors.reference && (
+                      <Typography variant="small" color="red">
+                        {formik.errors.reference}
+                      </Typography>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
-          </div>
-          {formik.values.zipCode.length === 8 && (
-            <div className="grid md:grid-cols-3 gap-6">
-              <div>
-                <Input
-                  id="city"
-                  type="text"
-                  label={t("default.myAccount.client.address.city")}
-                  onChange={formik.handleChange}
-                  value={formik.values.city}
-                />
-                {formik.touched.city && formik.errors.city && (
-                  <Typography variant="small" color="red">
-                    {formik.errors.city}
-                  </Typography>
-                )}
-              </div>
-              <div>
-                <Select
-                  id="state"
-                  label={t("default.myAccount.client.address.state")}
-                  onChange={(selectedValue) =>
-                    formik.setFieldValue("state", selectedValue)
-                  }
-                  value={formik.values.state}
-                >
-                  <Option value="AC">AC</Option>
-                  <Option value="AL">AL</Option>
-                  <Option value="AP">AP</Option>
-                  <Option value="AM">AM</Option>
-                  <Option value="BA">BA</Option>
-                  <Option value="CE">CE</Option>
-                  <Option value="DF">DF</Option>
-                  <Option value="ES">ES</Option>
-                  <Option value="GO">GO</Option>
-                  <Option value="MA">MA</Option>
-                  <Option value="MT">MT</Option>
-                  <Option value="MS">MS</Option>
-                  <Option value="MG">MG</Option>
-                  <Option value="PA">PA</Option>
-                  <Option value="PB">PB</Option>
-                  <Option value="PR">PR</Option>
-                  <Option value="PE">PE</Option>
-                  <Option value="PI">PI</Option>
-                  <Option value="RJ">RJ</Option>
-                  <Option value="RN">RN</Option>
-                  <Option value="RS">RS</Option>
-                  <Option value="RO">RO</Option>
-                  <Option value="RR">RR</Option>
-                  <Option value="SC">SC</Option>
-                  <Option value="SP">SP</Option>
-                  <Option value="SE">SE</Option>
-                  <Option value="TO">TO</Option>
-                </Select>
-                {formik.touched.state && formik.errors.state && (
-                  <Typography variant="small" color="red">
-                    {formik.errors.state}
-                  </Typography>
-                )}
-              </div>
-              <div>
-                <Input
-                  id="street"
-                  type="text"
-                  label={t("default.myAccount.client.address.street")}
-                  onChange={formik.handleChange}
-                  value={formik.values.street}
-                />
-                {formik.touched.street && formik.errors.street && (
-                  <Typography variant="small" color="red">
-                    {formik.errors.street}
-                  </Typography>
-                )}
-              </div>
-            </div>
-          )}
-          {formik.values.zipCode.length === 8 && (
-            <div className="grid md:grid-cols-3 gap-6">
-              <div>
-                <Input
-                  id="number"
-                  type="text"
-                  label={t("default.myAccount.client.address.number")}
-                  onChange={formik.handleChange}
-                  value={formik.values.number}
-                />
-                {formik.touched.number && formik.errors.number && (
-                  <Typography variant="small" color="red">
-                    {formik.errors.number}
-                  </Typography>
-                )}
-              </div>
-              <div>
-                <Input
-                  id="neighborhood"
-                  type="text"
-                  label={t("default.myAccount.client.address.neighborhood")}
-                  onChange={formik.handleChange}
-                  value={formik.values.neighborhood}
-                />
-                {formik.touched.neighborhood && formik.errors.neighborhood && (
-                  <Typography variant="small" color="red">
-                    {formik.errors.neighborhood}
-                  </Typography>
-                )}
-              </div>
-              <div>
-                <Input
-                  id="complement"
-                  type="text"
-                  label={t("default.myAccount.client.address.complement")}
-                  onChange={formik.handleChange}
-                  value={formik.values.complement}
-                />
-                {formik.touched.complement && formik.errors.complement && (
-                  <Typography variant="small" color="red">
-                    {formik.errors.complement}
-                  </Typography>
-                )}
-              </div>
-            </div>
-          )}
-          {formik.values.zipCode.length === 8 && (
-            <div className="grid md:grid-cols-3 gap-6">
-              <div>
-                <Input
-                  id="reference"
-                  type="text"
-                  label={t("default.myAccount.client.address.reference")}
-                  onChange={formik.handleChange}
-                  value={formik.values.reference}
-                />
-                {formik.touched.reference && formik.errors.reference && (
-                  <Typography variant="small" color="red">
-                    {formik.errors.reference}
-                  </Typography>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
+          </>
+        )}
       </div>
+
       <div className="w-full flex justify-end mt-8">
         <Button className="bg-GOLD_MAIN w-full md:w-auto" type="submit">
           {t("default.myAccount.client.beneficiary.nextStepButton")}

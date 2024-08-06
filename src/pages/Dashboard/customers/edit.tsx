@@ -1,27 +1,18 @@
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { EditClient } from "./editClient";
 import { EditFiles } from "./editFiles";
 import { EditWallets } from "./editWallets";
-import { getProfileById } from "../../../client/profiles";
 import { useTranslation } from "react-i18next";
 
 export const CustomerEdit = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+
   const location = useLocation();
-
-  const [dataUser, setDataUser] = useState<any>({});
-
-  const { id } = location.state;
-
-  useEffect(() => {
-    getProfileById(id).then((data) => {
-      setDataUser(data);
-    });
-  }, []);
+  const { dataUser } = location.state;
 
   const handleNavigateBack = () => {
     navigate(-1);

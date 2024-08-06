@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { CurrencyRow } from "../../../components/table/currencyRow";
+import { useAuth } from "../../../hook/auth";
 
 interface TABLE_ROW_PROPS {
   id: string;
@@ -28,6 +29,7 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
 export const ContribuitionDetails = () => {
   const navigate = useNavigate();
   const [status, setStatus] = useState("Pendente");
+  const { userData } = useAuth();
 
   const handleNavigateBack = () => {
     navigate(-1);
@@ -109,19 +111,21 @@ export const ContribuitionDetails = () => {
               </div>
             </div>
           </div>
-          <div className="mt-6">
-            <Select
-              label="Status do aporte"
-              disabled={status === "Concluído"}
-              value={status}
-              onChange={(value) => value && setStatus(value)}
-              className="pt-2"
-            >
-              <Option value="Pendente">Pendente</Option>
-              <Option value="Aprovado">Aprovado</Option>
-              <Option value="Rejeitado">Rejeitado</Option>
-            </Select>
-          </div>
+          {userData?.isAdmin && (
+            <div className="mt-6">
+              <Select
+                label="Status do aporte"
+                disabled={status === "Concluído"}
+                value={status}
+                onChange={(value) => value && setStatus(value)}
+                className="pt-2"
+              >
+                <Option value="Pendente">Pendente</Option>
+                <Option value="Aprovado">Aprovado</Option>
+                <Option value="Rejeitado">Rejeitado</Option>
+              </Select>
+            </div>
+          )}
           {status === "Aprovado" && (
             <div className="mt-6">
               <Button onClick={handleAllocate} color="green">

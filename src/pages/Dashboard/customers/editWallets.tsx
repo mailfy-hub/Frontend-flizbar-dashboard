@@ -38,7 +38,7 @@ export const EditWallets = () => {
                 onClick={handleNewWallet}
                 className="bg-GOLD_MAIN w-full md:w-auto mt-8"
               >
-                {t("default.myAccount.client.wallets.addNewWallet")}
+                {t("default.myAccount.client.contributions.button")}
               </Button>
             </div>
           </>

@@ -132,11 +132,14 @@ export const GenerateData = () => {
       ? profile?.clientDetails?.profession
       : "",
     declaresUsTaxes: profile?.clientDetails?.declaresUsTaxes ? "Sim" : "Não",
-    spouseName: profile?.clientDetails?.spouse
-      ? profile?.clientDetails?.profession
+    spouseName: profile?.clientDetails?.spouseDetails
+      ? profile?.clientDetails?.spouseDetails?.spouseName
       : "",
     spouseDocumentType: profile?.clientDetails?.spouseDetails
-      ? profile?.clientDetails?.profession
+      ? profile?.clientDetails?.spouseDetails?.spouseDocumentType
+      : "",
+    spousedocument: profile?.clientDetails?.spouseDetails
+      ? profile?.clientDetails?.spouseDetails?.spousedocument
       : "",
   };
 
@@ -317,7 +320,6 @@ export const GenerateData = () => {
                     value={`${userData?.name} ${userData?.surname}`}
                     type="text"
                     label={t("default.myAccount.client.generalData.name")}
-                    disabled
                   />
                 ) : (
                   <Input
@@ -361,10 +363,28 @@ export const GenerateData = () => {
                   }}
                   label={t("default.myAccount.client.generalData.nationality")}
                 >
-                  <Option value="brazilian">
+                  <Option value="Brasileiro">
                     {t("default.nationality.brazilian")}
                   </Option>
-                  <Option value="Other">
+                  <Option value="Português">
+                    {t("default.nationality.portuguese")}
+                  </Option>
+                  <Option value="Argentino">
+                    {t("default.nationality.argentine")}
+                  </Option>
+                  <Option value="Iraniano">
+                    {t("default.nationality.iranian")}
+                  </Option>
+                  <Option value="Americano">
+                    {t("default.nationality.american")}
+                  </Option>
+                  <Option value="Inglês">
+                    {t("default.nationality.english")}
+                  </Option>
+                  <Option value="Espanhol">
+                    {t("default.nationality.spanish")}
+                  </Option>
+                  <Option value="Outra">
                     {t("default.nationality.other")}
                   </Option>
                 </Select>
@@ -375,6 +395,7 @@ export const GenerateData = () => {
                   value={formik.values.documentType}
                   setFieldValue={formik.setFieldValue}
                   fieldName="documentType"
+                  type=""
                 />
                 <Input
                   name="document"
@@ -463,26 +484,19 @@ export const GenerateData = () => {
                   <Option value="Complete high school">
                     {t("default.education.completeHighSchool")}
                   </Option>
-                  <Option value="Technical course">
+                  <Option value="Curso técnico">
                     {t("default.education.technicalCourse")}
                   </Option>
-                  <Option value="Incomplete bachelor's education">
+                  <Option value="Ensino superior Incompleto">
                     {t("default.education.incompleteBachelorDegree")}
                   </Option>
-                  <Option value="Complete bachelor's education">
+                  <Option value="Ensino superior Completo">
                     {t("default.education.completeBachelorDegree")}
                   </Option>
-                  <Option value="Postgraduate">
-                    {" "}
-                    {t("default.education.postgraduate")}{" "}
+                  <Option value="Pós Graduação/Mestrado/Doutorado">
+                    {t("default.education.postGraduateMasterDoctorate")}
                   </Option>
-                  <Option value="Master">
-                    {t("default.education.master")}
-                  </Option>
-                  <Option value="Doctorate">
-                    {t("default.education.doctorate")}
-                  </Option>
-                  <Option value="Other">{t("default.education.other")}</Option>
+                  <Option value="Outro">{t("default.education.other")}</Option>
                 </Select>
                 <Select
                   id="politicalPerson"
@@ -551,6 +565,7 @@ export const GenerateData = () => {
                     value={formik.values.spouseDocumentType}
                     setFieldValue={formik.setFieldValue}
                     fieldName={"spouseDocumentType"}
+                    type=""
                   />
                   <Input
                     id="spousedocument"

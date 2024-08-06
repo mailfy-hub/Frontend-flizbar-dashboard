@@ -33,8 +33,8 @@ export const Wallets = () => {
   const handleNavigate = () => {
     navigate("insert");
   };
-  const handleEdit = () => {
-    navigate("edit");
+  const handleEdit = (id: string, walletName: string | null, type: string) => {
+    navigate("edit", { state: { id: id, walletName: walletName, type: type } });
   };
 
   const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
@@ -248,7 +248,7 @@ export const Wallets = () => {
 
                       <td className="flex items-center justify-end text-right p-4 border-b border-gray-300 gap-2">
                         <Tooltip content="Editar usuário">
-                          <IconButton onClick={handleEdit} variant="text">
+                          <IconButton onClick={() => handleEdit(id, walletName, type)} variant="text">
                             <PencilIcon className="w-4 h-4 text-gray-400" />
                           </IconButton>
                         </Tooltip>

@@ -130,6 +130,7 @@ export const AddressData = ({ userData }: any) => {
   };
 
   const handlePutAddressInformation = async (data: FormValues) => {
+    console.log(data)
     try {
       const dataFormatted = {
         clientId: profile?.id,
@@ -206,7 +207,7 @@ export const AddressData = ({ userData }: any) => {
             )}
           </div>
         </div>
-        {formik.values.zipCode.length == 8 && (
+        {formik.values.zipCode.length >= 8 && (
           <div className="grid md:grid-cols-3 gap-6">
             <Select
               id="addressType"
@@ -313,7 +314,12 @@ export const AddressData = ({ userData }: any) => {
           </div>
         )}
       </div>
-      <div className="w-full flex justify-start mt-8">
+      <div className={`w-full flex ${formik.isValid ? 'justify-end' : 'justify-between'} mt-8`}>
+        {!formik.isValid && (
+          <Typography variant="small" className="text-red-500">
+            Os campos marcados são obrigatórios
+          </Typography>
+        )}
         <Button className="bg-GOLD_MAIN w-full md:w-auto" type="submit">
           {t("default.myAccount.client.buttonUpdateData")}
         </Button>

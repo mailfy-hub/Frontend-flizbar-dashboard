@@ -42,6 +42,8 @@ export function Login() {
     switch (responseError?.message) {
       case "Invalid username or password":
         return "Endereço de e-mail ou senha incorretos.";
+      case "User is deleted":
+        return "Usuário foi deletado.";
       default:
         "Erro de servidor, tente novamente ou retorne mais tarde.";
         break;

@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Button, Input, Option, Select } from "@material-tailwind/react";
+import { Button, Input, Option, Select, Typography } from "@material-tailwind/react";
 import { FormStepType } from ".";
 import { SectionTitle } from "../../../components/sectionTitle";
 
@@ -12,7 +12,6 @@ import { useAuth } from "../../../hook/auth";
 
 export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
   const { userData, updateProfileDetails } = useAuth();
-
   const validationSchema = Yup.object().shape({
     personType: Yup.string()
       .oneOf(["pf", "pj"])
@@ -55,20 +54,20 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
     profession: Yup.string().required("Qual sua profissão é obrigatória"),
     declaresUsTaxes: Yup.string().required("Campo obrigatório"),
     spouseName: Yup.string().when("maritalStatus", {
-      is: "Stable Union",
+      is: ("Casado(a)" || "União Estável"),
       then(schema) {
         return schema.required("Must enter a spouse name");
       },
     }),
     spouseDocumentType: Yup.string().when("maritalStatus", {
-      is: "Stable Union" || "Married",
+      is: ("Casado(a)" || "União Estável"),
       then(schema) {
         return schema.required("Must enter a spouse name");
       },
     }),
     spousedocument: Yup.string().when("maritalStatus", {
-      is: "Stable Union",
-      then(schema) {
+      is: ("Casado(a)" || "União Estável"),
+      then(schema) { 
         return schema.required("Must enter a spouse name");
       },
     }),
@@ -79,7 +78,6 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
   const initialValues: FormValues = {
     personType: "pf",
     corporateName: "",
-    birthDate: new Date(),
     documentType: "",
     document: "",
     gender: "",
@@ -118,8 +116,8 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
         politicalPerson: data.politicalPerson == "true" ? true : false,
         declaresUsTaxes: data.declaresUsTaxes == "true" ? true : false,
         spouseDetails:
-          data.maritalStatus == "Stable Union" ||
-          data.maritalStatus == "Married"
+          data.maritalStatus == "União Estável" ||
+          data.maritalStatus == "Casado(a)"
             ? {
                 spouseName: data.spouseName,
                 spouseDocumentType: data.spouseDocumentType,
@@ -127,8 +125,8 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
               }
             : {},
         spouse:
-          data.maritalStatus == "Stable Union" ||
-          data.maritalStatus == "Married"
+          data.maritalStatus == "União Estável" ||
+          data.maritalStatus == "Casado(a)"
             ? true
             : false,
       };
@@ -154,8 +152,19 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
         politicalPerson: data.politicalPerson == "true" ? true : false,
         profession: data.profession,
         declaresUsTaxes: data.declaresUsTaxes == "true" ? true : false,
-        spouseDetails: "",
-        spouse: false,
+        spouseDetails: data.maritalStatus == "União Estável" ||
+        data.maritalStatus == "Casado(a)"
+          ? {
+              spouseName: data.spouseName,
+              spouseDocumentType: data.spouseDocumentType,
+              spousedocument: data.spousedocument,
+            }
+          : {},
+      spouse:
+        data.maritalStatus == "União Estável" ||
+        data.maritalStatus == "Casado(a)"
+          ? true
+          : false,
         corporateName: data.corporateName ? data.corporateName : "",
         id: userData.id,
         isEnterprise: data.corporateName ? true : false,
@@ -188,6 +197,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 formik.setFieldValue("personType", selectedOption);
               }}
               label="Tipo de pessoa"
+              error={formik.touched.personType && Boolean(formik.errors.personType)}
             >
               <Option value="pf">Física</Option>
               <Option value="pj">Jurídica</Option>
@@ -200,7 +210,6 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 value={`${userData?.name} ${userData?.surname}`}
                 type="text"
                 label="Nome"
-                disabled
               />
             ) : (
               <Input
@@ -210,6 +219,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 onChange={formik.handleChange}
                 type="text"
                 label="Razão social"
+                error={formik.touched.corporateName && Boolean(formik.errors.corporateName)}
               />
             )}
           </div>
@@ -222,6 +232,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 onChange={formik.handleChange}
                 type="date"
                 label="Date de nascimento"
+                error={Boolean(formik.errors.birthDate)}
               />
             )}
             <Select
@@ -232,8 +243,15 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 formik.setFieldValue("nationality", selectedValue);
               }}
               label="Nacionalidade"
+              error={formik.touched.nationality && Boolean(formik.errors.nationality)}
             >
               <Option value="Brasileiro">Brasileiro</Option>
+              <Option value="Português">Português</Option>
+              <Option value="Argentino">Argentino</Option>
+              <Option value="Iraniano">Iraniano</Option>
+              <Option value="Americano">Americano</Option>
+              <Option value="Inglês">Inglês</Option>
+              <Option value="Espanhol">Espanhol</Option>
               <Option value="Outra">Outra</Option>
             </Select>
           </div>
@@ -243,6 +261,8 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
               value={formik.values.documentType}
               setFieldValue={formik.setFieldValue}
               fieldName={"documentType"}
+              type=""
+              error={formik.touched.documentType && Boolean(formik.errors.documentType)}
             />
             <Input
               name="document"
@@ -251,6 +271,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
               onChange={formik.handleChange}
               type="text"
               label="Número do documento"
+              error={formik.touched.document && Boolean(formik.errors.document)}
             />
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -263,6 +284,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                   formik.setFieldValue("gender", selectedValue);
                 }}
                 label="Gênero"
+                error={formik.touched.gender && Boolean(formik.errors.gender)}
               >
                 <Option value="Masculino">Masculino</Option>
                 <Option value="Feminino">Feminino</Option>
@@ -286,6 +308,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
               onChange={formik.handleChange}
               type="text"
               label="Nome do pai"
+              error={formik.touched.fatherName && Boolean(formik.errors.fatherName)}
             />
             <Input
               id="motherName"
@@ -294,6 +317,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
               onChange={formik.handleChange}
               type="text"
               label="Nome da mãe"
+              error={formik.touched.motherName && Boolean(formik.errors.motherName)}
             />
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -305,6 +329,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 formik.setFieldValue("maritalStatus", selectedValue)
               }
               label="Estado civil"
+              error={formik.touched.maritalStatus && Boolean(formik.errors.maritalStatus)}
             >
               <Option value="Solteiro(a)">Solteiro(a)</Option>
               <Option value="Casado(a)">Casado(a)</Option>
@@ -321,6 +346,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 formik.setFieldValue("education", selectedValue)
               }
               label="Escolaridade"
+              error={formik.touched.education && Boolean(formik.errors.education)}
             >
               <Option value="Ensino médio incompleto">
                 Ensino médio incompleto
@@ -329,14 +355,11 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 Ensino médio completo
               </Option>
               <Option value="Curso técnico">Curso técnico</Option>
-              <Option value="Bacharelado Incompleto">
-                Bacharelado Incompleto
+              <Option value="Ensino superior Incompleto">
+                Ensino superior Incompleto
               </Option>
-              <Option value="Bacherelado Completo">Bacherelado Completo</Option>
-              <Option value="Pós-graduação">Pós-graduação</Option>
-              <Option value="Mestrado">Mestrado</Option>
-              <Option value="Doutorado">Doutorado</Option>
-              <Option value="Outro">Outro</Option>
+              <Option value="Ensino superior Completo">Ensino superior Completo</Option>
+              <Option value="Pós Graduação/Mestrado/Doutorado">Pós Graduação/Mestrado/Doutorado</Option>
             </Select>
             <Select
               id="politicalPerson"
@@ -346,6 +369,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 formik.setFieldValue("politicalPerson", selectedValue);
               }}
               label="É pessoa politicamente exposta?"
+              error={formik.touched.politicalPerson && Boolean(formik.errors.politicalPerson)}
             >
               <Option value="Sim">Sim</Option>
               <Option value="Não">Não</Option>
@@ -359,6 +383,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
               onChange={formik.handleChange}
               type="text"
               label="Qual sua profissão?"
+              error={formik.touched.profession && Boolean(formik.errors.profession)}
             />
             <Select
               id="declaresUsTaxes"
@@ -368,6 +393,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 formik.setFieldValue("declaresUsTaxes", selectedValue);
               }}
               label="Declara imposto ao governo dos EUA?"
+              error={formik.touched.declaresUsTaxes && Boolean(formik.errors.declaresUsTaxes)}
             >
               <Option value={"Sim"}>Sim</Option>
               <Option value={"Não"}>Não</Option>
@@ -382,6 +408,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 value={formik.values.spouseName}
                 onChange={formik.handleChange}
                 label="Nome do cônjuge"
+                error={formik.touched.spouseName && Boolean(formik.errors.spouseName)}
               />
             </div>
           )}
@@ -393,21 +420,29 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
                 value={formik.values.spouseDocumentType}
                 setFieldValue={formik.setFieldValue}
                 fieldName={"spouseDocumentType"}
+                type=" do cônjuge"
+                error={formik.touched.spouseDocumentType && Boolean(formik.errors.spouseDocumentType)}
               />
               <Input
                 id="spousedocument"
                 name="spousedocument"
                 value={formik.values.spousedocument}
                 onChange={formik.handleChange}
-                label="Número do documento"
+                label="Número do documento do cônjuge"
                 className="w-full"
+                error={formik.touched.spousedocument && Boolean(formik.errors.spousedocument)}
               />
             </div>
           )}
         </div>
       </div>
 
-      <div className="w-full flex justify-end mt-8">
+      <div className={`w-full flex ${formik.isValid ? 'justify-end' : 'justify-between'} mt-8`}>
+        {!formik.isValid && (
+          <Typography variant="small" className="text-red-500">
+            Todos os campos são obrigatórios
+          </Typography>
+        )}
         <Button
           /* onClick={() => {
             handleConfirmationClick(1);

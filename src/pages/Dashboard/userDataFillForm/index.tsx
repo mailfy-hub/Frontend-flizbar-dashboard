@@ -53,13 +53,13 @@ export const UserDataProfile = () => {
       ? 1
       : !isClientAddressesFilled
       ? 2
-      : !isClientContactsFilled
-      ? 3
       : !isClientFinanceFilled
-      ? 4
+      ? 3
       : !isClientBeneficiaryFilled
-      ? 5
+      ? 4
       : !isClientAttachmentsFilled
+      ? 5
+      : !isClientContactsFilled
       ? 6
       : 7;
 
@@ -109,16 +109,6 @@ export const UserDataProfile = () => {
           />
           <ChevronDoubleRightIcon color="#757575" height={16} />
 
-          <StepButtonIndicator
-            icon={"heroicons:user-circle"}
-            name={"Contato"}
-            isStepActive={ActiveFormStepPosition == 3}
-            handleStepClick={() => {}}
-            position={3}
-            isStepFilled={ActiveFormStepPosition > 3}
-          />
-          <ChevronDoubleRightIcon color="#757575" height={16} />
-
           {/*         <StepButtonIndicator
             icon={"heroicons:user"}
             name={"Dados complementares"}
@@ -132,6 +122,16 @@ export const UserDataProfile = () => {
           <StepButtonIndicator
             icon={"heroicons:banknotes"}
             name={"Dados bancários"}
+            isStepActive={ActiveFormStepPosition == 3}
+            handleStepClick={() => {}}
+            position={3}
+            isStepFilled={ActiveFormStepPosition > 3}
+          />
+          <ChevronDoubleRightIcon color="#757575" height={16} />
+
+          <StepButtonIndicator
+            icon={"heroicons:banknotes"}
+            name={"Beneficiário"}
             isStepActive={ActiveFormStepPosition == 4}
             handleStepClick={() => {}}
             position={4}
@@ -140,8 +140,8 @@ export const UserDataProfile = () => {
           <ChevronDoubleRightIcon color="#757575" height={16} />
 
           <StepButtonIndicator
-            icon={"heroicons:banknotes"}
-            name={"Beneficiário"}
+            icon={"heroicons:link-20-solid"}
+            name={"Anexos"}
             isStepActive={ActiveFormStepPosition == 5}
             handleStepClick={() => {}}
             position={5}
@@ -150,8 +150,8 @@ export const UserDataProfile = () => {
           <ChevronDoubleRightIcon color="#757575" height={16} />
 
           <StepButtonIndicator
-            icon={"heroicons:link-20-solid"}
-            name={"Anexos"}
+            icon={"heroicons:user-circle"}
+            name={"Contatos"}
             isStepActive={ActiveFormStepPosition == 6}
             handleStepClick={() => {}}
             position={6}
@@ -185,27 +185,27 @@ export const UserDataProfile = () => {
             }}
           />
         )}
+        {/* {ActiveFormStepPosition === 4 && (
+          <AdditionalData handleConfirmationClick={handleConfirmationData} />
+        )} */}
         {ActiveFormStepPosition === 3 && (
-          <Contact
+          <BankData
             handleConfirmationClick={() => {
               handleStepOnClick(4);
             }}
           />
         )}
-        {/* {ActiveFormStepPosition === 4 && (
-          <AdditionalData handleConfirmationClick={handleConfirmationData} />
-        )} */}
+
         {ActiveFormStepPosition === 4 && (
-          <BankData
+          <Beneficiary
             handleConfirmationClick={() => {
               handleStepOnClick(5);
-              console.log(ActiveFormStepPosition);
             }}
           />
         )}
 
         {ActiveFormStepPosition === 5 && (
-          <Beneficiary
+          <Attachments
             handleConfirmationClick={() => {
               handleStepOnClick(6);
             }}
@@ -213,7 +213,7 @@ export const UserDataProfile = () => {
         )}
 
         {ActiveFormStepPosition === 6 && (
-          <Attachments
+          <Contact
             handleConfirmationClick={() => {
               handleStepOnClick(7);
             }}

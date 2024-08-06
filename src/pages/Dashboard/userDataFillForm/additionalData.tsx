@@ -77,11 +77,12 @@ export const AdditionalData = ({ handleConfirmationClick }: FormStepType) => {
               </div>
               <div className="grid md:grid-cols-2 gap-6">
                 <Select label="Tipo do documento" className="w-full">
-                  <Option value="Inscrição estadual">Inscrição estadual</Option>
-                  <Option value="Carteira de habilitação">
-                    Carteira de habilitação
-                  </Option>
-                  <Option value="Passaporte">Passaporte</Option>
+                  <Option value="CPF">CPF</Option>
+                  <Option value="RG">RG</Option>
+                  <Option value="NATIONAL ID">NATIONAL ID</Option>
+                  <Option value="CARTEIRA DE HABILITAÇÃO">CARTEIRA DE HABILITAÇÃO</Option>
+                  <Option value="PASSAPORTE">PASSAPORTE</Option>
+                  <Option value="RNE">RNE</Option>
                 </Select>
                 <Input label="Número do documento" className="w-full" />
               </div>

@@ -28,6 +28,7 @@ import SuccessDialog from "../../../components/successDialog";
 import { User } from "../../../types/dashboard/users";
 import { api } from "../../../client/api";
 import { useTranslation } from "react-i18next";
+import { getProfileById } from "../../../client/profiles";
 
 export const Customers = () => {
   const navigate = useNavigate();
@@ -36,8 +37,13 @@ export const Customers = () => {
   const handleInsert = () => {
     navigate("insert");
   };
-  const handleEdit = (id: string) => {
-    navigate("edit", { state: { id: id } });
+  const handleEdit = async (id: string) => {
+    setIsLoading(true);
+    await getProfileById(id)
+      .then((data) => {
+        navigate("edit", { state: { dataUser: data } });
+      })
+      .catch((err) => console.log(err));
   };
 
   const TABLE_HEAD = [
@@ -57,6 +63,7 @@ export const Customers = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [_totalItems, setTotalItems] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const itemsPerPage = 10;
 
   const getUsersList = async (page: number) => {
@@ -241,7 +248,7 @@ export const Customers = () => {
                               color="black"
                               className="!font-normal"
                             >
-                              {personType?.toUpperCase()}
+                              {personType}
                             </Typography>
                           </div>
                         </td>
@@ -262,7 +269,7 @@ export const Customers = () => {
                           </Typography>
                         </td>
                         <td className={`${classes} flex justify-end `}>
-                          <Tooltip content={t("default.clients.quotes")}>
+                          <Tooltip content="Dashboard">
                             <IconButton variant="text">
                               <CircleStackIcon className="w-4 h-4 text-gray-400" />
                             </IconButton>
@@ -271,6 +278,7 @@ export const Customers = () => {
                             <IconButton
                               onClick={() => handleEdit(id)}
                               variant="text"
+                              disabled={isLoading}
                             >
                               <PencilIcon className="w-4 h-4 text-gray-400" />
                             </IconButton>

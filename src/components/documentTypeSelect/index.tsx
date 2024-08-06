@@ -11,6 +11,8 @@ interface DocumentTypeSelectProps {
   fieldName: string;
   value?: string;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
+  type?: string;
+  [key: string]: any;
 }
 
 export const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
@@ -18,6 +20,8 @@ export const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
   value = "",
   setFieldValue,
   fieldName,
+  type,
+  ...rest
 }) => {
   const { t } = useTranslation();
 
@@ -48,7 +52,10 @@ export const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
       onChange={(selectedValue) => {
         setFieldValue(fieldName, selectedValue);
       }}
-      label={t("default.myAccount.client.generalData.labelDocumentType")}
+      label={`${t(
+        "default.myAccount.client.generalData.labelDocumentType"
+      )}${type}`}
+      {...rest}
     >
       {options.map((option) => (
         <Option key={option.value} value={option.value}>

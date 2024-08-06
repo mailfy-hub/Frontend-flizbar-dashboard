@@ -40,8 +40,8 @@ export interface Beneficiary {
   street: string;
   number: string;
   neighborhood: string;
-  complement: string;
-  reference: string;
+  complement?: string;
+  reference?: string;
   email: string;
   RG: string;
   CPF: string;
@@ -75,8 +75,8 @@ export interface ClientAddress {
   street: string;
   number: string;
   neighborhood: string;
-  complement: string;
-  reference: string;
+  complement?: string;
+  reference?: string;
   id?: string;
 }
 
@@ -85,11 +85,11 @@ export interface ClientFinance {
   accountType: string;
   bankName: string;
   accountNumber: string;
-  accountDigit: string;
+  accountDigit?: string;
   agencyNumber: string;
-  agencyDigit: string;
-  pixKeyType: string;
-  pixKey: string;
+  agencyDigit?: string;
+  pixKeyType?: string;
+  pixKey?: string;
   id?: string;
 }
 
@@ -118,10 +118,14 @@ export interface ProfileDetails {
   declaresUsTaxes: boolean;
   isEnterprise: boolean;
   personalPhone: string;
-  spouseDetails: string;
+  spouseDetails: {
+    spouseName?: string,
+    spouseDocumentType?: string,
+    spousedocument?: string,
+  };
   spouse: boolean;
   birthDate: string;
-  fatherName: string;
+  fatherName?: string;
   motherName: string;
   personType: "pf" | "pj" | null;
   id: string;

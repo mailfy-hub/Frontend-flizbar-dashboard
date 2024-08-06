@@ -141,13 +141,29 @@ export const CustomerInsert = () => {
                   )}*`}
                 />
               )}
-              <Select
-                label={`${t(
-                  "default.myAccount.client.generalData.nationality"
-                )}*`}
-              >
-                <Option>{t("default.nationality.brazilian")}</Option>
-                <Option>{t("default.nationality.other")}</Option>
+              <Select label="Nacionalidade*">
+                <Option value="Brazilian">
+                  {t("default.nationality.brazilian")}
+                </Option>
+                <Option value="Portuguese">
+                  {t("default.nationality.portuguese")}
+                </Option>
+                <Option value="Argentine">
+                  {t("default.nationality.argentine")}
+                </Option>
+                <Option value="Iranian">
+                  {t("default.nationality.iranian")}
+                </Option>
+                <Option value="American">
+                  {t("default.nationality.american")}
+                </Option>
+                <Option value="English">
+                  {t("default.nationality.english")}
+                </Option>
+                <Option value="Spanish">
+                  {t("default.nationality.spanish")}
+                </Option>
+                <Option value="Other">{t("default.nationality.other")}</Option>
               </Select>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
@@ -156,15 +172,18 @@ export const CustomerInsert = () => {
                   "default.myAccount.client.generalData.labelDocumentType"
                 )}*`}
               >
-                <Option value="State Registration">
-                  {t("default.documentTypes.stateRegistration")}
+                <Option value="CPF">{t("default.documentTypes.cpf")}</Option>
+                <Option value="RG">{t("default.documentTypes.rg")}</Option>
+                <Option value="NATIONAL ID">
+                  {t("default.documentTypes.nationalID")}
                 </Option>
-                <Option value="Driver Licence">
+                <Option value="CARTEIRA DE HABILITAÇÃO">
                   {t("default.documentTypes.driverLicense")}
                 </Option>
-                <Option value="Passport">
+                <Option value="PASSAPORTE">
                   {t("default.documentTypes.passport")}
                 </Option>
+                <Option value="RNE">{t("default.documentTypes.rne")}</Option>
               </Select>
               <Input
                 type="text"
@@ -337,9 +356,9 @@ export const CustomerInsert = () => {
                   {t("default.education.incompleteBachelorDegree")}
                 </Option>
                 <Option>{t("default.education.completeBachelorDegree")}</Option>
-                <Option>{t("default.education.postgraduate")}</Option>
-                <Option>{t("default.education.master")}</Option>
-                <Option>{t("default.education.doctorate")}</Option>
+                <Option>
+                  {t("default.education.postGraduateMasterDoctorate")}
+                </Option>
                 <Option>{t("default.education.other")}</Option>
               </Select>
               <Select

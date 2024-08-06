@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Button, Input, Option, Select } from "@material-tailwind/react";
+import { Button, Input, Option, Select, Typography } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
@@ -15,11 +15,11 @@ export const BankData = ({ userData }: any) => {
     accountType: Yup.string().required("Tipo da conta é obrigatório"),
     bankName: Yup.string().required("Nome do banco é obrigatório"),
     accountNumber: Yup.string().required("Número da conta é obrigatório"),
-    accountDigit: Yup.string().required("Dígito da conta é obrigatório"),
-    agencyNumber: Yup.string().required("Número da agência é obrigatório"),
-    agencyDigit: Yup.string().required("Dígito da agência é obrigatório"),
-    pixKeyType: Yup.string().required("Tipo da chave PIX é obrigatório"),
-    pixKey: Yup.string().required("Chave PIX é obrigatória"),
+    accountDigit: Yup.string(),
+    agencyNumber: Yup.string(),
+    agencyDigit: Yup.string(),
+    pixKeyType: Yup.string(),
+    pixKey: Yup.string(),
   });
 
   const formik = useFormik({
@@ -131,11 +131,6 @@ export const BankData = ({ userData }: any) => {
             onChange={formik.handleChange}
             error={formik.touched.bankName && Boolean(formik.errors.bankName)}
           />
-          {formik.touched.bankName && formik.errors.bankName ? (
-            <div className="text-red-600">
-              {formik.errors.bankName.toString()}
-            </div>
-          ) : null}
         </div>
         <div className="grid md:grid-cols-2 gap-6">
           <Input
@@ -149,26 +144,13 @@ export const BankData = ({ userData }: any) => {
               Boolean(formik.errors.accountNumber)
             }
           />
-          {formik.touched.accountNumber && formik.errors.accountNumber ? (
-            <div className="text-red-600">
-              {formik.errors.accountNumber.toString()}
-            </div>
-          ) : null}
           <Input
             type="text"
             label={t("default.myAccount.client.bankDetails.accountDigit")}
             name="accountDigit"
             value={formik.values.accountDigit}
             onChange={formik.handleChange}
-            error={
-              formik.touched.accountDigit && Boolean(formik.errors.accountDigit)
-            }
           />
-          {formik.touched.accountDigit && formik.errors.accountDigit ? (
-            <div className="text-red-600">
-              {formik.errors.accountDigit?.toString()}
-            </div>
-          ) : null}
         </div>
         <div className="grid md:grid-cols-2 gap-6">
           <Input
@@ -178,29 +160,17 @@ export const BankData = ({ userData }: any) => {
             value={formik.values.agencyNumber}
             onChange={formik.handleChange}
             error={
-              formik.touched.agencyNumber && Boolean(formik.errors.agencyNumber)
+              formik.touched.agencyNumber &&
+              Boolean(formik.errors.agencyNumber)
             }
           />
-          {formik.touched.agencyNumber && formik.errors.agencyNumber ? (
-            <div className="text-red-600">
-              {formik.errors.agencyNumber?.toString()}
-            </div>
-          ) : null}
           <Input
             type="text"
             label={t("default.myAccount.client.bankDetails.agencyDigit")}
             name="agencyDigit"
             value={formik.values.agencyDigit}
             onChange={formik.handleChange}
-            error={
-              formik.touched.agencyDigit && Boolean(formik.errors.agencyDigit)
-            }
           />
-          {formik.touched.agencyDigit && formik.errors.agencyDigit ? (
-            <div className="text-red-600">
-              {formik.errors.agencyDigit?.toString()}
-            </div>
-          ) : null}
         </div>
         <div className="grid md:grid-cols-2 gap-6">
           <Select
@@ -211,9 +181,6 @@ export const BankData = ({ userData }: any) => {
             onChange={(selectedValue) => {
               formik.setFieldValue("pixKeyType", selectedValue);
             }}
-            error={
-              formik.touched.pixKeyType && Boolean(formik.errors.pixKeyType)
-            }
           >
             <Option value="E-mail">
               {t("default.myAccount.client.bankDetails.pixKeyType.email")}
@@ -241,7 +208,12 @@ export const BankData = ({ userData }: any) => {
           />
         </div>
       </div>
-      <div className="w-full flex justify-start mt-8">
+      <div className={`w-full flex ${formik.isValid ? 'justify-end' : 'justify-between'} mt-8`}>
+        {!formik.isValid && (
+          <Typography variant="small" className="text-red-500">
+            Os campos marcados são obrigatórios
+          </Typography>
+        )}
         <Button
           className="bg-GOLD_MAIN w-full md:w-auto"
           type="submit"
