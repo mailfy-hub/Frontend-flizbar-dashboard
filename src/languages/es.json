@@ -181,6 +181,7 @@
           "labelBornDate": "Fecha de nacimiento",
           "nationality": "Nacionalidad",
           "labelDocumentType": "Tipo de documento",
+          "spousedocumentNumber": "Número de documento del cónyuge",
           "documentNumber": "Número de documento",
           "fatherName": "Nombre del padre",
           "matherName": "Nombre de la madre",
@@ -314,11 +315,19 @@
       "nationalId": "Identificación nacional",
       "cnpj": "CNPJ",
       "iban": "IBAN",
-      "stateRegistration": "Registro estatal"
+      "stateRegistration": "Registro estatal",
+      "rne": "RNE"
     },
     "nationality": {
       "brazilian": "Brasileño",
-      "other": "Otro"
+      "portuguese": "Portugués",
+      "argentine": "Argentino",
+      "iranian": "Iraní",
+      "american": "Americano",
+      "english": "Inglés",
+      "spanish": "Español",
+      "other": "Otro",
+      "rne": "RNE"
     },
     "maritalStatus": {
       "single": "Soltero",
@@ -340,6 +349,7 @@
       "technicalCourse": "Curso técnico",
       "incompleteBachelorDegree": "Educación universitaria incompleta",
       "completeBachelorDegree": "Educación universitaria completa",
+      "postGraduateMasterDoctorate": "Postgrado / Maestría / Doctorado",
       "postgraduate": "Postgrado",
       "master": "Maestro",
       "doctorate": "Doctorado",
@@ -407,11 +417,18 @@
       "rgRequired": "RG es obligatorio",
       "cpfRequired": "CPF es obligatorio",
       "emailRequired": "El correo electrónico es obligatorio",
-      "emailInvalid": "Introduzca un correo electrónico válido"
+      "emailInvalid": "Introduzca un correo electrónico válido",
+      "walletRequired": "La billetera es obligatoria"
     },
     "labelPhone": "Teléfono",
     "placeHolderLabelPhone": "Ingresa tu número",
     "buttonClose": "Cerrar",
-    "loadingZipCodeData": "Cargando datos del código postal ..."
+    "loadingZipCodeData": "Cargando datos del código postal ...",
+    "contributionDateRequired": "La fecha de contribución es obligatoria",
+    "dollarValueRequired": "El valor de la moneda del dólar es obligatorio",
+    "contributionValueRequired": "El valor de la contribución es obligatorio",
+    "valueMustBeGreaterThanZero": "O valor debe ser mayor o igual a 0",
+    "statusRequired": "El estado es obligatorio",
+    "clientRequired": "El cliente es obligatorio"
   }
 }

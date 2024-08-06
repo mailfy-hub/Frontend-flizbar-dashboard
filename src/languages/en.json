@@ -206,6 +206,7 @@
           "nationality": "Nationality",
           "labelDocumentType": "Document type",
           "documentNumber": "Document number",
+          "spousedocumentNumber": "Spouse document number",
           "fatherName": "Father's name",
           "matherName": "Mother's name",
           "maritalStatus": "Marital status",
@@ -349,11 +350,19 @@
       "nationalId": "National ID",
       "cnpj": "CNPJ",
       "iban": "IBAN",
-      "stateRegistration": "State registration"
+      "stateRegistration": "State registration",
+      "rne": "RNE"
     },
     "nationality": {
       "brazilian": "Brazilian",
-      "other": "Other"
+      "portuguese": "Portuguese",
+      "argentine": "Argentine",
+      "iranian": "Iranian",
+      "american": "American",
+      "english": "English",
+      "spanish": "Spanish",
+      "other": "Other",
+      "rne": "RNE"
     },
     "maritalStatus": {
       "single": "Single",
@@ -381,6 +390,7 @@
       "technicalCourse": "Technical course",
       "incompleteBachelorDegree": "Incomplete bachelor's education",
       "completeBachelorDegree": "Complete bachelor's education",
+      "postGraduateMasterDoctorate": "Postgraduate/Master/Doctorate",
       "postgraduate": "Postgraduate",
       "master": "Master",
       "doctorate": "Doctorate",
@@ -433,7 +443,14 @@
       "rgRequired": "RG is required",
       "cpfRequired": "CPF is required",
       "emailRequired": "Email is required",
-      "emailInvalid": "Enter a valid email address"
+      "emailInvalid": "Enter a valid email address",
+      "walletRequired": "Wallet is required",
+      "contributionDateRequired": "Contribution date is required",
+      "dollarValueRequired": "Dollar price value is obligatory",
+      "contributionValueRequired": "Contribution value is required",
+      "valueMustBeGreaterThanZero": "The value must be greater than or equal to 0",
+      "statusRequired": "Status is required",
+      "clientRequired": "Client is required"
     },
     "labelPhone": "Phone",
     "placeHolderLabelPhone": "Enter your number",

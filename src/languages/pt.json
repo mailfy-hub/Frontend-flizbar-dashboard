@@ -207,6 +207,7 @@
           "nationality": "Nacionalidade",
           "labelDocumentType": "Tipo de documento",
           "documentNumber": "Número do documento",
+          "spousedocumentNumber": "Número do documento do cônjuge",
           "fatherName": "Nome do pai",
           "matherName": "Nome da mãe",
           "maritalStatus": "Estado civil",
@@ -339,11 +340,19 @@
       "nationalId": "Identidade nacional",
       "cnpj": "CNPJ",
       "iban": "IBAN",
-      "stateRegistration": "Inscrição estadual"
+      "stateRegistration": "Inscrição estadual",
+      "rne": "RNE"
     },
     "nationality": {
       "brazilian": "Brasileiro",
-      "other": "Outro"
+      "portuguese": "Português",
+      "argentine": "Argentino",
+      "iranian": "Iraniano",
+      "american": "Americano",
+      "english": "Inglês",
+      "spanish": "Espanhol",
+      "other": "Outro",
+      "rne": "RNE"
     },
     "maritalStatus": {
       "single": "Solteiro(a)",
@@ -365,6 +374,7 @@
       "incompleteBachelorDegree": "Ensino superior incompleto",
       "technicalCourse": "Curso técnico",
       "completeBachelorDegree": "Ensino superior completo",
+      "postGraduateMasterDoctorate": "Pós graduação / Mestrado / Doutorado",
       "postgraduate": "Pós-graduação",
       "master": "Mestrado",
       "doctorate": "Doutorado",
@@ -432,7 +442,15 @@
       "rgRequired": "O RG é obrigatório",
       "cpfRequired": "O CPF é obrigatório",
       "emailRequired": "O e-mail é obrigatório",
-      "emailInvalid": "Insira um e-mail inválido"
+      "emailInvalid": "Insira um e-mail inválido",
+      "walletRequired": "A carteira é obrigatória",
+      "contributionDateRequired": "Data do aporte é obrigatória",
+      "dollarValueRequired": "Valor da cotação do dólar é obrigatório",
+      "contributionValueRequired": "Valor do aporte é obrigatório",
+      "valueMustBeGreaterThanZero": "O valor deve ser maior ou igual a 0",
+      "statusRequired": "O status é obrigatório",
+      "clientRequired": "O cliente é obrigatório"
+      
     },
     "labelPhone": "Telefone",
     "placeHolderLabelPhone": "Insira seu número",
