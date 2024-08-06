@@ -182,7 +182,7 @@ export const ContribuitionInsert = () => {
       {profile?.user.isAdmin ? (
         <AdminForm formik={adminForm} clients={clients} wallets={wallets} />
       ) : (
-        <UserForm formik={userForm} wallets={wallets} t={t} />
+        <UserForm formik={userForm} wallets={wallets} />
       )}
     </div>
   );

@@ -18,6 +18,7 @@ import { generateRoutesByRole } from "../../utils/route-role-export";
 import { Logo } from "../logo";
 import { PageButton } from "../sidebar/PageButton";
 import Profile from "../../assets/profile.png";
+import LocaleSwitch from "../localeSwitch";
 
 const profileMenuItems = [
   {
@@ -94,7 +95,6 @@ export const Header = ({ isBlocked = false }: HeaderType) => {
 
   const routesUserRole = userData && generateRoutesByRole(userData?.isAdmin);
 
-
   return (
     <div className="h-[72px] w-full relative">
       <header className="md:bg-GRAY_100 bg-BLACK h-[72px] w-full p-4 md:px-12 flex items-center justify-between fixed md:static top-0 z-40 ">
@@ -135,6 +135,9 @@ export const Header = ({ isBlocked = false }: HeaderType) => {
             <Logo />
           </motion.div>
         </AnimatePresence>
+        <div className=" pr-3 lg:ml-auto">
+          <LocaleSwitch />
+        </div>
         <div className="hidden md:block">
           <Menu
             open={isMenuOpen}

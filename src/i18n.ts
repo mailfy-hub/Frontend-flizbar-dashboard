@@ -17,6 +17,10 @@ const resources = {
   }
 };
 
+const locales = ["pt", "en", "es"]
+export const defaultLocale = "en";
+export type Locale = (typeof locales)[number];
+
 i18n
   .use(initReactI18next)
   .init({
