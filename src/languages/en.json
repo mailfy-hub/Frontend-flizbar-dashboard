@@ -187,6 +187,29 @@
             "email": "Access email*",
             "password": "Password*"
           }
+        },
+        "founds": {
+          "title": "All funds",
+          "tableTitle": "Fund table",
+          "text": "View information about all your investment funds",
+          "code": "Code",
+          "name": "Fund name",
+          "currency": "Currency",
+          "percentage": "Percentage",
+          "type": "Type",
+          "convencionalType": "Conventional",
+          "emergencyType": "Emergency",
+          "actions": "Actions",
+          "button": "ADD FUND",
+          "addFoundForm": {
+            "title": "Fund",
+            "titleSecondary": "Fill in the inclusion form",
+            "name": "Name",
+            "standardPercentage": "Standard percentage"
+          },
+          "editFound": "Edit fund",
+          "deleteFound": "Delete fund"
+        
         }
       },
       "client": {

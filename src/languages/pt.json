@@ -188,6 +188,29 @@
             "email": "E-mail de acesso*",
             "password": "Senha*"
           }
+        },
+        "founds": {
+          "title": "Todos os fundos",
+          "tableTitle": "Tabela de fundos",
+          "text": "Veja informações sobre todos os seus fundos de investimento",
+          "code": "Código",
+          "name": "Nome do fundo",
+          "currency": "Moeda",
+          "percentage": "Percentual",
+          "type": "Tipo",
+          "convencionalType": "Convencional",
+          "emergencyType": "Emergencial",
+          "actions": "Ações",
+          "button": "ADICIONAR FUNDO",
+          "addFoundForm": {
+            "title": "Fundo",
+            "titleSecondary": "Preencha o formulário de inclusão",
+            "name": "Nome",
+            "standardPercentage": "Percentual padrão"
+          },
+          "editFound": "Editar fundo",
+          "deleteFound": "Deletar fundo"
+        
         }
       },
       "client": {
