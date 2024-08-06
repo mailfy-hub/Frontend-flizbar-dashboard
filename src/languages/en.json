@@ -210,6 +210,43 @@
           "editFound": "Edit fund",
           "deleteFound": "Delete fund"
         
+        },
+        "wallets": {
+          "title": "All wallets",
+          "secondaryTile": "Wallet data",
+          "tableTitle": "Wallet table",
+          "text": "View information about all your wallets",
+          "code": "Code",
+          "name": "Name",
+          "type": "Type",
+          "actions": "Actions",
+          "button": "ADD WALLET",
+          "addWalletForm": {
+            "title": "Wallet",
+            "titleSecondary": "Fill in the inclusion form",
+            "name": "Wallet name",
+            "fundType": "Fund type"
+          },
+          "editWallet": "Edit wallet",
+          "deleteWallet": "Delete wallet"
+        },
+        "income": {
+          "title": "All incomes",
+          "tableTitle": "Income table",
+          "text": "View information about all your incomes",
+          "code": "Code",
+          "fund": "Fund",
+          "fundName": "Fund name",
+          "value": "Value",
+          "createdAt": "Creation date",
+          "button": "ADD INCOME",
+          "addIncomeForm": {
+            "title": "Fill out the inclusion form",
+            "subtitle": "Income",
+            "dateOfIncome": "Date of income",
+            "Sourcefund": "Source fund",
+            "PercentageOfIncome": "Income percentage"
+          }
         }
       },
       "client": {
@@ -473,7 +510,8 @@
       "contributionValueRequired": "Contribution value is required",
       "valueMustBeGreaterThanZero": "The value must be greater than or equal to 0",
       "statusRequired": "Status is required",
-      "clientRequired": "Client is required"
+      "clientRequired": "Client is required",
+      "allFieldsRequired": "All fields are required"
     },
     "labelPhone": "Phone",
     "placeHolderLabelPhone": "Enter your number",

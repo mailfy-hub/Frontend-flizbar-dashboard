@@ -25,11 +25,19 @@ import { SectionTitle } from "../../../components/sectionTitle";
 import SuccessDialog from "../../../components/successDialog";
 import { Wallet } from "../../../types/dashboard/wallets";
 import { formatDate } from "../../../utils/formatDate";
-
-const TABLE_HEAD = ["Código", "Nome", "Tipo", "Ações"];
+import { useTranslation } from "react-i18next";
 
 export const Wallets = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const TABLE_HEAD = [
+    `${t("default.myAccount.admin.wallets.code")}`,
+    `${t("default.myAccount.admin.wallets.name")}`,
+    `${t("default.myAccount.admin.wallets.type")}`,
+    `${t("default.myAccount.admin.wallets.actions")}`,
+  ];
+
   const handleNavigate = () => {
     navigate("insert");
   };
@@ -132,12 +140,8 @@ export const Wallets = () => {
         open={openConfimationDialog}
         handler={handleToggleConfirmationDialog}
       >
-        <DialogHeader>
-          Tem certeza que deseja <br /> deletar este registro?
-        </DialogHeader>
-        <DialogBody>
-          Essa ação é irreversível, tome cuidado ao prosseguir.
-        </DialogBody>
+        <DialogHeader>{t("default.modals.title")}</DialogHeader>
+        <DialogBody>{t("default.modals.titleSecondary")}</DialogBody>
         <DialogFooter>
           <Button
             variant="text"
@@ -145,14 +149,14 @@ export const Wallets = () => {
             onClick={handleCancelDeleteWallet}
             className="mr-1"
           >
-            <span>Cancelar</span>
+            <span>{t("default.modals.buttonCancel")}</span>
           </Button>
           <Button variant="gradient" color="red" onClick={DeleteWalletAction}>
-            <span>Confirmar</span>
+            <span>{t("default.modals.buttonConfirm")}</span>
           </Button>
         </DialogFooter>
       </Dialog>
-      <SectionTitle text="Todas carteiras" />
+      <SectionTitle text={t("default.myAccount.admin.wallets.title")} />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
           floated={false}
@@ -161,10 +165,10 @@ export const Wallets = () => {
         >
           <div>
             <Typography variant="h6" color="black">
-              Tabela de carteiras
+              {t("default.myAccount.admin.wallets.tableTitle")}
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
-              Veja informações sobre todas suas carteiras
+              {t("default.myAccount.admin.wallets.text")}
             </Typography>
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
@@ -178,7 +182,7 @@ export const Wallets = () => {
               onClick={handleNavigate}
               className="md:max-w-fit w-full bg-GOLD_MAIN"
             >
-              ADICIONAR CARTEIRA
+              {t("default.myAccount.admin.wallets.button")}
             </Button>
           </div>
         </CardHeader>
@@ -247,12 +251,23 @@ export const Wallets = () => {
                       </td>
 
                       <td className="flex items-center justify-end text-right p-4 border-b border-gray-300 gap-2">
-                        <Tooltip content="Editar usuário">
-                          <IconButton onClick={() => handleEdit(id, walletName, type)} variant="text">
+                        <Tooltip
+                          content={t(
+                            "default.myAccount.admin.wallets.editWallet"
+                          )}
+                        >
+                          <IconButton
+                            onClick={() => handleEdit(id, walletName, type)}
+                            variant="text"
+                          >
                             <PencilIcon className="w-4 h-4 text-gray-400" />
                           </IconButton>
                         </Tooltip>
-                        <Tooltip content="Deletar usuário">
+                        <Tooltip
+                          content={t(
+                            "default.myAccount.admin.wallets.deleteWallet"
+                          )}
+                        >
                           <IconButton
                             onClick={() => handleDeleteWallet(id)}
                             variant="text"
@@ -269,7 +284,8 @@ export const Wallets = () => {
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-            Página {currentPage} de {totalPages}
+            {t("default.pagination.page")} {currentPage}{" "}
+            {t("default.pagination.of")} {totalPages}
           </Typography>
           <div className="flex gap-4">
             <Button
@@ -279,7 +295,7 @@ export const Wallets = () => {
               disabled={currentPage === 1}
             >
               <ChevronLeftIcon strokeWidth={3} className="h-3 w-3" />
-              Anterior
+              {t("default.pagination.previous")}
             </Button>
             <Button
               variant="text"
@@ -287,7 +303,7 @@ export const Wallets = () => {
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
             >
-              Próximo
+              {t("default.pagination.next")}
               <ChevronRightIcon strokeWidth={3} className="h-3 w-3" />
             </Button>
           </div>

@@ -189,7 +189,43 @@
           },
           "editFound": "Editar fondo",
           "deleteFound": "Eliminar fondo"
-        
+        },
+        "wallets": {
+          "title": "Todas las billeteras",
+          "secondaryTile": "Datos de la billetera",
+          "tableTitle": "Tabla de billeteras",
+          "text": "Ver información sobre todas tus billeteras",
+          "code": "Código",
+          "name": "Nombre",
+          "type": "Tipo",
+          "actions": "Acciones",
+          "button": "AÑADIR BILLETERA",
+          "addWalletForm": {
+            "title": "Billetera",
+            "titleSecondary": "Rellena el formulario de inclusión",
+            "name": "nombre de la billetera",
+            "fundType": "Tipo de fondo"
+          },
+          "editWallet": "Editar billetera",
+          "deleteWallet": "Eliminar billetera"
+        },
+        "income": {
+          "title": "Todos los ingresos",
+          "tableTitle": "Tabla de ingresos",
+          "text": "Ver información sobre todos tus ingresos",
+          "code": "Código",
+          "fund": "Fondo",
+          "fundName": "Nombre del fondo",
+          "value": "Valor",
+          "createdAt": "Fecha de creación",
+          "button": "AÑADIR INGRESO",
+          "addIncomeForm": {
+            "title": "Complete el formulario de inclusión",
+            "subtitle": "Ingreso",
+            "dateOfIncome": "Fecha de ingreso",
+            "Sourcefund": "Fondo de origen",
+            "PercentageOfIncome": "Porcentaje de ingresos"
+          }
         }
       },
       "client": {
@@ -441,7 +477,8 @@
       "cpfRequired": "CPF es obligatorio",
       "emailRequired": "El correo electrónico es obligatorio",
       "emailInvalid": "Introduzca un correo electrónico válido",
-      "walletRequired": "La billetera es obligatoria"
+      "walletRequired": "La billetera es obligatoria",
+      "allFieldsRequired": "Todos los campos son obligatorios"
     },
     "labelPhone": "Teléfono",
     "placeHolderLabelPhone": "Ingresa tu número",

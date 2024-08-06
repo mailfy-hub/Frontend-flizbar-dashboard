@@ -211,6 +211,43 @@
           "editFound": "Editar fundo",
           "deleteFound": "Deletar fundo"
         
+        },
+        "wallets": {
+          "title": "Todas as carteiras",
+          "secondaryTile": "Dados da carteira",
+          "tableTitle": "Tabela de carteiras",
+          "text": "Veja informações sobre todas as suas carteiras",
+          "code": "Código",
+          "name": "Nome",
+          "type": "Tipo",
+          "actions": "Ações",
+          "button": "ADICIONAR CARTEIRA",
+          "addWalletForm": {
+            "title": "Carteira",
+            "titleSecondary": "Preencha o formulário de inclusão",
+            "name": "Nome da carteira",
+            "fundType": "Tipo do fundo"
+          },
+          "editWallet": "Editar carteira",
+          "deleteWallet": "Deletar carteira"
+        },
+        "income": {
+          "title": "Todos os rendimentos",
+          "tableTitle": "Tabela de rendimentos",
+          "text": "Veja informações sobre todos os seus rendimentos",
+          "code": "Código",
+          "fund": "Fundo",
+          "fundName": "Nome do fundo",
+          "value": "Valor",
+          "createdAt": "Data de criação",
+          "button": "ADICIONAR RENDIMENTO",
+          "addIncomeForm": {
+            "title": "Preencha o formulário de inclusão",
+            "subtitle": "Rendimento",
+            "dateOfIncome": "Data do rendimento",
+            "Sourcefund": "Fundo de origem",
+            "PercentageOfIncome": "Percentual de rendimento"
+          }
         }
       },
       "client": {
@@ -472,7 +509,8 @@
       "contributionValueRequired": "Valor do aporte é obrigatório",
       "valueMustBeGreaterThanZero": "O valor deve ser maior ou igual a 0",
       "statusRequired": "O status é obrigatório",
-      "clientRequired": "O cliente é obrigatório"
+      "clientRequired": "O cliente é obrigatório",
+      "allFieldsRequired": "Todos os campos são obrigatórios"
       
     },
     "labelPhone": "Telefone",
