@@ -1,5 +1,5 @@
 interface TableRowProps {
-  currency: "BRL" | "USD" | "EUR" | "JPY";
+  currency: "BRL" | "USD" | "EUR" | "JPY" | "YEN";
   value: number;
 }
 
@@ -8,6 +8,7 @@ const CURRENCY_MAP = {
   USD: "$",
   EUR: "€",
   JPY: "¥",
+  YEN: "¥",
 };
 
 export const CurrencyRow = ({currency, value}: TableRowProps) => {

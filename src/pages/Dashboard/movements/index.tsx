@@ -14,31 +14,40 @@ import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { CurrencyRow } from "../../../components/table/currencyRow";
 import { useAuth } from "../../../hook/auth";
+import { useEffect, useState } from "react";
+import { getAllTransactions } from "../../../client/transactions";
+import { Fund } from "../../../types/dashboard/funds";
+import { Profile } from "../../../types/auth";
+import { formatDate } from "../../../utils/formatDate";
 
 interface TableRowProps {
-  currency: "BRL" | "USD" | "EUR" | "JPY";
-  value: number;
-  code: string;
-  type: string;
-  fund: string;
-  customer: string;
-  created_at: string;
+  id: string;
+  clientId: string;
+  fundId: string;
+  type: 'INCOME' | 'CONTRIBUTIONS' | 'WITHDRAWAL';
+  amount: number;
+  currency: 'BRL' | 'USD' | 'EUR' | 'YEN';
+  observation: string;
+  createdAt: string;
+  clientProfile: Profile;
+  fund: Fund;
 }
 
-const TABLE_ROW: TableRowProps[] = [
-/*   {
-    code: "#TBR52536267",
-    type: "Resgate",
-    value: 120.0,
-    created_at: "23/05/2024",
-    currency: "USD",
-    customer: "Marlon Lencina S. B.",
-    fund: "T-Bond Brazil",
-  }, */
-];
+const translate = (text: string) => {
+  switch(text) {
+    case "INCOME":
+      return "Rendimento"
+    case "CONTRIBUTION":
+      return "Contribuição"
+    case "WITHDRAWAL":
+      return "Resgate"
+  }
+}
 
 export const Movements = () => {
   const { userData } = useAuth();
+
+  const [transactions, setTransactions] = useState<TableRowProps[]>([])
 
   const navigate = useNavigate();
   const handleNavigateDetails = () => {
@@ -47,6 +56,19 @@ export const Movements = () => {
   const TABLE_HEAD = userData?.isAdmin
     ? ["Código", "Cliente", "Data", "Tipo", "Fundo", "Valor", "Ações"]
     : ["Código", "Data", "Tipo", "Fundo", "Valor"];
+
+  
+  useEffect(() => {
+    async function fetchData() {
+      await getAllTransactions(userData?.id)
+        .then(res => setTransactions(res))
+        .catch(err => console.log(err))
+    }
+
+    fetchData()
+  }, []);
+
+    
   return (
     <div>
       <SectionTitle text="Todas movimentações" />
@@ -84,19 +106,19 @@ export const Movements = () => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROW.map(
+              {transactions?.map(
                 ({
-                  code,
+                  id,
                   currency,
-                  created_at,
-                  fund,
+                  createdAt,
                   type,
-                  value,
-                  customer,
+                  clientProfile,
+                  fund,
+                  amount,
                 }) => {
                   const classes = "!p-6 ";
                   return (
-                    <tr key={code}>
+                    <tr key={id}>
                       <td className={classes}>
                         <div className="flex items-center gap-3">
                           <div>
@@ -105,7 +127,7 @@ export const Movements = () => {
                               color="blue-gray"
                               className="!font-semibold"
                             >
-                              {code}
+                              {id}
                             </Typography>
                           </div>
                         </div>
@@ -119,7 +141,7 @@ export const Movements = () => {
                                 color="blue-gray"
                                 className="!font-semibold"
                               >
-                                {customer}
+                                {clientProfile.user.name}
                               </Typography>
                             </div>
                           </div>
@@ -133,7 +155,7 @@ export const Movements = () => {
                               color="blue-gray"
                               className="!font-semibold"
                             >
-                              {created_at}
+                              {formatDate(createdAt)}
                             </Typography>
                             {/*                             <Typography
                               variant="small"
@@ -151,7 +173,7 @@ export const Movements = () => {
                             color="black"
                             className="!font-normal"
                           >
-                            {type}
+                            {translate(type)}
                           </Typography>
                         </div>
                       </td>
@@ -162,12 +184,12 @@ export const Movements = () => {
                             color="black"
                             className="!font-normal"
                           >
-                            {fund}
+                            {fund.name}
                           </Typography>
                         </div>
                       </td>
                       <td className={classes}>
-                        <CurrencyRow currency={currency} value={value} />
+                        <CurrencyRow currency={currency} value={amount} />
                       </td>
                       {userData?.isAdmin && (
                         <td className={`${classes} flex justify-start `}>
