@@ -226,6 +226,27 @@
             "Sourcefund": "Fondo de origen",
             "PercentageOfIncome": "Porcentaje de ingresos"
           }
+        },
+        "readjustments": {
+          "title": "Todos los ajustes",
+          "tableTitle": "Tabla de reajustes",
+          "text": "Ver información sobre todos tus ajustes",
+          "code": "Código",
+          "createdAt": "Fecha de creación",
+          "client":"Cliente",
+          "fundOrigin": "Fondo de origen",
+          "fundDestination": "Fondo de Destino",
+          "value": "Valor",
+          "actions": "Acciones",
+          "button": "AÑADIR REECUACIÓN",
+          "clientName": "Nombre del cliente",
+          "details": "Detalles",
+          "addReadjustmentForm": {
+            "title": "Rellena el formulario de inclusión",
+            "subtitle": "Reajuste",
+            "valueOfReadjustment": "Valor de reajuste",
+            "dateOfReadjustment": "Fecha de reajuste"
+          }
         }
       },
       "client": {

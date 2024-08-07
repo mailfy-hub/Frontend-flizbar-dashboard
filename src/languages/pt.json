@@ -248,6 +248,27 @@
             "Sourcefund": "Fundo de origem",
             "PercentageOfIncome": "Percentual de rendimento"
           }
+        },
+        "readjustments": {
+          "title": "Todas as readequações",
+          "tableTitle": "Tabela de readequações",
+          "text": "Veja informações sobre todas as suas readequações",
+          "code": "Código",
+          "createdAt": "Data de criação",
+          "client":"Cliente",
+          "fundOrigin": "Fundo de origem",
+          "fundDestination": "Fundo de destino",
+          "value": "Valor",
+          "actions": "Ações",
+          "button": "ADICIONAR READEQUAÇÃO",
+          "clientName": "Nome do cliente",
+          "details": "Detalhes",
+          "addReadjustmentForm": {
+            "title": "Preencha o formulário de inclusão",
+            "subtitle": "Readequação",
+            "valueOfReadjustment": "Valor da readequação",
+            "dateOfReadjustment": "Data da readequação"
+          }
         }
       },
       "client": {

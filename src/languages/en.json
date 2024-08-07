@@ -247,6 +247,27 @@
             "Sourcefund": "Source fund",
             "PercentageOfIncome": "Income percentage"
           }
+        },
+        "readjustments": {
+          "title": "All readjustments",
+          "tableTitle": "Readjustments table",
+          "text": "See information about all your readjustments",
+          "code": "Code",
+          "createdAt": "Creation date",
+          "client":"Client",
+          "fundOrigin": "Source fund",
+          "fundDestination": "Destination fund",
+          "value": "Value",
+          "actions": "Actions",
+          "button": "ADD READJUSTMENT",
+          "clientName": "Client name",
+          "details": "Details",
+          "addReadjustmentForm": {
+            "title": "Fill out the add form",
+            "subtitle": "Readjustment",
+            "valueOfReadjustment": "Amount of readjustment",
+            "dateOfReadjustment": "Date of readjustment"
+          }
         }
       },
       "client": {
