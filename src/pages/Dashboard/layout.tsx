@@ -4,7 +4,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { ActiveRouteProps, Header } from "../../components/header";
 import {} from "../../components/lineChart";
 import { SidebarLayout } from "../../components/sidebar";
-import { routesMapped } from "../../utils/route-config";
+import { RoutesMapped } from "../../utils/route-config";
 import { Loading } from "../Utils/loading";
 
 export const Layout = () => {
@@ -16,7 +16,7 @@ export const Layout = () => {
   );
 
   const getPageInfo = (route: string) => {
-    const foundRoute = routesMapped
+    const foundRoute = RoutesMapped()
       .filter((r) => route.startsWith(r.path))
       .sort((a, b) => b.path.length - a.path.length)[0];
 

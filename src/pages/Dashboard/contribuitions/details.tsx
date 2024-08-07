@@ -1,8 +1,9 @@
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
 import { Button, Option, Select, Typography } from "@material-tailwind/react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { api } from "../../../client/api";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { CurrencyRow } from "../../../components/table/currencyRow";
 import { useAuth } from "../../../hook/auth";
@@ -13,9 +14,16 @@ interface TABLE_ROW_PROPS {
   dolarValue: number;
   realValue: number;
   currency: "BRL" | "USD" | "EUR" | "JPY";
+  percentage: number;
 }
 
-const TABLE_HEAD = ["Fundo", "Moeda", "Valor ($)", "Valor (R$)"];
+const TABLE_HEAD = [
+  "Fundo",
+  "Moeda",
+  "Valor ($)",
+  "Valor (R$)",
+  "Porcentagem (%)",
+];
 const TABLE_ROW: TABLE_ROW_PROPS[] = [
   {
     id: "1",
@@ -23,6 +31,31 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
     currency: "BRL",
     dolarValue: 585.0,
     realValue: 3000.0,
+    percentage: 0,
+  },
+  {
+    id: "2",
+    fund: "T-Bond USA",
+    currency: "USD",
+    dolarValue: 0,
+    realValue: 0,
+    percentage: 0,
+  },
+  {
+    id: "3",
+    fund: "Baixo Risco",
+    currency: "BRL",
+    dolarValue: 0,
+    realValue: 0,
+    percentage: 0,
+  },
+  {
+    id: "4",
+    fund: "Alto Risco",
+    currency: "BRL",
+    dolarValue: 0,
+    realValue: 0,
+    percentage: 0,
   },
 ];
 
@@ -31,14 +64,13 @@ export const ContribuitionDetails = () => {
   const [status, setStatus] = useState("Pendente");
   const { userData } = useAuth();
 
+  const params = useParams();
+
   const handleNavigateBack = () => {
     navigate(-1);
   };
 
   const handleAllocate = () => {
-    // Função que vai criar a movimentação do Aporte
-    // Distribuir o valor nos respectivos fundos e percentuais definidos para cada um
-
     setStatus("Concluído");
     toast("Sucesso", {
       type: "success",
@@ -47,6 +79,20 @@ export const ContribuitionDetails = () => {
 
     // Impedir que o status seja editado após a alocação
   };
+
+  // onst [contribuition, setContribuition] = useState();
+  const getContribuitionById = async (id: string) => {
+    try {
+      const response = await api.get(`/contributions/${id}`);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    params.id && getContribuitionById(params.id);
+  }, []);
 
   return (
     <div>
@@ -115,14 +161,16 @@ export const ContribuitionDetails = () => {
             <div className="mt-6">
               <Select
                 label="Status do aporte"
-                disabled={status === "Concluído"}
+                // disabled={status === "Concluído"}
                 value={status}
                 onChange={(value) => value && setStatus(value)}
                 className="pt-2"
+                disabled
               >
+                <Option value="Rejeitado">Rejeitado</Option>
                 <Option value="Pendente">Pendente</Option>
                 <Option value="Aprovado">Aprovado</Option>
-                <Option value="Rejeitado">Rejeitado</Option>
+                <Option value="Creditado">Creditado</Option>
               </Select>
             </div>
           )}
@@ -151,38 +199,48 @@ export const ContribuitionDetails = () => {
             </tr>
           </thead>
           <tbody>
-            {TABLE_ROW.map(({ currency, dolarValue, fund, realValue, id }) => {
-              const classes = "!p-6 ";
-              return (
-                <tr key={id}>
-                  <td className={classes}>
-                    <div>
+            {TABLE_ROW.map(
+              ({ currency, dolarValue, fund, realValue, id, percentage }) => {
+                const classes = "!p-6 ";
+                return (
+                  <tr key={id}>
+                    <td className={classes}>
+                      <div>
+                        <Typography
+                          variant="small"
+                          color="black"
+                          className="!font-normal"
+                        >
+                          {fund}
+                        </Typography>
+                      </div>
+                    </td>
+                    <td className={classes}>
                       <Typography
                         variant="small"
-                        color="black"
-                        className="!font-normal"
+                        className="!font-normal text-gray-600"
                       >
-                        {fund}
+                        {currency}
                       </Typography>
-                    </div>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className="!font-normal text-gray-600"
-                    >
-                      {currency}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <CurrencyRow currency="USD" value={dolarValue} />
-                  </td>
-                  <td className={classes}>
-                    <CurrencyRow currency="BRL" value={realValue} />
-                  </td>
-                </tr>
-              );
-            })}
+                    </td>
+                    <td className={classes}>
+                      <CurrencyRow currency="USD" value={dolarValue} />
+                    </td>
+                    <td className={classes}>
+                      <CurrencyRow currency="BRL" value={realValue} />
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        className="!font-normal text-gray-600"
+                      >
+                        {percentage} %
+                      </Typography>
+                    </td>
+                  </tr>
+                );
+              }
+            )}
           </tbody>
         </table>
       </div>

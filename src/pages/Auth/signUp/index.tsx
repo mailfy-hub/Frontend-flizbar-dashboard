@@ -14,7 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { HeaderMobile } from "../../../components/headerMobile";
 import { InputWithDropdown } from "../../../components/inputWithDropdown";
 import { SideImageAuthorization } from "../../../components/sideImageAuthorization";
-
+import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
@@ -27,6 +27,8 @@ import { CountryType, countries } from "../../../utils/number-config";
 export function SignUp() {
   const navigate = useNavigate();
   const { signUp } = useAuth();
+  const { t } = useTranslation();
+
   const formik = useFormik({
     validateOnChange: false,
     validateOnBlur: false,
@@ -115,58 +117,48 @@ export function SignUp() {
         handler={handleDialogContract}
         size="lg"
       >
-        <DialogHeader>Contrato de serviço</DialogHeader>
+        <DialogHeader>{t("default.termsAndConditions.title")}</DialogHeader>
         <DialogBody divider className="max-h-[400px] overflow-y-auto">
           <Typography variant="h6" color="blue-gray">
-            Termos e Condições de Uso da Flizbar
+            {t("default.termsAndConditions.subtitle")}
           </Typography>
           <Typography variant="body2" color="gray" className="mt-2">
-            Bem-vindo à Flizbar! Ao se cadastrar, você concorda com os seguintes
-            termos e condições de uso:
+            {t("default.termsAndConditions.welcomeText")}
           </Typography>
           <Typography variant="body2" color="gray" className="mt-2">
-            1. A Flizbar é uma plataforma de gerenciamento financeiro baseada em
-            capital de mercado.
+            {t("default.termsAndConditions.firstTerm")}
           </Typography>
           <Typography variant="body2" color="gray" className="mt-2">
-            2. O usuário é responsável por manter a confidencialidade de sua
-            senha e conta.
+            {t("default.termsAndConditions.secondTerm")}
           </Typography>
           <Typography variant="body2" color="gray" className="mt-2">
-            3. É proibido utilizar a plataforma para atividades ilegais ou não
-            autorizadas.
+            {t("default.termsAndConditions.thirdTerm")}
           </Typography>
           <Typography variant="body2" color="gray" className="mt-2">
-            4. A Flizbar se reserva o direito de encerrar contas que violem
-            estes termos.
+            {t("default.termsAndConditions.fourthTerm")}
           </Typography>
           <Typography variant="body2" color="gray" className="mt-2">
-            5. O uso contínuo da plataforma implica na aceitação de possíveis
-            alterações nos termos.
+            {t("default.termsAndConditions.fifthTerm")}
           </Typography>
           <Typography variant="body2" color="gray" className="mt-2">
-            6. A Flizbar não se responsabiliza por perdas financeiras
-            decorrentes do uso da plataforma.
+            {t("default.termsAndConditions.sixthTerm")}
           </Typography>
           <Typography variant="body2" color="gray" className="mt-2">
-            7. As informações fornecidas pelo usuário devem ser precisas e
-            verdadeiras.
+            {t("default.termsAndConditions.seventhTerm")}
           </Typography>
           <Typography variant="body2" color="gray" className="mt-2">
-            8. O usuário concorda em receber comunicações eletrônicas da
-            Flizbar.
+            {t("default.termsAndConditions.eighthTerm")}
           </Typography>
           <Typography variant="body2" color="gray" className="mt-2">
-            9. Todos os dados do usuário são tratados conforme a política de
-            privacidade da Flizbar.
+            {t("default.termsAndConditions.ninthTerm")}
           </Typography>
           <Typography variant="body2" color="gray" className="mt-2">
-            10. Em caso de dúvidas, entre em contato com nosso suporte.
+            {t("default.termsAndConditions.tenthTerm")}
           </Typography>
         </DialogBody>
         <DialogFooter>
           <Button color="gray" onClick={handleDialogContract}>
-            Fechar
+            {t("default.buttonClose")}
           </Button>
         </DialogFooter>
       </Dialog>
@@ -177,17 +169,17 @@ export function SignUp() {
       <div className="w-full h-full flex justify-center  pt-[72px] overflow-y-scroll">
         <form onSubmit={formik.handleSubmit} className=" bg-white rounded-md">
           <Typography variant="h4" color="blue-gray">
-            Cadastre-se
+            {t("default.register.title")}
           </Typography>
           <Typography color="gray" className="mt-1 font-normal">
-            Prazer em te conhecer, faça seu cadastro.
+            {t("default.register.subtitle")}
           </Typography>
           <div className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
             <div className="mb-1 flex flex-col gap-6">
               <div className="flex flex-col">
                 <div className="flex items-center justify-between mb-3">
                   <Typography variant="h6" color="blue-gray" className="">
-                    Seu nome
+                    {t("default.register.labelName")}
                   </Typography>
                   {formik.errors.name && (
                     <Typography variant="small" className="text-red-500">
@@ -203,7 +195,7 @@ export function SignUp() {
                   type="text"
                   onChange={formik.handleChange}
                   size="md"
-                  placeholder="Insira seu nome"
+                  placeholder={t("default.register.placeHolderName")}
                   className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                   labelProps={{
                     className: "before:content-none after:content-none",
@@ -214,7 +206,7 @@ export function SignUp() {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <Typography variant="h6" color="blue-gray">
-                    Seu sobrenome
+                    {t("default.register.labelSurname")}
                   </Typography>
                   {formik.errors.surname && (
                     <Typography variant="small" className="text-red-500">
@@ -229,7 +221,7 @@ export function SignUp() {
                   type="text"
                   onChange={formik.handleChange}
                   size="md"
-                  placeholder="Insira um username"
+                  placeholder={t("default.register.placeHolderSurname")}
                   className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                   labelProps={{
                     className: "before:content-none after:content-none",
@@ -240,7 +232,7 @@ export function SignUp() {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <Typography variant="h6" color="blue-gray">
-                    Seu e-mail
+                    {t("default.register.labelEmail")}
                   </Typography>
                   {formik.errors.email && (
                     <Typography variant="small" className="text-red-500">
@@ -255,7 +247,7 @@ export function SignUp() {
                   type="email"
                   onChange={formik.handleChange}
                   size="md"
-                  placeholder="Insira seu e-mail"
+                  placeholder={t("default.register.placeHolderEmail")}
                   className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                   labelProps={{
                     className: "before:content-none after:content-none",
@@ -266,7 +258,7 @@ export function SignUp() {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <Typography variant="h6" color="blue-gray" className="-mb-3">
-                    Telefone
+                    {t("default.labelPhone")}
                   </Typography>
                   {formik.errors.phone && (
                     <Typography variant="small" className="text-red-500">
@@ -288,7 +280,7 @@ export function SignUp() {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <Typography variant="h6" color="blue-gray" className="-mb-3">
-                    Senha de acesso
+                    {t("default.register.labelPassword")}
                   </Typography>
                   {formik.errors.password && (
                     <Typography variant="small" className="text-red-500">
@@ -330,13 +322,13 @@ export function SignUp() {
                   onChange={formik.handleChange}
                 />
                 <Typography variant="paragraph" color="gray">
-                  Eu li e aceito os{" "}
+                  {t("default.register.textTerms")}{" "}
                   <button
                     type="button"
                     onClick={handleDialogContract}
                     className="text-blue-500"
                   >
-                    termos e condições
+                    {t("default.register.linkTerms")}
                   </button>
                 </Typography>
               </div>
@@ -361,14 +353,14 @@ export function SignUp() {
                 className="mt-6 bg-GOLD_MAIN disabled:opacity-65"
                 fullWidth
               >
-                Cadastrar
+                {t("default.register.button")}
               </Button>
             </div>
 
             <Typography color="gray" className="mt-4 text-center font-normal">
-              Já tem uma conta?{" "}
+              {t("default.register.haveAccount")}{" "}
               <Link to="/login" className="font-medium text-gray-900">
-                Fazer login
+                {t("default.register.linkLogin")}
               </Link>
             </Typography>
           </div>

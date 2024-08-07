@@ -5,5 +5,5 @@ export interface Contribuition {
   walletID:  string;
   dollarValue: 0,
   contributionAmount: 0,
-  status: 'pending' | 'approved' | 'completed';
+  status: 'pending' | 'approved' | 'completed' | 'credited';
 }

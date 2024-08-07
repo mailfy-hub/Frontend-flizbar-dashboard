@@ -4,8 +4,11 @@ import { useAuth } from "../../../hook/auth";
 import { InfoClient } from "./infoClient";
 import { InfoFiles } from "./infoFiles";
 import { InfoWallets } from "./infoWallets";
+import { useTranslation } from "react-i18next";
 
 export const MyAccount = () => {
+  const { t } = useTranslation();
+
   const [activeScreen, setActiveScreen] = useState<
     "client" | "wallets" | "files"
   >("client");
@@ -19,7 +22,7 @@ export const MyAccount = () => {
   return (
     <div>
       <div className="flex items-center gap-4">
-        <SectionTitle text="Seus dados da conta" />
+        <SectionTitle text={t("default.myAccount.title")} />
       </div>
       <div className="mt-12 flex items-center gap-2">
         {!userData?.isAdmin && (
@@ -33,7 +36,7 @@ export const MyAccount = () => {
                 : "bg-gray-300 text-gray-500"
             } px-4 py-2 rounded-md font-display font-semibold transition-all `}
           >
-            Dados do cliente
+            {t("default.myAccount.client.clientData")}
           </button>
         )}
         {!userData?.isAdmin && (
@@ -47,7 +50,7 @@ export const MyAccount = () => {
                 : "bg-gray-300 text-gray-500"
             } px-4 py-2 rounded-md font-display font-semibold transition-all `}
           >
-            Carteiras
+            {t("default.myAccount.client.wallets.title")}
           </button>
         )}
 
@@ -62,7 +65,7 @@ export const MyAccount = () => {
                 : "bg-gray-300 text-gray-500"
             } px-4 py-2 rounded-md font-display font-semibold transition-all `}
           >
-            Meus anexos
+            {t("default.myAccount.client.myAnexes.title")}
           </button>
         )}
       </div>

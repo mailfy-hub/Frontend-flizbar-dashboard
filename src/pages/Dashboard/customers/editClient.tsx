@@ -1,29 +1,16 @@
-import {
-  // useEffect,
-  useState,
-} from "react";
-// import { useLocation } from "react-router-dom";
-// import { getProfileById } from "../../../client/profiles";
+import { useState } from "react";
 import { Contact } from "./cardsClient/contact";
 import { AddressData } from "./cardsClient/address";
 import { Beneficiary } from "./cardsClient/beneficiary";
 import { BankData } from "./cardsClient/dataBank";
 import { GenerateData } from "./cardsClient/generateData";
+import { useTranslation } from "react-i18next";
 
 export const EditClient = ({ data }: any) => {
+  const { t } = useTranslation();
+
   const [activeTab, setActiveTab] = useState("generate-data");
-  // const [dataUser, setDataUser] = useState({});
-
   const dataUser = data;
-
-  // const location = useLocation();
-  // const { id } = location.state;
-
-  // useEffect(() => {
-  //   getProfileById(id).then((data) => {
-  //     setDataUser(data);
-  //   });
-  // }, []);
 
   return (
     <div>
@@ -40,7 +27,7 @@ export const EditClient = ({ data }: any) => {
                   : "border-transparent font-medium text-GRAY_400"
               }`}
             >
-              Dados gerais
+              {t("default.myAccount.client.generalData.title")}
             </button>
             <button
               onClick={() => {
@@ -52,7 +39,7 @@ export const EditClient = ({ data }: any) => {
                   : "border-transparent font-medium text-GRAY_400"
               }`}
             >
-              Endereço
+              {t("default.myAccount.client.address.title")}
             </button>
             <button
               onClick={() => {
@@ -64,7 +51,7 @@ export const EditClient = ({ data }: any) => {
                   : "border-transparent font-medium text-GRAY_400"
               }`}
             >
-              Dados bancários
+              {t("default.myAccount.client.bankDetails.title")}
             </button>
             <button
               onClick={() => {
@@ -76,7 +63,7 @@ export const EditClient = ({ data }: any) => {
                   : "border-transparent font-medium text-GRAY_400"
               }`}
             >
-              Contatos
+              {t("default.myAccount.client.contacts.title")}
             </button>
             <button
               onClick={() => {
@@ -88,7 +75,7 @@ export const EditClient = ({ data }: any) => {
                   : "border-transparent font-medium text-GRAY_400"
               }`}
             >
-              Beneficiário
+              {t("default.myAccount.client.beneficiary.title")}
             </button>
           </div>
           <div className="">

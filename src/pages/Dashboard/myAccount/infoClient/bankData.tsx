@@ -6,15 +6,24 @@ import * as Yup from "yup";
 import { api } from "../../../../client/api";
 import { SectionTitle } from "../../../../components/sectionTitle";
 import { useAuth } from "../../../../hook/auth";
+import { useTranslation } from "react-i18next";
 
 export const BankData = () => {
   const { profile } = useAuth();
+  const { t } = useTranslation();
+
   const validationSchema = Yup.object().shape({
-    accountType: Yup.string().required("Tipo da conta é obrigatório"),
-    bankName: Yup.string().required("Nome do banco é obrigatório"),
-    accountNumber: Yup.string().required("Número da conta é obrigatório"),
+    accountType: Yup.string().required(
+      `${t("default.error.accountTypeRequired")}`
+    ),
+    bankName: Yup.string().required(`${t("default.error.bankNameRequired")}`),
+    accountNumber: Yup.string().required(
+      `${t("default.error.numberAccountRequired")}`
+    ),
     accountDigit: Yup.string(),
-    agencyNumber: Yup.string().required("Número da agência é obrigatório"),
+    agencyNumber: Yup.string().required(
+      `${t("default.error.agencyNumberRequired")}`
+    ),
     agencyDigit: Yup.string(),
     pixKeyType: Yup.string(),
     pixKey: Yup.string(),
@@ -60,13 +69,13 @@ export const BankData = () => {
         profileId: profile?.id,
         ...data,
       });
-      toast("Alterado com sucesso", {
+      toast("Updated successfully", {
         type: "success",
         autoClose: 3000,
       });
     } catch (error) {
       console.log(error);
-      toast("Erro ao atualizar.", {
+      toast("Error updating.", {
         type: "error",
         autoClose: 3000,
       });
@@ -82,12 +91,15 @@ export const BankData = () => {
     >
       <div className="flex items-center gap-4">
         <Icon height={16} icon={"heroicons:banknotes"} color="black" />
-        <SectionTitle size="sm" text="Dados bancários" />
+        <SectionTitle
+          size="sm"
+          text={t("default.myAccount.client.bankDetails.title")}
+        />
       </div>
       <div className="mt-8 flex flex-col gap-6 ">
         <div className="grid md:grid-cols-2 gap-6">
           <Select
-            label="Tipo da conta"
+            label={t("default.myAccount.client.bankDetails.accountType.title")}
             name="accountType"
             value={formik.values.accountType}
             onChange={(selectedValue) => {
@@ -97,16 +109,30 @@ export const BankData = () => {
               formik.touched.accountType && Boolean(formik.errors.accountType)
             }
           >
-            <Option value="Conta corrente">Conta corrente</Option>
-            <Option value="Conta conjunta">Conta conjunta</Option>
-            <Option value="Conta poupança">Conta poupança</Option>
-            <Option value="Outra">Outra</Option>
+            <Option value="Conta corrente">
+              {t(
+                "default.myAccount.client.bankDetails.accountType.currentAccount"
+              )}
+            </Option>
+            <Option value="Conta conjunta">
+              {t(
+                "default.myAccount.client.bankDetails.accountType.jointAccount"
+              )}
+            </Option>
+            <Option value="Conta poupança">
+              {t(
+                "default.myAccount.client.bankDetails.accountType.savingsAccount"
+              )}
+            </Option>
+            <Option value="Outra">
+              {t("default.myAccount.client.bankDetails.accountType.other")}
+            </Option>
           </Select>
         </div>
         <div className="grid md:grid-cols-2 gap-6">
           <Input
             type="text"
-            label="Nome do banco"
+            label={t("default.myAccount.client.bankDetails.bankName")}
             name="bankName"
             value={formik.values.bankName}
             onChange={formik.handleChange}
@@ -119,7 +145,7 @@ export const BankData = () => {
         <div className="grid md:grid-cols-2 gap-6">
           <Input
             type="text"
-            label="Número da agência"
+            label={t("default.myAccount.client.bankDetails.agencyNumber")}
             name="agencyNumber"
             value={formik.values.agencyNumber}
             onChange={formik.handleChange}
@@ -132,7 +158,7 @@ export const BankData = () => {
           ) : null}
           <Input
             type="text"
-            label="Dígito da agência"
+            label={t("default.myAccount.client.bankDetails.agencyDigit")}
             name="agencyDigit"
             value={formik.values.agencyDigit}
             onChange={formik.handleChange}
@@ -147,7 +173,7 @@ export const BankData = () => {
         <div className="grid md:grid-cols-2 gap-6">
           <Input
             type="text"
-            label="Número da conta"
+            label={t("default.myAccount.client.bankDetails.numberAccount")}
             name="accountNumber"
             value={formik.values.accountNumber}
             onChange={formik.handleChange}
@@ -161,7 +187,7 @@ export const BankData = () => {
           ) : null}
           <Input
             type="text"
-            label="Dígito da conta"
+            label={t("default.myAccount.client.bankDetails.accountDigit")}
             name="accountDigit"
             value={formik.values.accountDigit}
             onChange={formik.handleChange}
@@ -176,7 +202,7 @@ export const BankData = () => {
 
         <div className="grid md:grid-cols-2 gap-6">
           <Select
-            label="Tipo da chave PIX"
+            label={t("default.myAccount.client.bankDetails.pixKeyType.title")}
             id="pixKeyType"
             name="pixKeyType"
             value={formik.values.pixKeyType}
@@ -187,16 +213,26 @@ export const BankData = () => {
               formik.touched.pixKeyType && Boolean(formik.errors.pixKeyType)
             }
           >
-            <Option value="Chave e-mail">Chave e-mail</Option>
-            <Option value="Chave número de telefone">Chave número de telefone</Option>
-            <Option value="Chave CPF">Chave CPF</Option>
-            <Option value="Chave CNPJ">Chave CNPJ</Option>
-            <Option value="Chave aleatória">Chave aleatória</Option>
+            <Option value="Chave E-mail">
+              {t("default.myAccount.client.bankDetails.pixKeyType.email")}
+            </Option>
+            <Option value="Chave número de telefone">
+              {t("default.myAccount.client.bankDetails.pixKeyType.phone")}
+            </Option>
+            <Option value="Chave CPF">
+              {t("default.myAccount.client.bankDetails.pixKeyType.cpf")}
+            </Option>
+            <Option value="Chave CNPJ">
+              {t("default.myAccount.client.bankDetails.pixKeyType.cnpj")}
+            </Option>
+            <Option value="Chave aleatória">
+              {t("default.myAccount.client.bankDetails.pixKeyType.randomKey")}
+            </Option>
           </Select>
 
           <Input
             type="text"
-            label="Chave PIX"
+            label={t("default.myAccount.client.bankDetails.pixKey")}
             name="pixKey"
             value={formik.values.pixKey}
             onChange={formik.handleChange}

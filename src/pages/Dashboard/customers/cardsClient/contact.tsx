@@ -15,6 +15,7 @@ import { api } from "../../../../client/api";
 import { SectionTitle } from "../../../../components/sectionTitle";
 import { useAuth } from "../../../../hook/auth";
 import { ClientContact } from "../../../../types/auth";
+import { useTranslation } from "react-i18next";
 
 interface ClientContactFormik {
   contactsList: ClientContactServer[];
@@ -28,6 +29,7 @@ interface ClientContactServer {
 
 export const Contact = ({ userData }: any) => {
   const profile = userData;
+  const { t } = useTranslation();
   const { updateProfileContacts } = useAuth();
 
   const [isModalAddContactOpen, setIsModalAddContactOpen] = useState(false);
@@ -38,15 +40,17 @@ export const Contact = ({ userData }: any) => {
   const ContactSchema = Yup.object().shape({
     contactsList: Yup.array().of(
       Yup.object().shape({
-        name: Yup.string().required("Nome é obrigatório"),
-        phone: Yup.string().required("Número de Telefone é obrigatório"),
+        name: Yup.string().required(`${t("default.error.nameRequired")}`),
+        phone: Yup.string().required(
+          `${t("default.error.phoneNumberRequired")}`
+        ),
       })
     ),
   });
 
   const ContactSchemaNewContacct = Yup.object().shape({
-    name: Yup.string().required("Nome é obrigatório"),
-    phone: Yup.string().required("Número de Telefone é obrigatório"),
+    name: Yup.string().required(`${t("default.error.nameRequired")}`),
+    phone: Yup.string().required(`${t("default.error.phoneNumberRequired")}`),
   });
 
   const initialValues = {
@@ -157,13 +161,13 @@ export const Contact = ({ userData }: any) => {
         open={isModalAddContactOpen}
         handler={handleOpenAddContact}
       >
-        <DialogHeader>Criar novo contato</DialogHeader>
+        <DialogHeader>{t("default.modals.titleSecondary")}</DialogHeader>
         <form onSubmit={formikNewContact.handleSubmit}>
           <DialogBody>
             <div className="flex flex-col gap-4">
               <Input
                 type="text"
-                label="Nome"
+                label={t("default.modals.name")}
                 id="name"
                 name="name"
                 value={formikNewContact.values.name}
@@ -171,7 +175,7 @@ export const Contact = ({ userData }: any) => {
               />
               <Input
                 type="text"
-                label="Número de Telefone"
+                label={t("default.modals.phoneNumber")}
                 id="phone"
                 name="phone"
                 value={formikNewContact.values.phone}
@@ -187,10 +191,10 @@ export const Contact = ({ userData }: any) => {
               className="mr-1"
               type="button"
             >
-              <span>Cancelar</span>
+              <span>{t("default.modals.buttonCancel")}</span>
             </Button>
             <Button variant="gradient" color="green" type="submit">
-              <span>Confirmar</span>
+              <span>{t("default.modals.buttonConfirm")}</span>
             </Button>
           </DialogFooter>
         </form>
@@ -199,7 +203,10 @@ export const Contact = ({ userData }: any) => {
         <div className="bg-WHITE p-8 w-full rounded-md ">
           <div className="flex items-center gap-4">
             <Icon height={16} icon={"heroicons:user-circle"} color="black" />
-            <SectionTitle size="sm" text="Contato" />
+            <SectionTitle
+              size="sm"
+              text={t("default.myAccount.client.contacts.title")}
+            />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid gap-6">
@@ -210,7 +217,7 @@ export const Contact = ({ userData }: any) => {
                 >
                   <Input
                     type="text"
-                    label="Nome"
+                    label={t("default.modals.name")}
                     id={`contactsList.${index}.name`}
                     name={`contactsList.${index}.name`}
                     value={formik.values.contactsList[index].name}
@@ -220,7 +227,7 @@ export const Contact = ({ userData }: any) => {
 
                   <Input
                     type="text"
-                    label="Número de Telefone"
+                    label={t("default.modals.phoneNumber")}
                     id={`contactsList.${index}.phone`}
                     name={`contactsList.${index}.phone`}
                     value={formik.values.contactsList[index].phone}
@@ -234,19 +241,14 @@ export const Contact = ({ userData }: any) => {
                       onClick={() => handleDeleteContact(contact.id)}
                       className="font-body font-medium text-GRAY text-body14 underline hover:text-GOLD_MAIN text-nowrap"
                     >
-                      Remover
+                      {t(
+                        "default.myAccount.client.contacts.buttonRemoveContact"
+                      )}
                     </button>
                   )}
                 </div>
               ))}
             </div>
-            {/* <Button
-            type="button"
-            onClick={handleNewContact}
-            className="bg-GRAY_100 w-full md:w-auto text-GRAY_400"
-          >
-            Novo contato
-          </Button> */}
           </div>
         </div>
         <div className="w-full flex gap-4 justify-end mt-8">
@@ -255,10 +257,10 @@ export const Contact = ({ userData }: any) => {
             onClick={handleOpenAddContact}
             className="bg-gray-300 w-full md:w-auto text-gray-700"
           >
-            Adicionar contato
+            {t("default.myAccount.client.contacts.buttonAddContact")}
           </Button>
           <Button type="submit" className="bg-GOLD_MAIN w-full md:w-auto">
-            Atualizar dados
+            {t("default.myAccount.client.buttonUpdateData")}
           </Button>
         </div>
       </form>

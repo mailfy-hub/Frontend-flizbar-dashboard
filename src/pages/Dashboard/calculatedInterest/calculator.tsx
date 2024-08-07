@@ -2,10 +2,13 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, Input, Option, Select } from "@material-tailwind/react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { SectionTitle } from "../../../components/sectionTitle";
+import { useTranslation } from "react-i18next";
 
 type PeriodType = "days" | "weeks" | "months" | "years";
 
 export const Calculator = () => {
+  const { t } = useTranslation();
+
   const [initialValue, setInitialValue] = useState<number>(0);
   const [monthlyValue, setMonthlyValue] = useState<number>(0);
   const [interestRate, setInterestRate] = useState<number>(0);
@@ -79,25 +82,36 @@ export const Calculator = () => {
   return (
     <div>
       <div className="flex items-center gap-4">
-        <SectionTitle text="Sua calculadora de juros compostos" />
+        <SectionTitle
+          text={t("default.myAccount.client.interestCalculator.title")}
+        />
       </div>
       <form className="mt-12" onSubmit={handleSubmit}>
         <div className="bg-WHITE p-8 w-full rounded-md">
           <div className="flex items-center gap-4">
             <Icon height={16} icon={"heroicons:circle-stack"} color="black" />
-            <SectionTitle size="sm" text="Calculadora de juros" />
+            <SectionTitle
+              size="sm"
+              text={t(
+                "default.myAccount.client.interestCalculator.secondaryTitle"
+              )}
+            />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
               <Input
                 type="number"
-                label="Valor inicial"
+                label={t(
+                  "default.myAccount.client.interestCalculator.initialValue"
+                )}
                 value={initialValue}
                 onChange={handleInitialValueChange}
               />
               <Input
                 type="number"
-                label="Valor mensal"
+                label={t(
+                  "default.myAccount.client.interestCalculator.monthlyValue"
+                )}
                 value={monthlyValue}
                 onChange={handleMonthlyValueChange}
               />
@@ -106,7 +120,9 @@ export const Calculator = () => {
             <div className="grid md:grid-cols-2 gap-6">
               <Input
                 type="number"
-                label="Taxa de juros (Anual %)"
+                label={t(
+                  "default.myAccount.client.interestCalculator.interestRate"
+                )}
                 value={interestRate}
                 onChange={handleInterestRateChange}
               />
@@ -114,20 +130,30 @@ export const Calculator = () => {
                 <Input
                   className="w-full min-w-0"
                   type="number"
-                  label="Período em"
+                  label={t(
+                    "default.myAccount.client.interestCalculator.periodIn"
+                  )}
                   value={period}
                   onChange={handlePeriodChange}
                 />
                 <Select
                   className="w-full min-w-0"
-                  label="Período de tempo"
+                  label={t(
+                    "default.myAccount.client.interestCalculator.periodOfTime"
+                  )}
                   value={periodType}
                   onChange={(e) => handlePeriodTypeChange(e as PeriodType)}
                 >
-                  <Option value="days">Dia(s)</Option>
-                  <Option value="weeks">Semana(s)</Option>
-                  <Option value="months">Mese(s)</Option>
-                  <Option value="years">Ano(s)</Option>
+                  <Option value="days">{t("default.periodOfTime.days")}</Option>
+                  <Option value="weeks">
+                    {t("default.periodOfTime.weeks")}
+                  </Option>
+                  <Option value="months">
+                    {t("default.periodOfTime.months")}
+                  </Option>
+                  <Option value="years">
+                    {t("default.periodOfTime.years")}
+                  </Option>
                 </Select>
               </div>
             </div>
@@ -135,7 +161,7 @@ export const Calculator = () => {
         </div>
         <div className="w-full flex justify-end mt-8">
           <Button type="submit" className="bg-GOLD_MAIN w-full md:w-auto">
-            Realizar cálculo de juros
+            {t("default.myAccount.client.interestCalculator.button")}
           </Button>
         </div>
       </form>
@@ -146,30 +172,56 @@ export const Calculator = () => {
               <div className="grid md:grid-cols-4 gap-8">
                 <div className="w-full p-6 grid place-content-center bg-white rounded-lg">
                   <p>
-                    <strong>Valor inicial:</strong> R${initialValue.toFixed(2)}
+                    <strong>
+                      {t(
+                        "default.myAccount.client.interestCalculator.initialValue"
+                      )}
+                      :
+                    </strong>{" "}
+                    R${initialValue.toFixed(2)}
                   </p>
                 </div>
                 <div className="w-full p-6 grid place-content-center bg-white rounded-lg">
                   <p>
-                    <strong>Valor mensal:</strong> R${monthlyValue.toFixed(2)}
+                    <strong>
+                      {t(
+                        "default.myAccount.client.interestCalculator.monthlyValue"
+                      )}
+                      :
+                    </strong>{" "}
+                    R${monthlyValue.toFixed(2)}
                   </p>
                 </div>
                 <div className="w-full p-6 grid place-content-center bg-white rounded-lg">
                   <p>
-                    <strong>Taxa de juros:</strong> {interestRate}% (anual)
+                    <strong>
+                      {t(
+                        "default.myAccount.client.interestCalculator.interestRateSecondary"
+                      )}
+                      :
+                    </strong>{" "}
+                    {interestRate}%{" "}
+                    {t("default.myAccount.client.interestCalculator.annual")}
                   </p>
                 </div>
                 <div className="w-full p-6 grid place-content-center bg-white rounded-lg">
                   <p>
-                    <strong>Período em:</strong> {period}{" "}
-                    {periodOfTimeMappedPortuguese}
+                    <strong>
+                      {t(
+                        "default.myAccount.client.interestCalculator.periodIn"
+                      )}
+                      :
+                    </strong>{" "}
+                    {period} {periodOfTimeMappedPortuguese}
                   </p>
                 </div>
               </div>
               <div className="grid md:grid-cols-3 gap-8">
                 <div className="w-full p-6 grid place-content-center bg-white rounded-lg">
                   <p className="font-body text-BLACK text-body16">
-                    Valor total investido:{" "}
+                    {t(
+                      "default.myAccount.client.interestCalculator.totalAmountInvested"
+                    )}{" "}
                     <strong className="text-GOLD_MAIN font-display font-bold">
                       R${" "}
                     </strong>
@@ -178,7 +230,9 @@ export const Calculator = () => {
                 </div>
                 <div className="w-full p-6 grid place-content-center bg-white rounded-lg">
                   <p className="font-body text-BLACK text-body16">
-                    Total em juros:{" "}
+                    {t(
+                      "default.myAccount.client.interestCalculator.totalInInterest"
+                    )}{" "}
                     <strong className="text-GOLD_MAIN font-display font-bold">
                       R${" "}
                     </strong>
@@ -187,7 +241,9 @@ export const Calculator = () => {
                 </div>
                 <div className="w-full p-6 grid place-content-center bg-GOLD_DARK rounded-lg">
                   <p className="font-body text-white text-body16">
-                    Valor total final:{" "}
+                    {t(
+                      "default.myAccount.client.interestCalculator.totalFinalAmount"
+                    )}{" "}
                     <strong className="text-white font-display font-bold">
                       R${" "}
                     </strong>

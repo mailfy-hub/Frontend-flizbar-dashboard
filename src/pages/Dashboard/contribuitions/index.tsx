@@ -3,6 +3,7 @@ import {
   ChevronRightIcon,
   DocumentArrowDownIcon,
   EyeIcon,
+  PencilIcon,
   TrashIcon,
 } from "@heroicons/react/16/solid";
 import {
@@ -29,25 +30,33 @@ import SuccessDialog from "../../../components/successDialog";
 import { useAuth } from "../../../hook/auth";
 import { Contribuition } from "../../../types/dashboard/contribuitions";
 import { formatDate } from "../../../utils/formatDate";
+import { useTranslation } from "react-i18next";
 
 export const Contribuitions = () => {
   const { userData } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const handleInsert = () => {
     navigate("insert");
   };
 
   const TABLE_HEAD = userData?.isAdmin
     ? [
-        "Código",
-        "Cliente",
-        "Valor do Aporte",
-        "Valor do Dólar",
-        "Status",
-        "Data de criação",
-        "Ações",
+        `${t("default.contributions.code")}`,
+        `${t("default.contributions.client")}`,
+        `${t("default.contributions.contributionValue")}`,
+        `${t("default.contributions.dollarValue")}`,
+        `${t("default.contributions.status")}`,
+        `${t("default.contributions.createdAt")}`,
+        `${t("default.contributions.actions")}`,
       ]
-    : ["Código", "Carteira", "Valor", "Data de criação"];
+    : [
+        `${t("default.contributions.code")}`,
+        `${t("default.contributions.wallet")}`,
+        `${t("default.contributions.value")}`,
+        `${t("default.contributions.createdAt")}`,
+      ];
 
   const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
@@ -74,6 +83,10 @@ export const Contribuitions = () => {
     navigate(`details/${id}`);
   };
 
+  const handleEdit = (id: string) => {
+    navigate(`edit/${id}`);
+  };
+
   const [contribuitionsList, setContribuitionsList] = useState<Contribuition[]>(
     []
   );
@@ -87,8 +100,6 @@ export const Contribuitions = () => {
       const { data } = await api.get(
         `contributions?page=${page}&itemsPerPage=${itemsPerPage}`
       );
-
-      // console.log("API Response:", data); // Log adicional
 
       const mappedData = data.map((contribuition: Contribuition) => {
         return {
@@ -165,12 +176,8 @@ export const Contribuitions = () => {
         open={openConfimationDialog}
         handler={handleToggleConfirmationDialog}
       >
-        <DialogHeader>
-          Tem certeza que deseja <br /> deletar este registro?
-        </DialogHeader>
-        <DialogBody>
-          Essa ação é irreversível, tome cuidado ao prosseguir.
-        </DialogBody>
+        <DialogHeader>{t("default.modals.title")}</DialogHeader>
+        <DialogBody>{t("default.contributions.text")}</DialogBody>
         <DialogFooter>
           <Button
             variant="text"
@@ -178,18 +185,18 @@ export const Contribuitions = () => {
             onClick={handleCancelDeleteContribuition}
             className="mr-1"
           >
-            <span>Cancelar</span>
+            <span>{t("default.modals.buttonCancel")}</span>
           </Button>
           <Button
             variant="gradient"
             color="red"
             onClick={DeleteContribuitionAction}
           >
-            <span>Confirmar</span>
+            <span>{t("default.modals.buttonConfirm")}</span>
           </Button>
         </DialogFooter>
       </Dialog>
-      <SectionTitle text="Todos aportes" />
+      <SectionTitle text={t("default.contributions.title")} />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
           floated={false}
@@ -198,10 +205,10 @@ export const Contribuitions = () => {
         >
           <div>
             <Typography variant="h6" color="black">
-              Tabela de aportes
+              {t("default.contributions.tableTitle")}
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
-              Veja informações sobre todos seus aportes
+              {t("default.contributions.text")}
             </Typography>
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
@@ -211,7 +218,7 @@ export const Contribuitions = () => {
               }}
               className="md:max-w-fit w-full bg-GOLD_MAIN"
             >
-              ADICIONAR APORTE
+              {t("default.contributions.button")}
             </Button>
           </div>
         </CardHeader>
@@ -315,6 +322,14 @@ export const Contribuitions = () => {
 
                         {userData?.isAdmin && (
                           <td className={`${classes} flex justify-start `}>
+                            <Tooltip content="Editar">
+                              <IconButton
+                                onClick={() => handleEdit(id)}
+                                variant="text"
+                              >
+                                <PencilIcon className="w-4 h-4 text-gray-400" />
+                              </IconButton>
+                            </Tooltip>
                             <Tooltip content="Visualizar">
                               <IconButton
                                 onClick={() => handleDetails(id)}
@@ -350,7 +365,8 @@ export const Contribuitions = () => {
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-            Página {currentPage} de {totalPages}
+            {t("default.pagination.page")} {currentPage}{" "}
+            {t("default.pagination.of")} {totalPages}
           </Typography>
           <div className="flex gap-4">
             <Button
@@ -360,7 +376,7 @@ export const Contribuitions = () => {
               disabled={currentPage === 1}
             >
               <ChevronLeftIcon strokeWidth={3} className="h-3 w-3" />
-              Anterior
+              {t("default.pagination.previous")}
             </Button>
             <Button
               variant="text"
@@ -368,7 +384,7 @@ export const Contribuitions = () => {
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
             >
-              Próximo
+              {t("default.pagination.next")}
               <ChevronRightIcon strokeWidth={3} className="h-3 w-3" />
             </Button>
           </div>

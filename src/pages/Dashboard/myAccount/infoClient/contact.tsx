@@ -15,6 +15,7 @@ import { api } from "../../../../client/api";
 import { SectionTitle } from "../../../../components/sectionTitle";
 import { useAuth } from "../../../../hook/auth";
 import { ClientContact } from "../../../../types/auth";
+import { useTranslation } from "react-i18next";
 
 interface ClientContactFormik {
   contactsList: ClientContactServer[];
@@ -28,6 +29,7 @@ interface ClientContactServer {
 
 export const Contact = () => {
   const { profile, userData, updateProfileContacts } = useAuth();
+  const { t } = useTranslation();
 
   const [isModalAddContactOpen, setIsModalAddContactOpen] = useState(false);
   const handleOpenAddContact = () => {
@@ -37,15 +39,17 @@ export const Contact = () => {
   const ContactSchema = Yup.object().shape({
     contactsList: Yup.array().of(
       Yup.object().shape({
-        name: Yup.string().required("Nome é obrigatório"),
-        phone: Yup.string().required("Número de Telefone é obrigatório"),
+        name: Yup.string().required(`${t("default.error.nameRequired")}`),
+        phone: Yup.string().required(
+          `${t("default.error.phoneNunberRequired")}`
+        ),
       })
     ),
   });
 
   const ContactSchemaNewContacct = Yup.object().shape({
-    name: Yup.string().required("Nome é obrigatório"),
-    phone: Yup.string().required("Número de Telefone é obrigatório"),
+    name: Yup.string().required(`${t("default.error.nameRequired")}`),
+    phone: Yup.string().required(`${t("default.error.phoneNunberRequired")}`),
   });
 
   const initialValues = {
@@ -82,13 +86,13 @@ export const Contact = () => {
           await api.put(`profiles/contacts/${contact.id}`, data);
         });
       }
-      toast("Alterado com sucesso", {
+      toast("Updated successfully", {
         type: "success",
         autoClose: 3000,
       });
     } catch (error) {
       console.log(error);
-      toast("Erro ao atualizar.", {
+      toast("Error updating.", {
         type: "error",
         autoClose: 3000,
       });
@@ -109,7 +113,7 @@ export const Contact = () => {
         },
       ];
       await api.post(`profiles/${userData?.id}/contacts`, formattedData);
-      toast("Contato adicionado com sucesso", {
+      toast("Contact added successfully", {
         type: "success",
         autoClose: 3000,
       });
@@ -118,7 +122,7 @@ export const Contact = () => {
       handleUpdateContacts();
     } catch (error) {
       console.log(error);
-      toast("Erro ao adicionar contato.", {
+      toast("Error adding contact.", {
         type: "error",
         autoClose: 3000,
       });
@@ -156,13 +160,13 @@ export const Contact = () => {
         open={isModalAddContactOpen}
         handler={handleOpenAddContact}
       >
-        <DialogHeader>Criar novo contato</DialogHeader>
+        <DialogHeader>{t("default.modals.titleSecondary")}</DialogHeader>
         <form onSubmit={formikNewContact.handleSubmit}>
           <DialogBody>
             <div className="flex flex-col gap-4">
               <Input
                 type="text"
-                label="Nome"
+                label={t("default.modals.name")}
                 id="name"
                 name="name"
                 value={formikNewContact.values.name}
@@ -170,7 +174,7 @@ export const Contact = () => {
               />
               <Input
                 type="text"
-                label="Número de Telefone"
+                label={t("default.modals.phoneNumber")}
                 id="phone"
                 name="phone"
                 value={formikNewContact.values.phone}
@@ -186,10 +190,10 @@ export const Contact = () => {
               className="mr-1"
               type="button"
             >
-              <span>Cancelar</span>
+              <span>{t("default.modals.buttonCancel")}</span>
             </Button>
             <Button variant="gradient" color="green" type="submit">
-              <span>Confirmar</span>
+              <span>{t("default.modals.buttonConfirm")}</span>
             </Button>
           </DialogFooter>
         </form>
@@ -199,11 +203,13 @@ export const Contact = () => {
           <div>
             <div className="flex items-center gap-4">
               <Icon height={16} icon={"heroicons:user-circle"} color="black" />
-              <SectionTitle size="sm" text="Contato adicional" />
+              <SectionTitle
+                size="sm"
+                text={t("default.myAccount.client.contacts.titleSecondary")}
+              />
             </div>
             <p className="mt-2 font-body text-body14 text-GRAY_400">
-              Se desejar, inclua um contato adicional como uma pessoa
-              alternativa para caso não conseguimos contato com você.
+              {t("default.myAccount.client.contacts.text")}
             </p>
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
@@ -215,7 +221,7 @@ export const Contact = () => {
                 >
                   <Input
                     type="text"
-                    label="Nome"
+                    label={t("default.modals.name")}
                     id={`contactsList.${index}.name`}
                     name={`contactsList.${index}.name`}
                     value={formik.values.contactsList[index].name}
@@ -225,7 +231,7 @@ export const Contact = () => {
 
                   <Input
                     type="text"
-                    label="Número de Telefone"
+                    label={t("default.modals.phoneNumber")}
                     id={`contactsList.${index}.phone`}
                     name={`contactsList.${index}.phone`}
                     value={formik.values.contactsList[index].phone}
@@ -233,13 +239,13 @@ export const Contact = () => {
                     onBlur={formik.handleBlur}
                   />
 
-                    <button
-                      type="button"
-                      onClick={() => handleDeleteContact(contact.id)}
-                      className="font-body font-medium text-GRAY text-body14 underline hover:text-GOLD_MAIN text-nowrap"
-                    >
-                      Remover
-                    </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteContact(contact.id)}
+                    className="font-body font-medium text-GRAY text-body14 underline hover:text-GOLD_MAIN text-nowrap"
+                  >
+                    {t("default.myAccount.client.contacts.buttonRemoveContact")}
+                  </button>
                 </div>
               ))}
             </div>
@@ -253,14 +259,14 @@ export const Contact = () => {
           </div>
           <div className="w-full flex flex-col md:flex-row gap-4 justify-between mt-8">
             <Button type="submit" className="bg-GOLD_MAIN w-full md:w-auto">
-              Atualizar dados
+              {t("default.myAccount.client.buttonUpdateData")}
             </Button>
             <Button
               type="button"
               onClick={handleOpenAddContact}
               className="bg-gray-300 w-full md:w-auto text-gray-700"
             >
-              Adicionar contato
+              {t("default.myAccount.client.contacts.buttonAddContact")}
             </Button>
           </div>
         </div>

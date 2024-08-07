@@ -26,6 +26,7 @@ import { CurrencyRow } from "../../../components/table/currencyRow";
 import { useAuth } from "../../../hook/auth";
 import { deleteQuotation, getAllQuotations } from "../../../client/quotations";
 import { formatDate } from "../../../utils/formatDate";
+import { useTranslation } from "react-i18next";
 
 interface TABLE_ROW_PROPS {
   id: string;
@@ -36,18 +37,20 @@ interface TABLE_ROW_PROPS {
   quotationDate: string;
 }
 
-const TABLE_HEAD = [
-  "Código",
-  "Data de criação",
-  "Dólar",
-  "Euro",
-  "Yene",
-  "Ações",
-];
 
 export const Quotes = () => {
   const navigate = useNavigate();
   const { userData } = useAuth();
+  const { t } = useTranslation();
+
+  const TABLE_HEAD = [
+    `${t("default.myAccount.admin.quotes.code")}`,
+    `${t("default.myAccount.admin.quotes.createdAt")}`,
+    `${t("default.myAccount.admin.quotes.dollar")}`,
+    `${t("default.myAccount.admin.quotes.yenes")}`,
+    `${t("default.myAccount.admin.quotes.euro")}`,
+    `${t("default.myAccount.admin.quotes.actions")}`,
+  ];
 
   const handleInsert = () => {
     navigate("insert");
@@ -101,12 +104,8 @@ export const Quotes = () => {
         open={openConfimationDialog}
         handler={handleToggleConfirmationDialog}
       >
-        <DialogHeader>
-          Tem certeza que deseja <br /> deletar este registro?
-        </DialogHeader>
-        <DialogBody>
-          Essa ação é irreversível, tome cuidado ao prosseguir.
-        </DialogBody>
+        <DialogHeader>{t("default.modals.title")}</DialogHeader>
+        <DialogBody>{t("default.modals.text")}</DialogBody>
         <DialogFooter>
           <Button
             variant="text"
@@ -114,18 +113,18 @@ export const Quotes = () => {
             onClick={handleToggleConfirmationDialog}
             className="mr-1"
           >
-            <span>Cancelar</span>
+            <span>{t("default.modals.buttonCancel")}</span>
           </Button>
           <Button
             variant="gradient"
             color="red"
             onClick={handleOpenSuccessDelete}
           >
-            <span>Confirmar</span>
+            <span>{t("default.modals.buttonConfirm")}</span>
           </Button>
         </DialogFooter>
       </Dialog>
-      <SectionTitle text="Todas cotações" />
+      <SectionTitle text={t("default.myAccount.admin.quotes.title")} />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
           floated={false}
@@ -134,10 +133,10 @@ export const Quotes = () => {
         >
           <div>
             <Typography variant="h6" color="black">
-              Tabela de cotações
+              {t("default.myAccount.admin.quotes.tableTitle")}
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
-              Veja informações sobre todos suas cotações
+              {t("default.myAccount.admin.quotes.text")}
             </Typography>
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
@@ -153,7 +152,7 @@ export const Quotes = () => {
               }}
               className="md:max-w-fit w-full bg-GOLD_MAIN"
             >
-              ADICIONAR COTAÇÃO
+              {t("default.myAccount.admin.quotes.button")}
             </Button>
           </div>
         </CardHeader>
@@ -226,12 +225,14 @@ export const Quotes = () => {
                     </td>
                     {userData?.isAdmin && (
                       <td className={`${classes} flex justify-end `}>
-                        <Tooltip content="Editar">
+                        <Tooltip content={t("default.myAccount.admin.quotes.edit")}>
                           <IconButton onClick={() => handleEdit({ id, quotationDate, dollar, euro, yen })} variant="text">
                             <PencilIcon className="w-4 h-4 text-gray-400" />
                           </IconButton>
                         </Tooltip>
-                        <Tooltip content="Excluir">
+                        <Tooltip
+                          content={t("default.myAccount.admin.quotes.delete")}
+                        >
                           <IconButton
                             onClick={() => {
                               setCurrentId(id)
@@ -252,15 +253,18 @@ export const Quotes = () => {
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-            Página 2 <span className="font-normal text-BLACK">of 10</span>
+            {t("default.pagination.page")} 1{" "}
+            <span className="font-normal text-BLACK">
+              {t("default.pagination.of")} 10
+            </span>
           </Typography>
           <div className="flex gap-4">
             <Button variant="text" className="flex items-center gap-1">
               <ChevronLeftIcon strokeWidth={3} className="h-3 w-3" />
-              Anterior
+              {t("default.pagination.previous")}
             </Button>
             <Button variant="text" className="flex items-center gap-1">
-              Próximo
+              {t("default.pagination.next")}
               <ChevronRightIcon strokeWidth={3} className="h-3 w-3" />
             </Button>
           </div>

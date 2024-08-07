@@ -12,13 +12,14 @@ import { BankData } from "./bankData";
 import { Beneficiary } from "./beneficiary";
 import { Contact } from "./contact";
 import { GenerateData } from "./generateData";
+import { useTranslation } from "react-i18next";
 
 export const InfoClient = () => {
   const { userData } = useAuth();
+  const { t } = useTranslation();
+
   const [activeTab, setActiveTab] = useState("generate-data");
-
   const [updateDataUserAdmin, setUpdateDataUserAdmin] = useState({});
-
   const [selectedCountry, setSelectedCountry] = useState<CountryType>(
     countries[0]
   );
@@ -56,21 +57,24 @@ export const InfoClient = () => {
             {" "}
             <div className="flex items-center gap-4">
               <Icon height={16} icon={"heroicons:user"} color="black" />
-              <SectionTitle size="sm" text="Dados de acesso" />
+              <SectionTitle
+                size="sm"
+                text={t("default.myAccount.admin.title")}
+              />
             </div>
             <div className="mt-8 flex flex-col gap-6 ">
               <div className="grid md:grid-cols-2 gap-6">
                 <Input
                   type="email"
                   name="email"
-                  label="E-mail de acesso"
+                  label={t("default.myAccount.admin.email")}
                   onChange={handleChange}
                   defaultValue={userData.email}
                 />
                 <Input
                   name="name"
                   type="text"
-                  label="Nome"
+                  label={t("default.myAccount.admin.name")}
                   onChange={handleChange}
                   defaultValue={userData.name}
                 />
@@ -79,7 +83,7 @@ export const InfoClient = () => {
                 <Input
                   type="text"
                   name="surname"
-                  label="Sobrenome"
+                  label={t("default.myAccount.admin.surname")}
                   onChange={handleChange}
                   defaultValue={userData.surname}
                 />
@@ -93,7 +97,7 @@ export const InfoClient = () => {
               </div>
               <div className="w-full">
                 <Button type="submit" className="bg-GOLD_MAIN w-full md:w-auto">
-                  Atualizar dados
+                  {t("default.myAccount.button")}
                 </Button>
               </div>
             </div>
@@ -112,7 +116,7 @@ export const InfoClient = () => {
                   : "border-transparent font-medium text-GRAY_400"
               }`}
             >
-              Dados gerais
+              {t("default.myAccount.client.generalData.title")}
             </button>
             <button
               onClick={() => {
@@ -124,7 +128,7 @@ export const InfoClient = () => {
                   : "border-transparent font-medium text-GRAY_400"
               }`}
             >
-              Endereço
+              {t("default.myAccount.client.address.title")}
             </button>
             <button
               onClick={() => {
@@ -136,7 +140,7 @@ export const InfoClient = () => {
                   : "border-transparent font-medium text-GRAY_400"
               }`}
             >
-              Dados bancários
+              {t("default.myAccount.client.bankDetails.title")}
             </button>
             <button
               onClick={() => {
@@ -148,7 +152,7 @@ export const InfoClient = () => {
                   : "border-transparent font-medium text-GRAY_400"
               }`}
             >
-              Beneficiário
+              {t("default.myAccount.client.beneficiary.title")}
             </button>
             <button
               onClick={() => {
@@ -160,7 +164,7 @@ export const InfoClient = () => {
                   : "border-transparent font-medium text-GRAY_400"
               }`}
             >
-              Contatos
+              {t("default.myAccount.client.contacts.title")}
             </button>
           </div>
           <div className="">

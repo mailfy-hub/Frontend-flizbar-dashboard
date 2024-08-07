@@ -4,10 +4,12 @@ import { Button, Input, Select } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { useAuth } from "../../../hook/auth";
+import { useTranslation } from "react-i18next";
 
 export const WithdrawInsert = () => {
   const navigate = useNavigate();
   const { userData } = useAuth();
+  const { t } = useTranslation();
 
   const handleNavigateBack = () => {
     navigate(-1);
@@ -21,7 +23,7 @@ export const WithdrawInsert = () => {
             className="text-GRAY_400 hover:text-GOLD_DARK transition-all"
           />
         </button>
-        <SectionTitle text="Preencha o formulário de inclusão" />
+        <SectionTitle text={t("default.rescues.addRescueForm.title")} />
       </div>
       <form className="mt-12">
         <div className="bg-WHITE p-8 w-full rounded-md">
@@ -31,28 +33,37 @@ export const WithdrawInsert = () => {
               icon={"heroicons:arrow-uturn-down"}
               color="black"
             />
-            <SectionTitle size="sm" text="Resgate" />
+            <SectionTitle
+              size="sm"
+              text={t("default.rescues.addRescueForm.subtitle")}
+            />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
-              <Input type="date" label="Data do resgate" />
+              <Input
+                type="date"
+                label={t("default.rescues.addRescueForm.dateOfRescue")}
+              />
               {userData?.isAdmin && (
-                <Select label="Cliente">
+                <Select label={t("default.rescues.client")}>
                   <option value=""></option>
                 </Select>
               )}
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-              <Select label="Carteira">
+              <Select label={t("default.rescues.addRescueForm.wallet")}>
                 <option value=""></option>
               </Select>
-              <Input type="number" label="Valor do resgate" />
+              <Input
+                type="number"
+                label={t("default.rescues.addRescueForm.ransomValue")}
+              />
             </div>
           </div>
         </div>
         <div className="w-full flex justify-end mt-8">
           <Button className="bg-GOLD_MAIN w-full md:w-auto">
-            Adicionar Resgate
+            {t("default.rescues.button")}
           </Button>
         </div>
       </form>

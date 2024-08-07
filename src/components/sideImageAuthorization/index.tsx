@@ -1,7 +1,10 @@
 import { ChevronLeftIcon } from "@heroicons/react/16/solid";
 import { Logo } from "../logo";
+import { useTranslation } from "react-i18next";
 
 export const SideImageAuthorization = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className="hidden md:flex p-12 flex-col justify-between h-screen w-full max-w-[560px] bg-auth-side-image ">
@@ -13,13 +16,13 @@ export const SideImageAuthorization = () => {
               href="https://flizbar.com/"
               className="text-white font-normal text-sm14 font-body"
             >
-              Voltar ao site
+              {t("default.login.back")}
             </a>
           </div>
         </div>
         <div>
           <h3 className="font-display text-head32 text-white font-normal">
-            Faça seu login e visualize <br /> seus rendimentos.
+            {t("default.login.text")} <br /> {t("default.login.textSecondary")}
           </h3>
         </div>
       </div>

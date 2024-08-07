@@ -25,17 +25,20 @@ import { SectionTitle } from "../../../components/sectionTitle";
 import SuccessDialog from "../../../components/successDialog";
 import { User } from "../../../types/dashboard/users";
 import { formatDate } from "../../../utils/formatDate";
-
-const TABLE_HEAD = [
-  "Código",
-  "Nome",
-  "Endereço de e-mail",
-  "Data de criação",
-  "Ações",
-];
+import { useTranslation } from "react-i18next";
 
 export const Users = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const TABLE_HEAD = [
+    `${t("default.myAccount.admin.users.code")}`,
+    `${t("default.myAccount.admin.users.name")}`,
+    `${t("default.myAccount.admin.users.email")}`,
+    `${t("default.myAccount.admin.users.createdAt")}`,
+    `${t("default.myAccount.admin.users.actions")}`,
+  ];
+
   const handleNavigate = () => {
     navigate("insert");
   };
@@ -69,7 +72,6 @@ export const Users = () => {
       const { data } = await api.get(
         `admin/users/admins?page=${page}&itemsPerPage=${itemsPerPage}`
       );
-
 
       const mappedData = data.items.map((user: User) => {
         return {
@@ -140,12 +142,8 @@ export const Users = () => {
         open={openConfimationDialog}
         handler={handleToggleConfirmationDialog}
       >
-        <DialogHeader>
-          Tem certeza que deseja <br /> deletar este registro?
-        </DialogHeader>
-        <DialogBody>
-          Essa ação é irreversível, tome cuidado ao prosseguir.
-        </DialogBody>
+        <DialogHeader>{t("default.modals.title")}</DialogHeader>
+        <DialogBody>{t("default.modals.text")}</DialogBody>
         <DialogFooter>
           <Button
             variant="text"
@@ -153,14 +151,14 @@ export const Users = () => {
             onClick={handleCancelDeleteUser}
             className="mr-1"
           >
-            <span>Cancelar</span>
+            <span>{t("default.modals.buttonCancel")}</span>
           </Button>
           <Button variant="gradient" color="red" onClick={DeleteUserAction}>
-            <span>Confirmar</span>
+            <span>{t("default.modals.buttonConfirm")}</span>
           </Button>
         </DialogFooter>
       </Dialog>
-      <SectionTitle text="Todos usuários" />
+      <SectionTitle text={t("default.myAccount.admin.users.title")} />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
           floated={false}
@@ -169,10 +167,10 @@ export const Users = () => {
         >
           <div>
             <Typography variant="h6" color="black">
-              Tabela de usuários
+              {t("default.myAccount.admin.users.tableTitle")}
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
-              Veja informações sobre todos seus usuários
+              {t("default.myAccount.admin.users.text")}
             </Typography>
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
@@ -186,7 +184,7 @@ export const Users = () => {
               onClick={handleNavigate}
               className="md:max-w-fit w-full bg-GOLD_MAIN"
             >
-              ADICIONAR USUÁRIO
+              {t("default.myAccount.admin.users.button")}
             </Button>
           </div>
         </CardHeader>
@@ -285,7 +283,8 @@ export const Users = () => {
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-            Página {currentPage} de {totalPages}
+            {t("default.pagination.page")} {currentPage}{" "}
+            {t("default.pagination.of")} {totalPages}
           </Typography>
           <div className="flex gap-4">
             <Button
@@ -295,7 +294,7 @@ export const Users = () => {
               disabled={currentPage === 1}
             >
               <ChevronLeftIcon strokeWidth={3} className="h-3 w-3" />
-              Anterior
+              {t("default.pagination.previous")}
             </Button>
             <Button
               variant="text"
@@ -303,7 +302,7 @@ export const Users = () => {
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
             >
-              Próximo
+              {t("default.pagination.next")}
               <ChevronRightIcon strokeWidth={3} className="h-3 w-3" />
             </Button>
           </div>

@@ -134,6 +134,7 @@ export const AuthContextProvider = ({ children }: Props) => {
   }) => {
     localStorage.setItem(`${LOCAL_STORAGE_KEY}-user`, JSON.stringify(user));
     localStorage.setItem(`${LOCAL_STORAGE_KEY}-token`, JSON.stringify(token));
+    localStorage.setItem("language", "en");
   };
 
   const removeFromLocalStorage = () => {

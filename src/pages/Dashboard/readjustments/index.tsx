@@ -25,6 +25,7 @@ import { SectionTitle } from "../../../components/sectionTitle";
 import SuccessDialog from "../../../components/successDialog";
 import { CurrencyRow } from "../../../components/table/currencyRow";
 import { useAuth } from "../../../hook/auth";
+import { useTranslation } from "react-i18next";
 
 interface TABLE_ROW_PROPS {
   originFund: string;
@@ -50,19 +51,20 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
   },
 ];
 
-const TABLE_HEAD = [
-  "Código",
-  "Data de criação",
-  "Cliente",
-  "Fundo de origem",
-  "Fundo de destino",
-  "Valor",
-  "Ações",
-];
-
 export const Readjustments = () => {
   const navigate = useNavigate();
   const { userData } = useAuth();
+  const { t } = useTranslation();
+
+  const TABLE_HEAD = [
+    `${t("default.myAccount.admin.readjustments.code")}`,
+    `${t("default.myAccount.admin.readjustments.createdAt")}`,
+    `${t("default.myAccount.admin.readjustments.client")}`,
+    `${t("default.myAccount.admin.readjustments.fundOrigin")}`,
+    `${t("default.myAccount.admin.readjustments.fundDestination")}`,
+    `${t("default.myAccount.admin.readjustments.value")}`,
+    `${t("default.myAccount.admin.readjustments.actions")}`,
+  ];
 
   const handleInsert = () => {
     navigate("insert");
@@ -93,12 +95,8 @@ export const Readjustments = () => {
         open={openConfimationDialog}
         handler={handleToggleConfirmationDialog}
       >
-        <DialogHeader>
-          Tem certeza que deseja <br /> deletar este registro?
-        </DialogHeader>
-        <DialogBody>
-          Essa ação é irreversível, tome cuidado ao prosseguir.
-        </DialogBody>
+        <DialogHeader>{t("default.modals.title")}</DialogHeader>
+        <DialogBody>{t("default.modals.text")}</DialogBody>
         <DialogFooter>
           <Button
             variant="text"
@@ -106,18 +104,18 @@ export const Readjustments = () => {
             onClick={handleToggleConfirmationDialog}
             className="mr-1"
           >
-            <span>Cancelar</span>
+            <span>{t("default.modals.buttonCancel")}</span>
           </Button>
           <Button
             variant="gradient"
             color="red"
             onClick={handleOpenSuccessDelete}
           >
-            <span>Confirmar</span>
+            <span>{t("default.modals.buttonConfirm")}</span>
           </Button>
         </DialogFooter>
       </Dialog>
-      <SectionTitle text="Todas readequações" />
+      <SectionTitle text={t("default.myAccount.admin.readjustments.title")} />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
           floated={false}
@@ -126,16 +124,16 @@ export const Readjustments = () => {
         >
           <div>
             <Typography variant="h6" color="black">
-              Tabela de readequações
+              {t("default.myAccount.admin.readjustments.tableTitle")}
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
-              Veja informações sobre todos suas readequações
+              {t("default.myAccount.admin.readjustments.text")}
             </Typography>
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
             <div className="w-full md:w-72">
               <Input
-                label="Nome do cliente"
+                label={t("default.myAccount.admin.readjustments.clientName")}
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               />
             </div>
@@ -145,7 +143,7 @@ export const Readjustments = () => {
               }}
               className="md:max-w-fit w-full bg-GOLD_MAIN"
             >
-              ADICIONAR READEQUAÇÃO
+              {t("default.myAccount.admin.readjustments.button")}
             </Button>
           </div>
         </CardHeader>
@@ -263,15 +261,18 @@ export const Readjustments = () => {
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-            Página 2 <span className="font-normal text-BLACK">of 10</span>
+            {t("default.pagination.page")} 2{" "}
+            <span className="font-normal text-BLACK">
+              {t("default.pagination.of")} 10
+            </span>
           </Typography>
           <div className="flex gap-4">
             <Button variant="text" className="flex items-center gap-1">
               <ChevronLeftIcon strokeWidth={3} className="h-3 w-3" />
-              Anterior
+              {t("default.pagination.previous")}
             </Button>
             <Button variant="text" className="flex items-center gap-1">
-              Próximo
+              {t("default.pagination.next")}
               <ChevronRightIcon strokeWidth={3} className="h-3 w-3" />
             </Button>
           </div>

@@ -9,9 +9,13 @@ import { HeaderMobile } from "../../../components/headerMobile";
 import { SideImageAuthorization } from "../../../components/sideImageAuthorization";
 import { useAuth } from "../../../hook/auth";
 import { AUTH_ERROR, loginProps } from "../../../types/auth";
+import { useTranslation } from "react-i18next";
+
 export function Login() {
   const { login } = useAuth();
   const [inputPassType, setInputPassType] = useState("password");
+
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
@@ -80,17 +84,17 @@ export function Login() {
           className="p-6 bg-white rounded-md"
         >
           <Typography variant="h4" color="blue-gray">
-            Entre na sua conta
+            {t("default.login.title")}
           </Typography>
           <Typography color="gray" className="mt-1 font-normal">
-            Que bom te ver denovo, faça seu login.
+            {t("default.login.subtitle")}
           </Typography>
           <div className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
             <div className="mb-1 flex flex-col gap-6">
               <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-between mb-3">
                   <Typography variant="h6" color="blue-gray" className="-mb-3">
-                    Seu e-mail
+                    {t("default.login.labelEmail")}
                   </Typography>
                   {formik.errors.email && (
                     <Typography variant="small" className="text-red-500">
@@ -105,7 +109,7 @@ export function Login() {
                   type="text"
                   onChange={formik.handleChange}
                   size="md"
-                  placeholder="Insira seu e-mail"
+                  placeholder={t("default.login.placeHolderEmail")}
                   className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                   labelProps={{
                     className: "before:content-none after:content-none",
@@ -116,7 +120,7 @@ export function Login() {
               <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-between mb-3">
                   <Typography variant="h6" color="blue-gray" className="-mb-3">
-                    Senha de acesso
+                    {t("default.login.labelPassword")}
                   </Typography>
                   {formik.errors.password && (
                     <Typography variant="small" className="text-red-500">
@@ -153,7 +157,7 @@ export function Login() {
                 className="font-body font-medium text-body14 text-GOLD_MAIN"
                 to={"/recovery"}
               >
-                Esqueci minha senha
+                {t("default.login.forgotPassword")}
               </Link>
             </div>
             <div className="mt-6 flex flex-col items-center">
@@ -170,13 +174,13 @@ export function Login() {
                 className="mt-2 bg-GOLD_MAIN disabled:opacity-65"
                 type="submit"
               >
-                Entrar
+                {t("default.login.button")}
               </Button>
             </div>
             <Typography color="gray" className="mt-4 text-center font-normal">
-              Ainda não tem uma conta?{" "}
+              {t("default.login.register")}{" "}
               <Link to="/register" className="font-medium text-gray-900">
-                Cadastrar
+                {t("default.login.linkRegister")}
               </Link>
             </Typography>
           </div>

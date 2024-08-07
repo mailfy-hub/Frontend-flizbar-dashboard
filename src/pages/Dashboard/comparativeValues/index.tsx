@@ -22,6 +22,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 import SuccessDialog from "../../../components/successDialog";
+import { useTranslation } from "react-i18next";
 
 const TABLE_ROW = [
   {
@@ -34,18 +35,20 @@ const TABLE_ROW = [
   },
 ];
 
-const TABLE_HEAD = [
-  "Código",
-  "Data",
-  "Flizbar",
-  "CDI",
-  "Poupança",
-  "Taxa de juros (BC)",
-  "Ações",
-];
-
 export const ComparativeValues = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const TABLE_HEAD = [
+    `${t("default.myAccount.admin.comparativeValues.code")}`,
+    `${t("default.myAccount.admin.comparativeValues.date")}`,
+    `${t("default.myAccount.admin.comparativeValues.flizBar")}`,
+    `${t("default.myAccount.admin.comparativeValues.CDI")}`,
+    `${t("default.myAccount.admin.comparativeValues.savings")}`,
+    `${t("default.myAccount.admin.comparativeValues.interestRate")}`,
+    `${t("default.myAccount.admin.comparativeValues.actions")}`,
+  ];
+
   const handleNavigate = () => {
     navigate("insert");
   };
@@ -78,12 +81,8 @@ export const ComparativeValues = () => {
         open={openConfimationDialog}
         handler={handleToggleConfirmationDialog}
       >
-        <DialogHeader>
-          Tem certeza que deseja <br /> deletar este registro?
-        </DialogHeader>
-        <DialogBody>
-          Essa ação é irreversível, tome cuidado ao prosseguir.
-        </DialogBody>
+        <DialogHeader>{t("default.modals.title")}</DialogHeader>
+        <DialogBody>{t("default.modals.text")}</DialogBody>
         <DialogFooter>
           <Button
             variant="text"
@@ -91,18 +90,20 @@ export const ComparativeValues = () => {
             onClick={handleToggleConfirmationDialog}
             className="mr-1"
           >
-            <span>Cancelar</span>
+            <span>{t("default.modals.buttonCancel")}</span>
           </Button>
           <Button
             variant="gradient"
             color="red"
             onClick={handleOpenSuccessDelete}
           >
-            <span>Confirmar</span>
+            <span>{t("default.modals.buttonConfirm")}</span>
           </Button>
         </DialogFooter>
       </Dialog>
-      <SectionTitle text="Todos valores comparativos" />
+      <SectionTitle
+        text={t("default.myAccount.admin.comparativeValues.title")}
+      />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
           floated={false}
@@ -111,10 +112,10 @@ export const ComparativeValues = () => {
         >
           <div>
             <Typography variant="h6" color="black">
-              Tabela de valores comparativos{" "}
+              {t("default.myAccount.admin.comparativeValues.secondaryTitle")}
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
-              Visualize todos valores comparativos do sistema
+              {t("default.myAccount.admin.comparativeValues.text")}
             </Typography>
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
@@ -123,7 +124,7 @@ export const ComparativeValues = () => {
               onClick={handleNavigate}
               className="md:max-w-fit w-full bg-GOLD_MAIN"
             >
-              ADICIONAR VALOR COMPARATIVO
+              {t("default.myAccount.admin.comparativeValues.button")}
             </Button>
           </div>
         </CardHeader>
@@ -236,13 +237,24 @@ export const ComparativeValues = () => {
                         </div>
                       </td>
                       <td className="flex items-center justify-end text-right p-4 border-b border-gray-300 gap-2">
-                        <Tooltip content="Editar usuário">
+                        <Tooltip
+                          content={t(
+                            "default.myAccount.admin.comparativeValues.editUser"
+                          )}
+                        >
                           <IconButton onClick={handleEdit} variant="text">
                             <PencilIcon className="w-4 h-4 text-gray-400" />
                           </IconButton>
                         </Tooltip>
-                        <Tooltip content="Deletar usuário">
-                          <IconButton onClick={handleToggleConfirmationDialog} variant="text">
+                        <Tooltip
+                          content={t(
+                            "default.myAccount.admin.comparativeValues.deleteUser"
+                          )}
+                        >
+                          <IconButton
+                            onClick={handleToggleConfirmationDialog}
+                            variant="text"
+                          >
                             <TrashIcon className="w-4 h-4 text-gray-400" />
                           </IconButton>
                         </Tooltip>
@@ -256,15 +268,18 @@ export const ComparativeValues = () => {
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-            Página 2 <span className="font-normal text-BLACK">of 10</span>
+            {t("default.pagination.page")} 2{" "}
+            <span className="font-normal text-BLACK">
+              {t("default.pagination.of")} 10
+            </span>
           </Typography>
           <div className="flex gap-4">
             <Button variant="text" className="flex items-center gap-1">
               <ChevronLeftIcon strokeWidth={3} className="h-3 w-3" />
-              Anterior
+              {t("default.pagination.previous")}
             </Button>
             <Button variant="text" className="flex items-center gap-1">
-              Próximo
+              {t("default.pagination.next")}
               <ChevronRightIcon strokeWidth={3} className="h-3 w-3" />
             </Button>
           </div>

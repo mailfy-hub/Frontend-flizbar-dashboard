@@ -5,9 +5,12 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { api } from "../../../../client/api";
 import { SectionTitle } from "../../../../components/sectionTitle";
+import { useTranslation } from "react-i18next";
 
 export const BankData = ({ userData }: any) => {
   const profile = userData;
+  const { t } = useTranslation();
+
   const validationSchema = Yup.object().shape({
     accountType: Yup.string().required("Tipo da conta é obrigatório"),
     bankName: Yup.string().required("Nome do banco é obrigatório"),
@@ -81,12 +84,15 @@ export const BankData = ({ userData }: any) => {
     >
       <div className="flex items-center gap-4">
         <Icon height={16} icon={"heroicons:banknotes"} color="black" />
-        <SectionTitle size="sm" text="Dados bancários" />
+        <SectionTitle
+          size="sm"
+          text={t("default.myAccount.client.bankDetails.title")}
+        />
       </div>
       <div className="mt-8 flex flex-col gap-6 ">
         <div className="grid md:grid-cols-2 gap-6">
           <Select
-            label="Tipo da conta"
+            label={t("default.myAccount.client.bankDetails.accountType.title")}
             name="accountType"
             value={formik.values.accountType}
             onChange={(selectedValue) => {
@@ -96,16 +102,30 @@ export const BankData = ({ userData }: any) => {
               formik.touched.accountType && Boolean(formik.errors.accountType)
             }
           >
-            <Option value="Conta corrente">Conta corrente</Option>
-            <Option value="Conta conjunta">Conta conjunta</Option>
-            <Option value="Conta poupança">Conta poupança</Option>
-            <Option value="Outra">Outra</Option>
+            <Option value="Current Account">
+              {t(
+                "default.myAccount.client.bankDetails.accountType.currentAccount"
+              )}
+            </Option>
+            <Option value="Joint Account">
+              {t(
+                "default.myAccount.client.bankDetails.accountType.jointAccount"
+              )}
+            </Option>
+            <Option value="Savings Account">
+              {t(
+                "default.myAccount.client.bankDetails.accountType.savingsAccount"
+              )}
+            </Option>
+            <Option value="Other">
+              {t("default.myAccount.client.bankDetails.accountType.other")}
+            </Option>
           </Select>
         </div>
         <div className="grid md:grid-cols-2 gap-6">
           <Input
             type="text"
-            label="Nome do banco"
+            label={t("default.myAccount.client.bankDetails.bankName")}
             name="bankName"
             value={formik.values.bankName}
             onChange={formik.handleChange}
@@ -115,7 +135,7 @@ export const BankData = ({ userData }: any) => {
         <div className="grid md:grid-cols-2 gap-6">
           <Input
             type="text"
-            label="Número da conta"
+            label={t("default.myAccount.client.bankDetails.numberAccount")}
             name="accountNumber"
             value={formik.values.accountNumber}
             onChange={formik.handleChange}
@@ -126,7 +146,7 @@ export const BankData = ({ userData }: any) => {
           />
           <Input
             type="text"
-            label="Dígito da conta"
+            label={t("default.myAccount.client.bankDetails.accountDigit")}
             name="accountDigit"
             value={formik.values.accountDigit}
             onChange={formik.handleChange}
@@ -135,7 +155,7 @@ export const BankData = ({ userData }: any) => {
         <div className="grid md:grid-cols-2 gap-6">
           <Input
             type="text"
-            label="Número da agência"
+            label={t("default.myAccount.client.bankDetails.agencyNumber")}
             name="agencyNumber"
             value={formik.values.agencyNumber}
             onChange={formik.handleChange}
@@ -146,7 +166,7 @@ export const BankData = ({ userData }: any) => {
           />
           <Input
             type="text"
-            label="Dígito da agência"
+            label={t("default.myAccount.client.bankDetails.agencyDigit")}
             name="agencyDigit"
             value={formik.values.agencyDigit}
             onChange={formik.handleChange}
@@ -154,7 +174,7 @@ export const BankData = ({ userData }: any) => {
         </div>
         <div className="grid md:grid-cols-2 gap-6">
           <Select
-            label="Tipo da chave PIX"
+            label={t("default.myAccount.client.bankDetails.pixKeyType.title")}
             id="pixKeyType"
             name="pixKeyType"
             value={formik.values.pixKeyType}
@@ -162,16 +182,26 @@ export const BankData = ({ userData }: any) => {
               formik.setFieldValue("pixKeyType", selectedValue);
             }}
           >
-            <Option value="Chave e-mail">Chave e-mail</Option>
-            <Option value="Chave número de telefone">Chave número de telefone</Option>
-            <Option value="Chave CPF">Chave CPF</Option>
-            <Option value="Chave CNPJ">Chave CNPJ</Option>
-            <Option value="Chave aleatória">Chave aleatória</Option>
+            <Option value="Chave E-mail">
+              {t("default.myAccount.client.bankDetails.pixKeyType.email")}
+            </Option>
+            <Option value="Chave número de telefone">
+              {t("default.myAccount.client.bankDetails.pixKeyType.phone")}
+            </Option>
+            <Option value="Chave CPF">
+              {t("default.myAccount.client.bankDetails.pixKeyType.cpf")}
+            </Option>
+            <Option value="Chave CNPJ">
+              {t("default.myAccount.client.bankDetails.pixKeyType.cnpj")}
+            </Option>
+            <Option value="Chave aleatória">
+              {t("default.myAccount.client.bankDetails.pixKeyType.randomKey")}
+            </Option>
           </Select>
 
           <Input
             type="text"
-            label="Chave PIX"
+            label={t("default.myAccount.client.bankDetails.pixKey")}
             name="pixKey"
             value={formik.values.pixKey}
             onChange={formik.handleChange}
@@ -189,7 +219,7 @@ export const BankData = ({ userData }: any) => {
           type="submit"
           disabled={formik.isSubmitting}
         >
-          Atualizar dados
+          {t("default.myAccount.client.buttonUpdateData")}
         </Button>
       </div>
     </form>

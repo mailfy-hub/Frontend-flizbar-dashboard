@@ -17,6 +17,7 @@ import * as Yup from "yup";
 import { InferType } from "yup";
 import { api } from "../../../../client/api";
 import { useAuth } from "../../../../hook/auth";
+import { useTranslation } from "react-i18next";
 
 interface dataAddressInformation {
   bairro: string;
@@ -34,28 +35,38 @@ interface dataAddressInformation {
 
 export const Beneficiary = () => {
   const { profile } = useAuth();
+  const { t } = useTranslation();
   const [isCheckedNotBeneficiary, setIsCheckedNotBeneficiary] = useState(
     profile?.beneficiaries[0].fullName === "" ? true : false
   );
 
   const validationSchema = Yup.object().shape({
-    nationality: Yup.string().required("nacionality is required"),
-    maritalStatus: Yup.string().required("Estado civil é obrigatório"),
-    profession: Yup.string().required("Qual sua profissão é obrigatória"),
-    zipCode: Yup.string().required("CEP é obrigatório"),
-    city: Yup.string().required("Cidade é obrigatória"),
-    state: Yup.string().required("Estado é obrigatório"),
-    street: Yup.string().required("Logradouro é obrigatório"),
-    number: Yup.string().required("Número é obrigatório"),
-    neighborhood: Yup.string().required("Bairro é obrigatório"),
+    nationality: Yup.string().required(
+      `${t("default.error.nationalityRequired")}`
+    ),
+    maritalStatus: Yup.string().required(
+      `${t("default.error.maritalStatusRequired")}`
+    ),
+    profession: Yup.string().required(
+      `${t("default.error.professionRequired")}`
+    ),
+    zipCode: Yup.string().required(`${t("default.error.zipCodeRequired")}`),
+    city: Yup.string().required(`${t("default.error.cityRequired")}`),
+    state: Yup.string().required(`${t("default.error.stateRequired")}`),
+    street: Yup.string().required(`${t("default.error.streetRequired")}`),
+    number: Yup.string().required(`${t("default.error.numberRequired")}`),
+    neighborhood: Yup.string().required(
+      `${t("default.error.neighborhoodRequired")}`
+    ),
     complement: Yup.string(),
     reference: Yup.string(),
-    fullName: Yup.string().required("Nome completo é obrigatório."),
-    RG: Yup.string().required("RG é obrigatório."),
-    CPF: Yup.string().required("CPF é obrigatório."),
+
+    fullName: Yup.string().required(`${t("default.error.fullNameRequired")}`),
+    RG: Yup.string().required(`${t("default.error.rgRequired")}`),
+    CPF: Yup.string().required(`${t("default.error.cpfRequired")}`),
     email: Yup.string()
-      .email("Insira um e-mail válido")
-      .required("E-mail é obrigatório."),
+      .email(`${t("default.error.emailInvalid")}`)
+      .required(`${t("default.error.emailRequired")}`),
   });
 
   type FormValues = InferType<typeof validationSchema>;
@@ -108,13 +119,13 @@ export const Beneficiary = () => {
         clientId: profile?.id,
         ...data,
       });
-      toast("Alterado com sucesso", {
+      toast("Updated successfully", {
         type: "success",
         autoClose: 3000,
       });
     } catch (error) {
       console.log(error);
-      toast("Erro ao atualizar.", {
+      toast("Error updating.", {
         type: "error",
         autoClose: 3000,
       });
@@ -171,27 +182,25 @@ export const Beneficiary = () => {
   }, [formik.errors]);
 
   const handleNotBeneficiaryNextStep = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      await api.put(`/profiles/beneficiaries/${profile?.beneficiaries[0].id}`, 
-        {
-          fullName: "",
-          email: "",
-          RG: "",
-          CPF: "",
-          nationality: "",
-          maritalStatus: "",
-          profession: "",
-          zipCode: "",
-          city: "",
-          state: "",
-          street: "",
-          number: "",
-          neighborhood: "",
-          complement: "",
-          reference: "",
-        }
-      )
+      await api.put(`/profiles/beneficiaries/${profile?.beneficiaries[0].id}`, {
+        fullName: "",
+        email: "",
+        RG: "",
+        CPF: "",
+        nationality: "",
+        maritalStatus: "",
+        profession: "",
+        zipCode: "",
+        city: "",
+        state: "",
+        street: "",
+        number: "",
+        neighborhood: "",
+        complement: "",
+        reference: "",
+      });
       toast("Alterado com sucesso", {
         type: "success",
         autoClose: 3000,
@@ -208,20 +217,24 @@ export const Beneficiary = () => {
   };
 
   return (
-    <form onSubmit={
-      isCheckedNotBeneficiary
-        ? handleNotBeneficiaryNextStep
-        : formik.handleSubmit
-    }>
+    <form
+      onSubmit={
+        isCheckedNotBeneficiary
+          ? handleNotBeneficiaryNextStep
+          : formik.handleSubmit
+      }
+    >
       <div className="bg-WHITE p-8 w-full rounded-md ">
         <div>
           <div className="flex items-center gap-4">
             <Icon height={16} icon={"heroicons:user"} color="black" />
-            <SectionTitle size="sm" text="Beneficiário" />
+            <SectionTitle
+              size="sm"
+              text={t("default.myAccount.client.beneficiary.title")}
+            />
           </div>
           <p className="mt-2 font-body text-body14 text-GRAY_400">
-            Se desejar, inclua as informações de uma pessoa ou entidade que
-            receberá benefícios ou terá direitos associados.
+            {t("default.myAccount.client.beneficiary.text")}
           </p>
         </div>
         <div>
@@ -351,11 +364,12 @@ export const Beneficiary = () => {
                     <Option value="União estável">União estável</Option>
                     <Option value="Outro">Outro</Option>
                   </Select>
-                  {formik.touched.maritalStatus && formik.errors.maritalStatus && (
-                    <Typography variant="small" color="red">
-                      {formik.errors.maritalStatus}
-                    </Typography>
-                  )}
+                  {formik.touched.maritalStatus &&
+                    formik.errors.maritalStatus && (
+                      <Typography variant="small" color="red">
+                        {formik.errors.maritalStatus}
+                      </Typography>
+                    )}
                 </div>
               </div>
               <div className="grid md:grid-cols-2 gap-6">
@@ -413,7 +427,11 @@ export const Beneficiary = () => {
 
                   {zipcodeGetError && (
                     <div>
-                      <Typography className="mt-2" variant={"small"} color={"red"}>
+                      <Typography
+                        className="mt-2"
+                        variant={"small"}
+                        color={"red"}
+                      >
                         {mappedError}
                       </Typography>
                     </div>
@@ -519,11 +537,12 @@ export const Beneficiary = () => {
                       onChange={formik.handleChange}
                       value={formik.values.neighborhood}
                     />
-                    {formik.touched.neighborhood && formik.errors.neighborhood && (
-                      <Typography variant="small" color="red">
-                        {formik.errors.neighborhood}
-                      </Typography>
-                    )}
+                    {formik.touched.neighborhood &&
+                      formik.errors.neighborhood && (
+                        <Typography variant="small" color="red">
+                          {formik.errors.neighborhood}
+                        </Typography>
+                      )}
                   </div>
                   <div>
                     <Input
@@ -560,14 +579,13 @@ export const Beneficiary = () => {
                 </div>
               )}
             </div>
-            </>
+          </>
         )}
-            <div className="w-full flex justify-start mt-8">
-              <Button className="bg-GOLD_MAIN w-full md:w-auto" type="submit">
-                Atualizar dados
-              </Button>
-            </div>
-          
+        <div className="w-full flex justify-start mt-8">
+          <Button className="bg-GOLD_MAIN w-full md:w-auto" type="submit">
+            Atualizar dados
+          </Button>
+        </div>
       </div>
     </form>
   );

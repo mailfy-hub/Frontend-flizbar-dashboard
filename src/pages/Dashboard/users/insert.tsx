@@ -11,10 +11,13 @@ import { useAuth } from "../../../hook/auth";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { SignUpProps } from "../../../types/auth";
+import { useTranslation } from "react-i18next";
 
 export const UserInsert = () => {
   const navigate = useNavigate();
   const { signUpAdmin } = useAuth();
+  const { t } = useTranslation();
+
   const handleNavigateBack = () => {
     navigate(-1);
   };
@@ -75,38 +78,43 @@ export const UserInsert = () => {
             className="text-GRAY_400 hover:text-GOLD_DARK transition-all"
           />
         </button>
-        <SectionTitle text="Preencha o formulário de inclusão" />
+        <SectionTitle
+          text={t("default.myAccount.admin.users.addUserForm.titleSecondary")}
+        />
       </div>
       <form className="mt-12">
         <div className="bg-WHITE p-8 w-full rounded-md">
           <div className="flex items-center gap-4">
             <Icon height={16} icon={"heroicons:user"} color="black" />
-            <SectionTitle size="sm" text="Usuário" />
+            <SectionTitle
+              size="sm"
+              text={t("default.myAccount.admin.users.addUserForm.title")}
+            />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
               <Input
                 type="email"
                 name="email"
-                label="E-mail de acesso*"
+                label={t("default.myAccount.admin.users.addUserForm.email")}
                 onChange={handleInputChange}
               />
               <Input
                 type="password"
                 name="password"
-                label="Senha*"
+                label={t("default.myAccount.admin.users.addUserForm.password")}
                 onChange={handleInputChange}
               />
               <Input
                 type="text"
-                label="Nome*"
+                label={t("default.myAccount.admin.users.addUserForm.name")}
                 onChange={handleInputChange}
                 name="name"
               />
               <Input
                 type="text"
                 name="surname"
-                label="Sobrenome*"
+                label={t("default.myAccount.admin.users.addUserForm.surname")}
                 onChange={handleInputChange}
               />
               <InputWithDropdown
@@ -128,7 +136,7 @@ export const UserInsert = () => {
               onSubmit();
             }}
           >
-            Adicionar Usuário
+            {t("default.myAccount.admin.users.button")}
           </Button>
         </div>
       </form>
