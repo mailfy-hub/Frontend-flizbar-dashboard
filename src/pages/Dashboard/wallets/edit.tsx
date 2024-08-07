@@ -6,11 +6,13 @@ import { SectionTitle } from "../../../components/sectionTitle";
 import { api } from "../../../client/api";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
-import * as Yup from "yup"
+import * as Yup from "yup";
+import { useTranslation } from "react-i18next";
 
 export const WalletEdit = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
   const { id, walletName, type } = location.state;
 
   const validationSchema = Yup.object().shape({
@@ -22,7 +24,7 @@ export const WalletEdit = () => {
 
   const initialValues: FormValues = {
     walletName: walletName,
-    type: type
+    type: type,
   };
 
   const formik = useFormik({
@@ -35,15 +37,15 @@ export const WalletEdit = () => {
 
   const handleSubmit = async (data: FormValues) => {
     try {
-      await api.put(`wallets/${id}`, data)
-      toast.success("Alterada com sucesso!")
-      navigate(-1)
+      await api.put(`wallets/${id}`, data);
+      toast.success("Alterada com sucesso!");
+      navigate(-1);
     } catch (error) {
       console.log(error);
     } finally {
       formik.setSubmitting(false);
     }
-  }
+  };
 
   const handleNavigateBack = () => {
     navigate(-1);
@@ -57,45 +59,57 @@ export const WalletEdit = () => {
             className="text-GRAY_400 hover:text-GOLD_DARK transition-all"
           />
         </button>
-        <SectionTitle text="Dados da carteira" />
+        <SectionTitle
+          text={t("default.myAccount.admin.wallets.secondatyTitle")}
+        />
       </div>
-      <form
-        onSubmit={formik.handleSubmit}
-        className="mt-12"
-      >
+      <form onSubmit={formik.handleSubmit} className="mt-12">
         <div className="bg-WHITE p-8 w-full rounded-md">
           <div className="flex items-center gap-4">
             <Icon height={16} icon={"heroicons:wallet"} color="black" />
-            <SectionTitle size="sm" text="Carteira" />
+            <SectionTitle
+              size="sm"
+              text={t("default.myAccount.admin.wallets.addWalletForm.title")}
+            />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
-              <Input 
+              <Input
                 id="walletName"
                 name="walletName"
                 type="text"
-                label="Nome da carteira"
+                label={t("default.myAccount.admin.wallets.addWalletForm.name")}
                 value={formik.values.walletName}
                 onChange={formik.handleChange}
-                error={formik.touched.walletName && Boolean(formik.errors.walletName)}
+                error={
+                  formik.touched.walletName && Boolean(formik.errors.walletName)
+                }
               />
               <Select
                 id="type"
                 name="type"
-                label="Tipo do fundo"
+                label={t(
+                  "default.myAccount.admin.wallets.addWalletForm.fundType"
+                )}
                 value={formik.values.type}
-                onChange={(selectedValue) => formik.setFieldValue("type", selectedValue)}
+                onChange={(selectedValue) =>
+                  formik.setFieldValue("type", selectedValue)
+                }
                 error={formik.touched.type && Boolean(formik.errors.type)}
               >
-                <Option value="conventional">Convencional</Option>
-                <Option value="emergency">Emergencial</Option>
+                <Option value="conventional">
+                  {t("default.myAccount.admin.founds.convencionalType")}
+                </Option>
+                <Option value="emergency">
+                  {t("default.myAccount.admin.founds.emergencyType")}
+                </Option>
               </Select>
             </div>
           </div>
         </div>
         <div className="w-full flex justify-end mt-8">
           <Button type="submit" className="bg-GOLD_MAIN w-full md:w-auto">
-            Atualizar dados
+            {t("default.myAccount.admin.wallets.button")}
           </Button>
         </div>
       </form>

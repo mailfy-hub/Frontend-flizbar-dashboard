@@ -1,6 +1,4 @@
-import {
-  TrashIcon,
-} from "@heroicons/react/16/solid";
+import { TrashIcon } from "@heroicons/react/16/solid";
 import {
   Button,
   Card,
@@ -21,6 +19,7 @@ import { SectionTitle } from "../../../components/sectionTitle";
 import SuccessDialog from "../../../components/successDialog";
 import { CurrencyRow } from "../../../components/table/currencyRow";
 import { useAuth } from "../../../hook/auth";
+import { useTranslation } from "react-i18next";
 
 interface TABLE_ROW_PROPS {
   wallet: string;
@@ -32,7 +31,7 @@ interface TABLE_ROW_PROPS {
 }
 
 const TABLE_ROW: TABLE_ROW_PROPS[] = [
-/*   {
+  /*   {
     wallet: "T-BOND Brazil",
     value: 2700.0,
     created_at: "22/05/2023",
@@ -44,14 +43,29 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
 
 export const Withdraw = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const handleInsert = () => {
     navigate("insert");
   };
   const { userData } = useAuth();
 
   const TABLE_HEAD = userData?.isAdmin
-    ? ["Código", "Cliente", "Fundo", "Valor", "Data de criação", "Ações"]
-    : ["Código", "Fundo", "Valor", "Data de criação"];
+    ? [
+        `${t("default.rescues.code")}`,
+        `${t("default.rescues.client")}`,
+        `${t("default.rescues.found")}`,
+        `${t("default.rescues.value")}`,
+        `${t("default.rescues.createdAt")}`,
+        `${t("default.rescues.client")}`,
+        `${t("default.rescues.actions")}`,
+      ]
+    : [
+        `${t("default.rescues.code")}`,
+        `${t("default.rescues.found")}`,
+        `${t("default.rescues.value")}`,
+        `${t("default.rescues.createdAt")}`,
+      ];
 
   const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
@@ -79,12 +93,8 @@ export const Withdraw = () => {
         open={openConfimationDialog}
         handler={handleToggleConfirmationDialog}
       >
-        <DialogHeader>
-          Tem certeza que deseja <br /> deletar este registro?
-        </DialogHeader>
-        <DialogBody>
-          Essa ação é irreversível, tome cuidado ao prosseguir.
-        </DialogBody>
+        <DialogHeader>{t("default.modals.title")}</DialogHeader>
+        <DialogBody>{t("default.modals.text")}</DialogBody>
         <DialogFooter>
           <Button
             variant="text"
@@ -92,18 +102,18 @@ export const Withdraw = () => {
             onClick={handleToggleConfirmationDialog}
             className="mr-1"
           >
-            <span>Cancelar</span>
+            <span>{t("default.modals.buttonCancel")}</span>
           </Button>
           <Button
             variant="gradient"
             color="red"
             onClick={handleOpenSuccessDelete}
           >
-            <span>Confirmar</span>
+            <span>{t("default.modals.buttonConfirm")}</span>
           </Button>
         </DialogFooter>
       </Dialog>
-      <SectionTitle text="Todos resgates" />
+      <SectionTitle text={t("default.rescues.title")} />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
           floated={false}
@@ -112,10 +122,10 @@ export const Withdraw = () => {
         >
           <div>
             <Typography variant="h6" color="black">
-              Tabela de resgates
+              {t("default.rescues.tableTitle")}
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
-              Veja informações sobre todos seus resgates
+              {t("default.rescues.text")}
             </Typography>
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
@@ -125,7 +135,7 @@ export const Withdraw = () => {
               }}
               className="md:max-w-fit w-full bg-GOLD_MAIN"
             >
-              ADICIONAR RESGATE
+              {t("default.rescues.button")}
             </Button>
           </div>
         </CardHeader>
@@ -223,7 +233,10 @@ export const Withdraw = () => {
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-            Página 1 <span className="font-normal text-BLACK">de 1</span>
+            {t("default.pagination.page")} 1{" "}
+            <span className="font-normal text-BLACK">
+              {t("default.pagination.of")} 1
+            </span>
           </Typography>
           <div className="flex gap-4">
             {/* <Button variant="text" className="flex items-center gap-1">

@@ -1,12 +1,13 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Typography } from "@material-tailwind/react";
 import { SectionTitle } from "../../../components/sectionTitle";
+import { useTranslation } from "react-i18next";
 
 interface TABLE_ROW_TYPE {
   code: string;
   wallet: string;
 }
-const TABLE_HEAD = ["Código", "Nome"];
+
 const TABLE_ROW: TABLE_ROW_TYPE[] = [
   /*   {
     code: "#TBR52536267",
@@ -19,16 +20,27 @@ const TABLE_ROW: TABLE_ROW_TYPE[] = [
 ];
 
 export const InfoWallets = () => {
+  const { t } = useTranslation();
+
+  const TABLE_HEAD = [
+    `${t("default.myAccount.client.wallets.code")}`,
+    `${t("default.myAccount.client.wallets.name")}`,
+  ];
+
   return (
     <form className="mt-12">
       <div className="bg-WHITE p-8 w-full rounded-md">
         <div className="flex items-center gap-4">
           <Icon height={16} icon={"heroicons:wallet"} color="black" />
-          <SectionTitle size="sm" text="Carteiras" />
+          <SectionTitle
+            size="sm"
+            text={t("default.myAccount.client.wallets.title")}
+          />
         </div>
 
         <div className="mt-8 flex flex-col gap-6 ">
           <p className="font-body font-normal text-body16 text-GRAY_400">
+            {t("default.myAccount.client.wallets.text")}
             Esse cliente não possui nenhuma carteira.
           </p>
         </div>

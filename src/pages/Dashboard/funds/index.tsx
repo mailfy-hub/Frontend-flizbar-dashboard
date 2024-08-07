@@ -25,17 +25,25 @@ import { SectionTitle } from "../../../components/sectionTitle";
 import SuccessDialog from "../../../components/successDialog";
 import { Fund } from "../../../types/dashboard/funds";
 import { formatDate } from "../../../utils/formatDate";
-
-
-
-const TABLE_HEAD = ["Código", "Nome do fundo", "Moeda", 'Percentual', "Tipo", "Ações"];
+import { useTranslation } from "react-i18next";
 
 export const Funds = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const TABLE_HEAD = [
+    `${t("default.myAccount.admin.founds.code")}`,
+    `${t("default.myAccount.admin.founds.name")}`,
+    `${t("default.myAccount.admin.founds.currency")}`,
+    `${t("default.myAccount.admin.founds.percentage")}`,
+    `${t("default.myAccount.admin.founds.type")}`,
+    `${t("default.myAccount.admin.founds.actions")}`,
+  ];
+
   const handleNavigate = () => {
     navigate("insert");
   };
-  
+
   const handleEdit = (id: string) => {
     navigate(`edit/${id}`);
   };
@@ -67,7 +75,6 @@ export const Funds = () => {
         `funds?page=${page}&itemsPerPage=${itemsPerPage}`
       );
 
-   
       const mappedData = data.map((fund: Fund) => {
         return {
           ...fund,
@@ -85,7 +92,6 @@ export const Funds = () => {
   useEffect(() => {
     getFundsList(currentPage);
   }, [currentPage]);
-
 
   const [fundIdSelected, setFundIdSelected] = useState("");
   const handleFundIdSelected = (id: string) => {
@@ -127,10 +133,11 @@ export const Funds = () => {
     }
   };
 
+  //{t("default.myAccount.admin.founds.actions")}
+
   return (
     <div>
-      
-            <SuccessDialog
+      <SuccessDialog
         open={openSuccessDialog}
         handleClose={handleToggleSuccessDialog}
       />
@@ -139,12 +146,8 @@ export const Funds = () => {
         open={openConfimationDialog}
         handler={handleToggleConfirmationDialog}
       >
-        <DialogHeader>
-          Tem certeza que deseja <br /> deletar este registro?
-        </DialogHeader>
-        <DialogBody>
-          Essa ação é irreversível, tome cuidado ao prosseguir.
-        </DialogBody>
+        <DialogHeader>{t("default.modals.title")}</DialogHeader>
+        <DialogBody>{t("default.modals.text")}</DialogBody>
         <DialogFooter>
           <Button
             variant="text"
@@ -152,18 +155,14 @@ export const Funds = () => {
             onClick={handleCancelDeleteFund}
             className="mr-1"
           >
-            <span>Cancelar</span>
+            <span>{t("default.modals.buttonCancel")}</span>
           </Button>
-          <Button
-            variant="gradient"
-            color="red"
-            onClick={DeleteFundAction}
-          >
-            <span>Confirmar</span>
+          <Button variant="gradient" color="red" onClick={DeleteFundAction}>
+            <span>{t("default.modals.buttonConfirm")}</span>
           </Button>
         </DialogFooter>
       </Dialog>
-      <SectionTitle text="Todos fundos" />
+      <SectionTitle text={t("default.myAccount.admin.founds.title")} />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
           floated={false}
@@ -172,10 +171,10 @@ export const Funds = () => {
         >
           <div>
             <Typography variant="h6" color="black">
-              Tabela de fundos
+              {t("default.myAccount.admin.founds.tableTitle")}
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
-              Veja informações sobre todos seus fundos de investimento
+              {t("default.myAccount.admin.founds.text")}
             </Typography>
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
@@ -189,7 +188,7 @@ export const Funds = () => {
               onClick={handleNavigate}
               className="md:max-w-fit w-full bg-GOLD_MAIN"
             >
-              ADICIONAR FUNDO
+              {t("default.myAccount.admin.founds.button")}
             </Button>
           </div>
         </CardHeader>
@@ -211,115 +210,123 @@ export const Funds = () => {
               </tr>
             </thead>
             <tbody>
-
-            {fundsList &&
-                fundsList.map(({ id, name, currency, defaultPercentage, type }) => {
-                  const classes = "!p-6 ";
-                  return (
-                    <tr key={id}>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3">
+              {fundsList &&
+                fundsList.map(
+                  ({ id, name, currency, defaultPercentage, type }) => {
+                    const classes = "!p-6 ";
+                    return (
+                      <tr key={id}>
+                        <td className={classes}>
+                          <div className="flex items-center gap-3">
+                            <div>
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="!font-semibold"
+                              >
+                                {id.slice(0, 8)}
+                              </Typography>
+                            </div>
+                          </div>
+                        </td>
+                        <td className={classes}>
+                          <div className="flex items-center gap-3">
+                            <div>
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="!font-semibold"
+                              >
+                                {`${name}`}
+                              </Typography>
+                            </div>
+                          </div>
+                        </td>
+                        <td className={classes}>
                           <div>
                             <Typography
                               variant="small"
-                              color="blue-gray"
-                              className="!font-semibold"
+                              color="black"
+                              className="!font-normal"
                             >
-                              {id.slice(0, 8)}
+                              {currency}
                             </Typography>
                           </div>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3">
+                        </td>
+
+                        <td className={classes}>
                           <div>
                             <Typography
                               variant="small"
-                              color="blue-gray"
-                              className="!font-semibold"
+                              color="black"
+                              className="!font-normal"
                             >
-                              {`${name}`}
+                              {defaultPercentage}
                             </Typography>
                           </div>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div>
-                          <Typography
-                            variant="small"
-                            color="black"
-                            className="!font-normal"
-                          >
-                            {currency}
-                          </Typography>
-                        </div>
-                      </td>
+                        </td>
 
-                      <td className={classes}>
-                        <div>
-                          <Typography
-                            variant="small"
-                            color="black"
-                            className="!font-normal"
-                          >
-                            {defaultPercentage}
-                          </Typography>
-                        </div>
-                      </td>
+                        <td className={classes}>
+                          <div className="flex items-center gap-3">
+                            <div>
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="!font-semibold"
+                              >
+                                {type}
+                              </Typography>
+                            </div>
+                          </div>
+                        </td>
 
-                      <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        <div>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="!font-semibold"
+                        <td className="flex items-center justify-end text-right p-4 border-b border-gray-300 gap-2">
+                          <Tooltip
+                            content={t(
+                              "default.myAccount.admin.founds.editFound"
+                            )}
                           >
-                            {type}
-                          </Typography>
-                         
-                        </div>
-                      </div>
-                    </td>
-
-                     
-                      <td className="flex items-center justify-end text-right p-4 border-b border-gray-300 gap-2">
-                        <Tooltip content="Editar fundo">
-                          <IconButton
-                            onClick={() => handleEdit(id)}
-                            variant="text"
+                            <IconButton
+                              onClick={() => handleEdit(id)}
+                              variant="text"
+                            >
+                              <PencilIcon className="w-4 h-4 text-gray-400" />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip
+                            content={t(
+                              "default.myAccount.admin.founds.deleteFound"
+                            )}
                           >
-                            <PencilIcon className="w-4 h-4 text-gray-400" />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip content="Deletar fundo">
-                          <IconButton
-                            onClick={() => handleDeleteFund(id)}
-                            variant="text"
-                          >
-                            <TrashIcon className="w-4 h-4 text-gray-400" />
-                          </IconButton>
-                        </Tooltip>
-                      </td>
-                    </tr>
-                  );
-                })}
+                            <IconButton
+                              onClick={() => handleDeleteFund(id)}
+                              variant="text"
+                            >
+                              <TrashIcon className="w-4 h-4 text-gray-400" />
+                            </IconButton>
+                          </Tooltip>
+                        </td>
+                      </tr>
+                    );
+                  }
+                )}
             </tbody>
           </table>
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-          Página {currentPage} de {totalPages}
+            {t("default.pagination.page")} {currentPage}{" "}
+            {t("default.pagination.of")} {totalPages}
           </Typography>
           <div className="flex gap-4">
-          <Button
+            <Button
               variant="text"
               className="flex items-center gap-1"
               onClick={handlePreviousPage}
               disabled={currentPage === 1}
             >
               <ChevronLeftIcon strokeWidth={3} className="h-3 w-3" />
-              Anterior
+              {t("default.pagination.previous")}
             </Button>
             <Button
               variant="text"
@@ -327,7 +334,7 @@ export const Funds = () => {
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
             >
-              Próximo
+              {t("default.pagination.next")}
               <ChevronRightIcon strokeWidth={3} className="h-3 w-3" />
             </Button>
           </div>

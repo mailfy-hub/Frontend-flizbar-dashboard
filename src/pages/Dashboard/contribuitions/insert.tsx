@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import { api } from "../../../client/api";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { useAuth } from "../../../hook/auth";
+import { useTranslation } from "react-i18next";
 
 interface WalletType {
   createdAt: string;
@@ -44,6 +45,7 @@ interface AdminFormValues extends UserFormValues {
 export const ContribuitionInsert = () => {
   const navigate = useNavigate();
   const { profile } = useAuth();
+  const { t } = useTranslation();
 
   const handleNavigateBack = () => {
     navigate(-1);
@@ -64,7 +66,6 @@ export const ContribuitionInsert = () => {
   const getClientsList = async () => {
     try {
       const response = await api.get("/admin/users/clients-without-pagination");
-      console.log(response);
       setClients(response.data);
     } catch (error) {
       console.log(error);
@@ -86,14 +87,16 @@ export const ContribuitionInsert = () => {
       contributionAmount: 0,
     },
     validationSchema: Yup.object({
-      walletID: Yup.string().required("Carteira é obrigatória"),
-      contributionDate: Yup.date().required("Data do aporte é obrigatória"),
+      walletID: Yup.string().required(`${t("default.error.walletRequired")}`),
+      contributionDate: Yup.date().required(
+        `${t("default.error.contributionDateRequired")}`
+      ),
       dollarValue: Yup.number().required(
-        "Valor da cotação do dólar é obrigatório"
+        `${t("default.error.dollarValueRequired")}`
       ),
       contributionAmount: Yup.number()
-        .required("Valor do aporte é obrigatório")
-        .min(0, "O valor deve ser maior ou igual a 0"),
+        .required(`${t("default.error.contributionValueRequired")}`)
+        .min(0, `${t("default.error.valueMustBeGreaterThanZero")}`),
     }),
     onSubmit: async (values) => {
       try {
@@ -107,7 +110,7 @@ export const ContribuitionInsert = () => {
         const response = await api.post("contributions", data);
         console.log("Form submitted successfully:", response);
         navigate("/contributions");
-        toast("Aporte inserido com sucesso!", {
+        toast("Contribution inserted successfully!", {
           type: "success",
           autoClose: 3000,
         });
@@ -127,16 +130,18 @@ export const ContribuitionInsert = () => {
       contributionAmount: 0,
     },
     validationSchema: Yup.object({
-      status: Yup.string().required("Status é obrigatório"),
-      clientID: Yup.string().required("Cliente é obrigatório"),
-      walletID: Yup.string().required("Carteira é obrigatória"),
-      contributionDate: Yup.date().required("Data do aporte é obrigatória"),
+      status: Yup.string().required(`${t("default.error.statusRequired")}`),
+      clientID: Yup.string().required(`${t("default.error.clientRequired")}`),
+      walletID: Yup.string().required(`${t("default.error.walletRequired")}`),
+      contributionDate: Yup.date().required(
+        `${t("default.error.contributionDateRequired")}`
+      ),
       dollarValue: Yup.number().required(
-        "Valor da cotação do dólar é obrigatório"
+        `${t("default.error.dollarValueRequired")}`
       ),
       contributionAmount: Yup.number()
-        .required("Valor do aporte é obrigatório")
-        .min(0, "O valor deve ser maior ou igual a 0"),
+        .required(`${t("default.error.contributionValueRequired")}`)
+        .min(0, `${t("default.error.valueMustBeGreaterThanZero")}`),
     }),
     onSubmit: async (values) => {
       try {
@@ -151,7 +156,7 @@ export const ContribuitionInsert = () => {
         const response = await api.post("contributions", data);
         console.log("Form submitted successfully:", response);
         navigate("/contributions");
-        toast("Aporte inserido com sucesso!", {
+        toast("Contribution inserted successfully!", {
           type: "success",
           autoClose: 3000,
         });
@@ -170,7 +175,9 @@ export const ContribuitionInsert = () => {
             className="text-GRAY_400 hover:text-GOLD_DARK transition-all"
           />
         </button>
-        <SectionTitle text="Preencha o formulário de inclusão" />
+        <SectionTitle
+          text={t("default.contributions.addContributionForm.title")}
+        />
       </div>
       {profile?.user.isAdmin ? (
         <AdminForm formik={adminForm} clients={clients} wallets={wallets} />
@@ -187,18 +194,24 @@ interface UserFormProps {
 }
 
 const UserForm = ({ formik, wallets }: UserFormProps) => {
+  const { t } = useTranslation();
   return (
     <form onSubmit={formik.handleSubmit} className="mt-12">
       <div className="bg-WHITE p-8 w-full rounded-md">
         <div className="flex items-center gap-4">
           <Icon height={16} icon={"radix-icons:dashboard"} color="black" />
-          <SectionTitle size="sm" text="Aporte" />
+          <SectionTitle
+            size="sm"
+            text={t("default.contribution.addContributionForm.subtitle")}
+          />
         </div>
         <div className="mt-8 flex flex-col gap-6">
           <div className="grid md:grid-cols-2 gap-6">
             <Input
               type="date"
-              label="Data do aporte"
+              label={t(
+                "default.contribution.addContributionForm.dateOfContribution"
+              )}
               name="contributionDate"
               onChange={formik.handleChange}
               value={formik.values.contributionDate}
@@ -208,7 +221,7 @@ const UserForm = ({ formik, wallets }: UserFormProps) => {
               }
             />
             <Select
-              label="Carteira"
+              label={t("default.contribution.wallet")}
               id="walletID"
               name="walletID"
               onChange={(val) => formik.setFieldValue("walletID", val)}
@@ -225,7 +238,9 @@ const UserForm = ({ formik, wallets }: UserFormProps) => {
           <div className="grid md:grid-cols-2 gap-6">
             <Input
               type="number"
-              label="Valor do aporte"
+              label={t(
+                "default.contribution.addContributionForm.contributionValue"
+              )}
               name="contributionAmount"
               onChange={formik.handleChange}
               value={formik.values.contributionAmount}
@@ -236,7 +251,7 @@ const UserForm = ({ formik, wallets }: UserFormProps) => {
             />
             <Input
               type="number"
-              label="Valor da cotação do dólar"
+              label={t("default.contribution.addContributionForm.dollarValue")}
               name="dollarValue"
               value={formik.values.dollarValue}
               disabled
@@ -247,7 +262,7 @@ const UserForm = ({ formik, wallets }: UserFormProps) => {
       </div>
       <div className="w-full flex justify-end mt-8">
         <Button type="submit" className="bg-GOLD_MAIN w-full md:w-auto">
-          Adicionar Aporte
+          {t("default.contribution.addContributionForm.button")}
         </Button>
       </div>
     </form>
@@ -261,18 +276,24 @@ interface AdminFormProps {
 }
 
 const AdminForm = ({ formik, clients, wallets }: AdminFormProps) => {
+  const { t } = useTranslation();
   return (
     <form onSubmit={formik.handleSubmit} className="mt-12">
       <div className="bg-WHITE p-8 w-full rounded-md">
         <div className="flex items-center gap-4">
           <Icon height={16} icon={"radix-icons:dashboard"} color="black" />
-          <SectionTitle size="sm" text="Aporte" />
+          <SectionTitle
+            size="sm"
+            text={t("default.contributions.addContributionForm.subtitle")}
+          />
         </div>
         <div className="mt-8 flex flex-col gap-6">
           <div className="grid md:grid-cols-2 gap-6">
             <Input
               type="date"
-              label="Data do aporte"
+              label={t(
+                "default.contributions.addContributionForm.dateOfContribution"
+              )}
               name="contributionDate"
               onChange={formik.handleChange}
               value={formik.values.contributionDate}
@@ -282,7 +303,7 @@ const AdminForm = ({ formik, clients, wallets }: AdminFormProps) => {
               }
             />
             <Select
-              label="Cliente"
+              label={t("default.contributions.addContributionForm.client")}
               id="clientID"
               name="clientID"
               onChange={(val) => formik.setFieldValue("clientID", val)}
@@ -298,7 +319,7 @@ const AdminForm = ({ formik, clients, wallets }: AdminFormProps) => {
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             <Select
-              label="Carteira"
+              label={t("default.contributions.addContributionForm.wallet")}
               id="walletID"
               name="walletID"
               onChange={(val) => formik.setFieldValue("walletID", val)}
@@ -313,7 +334,9 @@ const AdminForm = ({ formik, clients, wallets }: AdminFormProps) => {
             </Select>
             <Input
               type="number"
-              label="Valor do aporte"
+              label={t(
+                "default.contributions.addContributionForm.contributionValue"
+              )}
               name="contributionAmount"
               onChange={formik.handleChange}
               value={formik.values.contributionAmount}
@@ -325,23 +348,29 @@ const AdminForm = ({ formik, clients, wallets }: AdminFormProps) => {
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             <Select
-              label="Status"
+              label={t("default.contributions.addContributionForm.status")}
               id="status"
               name="status"
               onChange={(val) => formik.setFieldValue("status", val)}
               value={formik.values.status}
               error={formik.touched.status && Boolean(formik.errors.status)}
             >
-              <Option value="pending">Pendente</Option>
-              <Option value="approved">Aprovado</Option>
-              <Option value="completed">Concluído</Option>
+              <Option value="pending">
+                {t("default.contributions.addContributionForm.pending")}
+              </Option>
+              <Option value="approved">
+                {t("default.contributions.addContributionForm.approved")}
+              </Option>
+              <Option value="completed">
+                {t("default.contributions.addContributionForm.concluded")}
+              </Option>
             </Select>
           </div>
         </div>
       </div>
       <div className="w-full flex justify-end mt-8">
         <Button type="submit" className="bg-GOLD_MAIN w-full md:w-auto">
-          Adicionar Aporte
+          {t("default.contributions.addContributionForm.button")}
         </Button>
       </div>
     </form>

@@ -8,14 +8,16 @@ import { api } from "../../../../client/api";
 import { DocumentTypeSelect } from "../../../../components/documentTypeSelect";
 import { SectionTitle } from "../../../../components/sectionTitle";
 import { useAuth } from "../../../../hook/auth";
+import { useTranslation } from "react-i18next";
 
 export const GenerateData = () => {
   const { profile, userData } = useAuth();
+  const { t } = useTranslation();
 
   const validationSchema = Yup.object().shape({
     personType: Yup.string()
       .oneOf(["pf", "pj"])
-      .required("Tipo de pessoa é obrigatório"),
+      .required(`${t("default.error.typePersonRequired")}`),
     /* name: Yup.string().when("personType", {
       is: "pf",
       then(schema) {
@@ -25,50 +27,66 @@ export const GenerateData = () => {
     birthDate: Yup.date().when("personType", {
       is: "pf",
       then(schema) {
-        return schema.required("birth date is required");
+        return schema.required(`${t("default.error.bornDateRequired")}`);
       },
     }),
-    nationality: Yup.string().required("nacionality is required"),
-    documentType: Yup.string().required("doctype is required"),
-    document: Yup.string().required("docnum is required"),
+    nationality: Yup.string().required(
+      `${t("default.error.nationalityRequired")}`
+    ),
+    documentType: Yup.string().required(
+      `${t("default.error.documentTypeRequired")}`
+    ),
+    document: Yup.string().required(
+      `${t("default.error.documentNumberRequired")}`
+    ),
     gender: Yup.string().when("personType", {
       is: "pf",
       then(schema) {
-        return schema.required("Must enter a gender");
+        return schema.required(`${t("default.error.genderRequired")}`);
       },
     }),
     /* personalPhone: Yup.string().required("personalPhone is required"), */
     corporateName: Yup.string().when("personType", {
       is: "pj",
       then(schema) {
-        return schema.required("Must enter a company name");
+        return schema.required(`${t("default.error.companyNameRequired")}`);
       },
     }),
-    fatherName: Yup.string().required("Nome do pai é obrigatório"),
-    motherName: Yup.string().required("Nome da mãe é obrigatório"),
-    maritalStatus: Yup.string().required("Estado civil é obrigatório"),
-    education: Yup.string().required("Escolaridade é obrigatória"),
-    politicalPerson: Yup.string().required(
-      "Pessoa politicamente exposta é obrigatório"
+    fatherName: Yup.string().required(
+      `${t("default.error.fahterNameRequired")}`
     ),
-    profession: Yup.string().required("Qual sua profissão é obrigatória"),
-    declaresUsTaxes: Yup.string().required("Campo obrigatório"),
+    motherName: Yup.string().required(
+      `${t("default.error.matherNameRequired")}`
+    ),
+    maritalStatus: Yup.string().required(
+      `${t("default.error.maritalStatusRequired")}`
+    ),
+    education: Yup.string().required(`${t("default.error.educationRequired")}`),
+    politicalPerson: Yup.string().required(
+      `${t("default.error.personExportPoliticallyRequired")}`
+    ),
+    profession: Yup.string().required(
+      `${t("default.error.professionRequired")}`
+    ),
+    declaresUsTaxes: Yup.string().required(
+      `${t("default.error.requiredField")}`
+    ),
     spouseName: Yup.string().when("maritalStatus", {
       is: "Stable Union",
       then(schema) {
-        return schema.required("Must enter a spouse name");
+        return schema.required(`${t("default.error.spouseNameRequired")}`);
       },
     }),
     spouseDocumentType: Yup.string().when("maritalStatus", {
       is: "Stable Union" || "Married",
       then(schema) {
-        return schema.required("Must enter a spouse name");
+        return schema.required(`${t("default.error.spouseNameRequired")}`);
       },
     }),
     spousedocument: Yup.string().when("maritalStatus", {
       is: "Stable Union",
       then(schema) {
-        return schema.required("Must enter a spouse name");
+        return schema.required(`${t("default.error.spouseNameRequired")}`);
       },
     }),
   });
@@ -121,8 +139,8 @@ export const GenerateData = () => {
       ? profile?.clientDetails?.spouseDetails?.spouseDocumentType
       : "",
     spousedocument: profile?.clientDetails?.spouseDetails
-    ? profile?.clientDetails?.spouseDetails?.spousedocument
-    : "",
+      ? profile?.clientDetails?.spouseDetails?.spousedocument
+      : "",
   };
 
   const formik = useFormik({
@@ -230,7 +248,10 @@ export const GenerateData = () => {
         >
           <div className="flex items-center gap-4">
             <Icon height={16} icon={"heroicons:user"} color="black" />
-            <SectionTitle size="sm" text="Dados de acesso" />
+            <SectionTitle
+              size="sm"
+              text={t("default.myAccount.client.generalData.titleSecondary")}
+            />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
@@ -239,7 +260,7 @@ export const GenerateData = () => {
                 type="email"
                 id="email"
                 name="email"
-                label="E-mail de acesso"
+                label={t("default.myAccount.client.generalData.email")}
                 onChange={formikAccessData.handleChange}
               />
             </div>
@@ -252,7 +273,7 @@ export const GenerateData = () => {
                 }
                 className="bg-GOLD_MAIN w-full md:w-auto disabled:opacity-75"
               >
-                Atualizar dados
+                {t("default.myAccount.button")}
               </Button>
             </div>
           </div>
@@ -264,7 +285,10 @@ export const GenerateData = () => {
           <div>
             <div className="flex items-center gap-4">
               <Icon height={16} icon={"heroicons:user"} color="black" />
-              <SectionTitle size="sm" text="Dados gerais" />
+              <SectionTitle
+                size="sm"
+                text={t("default.myAccount.client.generalData.title")}
+              />
             </div>
             <div className="mt-8 flex flex-col gap-6 ">
               <div className="grid md:grid-cols-2 gap-6">
@@ -275,10 +299,18 @@ export const GenerateData = () => {
                   onChange={(selectedOption) => {
                     formik.setFieldValue("personType", selectedOption);
                   }}
-                  label="Tipo de pessoa"
+                  label={t(
+                    "default.myAccount.client.generalData.typePerson.labelTypePerson"
+                  )}
                 >
-                  <Option value="pf">Física</Option>
-                  <Option value="pj">Jurídica</Option>
+                  <Option value="pf">
+                    {t(
+                      "default.myAccount.client.generalData.typePerson.physical"
+                    )}
+                  </Option>
+                  <Option value="pj">
+                    {t("default.myAccount.client.generalData.typePerson.legal")}
+                  </Option>
                   {/*  <Option value="pj">Jurídica</Option> */}
                 </Select>
                 {formik.values.personType == "pf" ? (
@@ -287,7 +319,7 @@ export const GenerateData = () => {
                     id="name"
                     value={`${userData?.name} ${userData?.surname}`}
                     type="text"
-                    label="Nome"
+                    label={t("default.myAccount.client.generalData.name")}
                   />
                 ) : (
                   <Input
@@ -296,7 +328,9 @@ export const GenerateData = () => {
                     value={formik.values.corporateName}
                     onChange={formik.handleChange}
                     type="text"
-                    label="Razão social"
+                    label={t(
+                      "default.myAccount.client.generalData.companyName"
+                    )}
                   />
                 )}
               </div>
@@ -315,7 +349,9 @@ export const GenerateData = () => {
                       );
                     }}
                     type="date"
-                    label="Date de nascimento"
+                    label={t(
+                      "default.myAccount.client.generalData.labelBornDate"
+                    )}
                   />
                 )}
                 <Select
@@ -325,16 +361,32 @@ export const GenerateData = () => {
                   onChange={(selectedValue) => {
                     formik.setFieldValue("nationality", selectedValue);
                   }}
-                  label="Nacionalidade"
+                  label={t("default.myAccount.client.generalData.nationality")}
                 >
-                  <Option value="Brasileiro">Brasileiro</Option>
-                  <Option value="Português">Português</Option>
-                  <Option value="Argentino">Argentino</Option>
-                  <Option value="Iraniano">Iraniano</Option>
-                  <Option value="Americano">Americano</Option>
-                  <Option value="Inglês">Inglês</Option>
-                  <Option value="Espanhol">Espanhol</Option>
-                  <Option value="Outra">Outra</Option>
+                  <Option value="Brasileiro">
+                    {t("default.nationality.brazilian")}
+                  </Option>
+                  <Option value="Português">
+                    {t("default.nationality.portuguese")}
+                  </Option>
+                  <Option value="Argentino">
+                    {t("default.nationality.argentine")}
+                  </Option>
+                  <Option value="Iraniano">
+                    {t("default.nationality.iranian")}
+                  </Option>
+                  <Option value="Americano">
+                    {t("default.nationality.american")}
+                  </Option>
+                  <Option value="Inglês">
+                    {t("default.nationality.english")}
+                  </Option>
+                  <Option value="Espanhol">
+                    {t("default.nationality.spanish")}
+                  </Option>
+                  <Option value="Outra">
+                    {t("default.nationality.other")}
+                  </Option>
                 </Select>
               </div>
               <div className="grid md:grid-cols-2 gap-6">
@@ -351,7 +403,9 @@ export const GenerateData = () => {
                   value={formik.values.document}
                   onChange={formik.handleChange}
                   type="text"
-                  label="Número do documento"
+                  label={t(
+                    "default.myAccount.client.generalData.documentNumber"
+                  )}
                 />
               </div>
               <div></div>
@@ -360,7 +414,10 @@ export const GenerateData = () => {
           <div>
             <div className="flex items-center gap-4 ">
               <Icon height={16} icon={"heroicons:user"} color="black" />
-              <SectionTitle size="sm" text="Dados complementares" />
+              <SectionTitle
+                size="sm"
+                text={t("default.myAccount.client.generalData.titleTertiary")}
+              />
             </div>
             <div className="mt-8 flex flex-col gap-6 ">
               <div className="grid md:grid-cols-2 gap-6">
@@ -370,7 +427,7 @@ export const GenerateData = () => {
                   value={formik.values.fatherName}
                   onChange={formik.handleChange}
                   type="text"
-                  label="Nome do pai"
+                  label={t("default.myAccount.client.generalData.fatherName")}
                 />
                 <Input
                   id="motherName"
@@ -378,7 +435,7 @@ export const GenerateData = () => {
                   value={formik.values.motherName}
                   onChange={formik.handleChange}
                   type="text"
-                  label="Nome da mãe"
+                  label={t("default.myAccount.client.generalData.matherName")}
                 />
               </div>
               <div className="grid md:grid-cols-3 gap-6">
@@ -389,14 +446,28 @@ export const GenerateData = () => {
                   onChange={(selectedValue) =>
                     formik.setFieldValue("maritalStatus", selectedValue)
                   }
-                  label="Estado civil"
+                  label={t(
+                    "default.myAccount.client.generalData.maritalStatus"
+                  )}
                 >
-                  <Option value="Solteiro(a)">Solteiro(a)</Option>
-                  <Option value="Casado(a)">Casado(a)</Option>
-                  <Option value="Divorciado(a)">Divorciado(a)</Option>
-                  <Option value="Viúvo(a)">Viúvo(a)</Option>
-                  <Option value="União estável">União estável</Option>
-                  <Option value="Outro">Outro</Option>
+                  <Option value="Solteiro(a)">
+                    {t("default.maritalStatus.single")}
+                  </Option>
+                  <Option value="Casado(a)">
+                    {t("default.maritalStatus.married")}
+                  </Option>
+                  <Option value="Divorciado(a)">
+                    {t("default.maritalStatus.divorced")}
+                  </Option>
+                  <Option value="Viúvo(a)">
+                    {t("default.maritalStatus.widower")}
+                  </Option>
+                  <Option value="União estável">
+                    {t("default.maritalStatus.stableUnion")}
+                  </Option>
+                  <Option value="Outro">
+                    {t("default.maritalStatus.other")}
+                  </Option>
                 </Select>
                 <Select
                   id="education"
@@ -405,23 +476,27 @@ export const GenerateData = () => {
                   onChange={(selectedValue) =>
                     formik.setFieldValue("education", selectedValue)
                   }
-                  label="Escolaridade"
+                  label={t("default.myAccount.client.generalData.education")}
                 >
-                  <Option value="Ensino médio incompleto">
-                    Ensino médio incompleto
+                  <Option value="Incomplete high school">
+                    {t("default.education.incompleteHighSchool")}
                   </Option>
-                  <Option value="Ensino médio completo">
-                    Ensino médio completo
+                  <Option value="Complete high school">
+                    {t("default.education.completeHighSchool")}
                   </Option>
-                  <Option value="Curso técnico">Curso técnico</Option>
+                  <Option value="Curso técnico">
+                    {t("default.education.technicalCourse")}
+                  </Option>
                   <Option value="Ensino superior Incompleto">
-                    Ensino superior Incompleto
+                    {t("default.education.incompleteBachelorDegree")}
                   </Option>
                   <Option value="Ensino superior Completo">
-                    Ensino superior Completo
+                    {t("default.education.completeBachelorDegree")}
                   </Option>
-                  <Option value="Pós Graduação/Mestrado/Doutorado">Pós Graduação/Mestrado/Doutorado</Option>
-                  <Option value="Outro">Outro</Option>
+                  <Option value="Pós Graduação/Mestrado/Doutorado">
+                    {t("default.education.postGraduateMasterDoctorate")}
+                  </Option>
+                  <Option value="Outro">{t("default.education.other")}</Option>
                 </Select>
                 <Select
                   id="politicalPerson"
@@ -430,10 +505,16 @@ export const GenerateData = () => {
                   onChange={(selectedValue) => {
                     formik.setFieldValue("politicalPerson", selectedValue);
                   }}
-                  label="É pessoa politicamente exposta?"
+                  label={t(
+                    "default.myAccount.client.generalData.personExportPolitically"
+                  )}
                 >
-                  <Option value="Sim">Sim</Option>
-                  <Option value="Não">Não</Option>
+                  <Option value="Sim">
+                    {t("default.otherSelectOptions.yes")}
+                  </Option>
+                  <Option value="Não">
+                    {t("default.otherSelectOptions.no")}
+                  </Option>
                 </Select>
               </div>
               <div className="grid md:grid-cols-2 gap-6">
@@ -443,7 +524,7 @@ export const GenerateData = () => {
                   name="profession"
                   onChange={formik.handleChange}
                   type="text"
-                  label="Qual sua profissão?"
+                  label={t("default.myAccount.client.generalData.profession")}
                 />
                 <Select
                   id="declaresUsTaxes"
@@ -452,10 +533,16 @@ export const GenerateData = () => {
                   onChange={(selectedValue) => {
                     formik.setFieldValue("declaresUsTaxes", selectedValue);
                   }}
-                  label="Declara imposto ao governo dos EUA?"
+                  label={t(
+                    "default.myAccount.client.generalData.taxesUSGovernment"
+                  )}
                 >
-                  <Option value={"Sim"}>Sim</Option>
-                  <Option value={"Não"}>Não</Option>
+                  <Option value={"Sim"}>
+                    {t("default.otherSelectOptions.yes")}
+                  </Option>
+                  <Option value={"Não"}>
+                    {t("default.otherSelectOptions.no")}
+                  </Option>
                 </Select>
               </div>
               {(formik.values.maritalStatus == "União estável" ||
@@ -466,7 +553,7 @@ export const GenerateData = () => {
                     name="spouseName"
                     value={formik.values.spouseName}
                     onChange={formik.handleChange}
-                    label="Nome do cônjuge"
+                    label={t("default.myAccount.client.generalData.spouseName")}
                   />
                 </div>
               )}
@@ -485,7 +572,9 @@ export const GenerateData = () => {
                     name="spousedocument"
                     value={formik.values.spousedocument}
                     onChange={formik.handleChange}
-                    label="Número do documento"
+                    label={t(
+                      "default.myAccount.client.generalData.documentNumber"
+                    )}
                     className="w-full"
                   />
                 </div>
@@ -498,7 +587,7 @@ export const GenerateData = () => {
               type="submit"
               disabled={formik.isSubmitting}
             >
-              Atualizar dados
+              {t("default.myAccount.client.buttonUpdateData")}
             </Button>
           </div>
         </form>

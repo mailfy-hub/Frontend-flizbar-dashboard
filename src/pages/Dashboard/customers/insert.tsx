@@ -4,13 +4,13 @@ import { Button, Input, Option, Select } from "@material-tailwind/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
+import { useTranslation } from "react-i18next";
 
 type contact = {
   index: number;
   name: string;
   contact: string;
 };
-
 
 type MaritalStatus =
   | "Solteiro(a)"
@@ -22,6 +22,7 @@ type MaritalStatus =
 
 export const CustomerInsert = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleNavigateBack = () => {
     navigate(-1);
@@ -71,75 +72,132 @@ export const CustomerInsert = () => {
             className="text-GRAY_400 hover:text-GOLD_DARK transition-all"
           />
         </button>
-        <SectionTitle text="Preencha o formulário de inclusão" />
+        <SectionTitle
+          text={t("default.myAccount.admin.users.addUserForm.titleSecondary")}
+        />
       </div>
 
       <form className="mt-12">
         <div className="bg-WHITE p-8 w-full rounded-md">
           <div className="flex items-center gap-4">
             <Icon height={16} icon={"heroicons:user"} color="black" />
-            <SectionTitle size="sm" text="Dados de acesso" />
+            <SectionTitle size="sm" text={t("default.myAccount.admin.title")} />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
-              <Input type="email" label="E-mail de acesso*" />
+              <Input
+                type="email"
+                label={t("default.myAccount.admin.users.addUserForm.email")}
+              />
             </div>
           </div>
         </div>
         <div className="bg-WHITE p-8 w-full rounded-md mt-8">
           <div className="flex items-center gap-4">
             <Icon height={16} icon={"heroicons:user"} color="black" />
-            <SectionTitle size="sm" text="Dados gerais" />
+            <SectionTitle
+              size="sm"
+              text={t("default.myAccount.client.generalData.title")}
+            />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
               <Select
                 value={documentType}
                 onChange={(val) => val && handleDocumentType(val)}
-                label="Tipo de pessoa*"
+                label={`${t(
+                  "default.myAccount.client.generalData.typePerson.labelTypePerson"
+                )}*`}
               >
-                <Option value="pf">Física</Option>
-                <Option value="pj">Jurídica</Option>
+                <Option value="pf">
+                  {t(
+                    "default.myAccount.client.generalData.typePerson.physical"
+                  )}
+                </Option>
+                <Option value="pj">
+                  {t("default.myAccount.client.generalData.typePerson.legal")}
+                </Option>
               </Select>
               {documentType == "pf" ? (
-                <Input type="text" label="Nome*" />
+                <Input
+                  type="text"
+                  label={`${t("default.myAccount.client.generalData.name")}*`}
+                />
               ) : (
-                <Input type="text" label="Razão social*" />
+                <Input
+                  type="text"
+                  label={`${t(
+                    "default.myAccount.client.generalData.companyName"
+                  )}*`}
+                />
               )}
             </div>
             <div className="grid md:grid-cols-2 gap-6">
               {documentType == "pf" && (
-                <Input type="date" label="Date de nascimento*" />
+                <Input
+                  type="date"
+                  label={`${t(
+                    "default.myAccount.client.generalData.labelBornDate"
+                  )}*`}
+                />
               )}
               <Select label="Nacionalidade*">
-                <Option value="Brasileiro">Brasileiro</Option>
-                <Option value="Português">Português</Option>
-                <Option value="Argentino">Argentino</Option>
-                <Option value="Iraniano">Iraniano</Option>
-                <Option value="Americano">Americano</Option>
-                <Option value="Inglês">Inglês</Option>
-                <Option value="Espanhol">Espanhol</Option>
-                <Option value="Outra">Outra</Option>
-
+                <Option value="Brazilian">
+                  {t("default.nationality.brazilian")}
+                </Option>
+                <Option value="Portuguese">
+                  {t("default.nationality.portuguese")}
+                </Option>
+                <Option value="Argentine">
+                  {t("default.nationality.argentine")}
+                </Option>
+                <Option value="Iranian">
+                  {t("default.nationality.iranian")}
+                </Option>
+                <Option value="American">
+                  {t("default.nationality.american")}
+                </Option>
+                <Option value="English">
+                  {t("default.nationality.english")}
+                </Option>
+                <Option value="Spanish">
+                  {t("default.nationality.spanish")}
+                </Option>
+                <Option value="Other">{t("default.nationality.other")}</Option>
               </Select>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-              <Select label="Tipo do documento*">
-                <Option value="CPF">CPF</Option>
-                <Option value="RG">RG</Option>
-                <Option value="NATIONAL ID">NATIONAL ID</Option>
-                <Option value="CARTEIRA DE HABILITAÇÃO">CARTEIRA DE HABILITAÇÃO</Option>
-                <Option value="PASSAPORTE">PASSAPORTE</Option>
-                <Option value="RNE">RNE</Option>
+              <Select
+                label={`${t(
+                  "default.myAccount.client.generalData.labelDocumentType"
+                )}*`}
+              >
+                <Option value="CPF">{t("default.documentTypes.cpf")}</Option>
+                <Option value="RG">{t("default.documentTypes.rg")}</Option>
+                <Option value="NATIONAL ID">
+                  {t("default.documentTypes.nationalID")}
+                </Option>
+                <Option value="CARTEIRA DE HABILITAÇÃO">
+                  {t("default.documentTypes.driverLicense")}
+                </Option>
+                <Option value="PASSAPORTE">
+                  {t("default.documentTypes.passport")}
+                </Option>
+                <Option value="RNE">{t("default.documentTypes.rne")}</Option>
               </Select>
-              <Input type="text" label="Número do documento*" />
+              <Input
+                type="text"
+                label={`${t(
+                  "default.myAccount.client.generalData.documentNumber"
+                )}*`}
+              />
             </div>
             <div className="grid md:grid-cols-2 gap-6">
               {documentType == "pf" && (
-                <Select label="Gênero*">
-                  <Option>Masculino</Option>
-                  <Option>Feminino</Option>
-                  <Option>Prefiro não declarar</Option>
+                <Select label={`${t("default.gender.title")}*`}>
+                  <Option>{t("default.gender.male")}</Option>
+                  <Option>{t("default.gender.female")}</Option>
+                  <Option>{t("default.gender.other")}</Option>
                 </Select>
               )}
             </div>
@@ -148,31 +206,55 @@ export const CustomerInsert = () => {
         <div className="bg-WHITE p-8 w-full rounded-md mt-8">
           <div className="flex items-center gap-4">
             <Icon height={16} icon={"heroicons:map-pin"} color="black" />
-            <SectionTitle size="sm" text="Endereço" />
+            <SectionTitle
+              size="sm"
+              text={t("default.myAccount.client.address.title")}
+            />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
-            <Select label="Tipo do endereço*">
-                <Option>Residencial</Option>
-                <Option>Comercial</Option>
-                <Option>Outro</Option>
+              <Select label={`${t("default.addressType.title")}*`}>
+                <Option>{t("default.addressType.residential")}</Option>
+                <Option>{t("default.addressType.commercial")}</Option>
+                <Option>{t("default.addressType.other")}</Option>
               </Select>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
-              <Input type="text" label="Cep*" />
-              <Input type="text" label="Cidade*" />
-              <Select label="Estado*">
+              <Input
+                type="text"
+                label={`${t("default.myAccount.client.address.zipCode")}*`}
+              />
+              <Input
+                type="text"
+                label={`${t("default.myAccount.client.address.city")}*`}
+              />
+              <Select label={`${t("default.myAccount.client.address.state")}*`}>
                 <Option>1</Option>
               </Select>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
-              <Input type="text" label="Logradouro*" />
-              <Input type="text" label="Número*" />
-              <Input type="text" label="Bairro*" />
+              <Input
+                type="text"
+                label={`${t("default.myAccount.client.address.street")}*`}
+              />
+              <Input
+                type="text"
+                label={`${t("default.myAccount.client.address.number")}*`}
+              />
+              <Input
+                type="text"
+                label={`${t("default.myAccount.client.address.neighborhood")}*`}
+              />
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-              <Input type="text" label="Complemento*" />
-              <Input type="text" label="Referência*" />
+              <Input
+                type="text"
+                label={`${t("default.myAccount.client.address.complement")}*`}
+              />
+              <Input
+                type="text"
+                label={`${t("default.myAccount.client.address.reference")}*`}
+              />
             </div>
           </div>
         </div>
@@ -213,12 +295,25 @@ export const CustomerInsert = () => {
         <div className="bg-WHITE p-8 w-full rounded-md mt-8">
           <div className="flex items-center gap-4">
             <Icon height={16} icon={"heroicons:user"} color="black" />
-            <SectionTitle size="sm" text="Dados complementares" />
+            <SectionTitle
+              size="sm"
+              text={t("default.myAccount.client.generalData.titleTertiary")}
+            />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
-              <Input type="text" label="Nome do pai*" />
-              <Input type="text" label="Nome da mãe*" />
+              <Input
+                type="text"
+                label={`${t(
+                  "default.myAccount.client.generalData.fatherName"
+                )}*`}
+              />
+              <Input
+                type="text"
+                label={`${t(
+                  "default.myAccount.client.generalData.matherName"
+                )}*`}
+              />
             </div>
             <div className="grid md:grid-cols-3 gap-6">
               <Select
@@ -226,52 +321,106 @@ export const CustomerInsert = () => {
                 onChange={(val) =>
                   val && handleMaritalStatusChange(val as MaritalStatus)
                 }
-                label="Estado civil*"
+                label={`${t(
+                  "default.myAccount.client.generalData.maritalStatus"
+                )}*`}
               >
-                <Option value="Solteiro(a)">Solteiro(a)</Option>
-                <Option value="Casado(a)">Casado(a)</Option>
-                <Option value="Divorciado(a)">Divorciado(a)</Option>
-                <Option value="Viúvo(a)">Viúvo(a)</Option>
-                <Option value="União Estável">União Estável</Option>
-                <Option value="Outro">Outro</Option>
+                <Option value="Solteiro(a)">
+                  {t("default.maritalStatus.single")}
+                </Option>
+                <Option value="Casado(a)">
+                  {t("default.maritalStatus.married")}
+                </Option>
+                <Option value="Divorciado(a)">
+                  {t("default.maritalStatus.divorced")}
+                </Option>
+                <Option value="Viúvo(a)">
+                  {t("default.maritalStatus.widower")}
+                </Option>
+                <Option value="União Estável">
+                  {t("default.maritalStatus.stableUnion")}
+                </Option>
+                <Option value="Outro">
+                  {t("default.maritalStatus.other")}
+                </Option>
               </Select>
-              <Select label="Escolaridade*">
-                <Option>Ensino Médio incompleto</Option>
-                <Option>Ensino médio completo</Option>
-                <Option>Nível Técnico</Option>
-                <Option>Superior Incompleto</Option>
-                <Option>Superior Completo</Option>
-                <Option>Pós graduação/Mestrado/Doutorado</Option>
-                <Option>Outro</Option>
+              <Select
+                label={`${t(
+                  "default.myAccount.client.generalData.education"
+                )}*`}
+              >
+                <Option>{t("default.education.incompleteHighSchool")}</Option>
+                <Option>{t("default.education.completeHighSchool")}</Option>
+                <Option>{t("default.education.technicalCourse")}</Option>
+                <Option>
+                  {t("default.education.incompleteBachelorDegree")}
+                </Option>
+                <Option>{t("default.education.completeBachelorDegree")}</Option>
+                <Option>
+                  {t("default.education.postGraduateMasterDoctorate")}
+                </Option>
+                <Option>{t("default.education.other")}</Option>
               </Select>
-              <Select label="É pessoa politicamente exposta?*">
-                <Option>Sim</Option>
-                <Option>Não</Option>
+              <Select
+                label={`${t(
+                  "default.myAccount.client.generalData.personExportPolitically"
+                )}*`}
+              >
+                <Option>{t("default.otherSelectOptions.yes")}</Option>
+                <Option>{t("default.otherSelectOptions.no")}</Option>
               </Select>{" "}
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-              <Input type="text" label="Qual sua profissão?*" />
-              <Select label="Declara imposto ao governo dos EUA?*">
-                <Option>Sim</Option>
-                <Option>Não</Option>
+              <Input
+                type="text"
+                label={`${t(
+                  "default.myAccount.client.generalData.profession"
+                )}*`}
+              />
+              <Select
+                label={`${t(
+                  "default.myAccount.client.generalData.taxesUSGovernment"
+                )}*`}
+              >
+                <Option>{t("default.otherSelectOptions.yes")}</Option>
+                <Option>{t("default.otherSelectOptions.no")}</Option>
               </Select>
             </div>
             {selectedMaritalStatus == "União Estável" && (
               <div className="grid md:grid-cols-2 gap-6">
-                <Input label="Nome do cônjuge*" />
+                <Input
+                  label={`${t(
+                    "default.myAccount.client.generalData.spouseName"
+                  )}*`}
+                />
               </div>
             )}
             {selectedMaritalStatus == "União Estável" && (
               <div className="grid md:grid-cols-2 gap-6">
-                <Select label="Tipo do documento*" className="w-full">
-                  <Option value="Inscrição estadual">Inscrição estadual</Option>
-                  <Option value="Carteira de habilitação">
-                    Carteira de habilitação
+                <Select
+                  label={`${t(
+                    "default.myAccount.client.generalData.labelDocumentType"
+                  )}*`}
+                  className="w-full"
+                >
+                  <Option value="State Registration">
+                    {t("default.documentTypes.stateRegistration")}
                   </Option>
-                  <Option value="Passaporte">Passaporte</Option>
+                  <Option value="Driver license">
+                    {t("default.documentTypes.driverLicense")}
+                  </Option>
+                  <Option value="Passport">
+                    {t("default.documentTypes.passport")}
+                  </Option>
+                  <Option value="cpf">{t("default.documentTypes.cpf")}</Option>
                 </Select>
-                <Input label="Número do documento*" className="w-full" />
+                <Input
+                  label={`${t(
+                    "default.myAccount.client.generalData.documentNumber"
+                  )}*`}
+                  className="w-full"
+                />
               </div>
             )}
           </div>
@@ -279,43 +428,106 @@ export const CustomerInsert = () => {
         <div className="bg-WHITE p-8 w-full rounded-md mt-8">
           <div className="flex items-center gap-4">
             <Icon height={16} icon={"heroicons:banknotes"} color="black" />
-            <SectionTitle size="sm" text="Dados bancários" />
+            <SectionTitle
+              size="sm"
+              text={t("default.myAccount.client.bankDetails.title")}
+            />
           </div>
           <div className="mt-8 flex flex-col gap-6 ">
             <div className="grid md:grid-cols-2 gap-6">
-            <Select label="Tipo da conta*">
-                <Option>Conta corrente</Option>
-                <Option>Conta conjunta</Option>
-                <Option>Conta poupança</Option>
-                <Option>Outra</Option>
+              <Select
+                label={`${t(
+                  "default.myAccount.client.bankDetails.accountType.title"
+                )}*`}
+              >
+                <Option>
+                  {t(
+                    "default.myAccount.client.bankDetails.accountType.currentAccount"
+                  )}
+                </Option>
+                <Option>
+                  {t(
+                    "default.myAccount.client.bankDetails.accountType.jointAccount"
+                  )}
+                </Option>
+                <Option>
+                  {t(
+                    "default.myAccount.client.bankDetails.accountType.savingsAccount"
+                  )}
+                </Option>
+                <Option>
+                  {t("default.myAccount.client.bankDetails.accountType.other")}
+                </Option>
               </Select>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-              <Input type="text" label="Nome do banco*" />
+              <Input
+                type="text"
+                label={`${t("default.myAccount.client.bankDetails.bankName")}*`}
+              />
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-              <Input type="text" label="Número da conta*" />
-              <Input type="text" label="Dígito da conta*" />
+              <Input
+                type="text"
+                label={`${t(
+                  "default.myAccount.client.bankDetails.numberAccount"
+                )}*`}
+              />
+              <Input
+                type="text"
+                label={`${t(
+                  "default.myAccount.client.bankDetails.accountDigit"
+                )}*`}
+              />
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-              <Input type="text" label="Número da agência*" />
-              <Input type="text" label="Dígito da agência*" />
+              <Input
+                type="text"
+                label={`${t(
+                  "default.myAccount.client.bankDetails.agencyNumber"
+                )}*`}
+              />
+              <Input
+                type="text"
+                label={`${t(
+                  "default.myAccount.client.bankDetails.agencyDigit"
+                )}*`}
+              />
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-            <Select label="Tipo da chave PIX*">
-              <Option>Chave e-mail</Option>
-              <Option>Chave número de telefone</Option>
-              <Option>Chave CPF</Option>
-              <Option>Chave CNPJ</Option>
-              <Option>Chave aleatória</Option>
-            </Select>
-              <Input type="text" label="Chave PIX*" />
+              <Select
+                label={`${t(
+                  "default.myAccount.client.bankDetails.pixKeyType.title"
+                )}*`}
+              >
+                <Option>
+                  {t("default.myAccount.client.bankDetails.pixKeyType.email")}
+                </Option>
+                <Option>
+                  {t("default.myAccount.client.bankDetails.pixKeyType.phone")}
+                </Option>
+                <Option>
+                  {t("default.myAccount.client.bankDetails.pixKeyType.cpf")}
+                </Option>
+                <Option>
+                  {t("default.myAccount.client.bankDetails.pixKeyType.cnpj")}
+                </Option>
+                <Option>
+                  {t(
+                    "default.myAccount.client.bankDetails.pixKeyType.randomKey"
+                  )}
+                </Option>
+              </Select>
+              <Input
+                type="text"
+                label={`${t("default.myAccount.client.bankDetails.pixKey")}*`}
+              />
             </div>
           </div>
         </div>
         <div className="w-full flex justify-end mt-8">
           <Button className="bg-GOLD_MAIN w-full md:w-auto">
-            Adicionar cliente
+            {t("default.clients.button")}
           </Button>
         </div>
       </form>

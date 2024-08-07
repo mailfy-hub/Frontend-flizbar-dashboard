@@ -15,6 +15,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { CurrencyRow } from "../../../components/table/currencyRow";
+import { useTranslation } from "react-i18next";
 
 interface TABLE_ROW_PROPS {
   wallet: string;
@@ -34,16 +35,23 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
   },
 ];
 
-const TABLE_HEAD = ["Código", "Fundo", "Valor", "Data de criação"];
-
 export const Income = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const TABLE_HEAD = [
+    `${t("default.myAccount.admin.income.code")}`,
+    `${t("default.myAccount.admin.income.fund")}`,
+    `${t("default.myAccount.admin.income.value")}`,
+    `${t("default.myAccount.admin.income.createdAt")}`,
+  ];
+
   const handleInsert = () => {
     navigate("insert");
   };
   return (
     <div>
-      <SectionTitle text="Todos rendimentos" />
+      <SectionTitle text={t("default.myAccount.admin.income.title")} />
       <Card shadow={false} className="h-full w-full mt-8">
         <CardHeader
           floated={false}
@@ -52,16 +60,16 @@ export const Income = () => {
         >
           <div>
             <Typography variant="h6" color="black">
-              Tabela de rendimentos
+              {t("default.myAccount.admin.income.tableTitle")}
             </Typography>
             <Typography variant="small" className="text-GRAY_400 font-normal">
-              Veja informações sobre todos seus rendimentos
+              {t("default.myAccount.admin.income.text")}
             </Typography>
           </div>
           <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
             <div className="w-full md:w-72">
               <Input
-                label="Nome do fundo"
+                label={t("default.myAccount.admin.income.fundName")}
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               />
             </div>
@@ -71,7 +79,7 @@ export const Income = () => {
               }}
               className="md:max-w-fit w-full bg-GOLD_MAIN"
             >
-              ADICIONAR RENDIMENTO
+              {t("default.myAccount.admin.income.button")}
             </Button>
           </div>
         </CardHeader>
@@ -147,15 +155,18 @@ export const Income = () => {
         </CardBody>
         <CardFooter className="flex justify-between items-center">
           <Typography variant="h6" color="blue-gray">
-            Página 2 <span className="font-normal text-BLACK">of 10</span>
+            {t("default.pagination.page")} 2{" "}
+            <span className="font-normal text-BLACK">
+              {t("default.pagination.of")} 10
+            </span>
           </Typography>
           <div className="flex gap-4">
             <Button variant="text" className="flex items-center gap-1">
               <ChevronLeftIcon strokeWidth={3} className="h-3 w-3" />
-              Anterior
+              {t("default.pagination.previous")}
             </Button>
             <Button variant="text" className="flex items-center gap-1">
-              Próximo
+              {t("default.pagination.next")}
               <ChevronRightIcon strokeWidth={3} className="h-3 w-3" />
             </Button>
           </div>

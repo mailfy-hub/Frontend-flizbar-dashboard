@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { InferType } from "yup";
 import { api } from "../../../../client/api";
+import { useTranslation } from "react-i18next";
 
 interface dataAddressInformation {
   bairro: string;
@@ -33,28 +34,37 @@ interface dataAddressInformation {
 
 export const Beneficiary = ({ userData }: any) => {
   const profile = userData;
+  const { t } = useTranslation();
   const [isCheckedNotBeneficiary, setIsCheckedNotBeneficiary] = useState(
     profile?.beneficiaries?.length > 0 ? false : true
   );
 
   const validationSchema = Yup.object().shape({
-    nationality: Yup.string().required("nacionality is required"),
-    maritalStatus: Yup.string().required("Estado civil é obrigatório"),
-    profession: Yup.string().required("Qual sua profissão é obrigatória"),
-    zipCode: Yup.string().required("CEP é obrigatório"),
-    city: Yup.string().required("Cidade é obrigatória"),
-    state: Yup.string().required("Estado é obrigatório"),
-    street: Yup.string().required("Logradouro é obrigatório"),
-    number: Yup.string().required("Número é obrigatório"),
-    neighborhood: Yup.string().required("Bairro é obrigatório"),
+    nationality: Yup.string().required(
+      `${t("default.error.nationalityRequired")}`
+    ),
+    maritalStatus: Yup.string().required(
+      `${t("default.error.maritalStatusRequired")}`
+    ),
+    profession: Yup.string().required(
+      `${t("default.error.professionRequired")}`
+    ),
+    zipCode: Yup.string().required(`${t("default.error.zipCodeRequired")}`),
+    city: Yup.string().required(`${t("default.error.cityRequired")}`),
+    state: Yup.string().required(`${t("default.error.stateRequired")}`),
+    street: Yup.string().required(`${t("default.error.streetRequired")}`),
+    number: Yup.string().required(`${t("default.error.numberRequired")}`),
+    neighborhood: Yup.string().required(
+      `${t("default.error.neighborhoodRequired")}`
+    ),
     complement: Yup.string(),
     reference: Yup.string(),
-    fullName: Yup.string().required("Nome completo é obrigatório."),
-    RG: Yup.string().required("RG é obrigatório."),
-    CPF: Yup.string().required("CPF é obrigatório."),
+    fullName: Yup.string().required(`${t("default.error.fullNameRequired")}`),
+    RG: Yup.string().required(`${t("default.error.rgRequired")}`),
+    CPF: Yup.string().required(`${t("default.error.cpfRequired")}`),
     email: Yup.string()
-      .email("Insira um e-mail válido")
-      .required("E-mail é obrigatório."),
+      .email(`${t("default.error.emailValid")}`)
+      .required(`${t("default.error.emailRequired")}`),
   });
 
   type FormValues = InferType<typeof validationSchema>;
@@ -107,13 +117,13 @@ export const Beneficiary = ({ userData }: any) => {
         clientId: profile?.id,
         ...data,
       });
-      toast("Alterado com sucesso", {
+      toast("Updated successfully", {
         type: "success",
         autoClose: 3000,
       });
     } catch (error) {
       console.log(error);
-      toast("Erro ao atualizar.", {
+      toast("Error updating", {
         type: "error",
         autoClose: 3000,
       });
@@ -127,9 +137,9 @@ export const Beneficiary = ({ userData }: any) => {
   const mappedError = useMemo(() => {
     switch (zipcodeGetError) {
       case "zip code not found":
-        return "Cep não encontrado";
+        return "Cep not found";
       default:
-        "Erro de servidor, tente novamente ou retorne mais tarde.";
+        "Server error, please try again or come back later.";
         break;
     }
   }, [zipcodeGetError]);
@@ -174,7 +184,10 @@ export const Beneficiary = ({ userData }: any) => {
       <div className="bg-WHITE p-8 w-full rounded-md ">
         <div className="flex items-center gap-4">
           <Icon height={16} icon={"heroicons:user"} color="black" />
-          <SectionTitle size="sm" text="Beneficiário" />
+          <SectionTitle
+            size="sm"
+            text={t("default.myAccount.client.beneficiary.title")}
+          />
         </div>
         <div>
           <div className="flex items-center gap-2 mt-4">
@@ -303,11 +316,12 @@ export const Beneficiary = ({ userData }: any) => {
                     <Option value="União estável">União estável</Option>
                     <Option value="Outro">Outro</Option>
                   </Select>
-                  {formik.touched.maritalStatus && formik.errors.maritalStatus && (
-                    <Typography variant="small" color="red">
-                      {formik.errors.maritalStatus}
-                    </Typography>
-                  )}
+                  {formik.touched.maritalStatus &&
+                    formik.errors.maritalStatus && (
+                      <Typography variant="small" color="red">
+                        {formik.errors.maritalStatus}
+                      </Typography>
+                    )}
                 </div>
               </div>
               <div className="grid md:grid-cols-2 gap-6">
@@ -365,7 +379,11 @@ export const Beneficiary = ({ userData }: any) => {
 
                   {zipcodeGetError && (
                     <div>
-                      <Typography className="mt-2" variant={"small"} color={"red"}>
+                      <Typography
+                        className="mt-2"
+                        variant={"small"}
+                        color={"red"}
+                      >
                         {mappedError}
                       </Typography>
                     </div>
@@ -471,11 +489,12 @@ export const Beneficiary = ({ userData }: any) => {
                       onChange={formik.handleChange}
                       value={formik.values.neighborhood}
                     />
-                    {formik.touched.neighborhood && formik.errors.neighborhood && (
-                      <Typography variant="small" color="red">
-                        {formik.errors.neighborhood}
-                      </Typography>
-                    )}
+                    {formik.touched.neighborhood &&
+                      formik.errors.neighborhood && (
+                        <Typography variant="small" color="red">
+                          {formik.errors.neighborhood}
+                        </Typography>
+                      )}
                   </div>
                   <div>
                     <Input
@@ -515,10 +534,10 @@ export const Beneficiary = ({ userData }: any) => {
           </>
         )}
       </div>
-        
+
       <div className="w-full flex justify-end mt-8">
         <Button className="bg-GOLD_MAIN w-full md:w-auto" type="submit">
-          Próxima etapa
+          {t("default.myAccount.client.beneficiary.nextStepButton")}
         </Button>
       </div>
     </form>
