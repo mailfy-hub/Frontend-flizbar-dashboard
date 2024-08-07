@@ -18,49 +18,25 @@ import {
   Tooltip,
   Typography,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SectionTitle } from "../../../components/sectionTitle";
 import SuccessDialog from "../../../components/successDialog";
 import { CurrencyRow } from "../../../components/table/currencyRow";
 import { useAuth } from "../../../hook/auth";
+import { deleteQuotation, getAllQuotations } from "../../../client/quotations";
+import { formatDate } from "../../../utils/formatDate";
 import { useTranslation } from "react-i18next";
 
-interface CURRENCY_PROPS {
-  currency_code: "USD" | "EUR" | "JPY" | "BRL";
-  symbol: string;
-  value: number;
-}
-
 interface TABLE_ROW_PROPS {
-  code: string;
-  created_at: string;
-  USD: CURRENCY_PROPS;
-  EUR: CURRENCY_PROPS;
-  JPY: CURRENCY_PROPS;
+  id: string;
+  createdAt: string;
+  dollar: number;
+  euro: number;
+  yen: number;
+  quotationDate: string;
 }
 
-const TABLE_ROW: TABLE_ROW_PROPS[] = [
-  {
-    code: "#TBR52536267",
-    created_at: "23/04/2024",
-    USD: {
-      currency_code: "USD",
-      symbol: "$",
-      value: 2700,
-    },
-    EUR: {
-      currency_code: "EUR",
-      symbol: "€",
-      value: 2700,
-    },
-    JPY: {
-      currency_code: "JPY",
-      symbol: "¥",
-      value: 2700,
-    },
-  },
-];
 
 export const Quotes = () => {
   const navigate = useNavigate();
@@ -80,15 +56,22 @@ export const Quotes = () => {
     navigate("insert");
   };
 
-  const handleEdit = () => {
-    navigate("edit");
+  const handleEdit = (res: Omit<TABLE_ROW_PROPS, "createdAt">) => {
+    navigate("edit", { state: { data: res }});
   };
 
   const [openConfimationDialog, setOpenConfimationDialog] = useState(false);
+  const [quotations, setQuotations] = useState<TABLE_ROW_PROPS[]>([]);
+  const [currentId, setCurrentId] = useState('')
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+
   const handleOpenSuccessDelete = () => {
-    handleToggleConfirmationDialog();
-    handleToggleSuccessDialog();
+    deleteQuotation(currentId)
+      .then(() => {
+        handleToggleConfirmationDialog()
+        handleToggleSuccessDialog()
+      })
+      .catch(err => console.log(err))
   };
 
   const handleToggleSuccessDialog = () => {
@@ -98,6 +81,17 @@ export const Quotes = () => {
   const handleToggleConfirmationDialog = () => {
     setOpenConfimationDialog(!openConfimationDialog);
   };
+
+  useEffect(() => {
+    async function fetchData() {
+      await getAllQuotations()
+      .then(res => setQuotations(res))
+      .catch(err => console.log(err))
+
+    }
+    fetchData()
+
+  })
 
   return (
     <div>
@@ -180,10 +174,10 @@ export const Quotes = () => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROW.map(({ code, created_at, USD, EUR, JPY }) => {
+              {quotations?.map(({ id, createdAt, quotationDate, dollar, euro, yen }) => {
                 const classes = "!p-6 ";
                 return (
-                  <tr key={code}>
+                  <tr key={id}>
                     <td className={classes}>
                       <div className="flex items-center gap-3">
                         <div>
@@ -192,7 +186,7 @@ export const Quotes = () => {
                             color="blue-gray"
                             className="!font-semibold"
                           >
-                            {code}
+                            {id}
                           </Typography>
                         </div>
                       </div>
@@ -205,7 +199,7 @@ export const Quotes = () => {
                             color="blue-gray"
                             className="!font-semibold"
                           >
-                            {created_at}
+                            {formatDate(createdAt)}
                           </Typography>
                         </div>
                       </div>
@@ -213,28 +207,26 @@ export const Quotes = () => {
 
                     <td className={`${classes}`}>
                       <CurrencyRow
-                        currency={USD.currency_code}
-                        value={USD.value}
+                        currency={"USD"}
+                        value={dollar}
                       />
                     </td>
                     <td className={`${classes}`}>
                       <CurrencyRow
-                        currency={EUR.currency_code}
-                        value={USD.value}
+                        currency={"EUR"}
+                        value={euro}
                       />
                     </td>
                     <td className={`${classes}`}>
                       <CurrencyRow
-                        currency={JPY.currency_code}
-                        value={JPY.value}
+                        currency={"JPY"}
+                        value={yen}
                       />
                     </td>
                     {userData?.isAdmin && (
                       <td className={`${classes} flex justify-end `}>
-                        <Tooltip
-                          content={t("default.myAccount.admin.quotes.edit")}
-                        >
-                          <IconButton onClick={handleEdit} variant="text">
+                        <Tooltip content={t("default.myAccount.admin.quotes.edit")}>
+                          <IconButton onClick={() => handleEdit({ id, quotationDate, dollar, euro, yen })} variant="text">
                             <PencilIcon className="w-4 h-4 text-gray-400" />
                           </IconButton>
                         </Tooltip>
@@ -242,7 +234,10 @@ export const Quotes = () => {
                           content={t("default.myAccount.admin.quotes.delete")}
                         >
                           <IconButton
-                            onClick={handleToggleConfirmationDialog}
+                            onClick={() => {
+                              setCurrentId(id)
+                              handleToggleConfirmationDialog()
+                            }}
                             variant="text"
                           >
                             <TrashIcon className="w-4 h-4 text-gray-400" />

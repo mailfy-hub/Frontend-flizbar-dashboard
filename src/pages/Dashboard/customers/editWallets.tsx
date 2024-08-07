@@ -35,7 +35,6 @@ export const EditWallets = () => {
             <div>
               <Button
                 type="button"
-                onClick={handleNewWallet}
                 className="bg-GOLD_MAIN w-full md:w-auto mt-8"
               >
                 {t("default.myAccount.client.contributions.button")}

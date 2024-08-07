@@ -127,7 +127,7 @@ export interface ProfileDetails {
   birthDate: string;
   fatherName?: string;
   motherName: string;
-  personType: "pf" | "pj" | null;
+  personType: "Física" | "Jurídica" | null;
   id: string;
 }
 

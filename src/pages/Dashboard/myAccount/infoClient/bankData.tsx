@@ -213,19 +213,19 @@ export const BankData = () => {
               formik.touched.pixKeyType && Boolean(formik.errors.pixKeyType)
             }
           >
-            <Option value="Email">
+            <Option value="Chave E-mail">
               {t("default.myAccount.client.bankDetails.pixKeyType.email")}
             </Option>
-            <Option value="Telephone">
+            <Option value="Chave número de telefone">
               {t("default.myAccount.client.bankDetails.pixKeyType.phone")}
             </Option>
-            <Option value="CPF">
+            <Option value="Chave CPF">
               {t("default.myAccount.client.bankDetails.pixKeyType.cpf")}
             </Option>
-            <Option value="CNPJ">
+            <Option value="Chave CNPJ">
               {t("default.myAccount.client.bankDetails.pixKeyType.cnpj")}
             </Option>
-            <Option value="Random">
+            <Option value="Chave aleatória">
               {t("default.myAccount.client.bankDetails.pixKeyType.randomKey")}
             </Option>
           </Select>

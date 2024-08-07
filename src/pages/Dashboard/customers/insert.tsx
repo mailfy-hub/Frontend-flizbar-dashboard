@@ -28,9 +28,9 @@ export const CustomerInsert = () => {
     navigate(-1);
   };
 
-  const [documentType, setDocumentType] = useState<"pf" | "pj">("pf");
+  const [documentType, setDocumentType] = useState<"Física" | "Jurídica">("Física");
   const handleDocumentType = (docType: string) => {
-    if (docType === "pf" || docType === "pj") setDocumentType(docType);
+    if (docType === "Física" || docType === "Jurídica") setDocumentType(docType);
   };
 
   const [selectedMaritalStatus, setSelectedMaritalStatus] =
@@ -109,16 +109,16 @@ export const CustomerInsert = () => {
                   "default.myAccount.client.generalData.typePerson.labelTypePerson"
                 )}*`}
               >
-                <Option value="pf">
+                <Option value="Física">
                   {t(
                     "default.myAccount.client.generalData.typePerson.physical"
                   )}
                 </Option>
-                <Option value="pj">
+                <Option value="Jurídica">
                   {t("default.myAccount.client.generalData.typePerson.legal")}
                 </Option>
               </Select>
-              {documentType == "pf" ? (
+              {documentType == "Física" ? (
                 <Input
                   type="text"
                   label={`${t("default.myAccount.client.generalData.name")}*`}
@@ -133,7 +133,7 @@ export const CustomerInsert = () => {
               )}
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-              {documentType == "pf" && (
+              {documentType == "Física" && (
                 <Input
                   type="date"
                   label={`${t(
@@ -193,7 +193,7 @@ export const CustomerInsert = () => {
               />
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-              {documentType == "pf" && (
+              {documentType == "Física" && (
                 <Select label={`${t("default.gender.title")}*`}>
                   <Option>{t("default.gender.male")}</Option>
                   <Option>{t("default.gender.female")}</Option>

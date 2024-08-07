@@ -42,7 +42,7 @@ export const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
     { value: "IBAN", label: "IBAN" },
   ];
 
-  const options = personType === "pf" ? optionsPF : optionsPJ;
+  const options = personType === "Física" ? optionsPF : optionsPJ;
 
   return (
     <Select
