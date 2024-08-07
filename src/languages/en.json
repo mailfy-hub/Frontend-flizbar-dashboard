@@ -292,6 +292,27 @@
             "secondTitle": "Enter quote data",
             "button": "ADD COMPARATIVE VALUES"
           }
+        },
+        "quotes": {
+          "title": "All quotes",
+          "secondaryTitle": "Edit your quote",
+          "tableTitle": "Quotes table",
+          "text": "View information about all your quotes",
+          "code": "Code",
+          "createdAt": "Created date",
+          "dollar": "DollarDólar",
+          "yenes": "Yen",
+          "euro": "Euro",
+          "actions": "Actions",
+          "edit": "Edit",
+          "delete": "Delete",
+          "button": "ADD QUOTE",
+          "addQuoteForm": {
+            "title": "Fill in the add form",
+            "subtitle": "Quote",
+            "dateOfQuote": "Quote date",
+            "buttonUpdateData": "UPDATE DATA"
+          }
         }
       },
       "client": {

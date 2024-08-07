@@ -271,6 +271,27 @@
             "secondTitle": "Ingrese los datos de la cotización",
             "button": "AÑADIR VALORES COMPARATIVOS"
           }
+        },
+        "quotes": {
+          "title": "Todas las citas",
+          "secondaryTitle": "Edita tu cotización",
+          "tableTitle": "Tabla de cotizaciones",
+          "text": "Ver información de todas tus cotizaciones",
+          "code": "Código",
+          "createdAt": "Fecha de creación",
+          "dollar": "Dólar",
+          "yenes": "Yene",
+          "euro": "Euro",
+          "actions": "Acciones",
+          "edit": "Editar",
+          "delete": "Eliminar",
+          "button": "AÑADIR COTIZACIÓN",
+          "addQuoteForm": {
+            "title": "Rellena el formulario de inclusión",
+            "subtitle": "Cita",
+            "dateOfQuote": "Fecha de cotización",
+            "buttonUpdateData": "ACTUALIZAR DATOS"
+          }
         }
       },
       "client": {
