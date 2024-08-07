@@ -230,7 +230,7 @@ export const BankData = ({ handleConfirmationClick }: FormStepType) => {
                 formik.setFieldValue("pixKeyType", selectedValue);
               }}
             >
-              <Option value="Chave e-mail">Chave e-mail</Option>
+              <Option value="Chave E-mail">Chave E-mail</Option>
               <Option value="Chave número de telefone">Chave número de telefone</Option>
               <Option value="Chave CPF">Chave CPF</Option>
               <Option value="Chave CNPJ">Chave CNPJ</Option>

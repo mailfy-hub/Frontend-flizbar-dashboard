@@ -201,7 +201,7 @@ export const GenerateData = ({ handleConfirmationClick }: FormStepType) => {
             >
               <Option value="Física">Física</Option>
               <Option value="Jurídica">Jurídica</Option>
-              {/*  <Option value="pj">Jurídica</Option> */}
+              {/*  <Option value="Jurídica">Jurídica</Option> */}
             </Select>
             {formik.values.personType == "Física" ? (
               <Input
