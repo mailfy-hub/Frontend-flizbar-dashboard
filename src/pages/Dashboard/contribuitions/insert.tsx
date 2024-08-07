@@ -347,13 +347,6 @@ const AdminForm = ({ formik, clients, wallets }: AdminFormProps) => {
             />
           </div>
           <div className="grid md:grid-cols-2 gap-6">
-            <Input
-              type="number"
-              label={t("default.contributions.addContributionForm.dollarValue")}
-              name="dollarValue"
-              value={formik.values.dollarValue}
-              onChange={formik.handleChange}
-            />
             <Select
               label={t("default.contributions.addContributionForm.status")}
               id="status"
