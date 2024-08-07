@@ -269,6 +269,30 @@
             "valueOfReadjustment": "Valor da readequação",
             "dateOfReadjustment": "Data da readequação"
           }
+        },
+        "comparativeValues": {
+          "title": "Todos os valores comparativos",
+          "secondaryTitle": "Dados do valor comparativo",
+          "tableTitle": "Tabela de valores comparativos",
+          "text": "Visualize todos os valores comparativos do sistema",
+          "code": "Código",
+          "date": "Data",
+          "flizBar": "FlizBar",
+          "CDI": "CDI",
+          "savings": "Poupança",
+          "interestRate": "Taxa de juros (BC)",
+          "actions": "Ações",
+          "editUser":"Editar usuário",
+          "deleteUser":"Deletar usuário",
+          "button": "ADICIONAR VALOR COMPARATIVO",
+          "secondaryButton": "ATUALIZAR DADOS",
+          "addComparativeValueForm": {
+            "title": "Preencha o formulário de inclusão",
+            "subtitle": "Cotação",
+            "dataDating": "Datação dos dados",
+            "secondTitle": "Insira os dados das cotações",
+            "button": "ADICIONAR VALORES COMPARATIVOS"
+          }
         }
       },
       "client": {

@@ -268,6 +268,30 @@
             "valueOfReadjustment": "Amount of readjustment",
             "dateOfReadjustment": "Date of readjustment"
           }
+        },
+        "comparativeValues": {
+          "title": "All comparative values",
+          "secondaryTitle": "Comparative Value Data",
+          "tableTitle": "Comparative values table",
+          "text": "See all comparative values in the system",
+          "code": "Code",
+          "date": "Date",
+          "flizBar": "FlizBar",
+          "CDI": "CDI",
+          "savings": "Savings",
+          "interestRate": "Interest rate (BC)",
+          "actions": "Actions",
+          "editUser":"Edit user",
+          "deleteUser":"Delete user",
+          "button": "ADD COMPARATIVE VALUE",
+          "secondaryButton": "UPDATE DATA",
+          "addComparativeValueForm": {
+            "title": "Fill in the inclusion form",
+            "subtitle": "Quote",
+            "dataDating": "Data dating",
+            "secondTitle": "Enter quote data",
+            "button": "ADD COMPARATIVE VALUES"
+          }
         }
       },
       "client": {

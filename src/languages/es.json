@@ -247,6 +247,30 @@
             "valueOfReadjustment": "Valor de reajuste",
             "dateOfReadjustment": "Fecha de reajuste"
           }
+        },
+        "comparativeValues": {
+          "title": "Todos los valores comparativos",
+          "secundaryTitle": "Datos de valores comparativos",
+          "tableTitle": "Tabla de valores comparativos",
+          "text": "Ver todos los valores comparativos del sistema",
+          "code": "Código",
+          "date": "Fecha",
+          "flizBar": "FlizBar",
+          "CDI": "CDI",
+          "savings": "Ahorros",
+          "interestRate": "Tasa de interés (BC)",
+          "actions": "Acciones",
+          "editUser":"Editar usuário",
+          "deleteUser":"Eliminar usuario",
+          "button": "AÑADIR VALOR COMPARATIVO",
+          "secondaryButton": "ACTUALIZAR DATOS",
+          "addComparativeValueForm": {
+            "title": "Rellena el formulario de inclusión",
+            "subtitle": "Precio",
+            "dataDating": "Citas de datos",
+            "secondTitle": "Ingrese los datos de la cotización",
+            "button": "AÑADIR VALORES COMPARATIVOS"
+          }
         }
       },
       "client": {
