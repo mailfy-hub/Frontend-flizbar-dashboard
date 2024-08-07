@@ -459,6 +459,9 @@
       "commercial": "Comercial",
       "other": "Outro"
     },
+    "routes": {
+      "dashboard": "Dashboard"
+    },
     "periodOfTime": {
       "days": "Dia(s)",
       "weeks": "Semana(s)",

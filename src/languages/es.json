@@ -439,6 +439,9 @@
       "months": "Meses",
       "years": "Años"
     },
+    "routes": {
+      "dashboard": "Dashboard"
+    },
     "error": {
       "typePersonRequired": "Se requiere tipo de persona",
       "bornDateRequired": "La fecha de nacimiento es obligatoria",

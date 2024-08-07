@@ -58,332 +58,490 @@ export interface routeMapped {
   isAdmin?: RouteRole;
 }
 
-function createRouteMapped(route: Partial<routeMapped>): routeMapped {
-  return {
-    path: route.path || "",
-    name: route.name || "",
-    icon: route.icon,
-    isAdmin: route.isAdmin,
-    element: route.element!,
-    subRoutes: route.subRoutes || [],
-    addToSidebar: route.addToSidebar !== undefined ? route.addToSidebar : true,
-    isOutletRoute:
-      route.isOutletRoute !== undefined ? route.isOutletRoute : false,
-    blockSidebarInteractivity:
-      route.blockSidebarInteractivity !== undefined
-        ? route.blockSidebarInteractivity
-        : false,
-  };
-}
+export const RoutesMapped = () => {
+  function createRouteMapped(route: Partial<routeMapped>): routeMapped {
+    return {
+      path: route.path || "",
+      name: route.name || "",
+      icon: route.icon,
+      isAdmin: route.isAdmin,
+      element: route.element!,
+      subRoutes: route.subRoutes || [],
+      addToSidebar:
+        route.addToSidebar !== undefined ? route.addToSidebar : true,
+      isOutletRoute:
+        route.isOutletRoute !== undefined ? route.isOutletRoute : false,
+      blockSidebarInteractivity:
+        route.blockSidebarInteractivity !== undefined
+          ? route.blockSidebarInteractivity
+          : false,
+    };
+  }
 
-export const routesMapped: routeMapped[] = [
-  createRouteMapped({
-    path: "/",
-    element: <Home />,
-    name: "Dashboard",
-    icon: "radix-icons:dashboard",
-    isAdmin: "all",
-    subRoutes: [],
-    addToSidebar: true,
-    isOutletRoute: true,
-  }),
-  createRouteMapped({
-    path: "/profile",
-    element: <UserDataProfile />,
-    name: "Perfil do usuário",
-    icon: "heroicons:building-storefront",
-    isAdmin: false,
-    subRoutes: [],
-    addToSidebar: false,
-    isOutletRoute: true,
-    blockSidebarInteractivity: false,
-  }),
-  createRouteMapped({
-    path: "/my-account",
-    element: <MyAccount />,
-    name: "Minha conta",
-    icon: "radix-icons:dashboard",
-    isAdmin: "all",
-    subRoutes: [],
-    addToSidebar: false,
-    isOutletRoute: true,
-  }),
-  createRouteMapped({
-    path: "/users",
-    element: <Users />,
-    addToSidebar: true,
-    isOutletRoute: true,
-    name: "Usuários",
-    icon: "heroicons:users",
-    isAdmin: true,
-    subRoutes: [
-      {
-        name: "Edite seu usuário",
-        path: "edit/:id",
-        element: <UserEdit />,
-      },
-      {
-        name: "Crie um usuário",
-        path: "insert",
-        element: <UserInsert />,
-      },
-    ],
-  }),
-  createRouteMapped({
-    path: "/customers",
-    name: "Clientes",
-    addToSidebar: true,
-    isOutletRoute: true,
-    icon: "heroicons:building-storefront",
-    element: <Customers />,
-    isAdmin: true,
-    subRoutes: [
-      {
-        name: "Edite seu cliente",
-        path: "edit",
-        element: <CustomerEdit />,
-      },
-      {
-        name: "Crie um cliente",
-        path: "insert",
-        element: <CustomerInsert />,
-      },
-    ],
-  }),
-  createRouteMapped({
-    path: "/funds",
-    name: "Fundos",
-    addToSidebar: true,
-    isOutletRoute: true,
-    icon: "heroicons:currency-dollar",
-    element: <Funds />,
-    isAdmin: true,
+  const lang = localStorage.getItem("language") || "en";
 
-    subRoutes: [
-      {
-        name: "Edite seu fundo",
-        path: "edit/:id",
-        element: <FundsEdit />,
-      },
-      {
-        name: "Crie um fundo",
-        path: "insert",
-        element: <FundsInsert />,
-      },
-    ],
-  }),
-  createRouteMapped({
-    path: "/wallets",
-    name: "Carteiras",
-    addToSidebar: true,
-    isOutletRoute: true,
-    icon: "heroicons:wallet",
-    element: <Wallets />,
-    isAdmin: true,
+  const routes: routeMapped[] = [
+    createRouteMapped({
+      path: "/",
+      element: <Home />,
+      name: "Dashboard",
+      icon: "radix-icons:dashboard",
+      isAdmin: "all",
+      subRoutes: [],
+      addToSidebar: true,
+      isOutletRoute: true,
+    }),
+    createRouteMapped({
+      path: "/profile",
+      element: <UserDataProfile />,
+      name: "UserProfile",
+      icon: "heroicons:building-storefront",
+      isAdmin: false,
+      subRoutes: [],
+      addToSidebar: false,
+      isOutletRoute: true,
+      blockSidebarInteractivity: false,
+    }),
+    createRouteMapped({
+      path: "/my-account",
+      element: <MyAccount />,
+      name:
+        lang === "en"
+          ? "My account"
+          : lang === "pt"
+          ? "Minha conta"
+          : "Mi cuenta",
+      icon: "radix-icons:dashboard",
+      isAdmin: "all",
+      subRoutes: [],
+      addToSidebar: false,
+      isOutletRoute: true,
+    }),
+    createRouteMapped({
+      path: "/users",
+      element: <Users />,
+      addToSidebar: true,
+      isOutletRoute: true,
+      name: lang === "en" ? "Users" : lang === "pt" ? "Usuários" : "Usuarios",
+      icon: "heroicons:users",
+      isAdmin: true,
+      subRoutes: [
+        {
+          name:
+            lang === "en"
+              ? "Edit User"
+              : lang === "pt"
+              ? "Edite seu usuário"
+              : "Editar Usuario",
+          path: "edit/:id",
+          element: <UserEdit />,
+        },
+        {
+          name:
+            lang === "en"
+              ? "Create User"
+              : lang === "pt"
+              ? "Crie um usuário"
+              : "Crear Usuario",
+          path: "insert",
+          element: <UserInsert />,
+        },
+      ],
+    }),
+    createRouteMapped({
+      path: "/customers",
+      name:
+        lang === "en" ? "Customers" : lang === "pt" ? "Clientes" : "Clientes",
+      addToSidebar: true,
+      isOutletRoute: true,
+      icon: "heroicons:building-storefront",
+      element: <Customers />,
+      isAdmin: true,
+      subRoutes: [
+        {
+          name:
+            lang === "en"
+              ? "Edit Client"
+              : lang === "pt"
+              ? "Edite seu cliente"
+              : "Editar Cliente",
+          path: "edit",
+          element: <CustomerEdit />,
+        },
+        {
+          name:
+            lang === "en"
+              ? "Create Client"
+              : lang === "pt"
+              ? "Crie um cliente"
+              : "Crear Cliente",
+          path: "insert",
+          element: <CustomerInsert />,
+        },
+      ],
+    }),
+    createRouteMapped({
+      path: "/funds",
+      name: lang === "en" ? "Funds" : lang === "pt" ? "Fundos" : "Fondos",
+      addToSidebar: true,
+      isOutletRoute: true,
+      icon: "heroicons:currency-dollar",
+      element: <Funds />,
+      isAdmin: true,
 
-    subRoutes: [
-      {
-        name: "Edite sua carteira",
-        path: "edit",
-        element: <WalletEdit />,
-      },
-      {
-        name: "Crie uma carteira",
-        path: "insert",
-        element: <WalletInsert />,
-      },
-    ],
-  }),
-  createRouteMapped({
-    path: "/contributions",
-    name: "Aportes",
-    addToSidebar: true,
-    isOutletRoute: true,
-    icon: "radix-icons:dashboard",
-    isAdmin: "all",
-    element: <Contribuitions />,
-    subRoutes: [
-      {
-        name: "Faça um aporte",
-        path: "insert",
-        element: <ContribuitionInsert />,
-      },
-      {
-        name: "Detalhes do aporte",
-        path: "details/:id",
-        element: <ContribuitionDetails />,
-      },
-    ],
-  }),
-  createRouteMapped({
-    path: "/income",
-    name: "Rendimentos",
-    addToSidebar: true,
-    isOutletRoute: true,
-    icon: "heroicons:arrow-trending-up-20-solid",
-    element: <Income />,
-    isAdmin: true,
+      subRoutes: [
+        {
+          name:
+            lang === "en"
+              ? "Edit Fund"
+              : lang === "pt"
+              ? "Edite seu fundo"
+              : "Editar Fondo",
+          path: "edit/:id",
+          element: <FundsEdit />,
+        },
+        {
+          name:
+            lang === "en"
+              ? "Create Fund"
+              : lang === "pt"
+              ? "Crie um fundo"
+              : "Crear Fondo",
+          path: "insert",
+          element: <FundsInsert />,
+        },
+      ],
+    }),
+    createRouteMapped({
+      path: "/wallets",
+      name:
+        lang === "en" ? "Wallets" : lang === "pt" ? "Carteiras" : "Billeteras",
+      addToSidebar: true,
+      isOutletRoute: true,
+      icon: "heroicons:wallet",
+      element: <Wallets />,
+      isAdmin: true,
 
-    subRoutes: [
-      {
-        name: "Adicione um rendimento",
-        path: "insert",
-        element: <IncomeInsert />,
-      },
-    ],
-  }),
-  createRouteMapped({
-    path: "/withdraw",
-    name: "Resgates",
-    addToSidebar: true,
-    isOutletRoute: true,
-    icon: "heroicons:arrow-uturn-down",
-    isAdmin: "all",
-    element: <Withdraw />,
-    subRoutes: [
-      {
-        name: "Crie um valor comparativo",
-        path: "insert",
-        element: <WithdrawInsert />,
-      },
-    ],
-  }),
-  createRouteMapped({
-    path: "/movements",
-    name: "Movimentações",
-    addToSidebar: true,
-    isOutletRoute: true,
-    icon: "heroicons:arrows-right-left",
-    isAdmin: "all",
-    element: <Movements />,
-    subRoutes: [],
-  }),
-  createRouteMapped({
-    path: "/readjustments",
-    name: "Readequações",
-    addToSidebar: true,
-    isOutletRoute: true,
-    isAdmin: true,
+      subRoutes: [
+        {
+          name:
+            lang === "en"
+              ? "Edit Wallet"
+              : lang === "pt"
+              ? "Edite sua carteira"
+              : "Editar Billetera",
+          path: "edit",
+          element: <WalletEdit />,
+        },
+        {
+          name:
+            lang === "en"
+              ? "Create Wallet"
+              : lang === "pt"
+              ? "Crie uma carteira"
+              : "Crear Billetera",
+          path: "insert",
+          element: <WalletInsert />,
+        },
+      ],
+    }),
+    createRouteMapped({
+      path: "/contributions",
+      name:
+        lang === "en" ? "Contributions" : lang === "pt" ? "Aportes" : "Aportes",
+      addToSidebar: true,
+      isOutletRoute: true,
+      icon: "radix-icons:dashboard",
+      isAdmin: "all",
+      element: <Contribuitions />,
+      subRoutes: [
+        {
+          name:
+            lang === "en"
+              ? "Make a contribution"
+              : lang === "pt"
+              ? "Faça um aporte"
+              : "Hacer una contribución",
+          path: "insert",
+          element: <ContribuitionInsert />,
+        },
+        {
+          name:
+            lang === "en"
+              ? "Contribution details"
+              : lang === "pt"
+              ? "Detalhes do aporte"
+              : "Detalles de la contribución",
+          path: "details/:id",
+          element: <ContribuitionDetails />,
+        },
+      ],
+    }),
+    createRouteMapped({
+      path: "/income",
+      name:
+        lang === "en" ? "Incomes" : lang === "pt" ? "Rendimentos" : "Ingresos",
+      addToSidebar: true,
+      isOutletRoute: true,
+      icon: "heroicons:arrow-trending-up-20-solid",
+      element: <Income />,
+      isAdmin: true,
 
-    icon: "heroicons:briefcase",
-    element: <Readjustments />,
-    subRoutes: [
-      {
-        name: "Adicione uma readequação",
-        path: "insert",
-        element: <ReadjustmentsInsert />,
-      },
-    ],
-  }),
-  createRouteMapped({
-    path: "/comparative-values",
-    name: "Valores comparativos",
-    icon: "heroicons:table-cells",
-    addToSidebar: true,
-    isOutletRoute: true,
-    element: <ComparativeValues />,
-    isAdmin: true,
+      subRoutes: [
+        {
+          name:
+            lang === "en"
+              ? "Add an income"
+              : lang === "pt"
+              ? "Adicione um rendimento"
+              : "Agregar un ingreso",
+          path: "insert",
+          element: <IncomeInsert />,
+        },
+      ],
+    }),
+    createRouteMapped({
+      path: "/withdraw",
+      name:
+        lang === "en" ? "Withdraws" : lang === "pt" ? "Resgates" : "Retiros",
+      addToSidebar: true,
+      isOutletRoute: true,
+      icon: "heroicons:arrow-uturn-down",
+      isAdmin: "all",
+      element: <Withdraw />,
+      subRoutes: [
+        {
+          name:
+            lang === "en"
+              ? "Create a comparative value"
+              : lang === "pt"
+              ? "Crie um valor comparativo"
+              : "Crear un valor comparativo",
+          path: "insert",
+          element: <WithdrawInsert />,
+        },
+      ],
+    }),
+    createRouteMapped({
+      path: "/movements",
+      name:
+        lang === "en"
+          ? "Movements"
+          : lang === "pt"
+          ? "Movimentações"
+          : "Movimientos",
+      addToSidebar: true,
+      isOutletRoute: true,
+      icon: "heroicons:arrows-right-left",
+      isAdmin: "all",
+      element: <Movements />,
+      subRoutes: [],
+    }),
+    createRouteMapped({
+      path: "/readjustments",
+      name:
+        lang === "en"
+          ? "Readjustments"
+          : lang === "pt"
+          ? "Readequações"
+          : "Reajustes",
+      addToSidebar: true,
+      isOutletRoute: true,
+      isAdmin: true,
 
-    subRoutes: [
-      {
-        name: "Edite seu valor comparativo",
-        path: "edit",
-        element: <ComparativeValuesEdit />,
-      },
-      {
-        name: "Crie um valor comparativo",
-        path: "insert",
-        element: <ComparativeValuesInsert />,
-      },
-    ],
-  }),
-  createRouteMapped({
-    path: "/quotes",
-    name: "Cotações",
-    icon: "heroicons:chart-bar",
-    addToSidebar: true,
-    isOutletRoute: true,
-    element: <Quotes />,
-    isAdmin: true,
+      icon: "heroicons:briefcase",
+      element: <Readjustments />,
+      subRoutes: [
+        {
+          name:
+            lang === "en"
+              ? "Add a readjustment"
+              : lang === "pt"
+              ? "Adicione uma readequação"
+              : "Agregar un reajuste",
+          path: "insert",
+          element: <ReadjustmentsInsert />,
+        },
+      ],
+    }),
+    createRouteMapped({
+      path: "/comparative-values",
+      name:
+        lang === "en"
+          ? "Comparative values"
+          : lang === "pt"
+          ? "Valores comparativos"
+          : "Valores comparativos",
+      icon: "heroicons:table-cells",
+      addToSidebar: true,
+      isOutletRoute: true,
+      element: <ComparativeValues />,
+      isAdmin: true,
 
-    subRoutes: [
-      {
-        name: "Adicione uma cotação",
-        path: "insert",
-        element: <QuotesInsert />,
-      },
-      {
-        name: "Edite uma cotação",
-        path: "edit",
-        element: <QuotesEdit />,
-      },
-    ],
-  }),
-  createRouteMapped({
-    path: "/calculated-interest",
-    name: "Juros calculados",
-    addToSidebar: true,
-    isOutletRoute: true,
-    icon: "heroicons:circle-stack",
-    element: <CalculedInterest />,
-    isAdmin: true,
+      subRoutes: [
+        {
+          name:
+            lang === "en"
+              ? "Edit your comparative value"
+              : lang === "pt"
+              ? "Edite seu valor comparativo"
+              : "Editar su valor comparativo",
+          path: "edit",
+          element: <ComparativeValuesEdit />,
+        },
+        {
+          name:
+            lang === "en"
+              ? "Create a comparative value"
+              : lang === "pt"
+              ? "Crie um valor comparativo"
+              : "Crear un valor comparativo",
+          path: "insert",
+          element: <ComparativeValuesInsert />,
+        },
+      ],
+    }),
+    createRouteMapped({
+      path: "/quotes",
+      name:
+        lang === "en" ? "Quotes" : lang === "pt" ? "Cotações" : "Cotizaciones",
+      icon: "heroicons:chart-bar",
+      addToSidebar: true,
+      isOutletRoute: true,
+      element: <Quotes />,
+      isAdmin: true,
 
-    subRoutes: [
-      {
-        name: "Edite seu cálculo",
-        path: "edit",
-        element: <CalculedInterestEdit />,
-      },
-      {
-        name: "Crie um cálculo",
-        path: "insert",
-        element: <CalculedInterestInsert />,
-      },
-    ],
-  }),
-  createRouteMapped({
-    path: "/interested-calculator",
-    element: <Calculator />,
-    name: "Calculadora de juros",
-    icon: "heroicons:circle-stack",
-    isAdmin: false,
-    subRoutes: [],
-    addToSidebar: true,
-    isOutletRoute: true,
-  }),
-  createRouteMapped({
-    path: "/verify-access",
-    element: <VerifyAccess />,
-    name: "Verifição de acesso",
-    subRoutes: [
-      {
-        name: "Verifique o código de acesso",
-        path: "code",
-        element: <VerifyAccessCode />,
-      },
-    ],
-    addToSidebar: false,
-    isOutletRoute: false,
-  }),
-  createRouteMapped({
-    path: "/fullfill-user-form",
-    element: <UserDataProfile />,
-    name: "Cadastro de dados",
-    icon: "heroicons:circle-stack",
-    isAdmin: false,
-    subRoutes: [],
-    addToSidebar: false,
-    isOutletRoute: true,
-    blockSidebarInteractivity: false,
-  }),
-  createRouteMapped({
-    path: "/users-history",
-    element: <History />,
-    name: "Atividades Recente",
-    icon: "mdi:history",
-    isAdmin: true,
-    subRoutes: [],
-    addToSidebar: false,
-    isOutletRoute: true,
-  }),
-];
+      subRoutes: [
+        {
+          name:
+            lang === "en"
+              ? "Add a quote"
+              : lang === "pt"
+              ? "Adicione uma cotação"
+              : "Agregar una cotización",
+          path: "insert",
+          element: <QuotesInsert />,
+        },
+        {
+          name:
+            lang === "en"
+              ? "Edit a quote"
+              : lang === "pt"
+              ? "Edite uma cotação"
+              : "Editar una cotización",
+          path: "edit",
+          element: <QuotesEdit />,
+        },
+      ],
+    }),
+    createRouteMapped({
+      path: "/calculated-interest",
+      name:
+        lang === "en"
+          ? "Calculated interest"
+          : lang === "pt"
+          ? "Juros calculados"
+          : "Intereses calculados",
+      addToSidebar: true,
+      isOutletRoute: true,
+      icon: "heroicons:circle-stack",
+      element: <CalculedInterest />,
+      isAdmin: true,
+
+      subRoutes: [
+        {
+          name:
+            lang === "en"
+              ? "Edit your calculation"
+              : lang === "pt"
+              ? "Edite seu cálculo"
+              : "Editar su cálculo",
+          path: "edit",
+          element: <CalculedInterestEdit />,
+        },
+        {
+          name:
+            lang === "en"
+              ? "Create a calculation"
+              : lang === "pt"
+              ? "Crie um cálculo"
+              : "Crear un cálculo",
+          path: "insert",
+          element: <CalculedInterestInsert />,
+        },
+      ],
+    }),
+    createRouteMapped({
+      path: "/interested-calculator",
+      element: <Calculator />,
+      name:
+        lang === "en"
+          ? "Interested calculator"
+          : lang === "pt"
+          ? "Calculadora de juros"
+          : "Calculadora de intereses",
+      icon: "heroicons:circle-stack",
+      isAdmin: false,
+      subRoutes: [],
+      addToSidebar: true,
+      isOutletRoute: true,
+    }),
+    createRouteMapped({
+      path: "/verify-access",
+      element: <VerifyAccess />,
+      name:
+        lang === "en"
+          ? "Access verification"
+          : lang === "pt"
+          ? "Verificação de acesso"
+          : "Verificación de acceso",
+      subRoutes: [
+        {
+          name:
+            lang === "en"
+              ? "Check the access code"
+              : lang === "pt"
+              ? "Verifique o código de acesso"
+              : "Verifique el código de acceso",
+          path: "code",
+          element: <VerifyAccessCode />,
+        },
+      ],
+      addToSidebar: false,
+      isOutletRoute: false,
+    }),
+    createRouteMapped({
+      path: "/fullfill-user-form",
+      element: <UserDataProfile />,
+      name:
+        lang === "en"
+          ? "Data registration"
+          : lang === "pt"
+          ? "Cadastro de dados"
+          : "Registro de datos",
+      icon: "heroicons:circle-stack",
+      isAdmin: false,
+      subRoutes: [],
+      addToSidebar: false,
+      isOutletRoute: true,
+      blockSidebarInteractivity: false,
+    }),
+    createRouteMapped({
+      path: "/users-history",
+      element: <History />,
+      name:
+        lang === "en"
+          ? "Recent activity"
+          : lang === "pt"
+          ? "Atividades recente"
+          : "Actividad reciente",
+      icon: "mdi:history",
+      isAdmin: true,
+      subRoutes: [],
+      addToSidebar: false,
+      isOutletRoute: true,
+    }),
+  ];
+
+  return routes;
+};

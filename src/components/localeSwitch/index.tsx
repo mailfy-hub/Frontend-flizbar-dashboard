@@ -40,12 +40,17 @@ export default function LocaleSwitch() {
     return false;
   }, [size]);
 
+  const refreshPage = () => {
+    window.location.reload();
+  };
+
   const handleSelect = (newLocale: Locale) => {
     setLanguage(newLocale);
     localStorage.setItem("selectedLocale", newLocale);
     localStorage.setItem("language", newLocale);
     setSelectedLocale(newLocale);
     setIsOpen(false);
+    refreshPage();
   };
 
   useEffect(() => {

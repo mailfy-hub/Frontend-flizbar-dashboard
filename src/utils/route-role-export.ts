@@ -1,9 +1,9 @@
-import { routeMapped, routesMapped } from "./route-config";
+import { routeMapped, RoutesMapped } from "./route-config";
 
 export const generateRoutesByRole = (
   userIsAdmin: boolean,
 ): routeMapped[] => {
-  const routes = routesMapped.filter((route) => {
+  const routes = RoutesMapped().filter((route) => {
     if (userIsAdmin == route.isAdmin || route.isAdmin == "all") {
       return route;
     }
@@ -11,3 +11,4 @@ export const generateRoutesByRole = (
 
   return routes;
 };
+9

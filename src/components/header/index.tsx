@@ -13,7 +13,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../hook/auth";
-import { routesMapped } from "../../utils/route-config";
+import { RoutesMapped } from "../../utils/route-config";
 import { generateRoutesByRole } from "../../utils/route-role-export";
 import { Logo } from "../logo";
 import { PageButton } from "../sidebar/PageButton";
@@ -62,7 +62,7 @@ export const Header = ({ isBlocked = false }: HeaderType) => {
   );
 
   const getPageInfo = (route: string) => {
-    const foundRoute = routesMapped
+    const foundRoute = RoutesMapped()
       .filter((r) => route.startsWith(r.path))
       .sort((a, b) => b.path.length - a.path.length)[0];
 

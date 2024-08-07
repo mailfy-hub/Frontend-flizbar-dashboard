@@ -17,16 +17,18 @@ const resources = {
   }
 };
 
+
+
 const locales = ["pt", "en", "es"]
-export const defaultLocale = "en";
+export const defaultLocale = localStorage.getItem("language") || "en";
 export type Locale = (typeof locales)[number];
 
 i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'en', // Set a default language
-    fallbackLng: 'en',
+    lng: defaultLocale, // Set a default language
+    fallbackLng: defaultLocale,
     interpolation: {
       escapeValue: false
     }

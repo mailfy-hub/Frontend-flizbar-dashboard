@@ -466,6 +466,9 @@
       "months": "Months",
       "years": "Years"
     },
+    "routes": {
+      "dashboard": "Dashboard"
+    },
     "error": {
       "typePersonRequired": "Person type is required",
       "bornDateRequired": "Birth date is required",
