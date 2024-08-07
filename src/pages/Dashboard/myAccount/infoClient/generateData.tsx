@@ -14,16 +14,16 @@ export const GenerateData = () => {
 
   const validationSchema = Yup.object().shape({
     personType: Yup.string()
-      .oneOf(["pf", "pj"])
+      .oneOf(["Física", "Jurídica"])
       .required("Tipo de pessoa é obrigatório"),
     /* name: Yup.string().when("personType", {
-      is: "pf",
+      is: "Física",
       then(schema) {
         return schema.required("name is required");
       },
     }), */
     birthDate: Yup.date().when("personType", {
-      is: "pf",
+      is: "Física",
       then(schema) {
         return schema.required("birth date is required");
       },
@@ -32,14 +32,14 @@ export const GenerateData = () => {
     documentType: Yup.string().required("doctype is required"),
     document: Yup.string().required("docnum is required"),
     gender: Yup.string().when("personType", {
-      is: "pf",
+      is: "Física",
       then(schema) {
         return schema.required("Must enter a gender");
       },
     }),
     /* personalPhone: Yup.string().required("personalPhone is required"), */
     corporateName: Yup.string().when("personType", {
-      is: "pj",
+      is: "Jurídica",
       then(schema) {
         return schema.required("Must enter a company name");
       },
@@ -78,7 +78,7 @@ export const GenerateData = () => {
   const initialValues: FormValues = {
     personType: profile?.clientDetails?.personType
       ? profile?.clientDetails?.personType
-      : "pf",
+      : "Física",
     corporateName: profile?.clientDetails?.corporateName
       ? profile?.clientDetails?.corporateName
       : "",
@@ -277,11 +277,11 @@ export const GenerateData = () => {
                   }}
                   label="Tipo de pessoa"
                 >
-                  <Option value="pf">Física</Option>
-                  <Option value="pj">Jurídica</Option>
-                  {/*  <Option value="pj">Jurídica</Option> */}
+                  <Option value="Física">Física</Option>
+                  <Option value="Jurídica">Jurídica</Option>
+                  {/*  <Option value="Jurídica">Jurídica</Option> */}
                 </Select>
-                {formik.values.personType == "pf" ? (
+                {formik.values.personType == "Física" ? (
                   <Input
                     name="name"
                     id="name"
@@ -301,7 +301,7 @@ export const GenerateData = () => {
                 )}
               </div>
               <div className="grid md:grid-cols-2 gap-6">
-                {formik.values.personType == "pf" && (
+                {formik.values.personType == "Física" && (
                   <Input
                     name="birthDate"
                     id="birthDate"
@@ -474,7 +474,7 @@ export const GenerateData = () => {
                 formik.values.maritalStatus == "Casado(a)") && (
                 <div className="grid md:grid-cols-2 gap-6">
                   <DocumentTypeSelect
-                    personType={"pf"}
+                    personType={"Física"}
                     value={formik.values.spouseDocumentType}
                     setFieldValue={formik.setFieldValue}
                     fieldName={"spouseDocumentType"}

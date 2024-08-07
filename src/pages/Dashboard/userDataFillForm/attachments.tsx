@@ -104,7 +104,7 @@ export const Attachments = ({ handleConfirmationClick }: FormStepType) => {
     try {
       setIsLoading(true);
       const isCheckedDocumentFile =
-        profile?.clientDetails?.personType === "pf"
+        profile?.clientDetails?.personType === "Física"
           ? handleCheckDocFiles(
               personDocumentFile,
               setPersonDocumentFileError,
@@ -126,7 +126,7 @@ export const Attachments = ({ handleConfirmationClick }: FormStepType) => {
         return;
       }
 
-      if (profile?.clientDetails?.personType === "pf") {
+      if (profile?.clientDetails?.personType === "Física") {
         await uploadFile(personDocumentFile, profile?.id!, "personDocument");
       } else {
         await uploadFile(
@@ -158,7 +158,7 @@ export const Attachments = ({ handleConfirmationClick }: FormStepType) => {
           <SectionTitle size="sm" text="Meus Anexos" />
         </div>
         <div className="mt-8 flex flex-col gap-8">
-          {profile?.clientDetails?.personType === "pf" ? (
+          {profile?.clientDetails?.personType === "Física" ? (
             <div>
               <div>
                 <p className="font-display text-body16 font-semibold text-BLACK">

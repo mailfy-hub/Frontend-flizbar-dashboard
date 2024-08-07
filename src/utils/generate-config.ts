@@ -1,5 +1,5 @@
 export const PERSON_DOC_TYPES = {
-  pf: [
+  Física: [
     "CPF",
     "RG",
     "Passaporte",
@@ -7,5 +7,5 @@ export const PERSON_DOC_TYPES = {
     "National ID",
     "RNE",
   ],
-  pj: ["CNPJ", "IBAN"],
+  Jurídica: ["CNPJ", "IBAN"],
 };

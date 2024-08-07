@@ -27,9 +27,9 @@ export const CustomerInsert = () => {
     navigate(-1);
   };
 
-  const [documentType, setDocumentType] = useState<"pf" | "pj">("pf");
+  const [documentType, setDocumentType] = useState<"Física" | "Jurídica">("Física");
   const handleDocumentType = (docType: string) => {
-    if (docType === "pf" || docType === "pj") setDocumentType(docType);
+    if (docType === "Física" || docType === "Jurídica") setDocumentType(docType);
   };
 
   const [selectedMaritalStatus, setSelectedMaritalStatus] =
@@ -98,17 +98,17 @@ export const CustomerInsert = () => {
                 onChange={(val) => val && handleDocumentType(val)}
                 label="Tipo de pessoa*"
               >
-                <Option value="pf">Física</Option>
-                <Option value="pj">Jurídica</Option>
+                <Option value="Física">Física</Option>
+                <Option value="Jurídica">Jurídica</Option>
               </Select>
-              {documentType == "pf" ? (
+              {documentType == "Física" ? (
                 <Input type="text" label="Nome*" />
               ) : (
                 <Input type="text" label="Razão social*" />
               )}
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-              {documentType == "pf" && (
+              {documentType == "Física" && (
                 <Input type="date" label="Date de nascimento*" />
               )}
               <Select label="Nacionalidade*">
@@ -135,7 +135,7 @@ export const CustomerInsert = () => {
               <Input type="text" label="Número do documento*" />
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-              {documentType == "pf" && (
+              {documentType == "Física" && (
                 <Select label="Gênero*">
                   <Option>Masculino</Option>
                   <Option>Feminino</Option>
