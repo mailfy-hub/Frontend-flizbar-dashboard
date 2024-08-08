@@ -8,9 +8,11 @@ export const EditWallets = () => {
   const { t } = useTranslation();
 
   const [isActiveSelectWallet, setIsActiveSelectWallet] = useState(false);
-  // const handleNewWallet = () => {
-  //   setIsActiveSelectWallet(true);
-  // };
+  const handleNewWallet = () => {
+    setIsActiveSelectWallet(true);
+  };
+
+  console.log("handleNewWallet", handleNewWallet);
 
   // {t("default.myAccount.client.contacts.buttonRemoveContact")}
 
