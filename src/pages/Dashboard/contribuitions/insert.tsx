@@ -306,8 +306,8 @@ const AdminForm = ({ formik, clients, wallets }: AdminFormProps) => {
               label="Cliente"
               id="clientID"
               name="clientID"
-              onChange={() => {
-                formik.handleChange("clientID");
+              onChange={(val) => {
+                formik.setFieldValue("clientID", val);
               }}
               onBlur={formik.handleBlur("clientID")}
               value={formik.values.clientID}
