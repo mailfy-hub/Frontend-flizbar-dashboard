@@ -21,7 +21,7 @@ const languagesTitles: { [key in Locale]: string } = {
 
 const languageKeys: Locale[] = Object.keys(languagesTitles) as Locale[];
 
-export default function LocaleSwitch({ setLang }: any) {
+export default function LocaleSwitch() {
   const [selectedLocale, setSelectedLocale] = useState<Locale>(defaultLocale);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -40,9 +40,9 @@ export default function LocaleSwitch({ setLang }: any) {
     return false;
   }, [size]);
 
-  const refreshPage = () => {
-    window.location.reload();
-  };
+  // const refreshPage = () => {
+  //   window.location.reload();
+  // };
 
   const handleSelect = (newLocale: Locale) => {
     setLanguage(newLocale);
@@ -50,7 +50,7 @@ export default function LocaleSwitch({ setLang }: any) {
     localStorage.setItem("language", newLocale);
     setSelectedLocale(newLocale);
     setIsOpen(false);
-    setLang(newLocale);
+    // setLang(newLocale);
     // refreshPage();
   };
 
