@@ -64,6 +64,7 @@ export interface User {
   createdAt: string;
   deletedAt: string | null;
   updatedAt: string;
+  customId?: string | null;
 }
 
 export interface ClientAddress {
@@ -119,9 +120,9 @@ export interface ProfileDetails {
   isEnterprise: boolean;
   personalPhone: string;
   spouseDetails: {
-    spouseName?: string,
-    spouseDocumentType?: string,
-    spousedocument?: string,
+    spouseName?: string;
+    spouseDocumentType?: string;
+    spousedocument?: string;
   };
   spouse: boolean;
   birthDate: string;

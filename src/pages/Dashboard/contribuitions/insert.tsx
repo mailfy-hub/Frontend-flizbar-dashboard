@@ -3,13 +3,13 @@ import { Icon } from "@iconify/react";
 import { Button, Input, Option, Select } from "@material-tailwind/react";
 import { FormikProps, useFormik } from "formik";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { api } from "../../../client/api";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { useAuth } from "../../../hook/auth";
-import { useTranslation } from "react-i18next";
 
 interface WalletType {
   createdAt: string;
@@ -32,9 +32,9 @@ interface UserType {
 
 interface UserFormValues {
   walletID: string;
-  contributionDate: string;
   dollarValue: number;
   contributionAmount: number;
+  paymentDate: string;
 }
 
 interface AdminFormValues extends UserFormValues {
@@ -82,12 +82,13 @@ export const ContribuitionInsert = () => {
   const userForm = useFormik<UserFormValues>({
     initialValues: {
       walletID: "",
-      contributionDate: "",
       dollarValue: 5.12,
       contributionAmount: 0,
+      paymentDate: "",
     },
     validationSchema: Yup.object({
       walletID: Yup.string().required(`${t("default.error.walletRequired")}`),
+      paymentDate: Yup.string().required("Data do aporte é obrigatória"),
       contributionDate: Yup.date().required(
         `${t("default.error.contributionDateRequired")}`
       ),
@@ -103,7 +104,7 @@ export const ContribuitionInsert = () => {
         const data = {
           clientID: profile?.id,
           walletID: values.walletID,
-          contributionDate: values.contributionDate,
+          paymentDate: values.paymentDate,
           dollarValue: values.dollarValue,
           contributionAmount: values.contributionAmount,
         };
@@ -125,7 +126,7 @@ export const ContribuitionInsert = () => {
       status: "",
       clientID: "",
       walletID: "",
-      contributionDate: "",
+      paymentDate: "",
       dollarValue: 5.12,
       contributionAmount: 0,
     },
@@ -133,7 +134,7 @@ export const ContribuitionInsert = () => {
       status: Yup.string().required(`${t("default.error.statusRequired")}`),
       clientID: Yup.string().required(`${t("default.error.clientRequired")}`),
       walletID: Yup.string().required(`${t("default.error.walletRequired")}`),
-      contributionDate: Yup.date().required(
+      paymentDate: Yup.date().required(
         `${t("default.error.contributionDateRequired")}`
       ),
       dollarValue: Yup.number().required(
@@ -145,10 +146,11 @@ export const ContribuitionInsert = () => {
     }),
     onSubmit: async (values) => {
       try {
+        const paymentDateFormatted = new Date(values.paymentDate);
         const data = {
           clientID: values.clientID,
           walletID: values.walletID,
-          contributionDate: values.contributionDate,
+          paymentDate: paymentDateFormatted.toISOString(),
           dollarValue: values.dollarValue,
           contributionAmount: values.contributionAmount,
           status: values.status,
@@ -212,12 +214,11 @@ const UserForm = ({ formik, wallets }: UserFormProps) => {
               label={t(
                 "default.contribution.addContributionForm.dateOfContribution"
               )}
-              name="contributionDate"
+              name="paymentDate"
               onChange={formik.handleChange}
-              value={formik.values.contributionDate}
+              value={formik.values.paymentDate}
               error={
-                formik.touched.contributionDate &&
-                Boolean(formik.errors.contributionDate)
+                formik.touched.paymentDate && Boolean(formik.errors.paymentDate)
               }
             />
             <Select
@@ -294,19 +295,21 @@ const AdminForm = ({ formik, clients, wallets }: AdminFormProps) => {
               label={t(
                 "default.contributions.addContributionForm.dateOfContribution"
               )}
-              name="contributionDate"
+              name="paymentDate"
               onChange={formik.handleChange}
-              value={formik.values.contributionDate}
+              value={formik.values.paymentDate}
               error={
-                formik.touched.contributionDate &&
-                Boolean(formik.errors.contributionDate)
+                formik.touched.paymentDate && Boolean(formik.errors.paymentDate)
               }
             />
             <Select
-              label={t("default.contributions.addContributionForm.client")}
+              label="Cliente"
               id="clientID"
               name="clientID"
-              onChange={(val) => formik.setFieldValue("clientID", val)}
+              onChange={() => {
+                formik.handleChange("clientID");
+              }}
+              onBlur={formik.handleBlur("clientID")}
               value={formik.values.clientID}
               error={formik.touched.clientID && Boolean(formik.errors.clientID)}
             >
@@ -319,10 +322,11 @@ const AdminForm = ({ formik, clients, wallets }: AdminFormProps) => {
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             <Select
-              label={t("default.contributions.addContributionForm.wallet")}
+              label="Carteira"
               id="walletID"
               name="walletID"
               onChange={(val) => formik.setFieldValue("walletID", val)}
+              onBlur={formik.handleBlur("walletID")}
               value={formik.values.walletID}
               error={formik.touched.walletID && Boolean(formik.errors.walletID)}
             >
@@ -352,16 +356,17 @@ const AdminForm = ({ formik, clients, wallets }: AdminFormProps) => {
               id="status"
               name="status"
               onChange={(val) => formik.setFieldValue("status", val)}
+              onBlur={formik.handleBlur("status")}
               value={formik.values.status}
               error={formik.touched.status && Boolean(formik.errors.status)}
             >
-              <Option value="pending">
+              <Option value="PENDING">
                 {t("default.contributions.addContributionForm.pending")}
               </Option>
-              <Option value="approved">
+              <Option value="APPROVED">
                 {t("default.contributions.addContributionForm.approved")}
               </Option>
-              <Option value="completed">
+              <Option value="COMPLETED">
                 {t("default.contributions.addContributionForm.concluded")}
               </Option>
             </Select>

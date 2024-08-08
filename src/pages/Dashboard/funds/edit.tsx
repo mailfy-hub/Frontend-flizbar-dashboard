@@ -1,14 +1,14 @@
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Button, Input, Select, Option } from "@material-tailwind/react";
+import { Button, Input, Option, Select } from "@material-tailwind/react";
+import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
 import { api } from "../../../client/api";
 import { SectionTitle } from "../../../components/sectionTitle";
 import { Fund } from "../../../types/dashboard/funds";
-import { useFormik } from "formik";
-import { toast } from "react-toastify";
-import * as Yup from "yup";
 
 export const FundsEdit = () => {
   const navigate = useNavigate();
@@ -20,7 +20,10 @@ export const FundsEdit = () => {
     name: Yup.string().required("O nome do fundo é obrigatório"),
     currency: Yup.string().required("A moeda é obrigatória"),
     type: Yup.string().required("O tipo é obrigatório"),
-    defaultPercentage: Yup.string().required("O percentual padrão é obrigatório"),
+    defaultPercentage: Yup.string().required(
+      "O percentual padrão é obrigatório"
+    ),
+    customId: Yup.string(),
   });
 
   const formik = useFormik({
@@ -29,6 +32,7 @@ export const FundsEdit = () => {
       currency: "",
       type: "",
       defaultPercentage: "",
+      customId: "",
     },
     validationSchema,
     onSubmit: (values) => {
@@ -37,7 +41,12 @@ export const FundsEdit = () => {
     enableReinitialize: true,
   });
 
-  const handlePutFinanceInformation = async (data: { name: string; currency: string; type: string; defaultPercentage: string }) => {
+  const handlePutFinanceInformation = async (data: {
+    name: string;
+    currency: string;
+    type: string;
+    defaultPercentage: string;
+  }) => {
     try {
       await api.put(`funds/${fund?.id}`, {
         ...data,
@@ -70,6 +79,7 @@ export const FundsEdit = () => {
         currency: data.currency || "",
         type: data.type || "",
         defaultPercentage: data.defaultPercentage || "",
+        customId: data.customId || "",
       });
     } catch (error) {
       console.log(error);
@@ -96,7 +106,11 @@ export const FundsEdit = () => {
       <form className="mt-12" onSubmit={formik.handleSubmit}>
         <div className="bg-WHITE p-8 w-full rounded-md">
           <div className="flex items-center gap-4">
-            <Icon height={16} icon={"heroicons:currency-dollar"} color="black" />
+            <Icon
+              height={16}
+              icon={"heroicons:currency-dollar"}
+              color="black"
+            />
             <SectionTitle size="sm" text="Fundo" />
           </div>
 
@@ -144,12 +158,24 @@ export const FundsEdit = () => {
                   onChange={formik.handleChange}
                   error={formik.errors.defaultPercentage ? true : false}
                 />
+
+                <Input
+                  type="text"
+                  label="ID Personalizado"
+                  name="customId"
+                  value={formik.values.customId}
+                  onChange={formik.handleChange}
+                />
               </div>
             </div>
           </div>
         </div>
         <div className="w-full flex justify-end mt-8">
-          <Button className="bg-GOLD_MAIN w-full md:w-auto" type="submit" disabled={formik.isSubmitting}>
+          <Button
+            className="bg-GOLD_MAIN w-full md:w-auto"
+            type="submit"
+            disabled={formik.isSubmitting}
+          >
             Atualizar dados
           </Button>
         </div>

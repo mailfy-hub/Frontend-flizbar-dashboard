@@ -128,6 +128,13 @@ export const UserEdit = () => {
                 name="username"
                 onChange={handleInputChange}
               />
+              <Input
+                defaultValue={user?.customId}
+                type="text"
+                label={'ID Personalizado'}
+                name="customId"
+                onChange={handleInputChange}
+              />
             </div>
           </div>
         </div>

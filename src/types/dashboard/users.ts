@@ -14,4 +14,5 @@ export interface User {
   username: string;
   verified: boolean;
   personType: string
+  customId: string;
 }

@@ -1,9 +1,11 @@
+export type CURRENCY_TYPE = "BRL" | "USD" | "EUR" | "JPY" | "YEN";
+
 interface TableRowProps {
-  currency: "BRL" | "USD" | "EUR" | "JPY" | "YEN";
+  currency: CURRENCY_TYPE;
   value: number;
 }
 
-const CURRENCY_MAP = {
+export const CURRENCY_MAP = {
   BRL: "R$",
   USD: "$",
   EUR: "€",
@@ -11,7 +13,7 @@ const CURRENCY_MAP = {
   YEN: "¥",
 };
 
-export const CurrencyRow = ({currency, value}: TableRowProps) => {
+export const CurrencyRow = ({ currency, value }: TableRowProps) => {
   return (
     <div className="flex items-center gap-2">
       <span className="font-display font-semibold text-body16 text-GOLD_MAIN">

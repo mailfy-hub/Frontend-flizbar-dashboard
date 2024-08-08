@@ -1,12 +1,21 @@
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
 import { Button, Option, Select, Typography } from "@material-tailwind/react";
+import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../../../client/api";
 import { SectionTitle } from "../../../components/sectionTitle";
-import { CurrencyRow } from "../../../components/table/currencyRow";
+import {
+  CURRENCY_TYPE,
+  CurrencyRow,
+} from "../../../components/table/currencyRow";
 import { useAuth } from "../../../hook/auth";
+import {
+  Contribution,
+  CONTRIBUTION_STATUS,
+} from "../../../types/dashboard/contribuitions";
+import { formatValueByCurrency, ValueObject } from "../../../utils/formatValue";
 
 interface TABLE_ROW_PROPS {
   id: string;
@@ -61,7 +70,6 @@ const TABLE_ROW: TABLE_ROW_PROPS[] = [
 
 export const ContribuitionDetails = () => {
   const navigate = useNavigate();
-  const [status, setStatus] = useState("Pendente");
   const { userData } = useAuth();
 
   const params = useParams();
@@ -71,24 +79,39 @@ export const ContribuitionDetails = () => {
   };
 
   const handleAllocate = () => {
-    setStatus("Concluído");
+    setStatus("COMPLETED");
     toast("Sucesso", {
       type: "success",
       autoClose: 3000,
     });
-
-    // Impedir que o status seja editado após a alocação
   };
 
-  // onst [contribuition, setContribuition] = useState();
+  const [contribuition, setContribuition] = useState<Contribution>(
+    {} as Contribution
+  );
+  const [status, setStatus] = useState<CONTRIBUTION_STATUS>(
+    "" as CONTRIBUTION_STATUS
+  );
+
   const getContribuitionById = async (id: string) => {
     try {
       const response = await api.get(`/contributions/${id}`);
-      console.log(response);
+      setContribuition(response.data);
+      setStatus(response.data.status);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const createdAtFormatted =
+    contribuition?.createdAt && format(contribuition?.createdAt, "dd/MM/yyyy");
+
+  const valueFormatted: ValueObject = contribuition.contributionAmount
+    ? formatValueByCurrency(
+        contribuition.contributionAmount,
+        contribuition.currency as CURRENCY_TYPE
+      )
+    : ({} as ValueObject);
 
   useEffect(() => {
     params.id && getContribuitionById(params.id);
@@ -103,17 +126,20 @@ export const ContribuitionDetails = () => {
             className="text-GRAY_400 hover:text-GOLD_DARK transition-all"
           />
         </button>
-        <SectionTitle text="Detalhes aporte #41" />
+        <SectionTitle text={`Detalhes do aporte ${contribuition.id}`} />
       </div>
       <div className="mt-12">
         <div className="bg-WHITE p-8 w-full rounded-md">
           <div>
-            <SectionTitle size="sm" text="Marlon Lencina B." />
+            <SectionTitle
+              size="sm"
+              text={`${contribuition?.clientProfile?.user?.name} ${contribuition?.clientProfile?.user?.surname}`}
+            />
             <Typography
               variant="small"
               className="text-GRAY_400 font-normal mt-2"
             >
-              Aporte realizado em 26/09/2024
+              Aporte realizado em {createdAtFormatted}
             </Typography>
           </div>
           <div className="mt-6 flex items-center justify-between">
@@ -147,12 +173,13 @@ export const ContribuitionDetails = () => {
               >
                 VALOR DO APORTE
               </Typography>
-              <div className="flex items-center gap-1 bg-GOLD_DARK py-2 px-4 rounded-sm">
+              <div className="flex items-center gap-1 bg-GOLD_DARK py-2 px-4 rounded-md">
                 <span className="font-display font-medium text-WHITE text-body20">
-                  R$
+                  {valueFormatted?.symbol ? valueFormatted?.symbol : ""}
+                  {}
                 </span>
                 <span className="font-display font-medium text-WHITE text-body20">
-                  648,56
+                  {valueFormatted?.value ? valueFormatted?.value : ""}
                 </span>
               </div>
             </div>
@@ -161,20 +188,21 @@ export const ContribuitionDetails = () => {
             <div className="mt-6">
               <Select
                 label="Status do aporte"
-                // disabled={status === "Concluído"}
                 value={status}
-                onChange={(value) => value && setStatus(value)}
+                onChange={(value) =>
+                  value && setStatus(value as CONTRIBUTION_STATUS)
+                }
                 className="pt-2"
                 disabled
               >
-                <Option value="Rejeitado">Rejeitado</Option>
-                <Option value="Pendente">Pendente</Option>
-                <Option value="Aprovado">Aprovado</Option>
-                <Option value="Creditado">Creditado</Option>
+                <Option value="REJECTED">Rejeitado</Option>
+                <Option value="PENDING">Pendente</Option>
+                <Option value="APPROVED">Aprovado</Option>
+                <Option value="CREDITED">Creditado</Option>
               </Select>
             </div>
           )}
-          {status === "Aprovado" && (
+          {status === "APPROVED" && (
             <div className="mt-6">
               <Button onClick={handleAllocate} color="green">
                 Alocar Aporte

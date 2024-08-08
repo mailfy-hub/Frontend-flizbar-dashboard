@@ -17,20 +17,32 @@ import {
   DialogFooter,
   DialogHeader,
   IconButton,
+  Option,
+  Select,
   Tooltip,
   Typography,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Link, useNavigate } from "react-router-dom";
 import exampleImageAporte from "../../../assets/example-image-aporte.png";
 import { api } from "../../../client/api";
 import { ImageDialog } from "../../../components/imageDialog";
 import { SectionTitle } from "../../../components/sectionTitle";
 import SuccessDialog from "../../../components/successDialog";
 import { useAuth } from "../../../hook/auth";
-import { Contribuition } from "../../../types/dashboard/contribuitions";
+import {
+  Contribution,
+  CONTRIBUTION_STATUS,
+} from "../../../types/dashboard/contribuitions";
 import { formatDate } from "../../../utils/formatDate";
-import { useTranslation } from "react-i18next";
+
+type CONTRIBUTION_STATUS_FILTER =
+  | "PENDING"
+  | "APPROVED"
+  | "REJECTED"
+  | "COMPLETED"
+  | "ALL";
 
 export const Contribuitions = () => {
   const { userData } = useAuth();
@@ -46,7 +58,6 @@ export const Contribuitions = () => {
         `${t("default.contributions.code")}`,
         `${t("default.contributions.client")}`,
         `${t("default.contributions.contributionValue")}`,
-        `${t("default.contributions.dollarValue")}`,
         `${t("default.contributions.status")}`,
         `${t("default.contributions.createdAt")}`,
         `${t("default.contributions.actions")}`,
@@ -87,29 +98,49 @@ export const Contribuitions = () => {
     navigate(`edit/${id}`);
   };
 
-  const [contribuitionsList, setContribuitionsList] = useState<Contribuition[]>(
+  const [selectedStatus, setSelectedStatus] = useState<
+    CONTRIBUTION_STATUS | string
+  >("ALL");
+  const handleStatusChange = (status: CONTRIBUTION_STATUS_FILTER) => {
+    setSelectedStatus(status);
+    getContribuitionsList(currentPage, status);
+  };
+
+  const [contribuitionsList, setContribuitionsList] = useState<Contribution[]>(
     []
   );
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages] = useState(1);
-  const [_totalItems] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const [_, setTotalItems] = useState(0);
   const itemsPerPage = 10;
 
-  const getContribuitionsList = async (page: number) => {
+  const getContribuitionsList = async (
+    page: number,
+    status: CONTRIBUTION_STATUS_FILTER = "ALL"
+  ) => {
     try {
-      const { data } = await api.get(
-        `contributions?page=${page}&itemsPerPage=${itemsPerPage}`
-      );
+      const endpoint = userData?.isAdmin
+        ? `/admin/contributions?page=${page}&itemsPerPage=${itemsPerPage}}${
+            status !== "ALL" ? `&status=${status}` : ""
+          }`
+        : `contributions?page=${page}&itemsPerPage=${itemsPerPage}}${
+            status !== "ALL" ? `&status=${status}` : ""
+          }`;
 
-      const mappedData = data.map((contribuition: Contribuition) => {
+      const { data } = await api.get(endpoint);
+      const { items, pagination } = data;
+
+      const mappedData = items.map((contribution: Contribution) => {
         return {
-          ...contribuition,
-          createdAt: formatDate(contribuition.createdAt),
+          ...contribution,
+          createdAt: formatDate(contribution.createdAt),
         };
       });
       setContribuitionsList(mappedData);
-      /*  setTotalPages(data.pagination.totalPages);
-      setTotalItems(data.pagination.totalItems); */
+
+      setTotalPages(pagination.totalPages);
+      setTotalItems(pagination.totalItems);
+      setCurrentPage(Number(pagination.currentPage));
     } catch (error) {
       console.error(error);
     }
@@ -211,7 +242,8 @@ export const Contribuitions = () => {
               {t("default.contributions.text")}
             </Typography>
           </div>
-          <div className="flex flex-wrap items-center w-full shrink-0 gap-4 md:w-max">
+
+          <div className="flex items-center w-full shrink-0 gap-4 md:w-max">
             <Button
               onClick={() => {
                 handleInsert();
@@ -222,7 +254,23 @@ export const Contribuitions = () => {
             </Button>
           </div>
         </CardHeader>
-        <CardBody className="overflow-auto !p-0">
+        <div className="px-6 md:max-w-[348px] w-full">
+          <Select
+            label="Filtro por status"
+            value={selectedStatus}
+            onChange={(value) => {
+              value && handleStatusChange(value as CONTRIBUTION_STATUS_FILTER);
+            }}
+            className=""
+          >
+            <Option value="ALL">Todos</Option>
+            <Option value="APPROVED">Aprovado</Option>
+            <Option value="PENDING">Pendente</Option>
+            <Option value="REJECTED">Rejeitado</Option>
+            <Option value="COMPLETED">Concluído</Option>
+          </Select>
+        </div>
+        <CardBody className="overflow-auto !p-0 mt-2">
           <table className="w-full min-w-max table-auto text-left">
             <thead>
               <tr>
@@ -244,11 +292,10 @@ export const Contribuitions = () => {
                 contribuitionsList.map(
                   ({
                     id,
-                    clientID,
                     contributionAmount,
-                    dollarValue,
                     status,
                     createdAt,
+                    clientProfile,
                   }) => {
                     const classes = "!p-6 ";
                     return (
@@ -269,15 +316,23 @@ export const Contribuitions = () => {
 
                         {userData?.isAdmin && (
                           <td className={classes}>
-                            <div>
-                              <Typography
-                                variant="small"
-                                color="black"
-                                className="!font-normal"
-                              >
-                                {clientID}
-                              </Typography>
-                            </div>
+                            <Link to={`/custumers/edit/${clientProfile.id}`}>
+                              <div className="hover:opacity-65">
+                                <Typography
+                                  variant="small"
+                                  className="!font-bold text-BLACK"
+                                >
+                                  {clientProfile.user.name}{" "}
+                                  {clientProfile.user.surname}
+                                </Typography>
+                                <Typography
+                                  variant="small"
+                                  className="!font-normal text-GRAY_400"
+                                >
+                                  {clientProfile.user.email}
+                                </Typography>
+                              </div>
+                            </Link>
                           </td>
                         )}
 
@@ -291,15 +346,6 @@ export const Contribuitions = () => {
                               {contributionAmount}
                             </Typography>
                           </div>
-                        </td>
-
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            className="!font-normal text-gray-600"
-                          >
-                            {dollarValue}
-                          </Typography>
                         </td>
 
                         <td className={classes}>
