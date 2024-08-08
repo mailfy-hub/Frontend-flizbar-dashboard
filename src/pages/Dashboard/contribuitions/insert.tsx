@@ -202,7 +202,7 @@ const UserForm = ({ formik, wallets }: UserFormProps) => {
           <Icon height={16} icon={"radix-icons:dashboard"} color="black" />
           <SectionTitle
             size="sm"
-            text={t("default.contribution.addContributionForm.subtitle")}
+            text={t("default.contributions.addContributionForm.subtitle")}
           />
         </div>
         <div className="mt-8 flex flex-col gap-6">
@@ -210,7 +210,7 @@ const UserForm = ({ formik, wallets }: UserFormProps) => {
             <Input
               type="date"
               label={t(
-                "default.contribution.addContributionForm.dateOfContribution"
+                "default.contributions.addContributionForm.dateOfContribution"
               )}
               name="contributionDate"
               onChange={formik.handleChange}
@@ -221,7 +221,7 @@ const UserForm = ({ formik, wallets }: UserFormProps) => {
               }
             />
             <Select
-              label={t("default.contribution.wallet")}
+              label={t("default.contributions.wallet")}
               id="walletID"
               name="walletID"
               onChange={(val) => formik.setFieldValue("walletID", val)}
@@ -239,7 +239,7 @@ const UserForm = ({ formik, wallets }: UserFormProps) => {
             <Input
               type="number"
               label={t(
-                "default.contribution.addContributionForm.contributionValue"
+                "default.contributions.addContributionForm.contributionValue"
               )}
               name="contributionAmount"
               onChange={formik.handleChange}
@@ -251,7 +251,7 @@ const UserForm = ({ formik, wallets }: UserFormProps) => {
             />
             <Input
               type="number"
-              label={t("default.contribution.addContributionForm.dollarValue")}
+              label={t("default.contributions.addContributionForm.dollarValue")}
               name="dollarValue"
               value={formik.values.dollarValue}
               disabled
@@ -262,7 +262,7 @@ const UserForm = ({ formik, wallets }: UserFormProps) => {
       </div>
       <div className="w-full flex justify-end mt-8">
         <Button type="submit" className="bg-GOLD_MAIN w-full md:w-auto">
-          {t("default.contribution.addContributionForm.button")}
+          {t("default.contributions.addContributionForm.button")}
         </Button>
       </div>
     </form>
