@@ -21,7 +21,7 @@ const languagesTitles: { [key in Locale]: string } = {
 
 const languageKeys: Locale[] = Object.keys(languagesTitles) as Locale[];
 
-export default function LocaleSwitch() {
+export default function LocaleSwitch({ setLang }: any) {
   const [selectedLocale, setSelectedLocale] = useState<Locale>(defaultLocale);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -50,7 +50,8 @@ export default function LocaleSwitch() {
     localStorage.setItem("language", newLocale);
     setSelectedLocale(newLocale);
     setIsOpen(false);
-    refreshPage();
+    setLang(newLocale);
+    // refreshPage();
   };
 
   useEffect(() => {
