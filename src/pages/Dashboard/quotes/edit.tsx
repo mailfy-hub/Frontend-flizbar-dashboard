@@ -32,7 +32,6 @@ export const QuotesEdit = () => {
     yen: data?.yen,
   };
 
-
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -48,11 +47,11 @@ export const QuotesEdit = () => {
   const handlePostCotation = async (form: FormValues) => {
     await updateQuotation(form, data.id)
       .then(() => {
-        toast.success("Cotação editada com sucesso!")
-        handleNavigateBack()
+        toast.success("Cotação editada com sucesso!");
+        handleNavigateBack();
       })
-      .catch(err => console.log(err))
-  }
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div>
@@ -67,10 +66,7 @@ export const QuotesEdit = () => {
           text={t("default.myAccount.admin.quotes.secondaryTitle")}
         />
       </div>
-      <form
-        onSubmit={formik.handleSubmit}
-        className="mt-12"
-      >
+      <form onSubmit={formik.handleSubmit} className="mt-12">
         <div className="bg-WHITE p-8 w-full rounded-md">
           <div className="flex items-center gap-4">
             <Icon height={16} icon={"heroicons:chart-bar"} color="black" />
@@ -88,9 +84,12 @@ export const QuotesEdit = () => {
                 )}
                 id="quotationDate"
                 name="quotationDate"
-                value={formik.values.quotationDate}
+                value={formik.values.quotationDate.toString()}
                 onChange={formik.handleChange}
-                error={formik.touched.quotationDate && Boolean(formik.errors.quotationDate)}
+                error={
+                  formik.touched.quotationDate &&
+                  Boolean(formik.errors.quotationDate)
+                }
               />
             </div>
           </div>
@@ -104,7 +103,7 @@ export const QuotesEdit = () => {
             <div className="grid md:grid-cols-2 gap-6 mt-6">
               <Input
                 type="number"
-                label="Dólar ($)" 
+                label="Dólar ($)"
                 id="dollar"
                 name="dollar"
                 value={formik.values.dollar}

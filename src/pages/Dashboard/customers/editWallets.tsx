@@ -12,6 +12,8 @@ export const EditWallets = () => {
     setIsActiveSelectWallet(true);
   };
 
+  console.log("handleNewWallet", handleNewWallet);
+
   // {t("default.myAccount.client.contacts.buttonRemoveContact")}
 
   return (
